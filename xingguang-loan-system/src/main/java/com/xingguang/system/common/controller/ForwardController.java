@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.websocket.server.PathParam;
-
 /**
  * 统一路由转发器
  */
@@ -14,8 +12,8 @@ import javax.websocket.server.PathParam;
 public class ForwardController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
-    public String first(){
-        return "system/login/login";
+    public String zero(){
+        return "redirect:/system/login";
     }
 
     @RequestMapping(value = "/forward/{first}",method = RequestMethod.GET)
