@@ -34,7 +34,7 @@ public class AuthInterceptor implements HandlerInterceptor{
             }else{
                 token = token.substring(7, token.length());
                 if(null == JwtUtils.parseJWT(token)){
-                    throw new CustomException("token令牌无效");
+                    throw new CustomException("token令牌无效或已过期");
                     //return true;
                 }else{
                     return false;
