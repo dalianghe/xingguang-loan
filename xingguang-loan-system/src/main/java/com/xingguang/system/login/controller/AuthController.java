@@ -3,7 +3,7 @@ package com.xingguang.system.login.controller;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.system.common.controller.BaseController;
 import com.xingguang.system.login.domain.AuthUserDomain;
-import com.xingguang.system.login.request.LoginBean;
+import com.xingguang.system.login.request.AuthBean;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresUser;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/system")
-public class LoginController extends BaseController {
+public class AuthController extends BaseController {
 
     @RequestMapping(value = "/login" , method = RequestMethod.GET)
     public String login(){
@@ -28,10 +28,10 @@ public class LoginController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/login" , method = RequestMethod.POST)
-    public ResultBean login(@RequestBody LoginBean loginBean) throws Exception{
+    public ResultBean login(@RequestBody AuthBean authBean) throws Exception{
         ResultBean<?> resultBean = null;
-        String loginId = loginBean.getLoginId();
-        String password = loginBean.getPassword();
+        String loginId = authBean.getLoginId();
+        String password = authBean.getPassword();
         UsernamePasswordToken token = new UsernamePasswordToken(loginId , password);
         Subject subject = SecurityUtils.getSubject();
         try {

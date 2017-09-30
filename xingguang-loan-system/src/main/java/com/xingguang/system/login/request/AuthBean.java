@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @Date 2017/9/21  16:32
  * @Version v1.0.0
  */
-public class LoginBean implements Serializable {
+public class AuthBean implements Serializable {
 
     private String loginId;
 
