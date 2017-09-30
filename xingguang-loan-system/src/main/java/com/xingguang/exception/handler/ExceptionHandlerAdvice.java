@@ -1,14 +1,14 @@
-package com.xingguang.system.common.controller;
+package com.xingguang.exception.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.xingguang.beans.ResultBean;
+import com.xingguang.exception.CustomException;
 import com.xingguang.utils.WebUtilsPro;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +17,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by admin on 2017/9/27.
+ * Created by admin on 2017/9/30.
  */
-public class BaseController {
+@ControllerAdvice
+public class ExceptionHandlerAdvice {
 
-    protected static final Logger logger = LogManager.getLogger(BaseController.class);
+    @ExceptionHandler({CustomException.class})
+    public void authenticationException(CustomException customException , HttpServletResponse response) {
+        System.out.println(customException.getMessage());
+        ResultBean<?> resultBean = new ResultBean<>(customException.getMessage());
+        resultBean.setBizCode(ResultBean.FALL);
+        writeJson(resultBean, response);
+    }
 
-    /*@ExceptionHandler({ UnauthenticatedException.class, AuthenticationException.class })
+    @ExceptionHandler({ UnauthenticatedException.class, AuthenticationException.class })
     public String authenticationException(HttpServletRequest request, HttpServletResponse response) {
         if (WebUtilsPro.isAjaxRequest(request)) {
             ResultBean<?> resultBean = new ResultBean<>();
@@ -62,5 +69,5 @@ public class BaseController {
                 out.close();
             }
         }
-    }*/
+    }
 }
