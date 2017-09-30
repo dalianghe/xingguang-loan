@@ -1,6 +1,8 @@
 package com.xingguang.config;
 
 import com.xingguang.system.login.domain.AuthUserDomain;
+import com.xingguang.system.resource.entity.SysResourceEntity;
+import com.xingguang.system.resource.service.ISysResourceService;
 import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.service.ISysUserService;
 import org.apache.shiro.authc.*;
@@ -25,6 +27,8 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private ISysUserService sysUserService;
+    @Autowired
+    private ISysResourceService sysResourceService;
 
     /**
      * 身份认证
@@ -40,14 +44,19 @@ public class ShiroRealm extends AuthorizingRealm {
         AuthUserDomain authUserDomain = new AuthUserDomain();
         SysUserEntity sysUserEntity = null;
         try {
+            // 从数据库中查询用户
             sysUserEntity = sysUserService.findUserByLoginId(loginId);
+
+            if(sysUserEntity != null){ // 用户存在
+                BeanUtils.copyProperties(sysUserEntity,authUserDomain);
+                // 获取用户权限菜单
+                List<SysResourceEntity> menus = sysResourceService.findMenusByUserId(sysUserEntity.getId());
+                authUserDomain.setMenus(menus);
+                ByteSource salt = ByteSource.Util.bytes(loginId);
+                return new SimpleAuthenticationInfo(authUserDomain, sysUserEntity.getPassword(),salt, getName());
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        if(sysUserEntity != null){
-            BeanUtils.copyProperties(sysUserEntity,authUserDomain);
-            ByteSource salt = ByteSource.Util.bytes(loginId);
-            return new SimpleAuthenticationInfo(authUserDomain, sysUserEntity.getPassword(),salt, getName());
         }
         return null;
     }

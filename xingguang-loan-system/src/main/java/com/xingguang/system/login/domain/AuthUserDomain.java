@@ -1,7 +1,11 @@
 package com.xingguang.system.login.domain;
 
+import com.xingguang.system.resource.entity.SysResourceEntity;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2017/9/22.
@@ -17,6 +21,8 @@ public class AuthUserDomain implements Serializable {
     private String userJob;
     private Date joinDate;
     private String status;
+    // 用户权限菜单
+    List<SysResourceEntity> menus = new ArrayList<>();
 
     public String getUserName() {
         return userName;
@@ -96,6 +102,14 @@ public class AuthUserDomain implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<SysResourceEntity> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<SysResourceEntity> menus) {
+        this.menus = menus;
     }
 
     @Override

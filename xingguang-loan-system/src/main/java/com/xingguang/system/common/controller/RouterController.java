@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 统一路由转发器
  */
 @Controller
-public class ForwardController {
+public class RouterController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String zero(){
-        return "redirect:/system/login";
+        return "redirect:/router/system/login/login";
     }
 
-    @RequestMapping(value = "/forward/{first}",method = RequestMethod.GET)
+    @RequestMapping(value = "/router/{first}",method = RequestMethod.GET)
     public String first(@PathVariable String first){
         return first;
     }
 
-    @RequestMapping(value = "/forward/{first}/{second}",method = RequestMethod.GET)
+    @RequestMapping(value = "/router/{first}/{second}",method = RequestMethod.GET)
     public String second(@PathVariable String first,@PathVariable String second){
         return first + "/" + second;
     }
 
-    @RequestMapping(value = "/forward/{first}/{second}/{third}",method = RequestMethod.GET)
+    @RequestMapping(value = "/router/{first}/{second}/{third}",method = RequestMethod.GET)
     public String third(@PathVariable String first,@PathVariable String second,@PathVariable String third){
         return first + "/" + second + "/" +third;
     }

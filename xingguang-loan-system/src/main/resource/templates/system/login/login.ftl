@@ -304,7 +304,7 @@
                             console.log(data);
                             if(data.sysCode==0){
                                 if(data.bizCode==0){
-                                    window.location.href = "/common/index";
+                                    window.location.href = "/router/system/common/index";
                                 }
                             }
                         },

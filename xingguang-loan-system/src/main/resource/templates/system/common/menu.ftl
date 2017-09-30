@@ -30,7 +30,7 @@
 
 <ul id="menuUl" class="nav nav-list">
     <li class="active">
-        <a href="#" url="/common/500">
+        <a href="#" url="/forward/error/500">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> 控制台 </span>
         </a>
@@ -186,9 +186,7 @@
 <script src="/assets/js/ace.min.js"></script>
 
 <script>
-
     $(document).ready(function(){
-
         // 遍历一级菜单名绑定点击事件
         $("#menuUl").children("li").each(function(index){
             // 是否有二级菜单
