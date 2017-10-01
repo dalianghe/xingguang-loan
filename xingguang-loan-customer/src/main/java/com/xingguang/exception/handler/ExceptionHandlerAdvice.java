@@ -23,8 +23,9 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler({CustomException.class})
     public void authenticationException(CustomException customException , HttpServletResponse response) {
         logger.info("捕获到自定义异常，异常提示 : " + customException.getMessage());
-        ResultBean<?> resultBean = new ResultBean<>(customException.getMessage());
+        ResultBean<?> resultBean = new ResultBean<>();
         resultBean.setBizCode(ResultBean.FALL);
+        resultBean.setMsg(customException.getMessage());
         writeJson(resultBean, response);
     }
 
