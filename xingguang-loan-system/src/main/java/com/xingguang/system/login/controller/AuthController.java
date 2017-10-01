@@ -3,7 +3,7 @@ package com.xingguang.system.login.controller;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.system.common.controller.BaseController;
 import com.xingguang.system.login.domain.AuthUserDomain;
-import com.xingguang.system.login.request.AuthBean;
+import com.xingguang.system.login.params.AuthBean;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresUser;

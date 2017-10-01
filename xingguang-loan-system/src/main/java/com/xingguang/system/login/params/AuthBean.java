@@ -1,4 +1,4 @@
-package com.xingguang.system.login.request;
+package com.xingguang.system.login.params;
 
 import java.io.Serializable;
 

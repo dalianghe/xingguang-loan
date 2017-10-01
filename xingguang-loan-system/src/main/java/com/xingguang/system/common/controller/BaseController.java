@@ -24,8 +24,8 @@ public class BaseController {
     protected static final Logger logger = LogManager.getLogger(BaseController.class);
 
     /*@ExceptionHandler({ UnauthenticatedException.class, AuthenticationException.class })
-    public String authenticationException(HttpServletRequest request, HttpServletResponse response) {
-        if (WebUtilsPro.isAjaxRequest(request)) {
+    public String authenticationException(HttpServletRequest params, HttpServletResponse response) {
+        if (WebUtilsPro.isAjaxRequest(params)) {
             ResultBean<?> resultBean = new ResultBean<>();
             resultBean.setBizCode(ResultBean.FALL);
             resultBean.setMsg("没有登陆或回话过期，请重新登陆！");
@@ -37,8 +37,8 @@ public class BaseController {
     }
 
     @ExceptionHandler({ UnauthorizedException.class, AuthorizationException.class })
-    public String authorizationException(HttpServletRequest request, HttpServletResponse response) {
-        if (WebUtilsPro.isAjaxRequest(request)) {
+    public String authorizationException(HttpServletRequest params, HttpServletResponse response) {
+        if (WebUtilsPro.isAjaxRequest(params)) {
             ResultBean<?> resultBean = new ResultBean<>();
             resultBean.setMsg("没有该功能的操作权限！");
             writeJson(resultBean, response);
