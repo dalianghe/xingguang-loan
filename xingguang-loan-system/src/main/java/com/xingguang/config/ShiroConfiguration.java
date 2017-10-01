@@ -106,12 +106,12 @@ public class ShiroConfiguration {
 
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/static/**", "anon");
-        filterChainDefinitionMap.put("/system/login", "anon");
+        //filterChainDefinitionMap.put("/router/system/login/login", "anon");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
-        shiroFilterFactoryBean.setLoginUrl("/system/login");
+        /*shiroFilterFactoryBean.setLoginUrl("/system/login");
         shiroFilterFactoryBean.setSuccessUrl("/common/index");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/common/500");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/common/500");*/
         return shiroFilterFactoryBean;
     }
 

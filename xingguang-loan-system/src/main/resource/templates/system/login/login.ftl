@@ -79,6 +79,7 @@
                                                             </span>
                                                     </label>
 
+                                                    <div id="message" style="color: red"></div>
                                                     <div class="space"></div>
 
                                                     <div class="clearfix">
@@ -290,9 +291,21 @@
 
         <!-- inline scripts related to this page -->
         <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
+        <script src="/js/lib/layer/layer.js"></script>
         <script type="text/javascript">
+            function loginError(){
+                $("#message").text("用户名密码错误！");
+            }
             jQuery(function($) {
                 $("#loginButton").on("click",function(e){
+                    if($("#loginId").val()==""){
+                        layer.tips("用户名不能为空",$("#loginId"),{tips:1});
+                        return;
+                    }
+                    if($("#password").val()==""){
+                        layer.tips("用户密码不能为空",$("#password"),{tips:1});
+                        return;
+                    }
                     $.ajax({
                         url: "/system/login",
                         type: "POST",
@@ -305,6 +318,8 @@
                             if(data.sysCode==0){
                                 if(data.bizCode==0){
                                     window.location.href = "/router/system/common/index";
+                                }else{
+                                    $("#message").html("用户名密码错误！").show(300).delay(3000).hide(300);
                                 }
                             }
                         },

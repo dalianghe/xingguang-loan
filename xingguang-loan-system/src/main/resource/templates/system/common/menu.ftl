@@ -109,7 +109,7 @@
                             var result = $.parseJSON(response);
                             if(result.sysCode==0){
                                 if(result.bizCode==1){
-                                    $("#main").load("/router/error/500");
+                                    $("#main").load("/error/500");
                                 }
                             }
                         }

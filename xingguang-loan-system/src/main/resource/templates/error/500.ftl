@@ -44,6 +44,6 @@
 
         <script>
             function toLogin(){
-                window.location.href = "/router/system/login/login";
+                window.location.href = "/";
             }
         </script>
