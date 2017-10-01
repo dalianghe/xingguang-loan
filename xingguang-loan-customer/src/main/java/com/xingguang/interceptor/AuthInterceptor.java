@@ -21,7 +21,7 @@ public class AuthInterceptor implements HandlerInterceptor{
         String token = httpServletRequest.getHeader("authorization");
         ResultBean<?> resultBean = null;
         if((token == null) || (token.length() <=7)){
-            throw new CustomException("token令牌必须以存放在head的authorization中传送");
+            throw new CustomException("token令牌不能为空");
         }else{
             String headStr = token.substring(0, 6).toLowerCase();
             if (headStr.compareTo("bearer") != 0){
