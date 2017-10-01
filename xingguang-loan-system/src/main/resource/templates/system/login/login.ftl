@@ -306,6 +306,7 @@
                         layer.tips("用户密码不能为空",$("#password"),{tips:1});
                         return;
                     }
+                    var index = layer.load(2);
                     $.ajax({
                         url: "/system/login",
                         type: "POST",
@@ -314,9 +315,10 @@
                         dataType: "json",
                         timeout: 10000,
                         success: function (data) {
+                            layer.close(index);
                             console.log(data);
-                            if(data.sysCode==0){
-                                if(data.bizCode==0){
+                            if(data.sysCode==0){ // 系统正常返回
+                                if(data.bizCode==0){ // 业务处理通过
                                     window.location.href = "/router/system/common/index";
                                 }else{
                                     $("#message").html("用户名密码错误！").show(300).delay(3000).hide(300);
