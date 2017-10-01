@@ -6,6 +6,7 @@ import com.xingguang.customer.info.params.InfoBean;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by admin on 2017/10/1.
@@ -16,6 +17,7 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     private CusUserInfoMapper cusUserInfoMapper;
 
     @Override
+    @Transactional
     public CusUserInfoEntity addCusUserInfo(InfoBean infoBean) throws Exception {
         CusUserInfoEntity entity = new CusUserInfoEntity();
         entity.setPhone(infoBean.getPhone());
