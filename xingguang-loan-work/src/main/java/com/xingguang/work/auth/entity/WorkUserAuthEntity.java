@@ -8,7 +8,7 @@ import java.util.Date;
 public class WorkUserAuthEntity {
     private int id;
     private String phone;
-    private Date createTime = new Date();
+    private Date createTime ;
 
     public int getId() {
         return id;

@@ -9,4 +9,6 @@ public interface WorkUserInfoMapper {
 
     void insertWorkUserInfo(WorkUserInfoEntity workUserInfoEntity) throws Exception;
 
+    void updateWorkUserInfo(WorkUserInfoEntity workUserInfoEntity) throws Exception;
+
 }

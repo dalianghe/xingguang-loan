@@ -48,4 +48,20 @@ public class AuthTest {
         System.out.println(entity.toString());
     }
 
+    @Test
+    public void testUpdateWorkUserInfo() throws Exception{
+        InfoBean infoBean = new InfoBean();
+        infoBean.setId(1L);
+        infoBean.setName("刘德华");
+        infoBean.setIdNo("130130198206061255");
+        infoBean.setSex(0);
+        infoBean.setProvinceId(110110L);
+        infoBean.setProvinceName("北京市");
+        infoBean.setCityId(110110110L);
+        infoBean.setCityName("北京市");
+
+        WorkUserInfoEntity entity = workUserInfoService.updateWorkUserInfo(infoBean);
+        System.out.println(entity.toString());
+    }
+
 }

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * Created by admin on 2017/10/1.
  */
@@ -31,6 +33,7 @@ public class WorkUserAuthServiceImpl implements IWorkUserAuthService {
     public WorkUserAuthEntity addWorkUserAuth(AuthBean authBean) throws Exception {
         WorkUserAuthEntity entity = new WorkUserAuthEntity();
         entity.setPhone(authBean.getPhone());
+        entity.setCreateTime(new Date());
         workUserAuthMapper.insertWorkUserAuth(entity);
         return entity;
     }

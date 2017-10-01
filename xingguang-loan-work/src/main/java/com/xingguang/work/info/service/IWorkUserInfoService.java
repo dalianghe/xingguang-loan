@@ -10,4 +10,6 @@ public interface IWorkUserInfoService {
 
     public WorkUserInfoEntity addWorkUserInfo(InfoBean infoBean) throws Exception;
 
+    public WorkUserInfoEntity updateWorkUserInfo(InfoBean infoBean) throws Exception;
+
 }

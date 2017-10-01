@@ -22,9 +22,54 @@
         id, phone, name, id_no, sex, province_id, province_name, city_id, city_name,  create_time, status, auditor_id, auditor_name, auditor_time
     </sql>
 
+    <!-- 业务员插入信息 -->
     <insert id="insertWorkUserInfo" parameterType="com.xingguang.work.info.entity.WorkUserInfoEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO work_user_info (phone,create_time)
         VALUES (#{phone,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
     </insert>
+
+    <!-- 业务员更新信息 -->
+    <update id="updateWorkUserInfo" parameterType="com.xingguang.work.info.entity.WorkUserInfoEntity">
+        UPDATE work_user_info
+        <set>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="idNo != null">
+                id_no = #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="provinceName != null">
+                province_name = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="cityName != null">
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null">
+                auditor_id = #{auditorId,jdbcType=BIGINT},
+            </if>
+            <if test="auditorName != null">
+                auditor_name = #{auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorTime != null" >
+                auditor_time = #{auditorTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 
 </mapper>
