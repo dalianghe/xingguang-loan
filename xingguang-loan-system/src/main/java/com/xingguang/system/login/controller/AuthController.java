@@ -55,7 +55,7 @@ public class AuthController extends BaseController {
         return resultBean;
     }
 
-    @RequiresUser
+    //@RequiresUser
     @RequestMapping(value = "/logout" , method = RequestMethod.GET)
     public ResultBean logout(){
         Subject subject = SecurityUtils.getSubject();
