@@ -57,7 +57,7 @@ public class JwtUtils {
     }
 
     public static void main(String [] args){
-        String jwt = JwtUtils.createJWT("cus.xingguanqb.com","bbb",10000);
+        String jwt = JwtUtils.createJWT("cus.xingguanqb.com","bbb",100000);
         System.out.println(jwt);
         Map<String,Object> map = JwtUtils.parseJWT(jwt);
         System.out.println(map);

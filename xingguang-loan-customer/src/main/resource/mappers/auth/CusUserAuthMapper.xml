@@ -1,34 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xingguang.system.user.mapper.SysUserMapper" >
-    <resultMap id="BaseResultMap" type="com.xingguang.system.user.entity.SysUserEntity" >
+<mapper namespace="com.xingguang.customer.login.mapper.CusUserAuthMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.customer.login.entity.CusUserAuthEntity" >
         <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="login_id" property="loginId" jdbcType="VARCHAR" />
-        <result column="password" property="password" jdbcType="VARCHAR" />
-        <result column="user_birthday" property="userBirthday" jdbcType="DATE" />
-        <result column="user_sex" property="userSex" jdbcType="VARCHAR" />
-        <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
-        <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
-        <result column="work_address" property="workAddress" jdbcType="VARCHAR" />
-        <result column="user_job" property="userJob" jdbcType="VARCHAR" />
-        <result column="join_date" property="joinDate" jdbcType="DATE" />
-        <result column="status" property="status" jdbcType="VARCHAR" />
-        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, user_name, login_id, password, user_birthday, user_sex, user_mobile, user_email, work_address, user_job,
-        join_date, status, last_login_time, create_time, update_time
+        id, phone, create_time
     </sql>
 
-    <select id="findUserByLoginId" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="findUserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM sys_user
-        WHERE login_id = #{loginId}
+        FROM cus_user_auth
+        WHERE phone = #{phone}
     </select>
 
 </mapper>
