@@ -1,4 +1,4 @@
-package com.xingguang.work.login.entity;
+package com.xingguang.work.auth.entity;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import java.util.Date;
 public class WorkUserAuthEntity {
     private int id;
     private String phone;
-    private Date createTime;
+    private Date createTime = new Date();
 
     public int getId() {
         return id;
@@ -32,5 +32,14 @@ public class WorkUserAuthEntity {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "WorkUserAuthEntity{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", createTime=" + createTime +
+                '}';
     }
 }
