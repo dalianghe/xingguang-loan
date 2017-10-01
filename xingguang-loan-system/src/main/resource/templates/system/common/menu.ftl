@@ -30,27 +30,27 @@
 
 <ul id="menuUl" class="nav nav-list">
 
-    <li class="active">
+    <#--<li class="active">
         <a href="#" url="/router/error/500">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> 控制台 </span>
         </a>
         <b class="arrow"></b>
-    </li>
+    </li>-->
 
     <!-- 菜单列表 -->
-    <li class="" v-for="menu in menus">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-cog"></i>
+    <li class="" v-for="(menu,index) in menus" :class="{'active':!index}" v-on:click="router">
+        <a href="#" :id="menu.id" class="dropdown-toggle" :title="menu.resUrl">
+            <i :class="menu.menuIcon"></i>
             <span class="menu-text"> {{menu.resName}} </span>
-            <b class="arrow fa fa-angle-down"></b>
+            <b class="arrow fa fa-angle-down" v-if="menu.subMenus.length > 1"></b>
         </a>
         <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="" v-for="sub in menu.sysResourceEntityCustomList" v-on:click="router">
-                <a href="#" id="[sub.id]" title="/system/users">
+        <ul class="submenu" v-if="menu.subMenus.length > 1">
+            <li class="" v-for="sub in menu.subMenus" v-on:self="router">
+                <a href="#" :id="sub.id" :title="sub.resUrl">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    {{sub.resName}}{{sub.id}}
+                    {{sub.resName}}
                 </a>
                 <b class="arrow"></b>
             </li>
@@ -89,7 +89,6 @@
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             that.menus = result.data;
-                            bindEvent();
                         }
                     }
                 },
@@ -100,56 +99,12 @@
         },
         methods : {
             router : function(event){
-                console.log(event);
-                console.log(event.target.title);
-                console.log(event.target.id);
+                var id = event.target.id
                 var url = event.target.title;
-                $("#main").load(url);
-                $(this).click(function() {
-                    alert();
-                })
-            }
-        }
-    });
-
-    function bindEvent(){
-        $("#menuUl").children("li").each(function(index){
-            // 是否有二级菜单
-            var hasSubMenu = $(this).children("ul").length==0 ? false : true;
-            if(hasSubMenu){
-                $(this).click(function() {
-                    $(this).siblings().removeClass("active");
-                    $(this).addClass("active");
-                    $(this).children("ul").children("li").each(function(){
-                        $(this).unbind("click");
-                        $(this).click(function(){
-                            $(this).siblings().removeClass("active");
-                            $(this).addClass("active");
-                            var url = $(this).children().attr("url");
-                            $("#main").load(url,function(response,status,xhr){
-                                console.log(response.bizCode);
-                                if(response.match("^\{(.+:.+,*){1,}\}$")){
-                                    var result = $.parseJSON(response);
-                                    if(result.sysCode==0){
-                                        if(result.bizCode==1){
-                                            $("#main").load("/router/error/500");
-                                        }
-                                    }
-                                }
-                            });
-                        })
-                    })
-                    $(this).siblings("li").children("ul").children("li").removeClass("active");
-                })
-            }else{
-                $(this).click(function() {
-                    $(this).siblings("li").removeClass("active");
-                    $(this).siblings("li").children("ul").children("li").removeClass("active");
-                    $(this).addClass("active");
-                    var url = $(this).children().attr("url");
-                    console.log("url="+url);
+                $("#menuUl").find("li").removeClass("active");
+                $("#"+id).parent().addClass("active");
+                if(url != ""){
                     $("#main").load(url,function(response,status,xhr){
-                        console.log(response.bizCode);
                         if(response.match("^\{(.+:.+,*){1,}\}$")){
                             var result = $.parseJSON(response);
                             if(result.sysCode==0){
@@ -159,10 +114,10 @@
                             }
                         }
                     });
-                })
+                }
             }
-        })
-    }
+        }
+    });
 
     $(document).ready(function(){
         // 遍历一级菜单名绑定点击事件

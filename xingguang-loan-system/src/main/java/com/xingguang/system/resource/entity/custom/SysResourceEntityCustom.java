@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class SysResourceEntityCustom extends SysResourceEntity{
 
-    private List<SysResourceEntityCustom> sysResourceEntityCustomList;
+    private List<SysResourceEntityCustom> subMenus;
 
-    public List<SysResourceEntityCustom> getSysResourceEntityCustomList() {
-        return sysResourceEntityCustomList;
+    public List<SysResourceEntityCustom> getSubMenus() {
+        return subMenus;
     }
 
-    public void setSysResourceEntityCustomList(List<SysResourceEntityCustom> sysResourceEntityCustomList) {
-        this.sysResourceEntityCustomList = sysResourceEntityCustomList;
+    public void setSubMenus(List<SysResourceEntityCustom> subMenus) {
+        this.subMenus = subMenus;
     }
 }

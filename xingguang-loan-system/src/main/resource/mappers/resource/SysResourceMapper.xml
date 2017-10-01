@@ -6,7 +6,8 @@
     <result column="res_name" property="resName" jdbcType="VARCHAR" />
     <result column="res_type" property="resType" jdbcType="VARCHAR" />
     <result column="res_url" property="resUrl" jdbcType="VARCHAR" />
-      <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
+    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
+    <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
     <result column="permis_code" property="permisCode" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="sortstring" property="sortstring" jdbcType="INTEGER" />
@@ -17,11 +18,12 @@
   </resultMap>
 
   <resultMap id="BaseResultMapCustom" type="com.xingguang.system.resource.entity.custom.SysResourceEntityCustom" extends="BaseResultMap">
-    <collection property="sysResourceEntityCustomList" javaType="list" ofType="com.xingguang.system.resource.entity.custom.SysResourceEntityCustom">
+    <collection property="subMenus" javaType="list" ofType="com.xingguang.system.resource.entity.custom.SysResourceEntityCustom">
       <id property="id" column="id2"/>
       <result property="resName" column="res_name2"/>
       <result property="resUrl" column="res_url2"/>
-        <result property="menuLevel" column="menu_level2"/>
+        <result property="menuIcon" column="menu_icon2"/>
+      <result property="menuLevel" column="menu_level2"/>
     </collection>
   </resultMap>
 
@@ -31,7 +33,7 @@
   </sql>
 
   <select id="findMenusByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMapCustom" >
-      select t1.id,t1.res_name,t1.res_url,t1.menu_level,t2.id id2,t2.res_name res_name2,t2.res_url res_url2,t2.menu_level menu_level2
+      select t1.id,t1.res_name,t1.res_url,t1.menu_level,t1.menu_icon,t2.id id2,t2.res_name res_name2,t2.res_url res_url2,t2.menu_level menu_level2,t2.menu_icon menu_icon2
       from
       (select c.* from sys_user_role a,sys_role_resource b,sys_resource c
       where a.sys_role_id = b.sys_role_id

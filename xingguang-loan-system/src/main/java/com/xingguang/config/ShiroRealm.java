@@ -27,8 +27,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private ISysUserService sysUserService;
-    @Autowired
-    private ISysResourceService sysResourceService;
 
     /**
      * 身份认证
@@ -49,9 +47,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
             if(sysUserEntity != null){ // 用户存在
                 BeanUtils.copyProperties(sysUserEntity,authUserDomain);
-                // 获取用户权限菜单
-               // List<SysResourceEntity> menus = sysResourceService.findMenusByUserId(sysUserEntity.getId());
-                //authUserDomain.setMenus(menus);
                 ByteSource salt = ByteSource.Util.bytes(loginId);
                 return new SimpleAuthenticationInfo(authUserDomain, sysUserEntity.getPassword(),salt, getName());
             }

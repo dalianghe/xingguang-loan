@@ -17,7 +17,7 @@
                     <ul class="list-unstyled spaced inline bigger-110 margin-15">
                         <li>
                             <i class="icon-hand-right blue"></i>
-                            关闭当前界面重新登陆
+                            点击下方按钮重新登陆
                         </li>
                         <li>
                             <i class="icon-hand-right blue"></i>

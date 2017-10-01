@@ -13,6 +13,8 @@ public class SysResourceEntity {
 
     private String resUrl;
 
+    private String menuIcon;
+
     private Integer menuLevel;
 
     private String permisCode;
@@ -59,6 +61,14 @@ public class SysResourceEntity {
 
     public void setResUrl(String resUrl) {
         this.resUrl = resUrl == null ? null : resUrl.trim();
+    }
+
+    public String getMenuIcon() {
+        return menuIcon;
+    }
+
+    public void setMenuIcon(String menuIcon) {
+        this.menuIcon = menuIcon;
     }
 
     public Integer getMenuLevel() {
