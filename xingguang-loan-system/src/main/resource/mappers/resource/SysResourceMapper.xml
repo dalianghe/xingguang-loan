@@ -6,6 +6,7 @@
     <result column="res_name" property="resName" jdbcType="VARCHAR" />
     <result column="res_type" property="resType" jdbcType="VARCHAR" />
     <result column="res_url" property="resUrl" jdbcType="VARCHAR" />
+      <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
     <result column="permis_code" property="permisCode" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="sortstring" property="sortstring" jdbcType="INTEGER" />
@@ -14,19 +15,40 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <resultMap id="BaseResultMapCustom" type="com.xingguang.system.resource.entity.custom.SysResourceEntityCustom" extends="BaseResultMap">
+    <collection property="sysResourceEntityCustomList" javaType="list" ofType="com.xingguang.system.resource.entity.custom.SysResourceEntityCustom">
+      <id property="id" column="id2"/>
+      <result property="resName" column="res_name2"/>
+      <result property="resUrl" column="res_url2"/>
+        <result property="menuLevel" column="menu_level2"/>
+    </collection>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     c.id, res_name, res_type, res_url, permis_code, parent_id, sortstring, delete_flag,
     delete_time, create_time, update_time
   </sql>
 
-  <select id="findMenusByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM sys_user_role a,sys_role_resource b,sys_resource c
-    WHERE a.sys_role_id = b.sys_role_id
-    AND b.sys_resource_id = c.id
-    AND c.res_type = 'menu'
-    AND sys_user_id = #{userId}
+  <select id="findMenusByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMapCustom" >
+      select t1.id,t1.res_name,t1.res_url,t1.menu_level,t2.id id2,t2.res_name res_name2,t2.res_url res_url2,t2.menu_level menu_level2
+      from
+      (select c.* from sys_user_role a,sys_role_resource b,sys_resource c
+      where a.sys_role_id = b.sys_role_id
+      and b.sys_resource_id = c.id
+      and c.res_type = 'menu'
+      and c.delete_flag = '0'
+      and c.menu_level = 1
+      and a.sys_user_id = #{userId}) t1
+      left join
+      (select c.* from sys_user_role a,sys_role_resource b,sys_resource c
+      where a.sys_role_id = b.sys_role_id
+      and b.sys_resource_id = c.id
+      and c.res_type = 'menu'
+      and c.delete_flag = '0'
+      and c.menu_level = 2
+      and a.sys_user_id = #{userId}) t2 on t1.id = t2.parent_id
+      order by t1.sortstring,t2.sortstring
   </select>
 
 </mapper>

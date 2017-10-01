@@ -1,6 +1,7 @@
 package com.xingguang.system.resource.service.impl;
 
 import com.xingguang.system.resource.entity.SysResourceEntity;
+import com.xingguang.system.resource.entity.custom.SysResourceEntityCustom;
 import com.xingguang.system.resource.mapper.SysResourceMapper;
 import com.xingguang.system.resource.service.ISysResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class SysResourceServiceImpl implements ISysResourceService {
     private SysResourceMapper sysResourceMapper;
 
     @Override
-    public List<SysResourceEntity> findMenusByUserId(int userId) throws Exception {
+    public List<SysResourceEntityCustom> findMenusByUserId(int userId) throws Exception {
         return sysResourceMapper.findMenusByUserId(userId);
     }
 }

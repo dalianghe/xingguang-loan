@@ -13,6 +13,8 @@ public class SysResourceEntity {
 
     private String resUrl;
 
+    private Integer menuLevel;
+
     private String permisCode;
 
     private Long parentId;
@@ -57,6 +59,14 @@ public class SysResourceEntity {
 
     public void setResUrl(String resUrl) {
         this.resUrl = resUrl == null ? null : resUrl.trim();
+    }
+
+    public Integer getMenuLevel() {
+        return menuLevel;
+    }
+
+    public void setMenuLevel(Integer menuLevel) {
+        this.menuLevel = menuLevel;
     }
 
     public String getPermisCode() {

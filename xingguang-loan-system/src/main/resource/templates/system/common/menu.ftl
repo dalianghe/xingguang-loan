@@ -29,8 +29,9 @@
 </div><!-- /.sidebar-shortcuts -->
 
 <ul id="menuUl" class="nav nav-list">
+
     <li class="active">
-        <a href="#" url="/forward/error/500">
+        <a href="#" url="/router/error/500">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> 控制台 </span>
         </a>
@@ -38,144 +39,23 @@
     </li>
 
     <!-- 菜单列表 -->
-    <li class="">
+    <li class="" v-for="menu in menus">
         <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-cog"></i>
-            <span class="menu-text"> 系统设置 </span>
+            <span class="menu-text"> {{menu.resName}} </span>
             <b class="arrow fa fa-angle-down"></b>
         </a>
         <b class="arrow"></b>
         <ul class="submenu">
-            <li class="">
-                <a href="#" url="/system/users">
+            <li class="" v-for="sub in menu.sysResourceEntityCustomList" v-on:click="router">
+                <a href="#" id="[sub.id]" title="/system/users">
                     <i class="menu-icon fa fa-caret-right"></i>
-                    用户管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="#" url="system/role/role.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    角色管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="#" url="system/role/role.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    资源管理
+                    {{sub.resName}}{{sub.id}}
                 </a>
                 <b class="arrow"></b>
             </li>
         </ul>
     </li>
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-user"></i>
-            <span class="menu-text"> 客户管理 </span>
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="">
-                <a href="#" url="system/user/userlist.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    客户查询
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="#" url="system/role/role.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    客户维护
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-key"></i>
-            <span class="menu-text"> 初审管理 </span>
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="">
-                <a href="#" url="system/user/userlist.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    初审审核
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="#" url="system/role/role.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    我的已办
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-gavel"></i>
-            <span class="menu-text"> 终审管理 </span>
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="">
-                <a href="#" url="system/user/userlist.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    终审审核
-                </a>
-                <b class="arrow"></b>
-            </li>
-            <li class="">
-                <a href="#" url="system/role/role.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    我的已办
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-pencil-square-o"></i>
-            <span class="menu-text"> 合同管理 </span>
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="">
-                <a href="#" url="system/user/userlist.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    合同管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-check-square-o"></i>
-            <span class="menu-text"> 财务管理 </span>
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="">
-                <a href="#" url="system/user/userlist.html">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    放款管理
-                </a>
-                <b class="arrow"></b>
-            </li>
-        </ul>
-    </li>
-
 </ul><!-- /.nav-list -->
 
 <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
@@ -185,9 +65,54 @@
 <script src="/assets/js/ace-elements.min.js"></script>
 <script src="/assets/js/ace.min.js"></script>
 
+<script src="/js/lib/vue/vue.min.js"></script>
+
 <script>
-    $(document).ready(function(){
-        // 遍历一级菜单名绑定点击事件
+
+    var app = new Vue({
+        el: '#menuUl',
+        data: {
+            menus: ""
+        },
+        created : function(){
+            var that=this;
+            $.ajax({
+                url: "/resource/menus",
+                type: "GET",
+                contentType: "application/json",
+                data : null,
+                dataType: "json",
+                timeout: 10000,
+                success: function (result) {
+                    console.log(result);
+                    console.log(result.data);
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            that.menus = result.data;
+                            bindEvent();
+                        }
+                    }
+                },
+                fail: function (err) {
+                    console.log(err)
+                }
+            })
+        },
+        methods : {
+            router : function(event){
+                console.log(event);
+                console.log(event.target.title);
+                console.log(event.target.id);
+                var url = event.target.title;
+                $("#main").load(url);
+                $(this).click(function() {
+                    alert();
+                })
+            }
+        }
+    });
+
+    function bindEvent(){
         $("#menuUl").children("li").each(function(index){
             // 是否有二级菜单
             var hasSubMenu = $(this).children("ul").length==0 ? false : true;
@@ -207,7 +132,7 @@
                                     var result = $.parseJSON(response);
                                     if(result.sysCode==0){
                                         if(result.bizCode==1){
-                                            $("#main").load("/common/500");
+                                            $("#main").load("/router/error/500");
                                         }
                                     }
                                 }
@@ -229,7 +154,60 @@
                             var result = $.parseJSON(response);
                             if(result.sysCode==0){
                                 if(result.bizCode==1){
-                                    $("#main").load("/common/500");
+                                    $("#main").load("/router/error/500");
+                                }
+                            }
+                        }
+                    });
+                })
+            }
+        })
+    }
+
+    $(document).ready(function(){
+        // 遍历一级菜单名绑定点击事件
+        $("#menuUl").children("li").each(function(index){
+            // 是否有二级菜单
+            var hasSubMenu = $(this).children("ul").length==0 ? false : true;
+            if(hasSubMenu){
+                $(this).click(function() {
+                    $(this).siblings().removeClass("active");
+                    $(this).addClass("active");
+                    $(this).children("ul").children("li").each(function(){
+                        $(this).unbind("click");
+                        $(this).click(function(){
+                            $(this).siblings().removeClass("active");
+                            $(this).addClass("active");
+                            var url = $(this).children().attr("url");
+                            $("#main").load(url,function(response,status,xhr){
+                                console.log(response.bizCode);
+                                if(response.match("^\{(.+:.+,*){1,}\}$")){
+                                    var result = $.parseJSON(response);
+                                    if(result.sysCode==0){
+                                        if(result.bizCode==1){
+                                            $("#main").load("/router/error/500");
+                                        }
+                                    }
+                                }
+                            });
+                        })
+                    })
+                    $(this).siblings("li").children("ul").children("li").removeClass("active");
+                })
+            }else{
+                $(this).click(function() {
+                    $(this).siblings("li").removeClass("active");
+                    $(this).siblings("li").children("ul").children("li").removeClass("active");
+                    $(this).addClass("active");
+                    var url = $(this).children().attr("url");
+                    console.log("url="+url);
+                    $("#main").load(url,function(response,status,xhr){
+                        console.log(response.bizCode);
+                        if(response.match("^\{(.+:.+,*){1,}\}$")){
+                            var result = $.parseJSON(response);
+                            if(result.sysCode==0){
+                                if(result.bizCode==1){
+                                    $("#main").load("/router/error/500");
                                 }
                             }
                         }

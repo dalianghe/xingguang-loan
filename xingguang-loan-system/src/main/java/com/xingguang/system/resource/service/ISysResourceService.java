@@ -1,6 +1,7 @@
 package com.xingguang.system.resource.service;
 
 import com.xingguang.system.resource.entity.SysResourceEntity;
+import com.xingguang.system.resource.entity.custom.SysResourceEntityCustom;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface ISysResourceService {
 
-    List<SysResourceEntity> findMenusByUserId(int userId) throws Exception;
+    List<SysResourceEntityCustom> findMenusByUserId(int userId) throws Exception;
 }
