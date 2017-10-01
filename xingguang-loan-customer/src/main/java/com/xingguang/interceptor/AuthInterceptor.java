@@ -21,23 +21,17 @@ public class AuthInterceptor implements HandlerInterceptor{
         String token = httpServletRequest.getHeader("authorization");
         ResultBean<?> resultBean = null;
         if((token == null) || (token.length() <=7)){
-            /*resultBean = new ResultBean<>("token令牌必须以存放在head的authorization中传送");
-            resultBean.setBizCode(ResultBean.FALL);
-            writeToClient(httpServletResponse,resultBean);*/
             throw new CustomException("token令牌必须以存放在head的authorization中传送");
-            //return true;
         }else{
             String headStr = token.substring(0, 6).toLowerCase();
             if (headStr.compareTo("bearer") != 0){
                 throw new CustomException("token令牌必须以bearer 开头");
-                //return true;
             }else{
                 token = token.substring(7, token.length());
                 if(null == JwtUtils.parseJWT(token)){
                     throw new CustomException("token令牌无效或已过期");
-                    //return true;
                 }else{
-                    return false;
+                    return true;
                 }
             }
         }
@@ -53,22 +47,4 @@ public class AuthInterceptor implements HandlerInterceptor{
 
     }
 
-    private void writeToClient(HttpServletResponse response,ResultBean<?> resultBean){
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        resultBean.setBizCode(ResultBean.FALL);
-        try {
-            String json = JSON.toJSONString(resultBean);
-            out = response.getWriter();
-            out.print(json);
-            out.flush();
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally{
-            if (out != null) {
-                out.close();
-            }
-        }
-    }
 }
