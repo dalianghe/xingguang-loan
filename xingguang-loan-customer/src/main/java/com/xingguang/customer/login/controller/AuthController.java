@@ -4,6 +4,7 @@ import com.xingguang.beans.ResultBean;
 import com.xingguang.customer.login.entity.CusUserAuthEntity;
 import com.xingguang.customer.login.params.AuthBean;
 import com.xingguang.customer.login.service.ICusUserAuthService;
+import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,18 @@ public class AuthController {
     public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception{
         ResultBean<?> resultBean = null;
 
-        CusUserAuthEntity cusUserAuthEntity = cusUserAuthService.findUserByPhone("13611201362");
+        CusUserAuthEntity cusUserAuthEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
+
+        if(cusUserAuthEntity == null){
+            throw new CustomException("用户不存在");
+        }
+
+        String clientSmsCode = authBean.getSmsCode();
+        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
+
+        if(!clientSmsCode.equals(serverSmsCode)){
+            throw new CustomException("验证码错误");
+        }
 
         String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com",authBean.getPhone(),10000);
 
