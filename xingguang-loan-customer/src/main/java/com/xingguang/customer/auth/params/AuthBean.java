@@ -1,4 +1,4 @@
-package com.xingguang.customer.login.params;
+package com.xingguang.customer.auth.params;
 
 /**
  * Created by admin on 2017/9/30.

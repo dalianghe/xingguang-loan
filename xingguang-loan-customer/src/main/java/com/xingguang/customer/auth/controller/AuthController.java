@@ -1,9 +1,9 @@
-package com.xingguang.customer.login.controller;
+package com.xingguang.customer.auth.controller;
 
 import com.xingguang.beans.ResultBean;
-import com.xingguang.customer.login.entity.CusUserAuthEntity;
-import com.xingguang.customer.login.params.AuthBean;
-import com.xingguang.customer.login.service.ICusUserAuthService;
+import com.xingguang.customer.auth.entity.CusUserAuthEntity;
+import com.xingguang.customer.auth.params.AuthBean;
+import com.xingguang.customer.auth.service.ICusUserAuthService;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +24,45 @@ public class AuthController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception{
+
         ResultBean<?> resultBean = null;
-
+        // 查询用户
         CusUserAuthEntity cusUserAuthEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
-
+        // 登陆账户是否存在
         if(cusUserAuthEntity == null){
             throw new CustomException("用户不存在");
         }
-
+        // 校验验证码
         String clientSmsCode = authBean.getSmsCode();
         String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
-
         if(!clientSmsCode.equals(serverSmsCode)){
             throw new CustomException("验证码错误");
         }
-
+        // 返回token串
         String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com",authBean.getPhone(),10000);
-
+        // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
+        return resultBean;
+    }
 
+    @RequestMapping(value = "/register" , method = RequestMethod.POST)
+    public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception{
+        ResultBean<?> resultBean = null;
+        // 验证短信验证码是否正确
+        String clientSmsCode = authBean.getSmsCode();
+        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
+        if(!clientSmsCode.equals(serverSmsCode)){
+            throw new CustomException("验证码错误");
+        }
+        // 检查手机号是否注册
+        CusUserAuthEntity oldEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
+        if(oldEntity!=null){
+            oldEntity = null;
+            throw new CustomException("用户已注册");
+        }
+        //  调用注册服务
+        CusUserAuthEntity newEntity = cusUserAuthService.registerCusUser(authBean);
+        resultBean = new ResultBean<>(newEntity);
         return resultBean;
     }
 }

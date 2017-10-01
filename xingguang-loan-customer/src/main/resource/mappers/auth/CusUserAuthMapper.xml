@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xingguang.customer.login.mapper.CusUserAuthMapper" >
-    <resultMap id="BaseResultMap" type="com.xingguang.customer.login.entity.CusUserAuthEntity" >
+<mapper namespace="com.xingguang.customer.auth.mapper.CusUserAuthMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.customer.auth.entity.CusUserAuthEntity" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="phone" property="phone" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -11,11 +11,16 @@
         id, phone, create_time
     </sql>
 
-    <select id="findUserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="findCusUserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
         FROM cus_user_auth
         WHERE phone = #{phone}
     </select>
+
+    <insert id="insertCusUserAuth" parameterType="com.xingguang.customer.auth.entity.CusUserAuthEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cus_user_auth (phone,create_time)
+        VALUES (#{phone,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
 
 </mapper>

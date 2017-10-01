@@ -12,7 +12,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class AuthConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**").excludePathPatterns("/auth/login");
+        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/auth/login").excludePathPatterns("/auth/register");
         super.addInterceptors(registry);
     }
 }
