@@ -9,7 +9,7 @@
     <a href="index.html" class="navbar-brand">
         <small>
             <i class="fa fa-leaf"></i>
-            星光钱包--系统管理平台
+            星光钱包--运营管理平台
         </small>
     </a>
 </div>
