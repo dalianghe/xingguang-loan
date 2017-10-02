@@ -6,20 +6,47 @@
         <result column="work_user_id" property="workUserId" jdbcType="BIGINT" />
         <result column="lng" property="lng" jdbcType="VARCHAR" />
         <result column="lat" property="lat" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="status" property="status" jdbcType="INTEGER" />
-        <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, work_user_id, lng, lat, create_time, status, use_time
+        id, work_user_id, lng, lat, status, create_time, update_time
     </sql>
 
-    <!-- 业务员插入信息 -->
+    <!-- 查询业务员二维码 -->
+    <select id="findQrCodeByWorkUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM work_qr_code
+        WHERE work_user_id = #{workUserId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 二维码插入信息 -->
     <insert id="insertWorkQrCode" parameterType="com.xingguang.work.qrcode.entity.custom.WorkQrCodeEntityCustom" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO work_qr_code (work_user_id,lng,lat,create_time)
-        VALUES (#{workUserId,jdbcType=BIGINT},#{lng,jdbcType=VARCHAR},#{lat,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+        INSERT INTO work_qr_code (work_user_id,lng,lat,create_time,update_time)
+        VALUES (#{workUserId,jdbcType=BIGINT},#{lng,jdbcType=VARCHAR},#{lat,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP})
     </insert>
 
+    <!-- 更新二维码数据 -->
+    <update id="updateWorkQrCode" parameterType="com.xingguang.work.qrcode.entity.custom.WorkQrCodeEntityCustom">
+        UPDATE work_qr_code
+        <set>
+            <if test="lng != null" >
+                lng = #{lng,jdbcType=VARCHAR},
+            </if>
+            <if test="lat != null" >
+                lat = #{lat,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE work_user_id = #{workUserId,jdbcType=BIGINT}
+    </update>
 
 </mapper>

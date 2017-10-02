@@ -1,6 +1,7 @@
 package com.xingguang.qrcode;
 
 import com.xingguang.work.qrcode.entity.WorkQrCodeEntity;
+import com.xingguang.work.qrcode.entity.custom.WorkQrCodeEntityCustom;
 import com.xingguang.work.qrcode.params.QrCodeBean;
 import com.xingguang.work.qrcode.service.IWorkQrCodeService;
 import org.junit.Test;
@@ -20,11 +21,17 @@ public class QrCodeTest {
     private IWorkQrCodeService workQrCodeService;
 
     @Test
+    public void testFindQrCodeByWorkUserId() throws Exception{
+        WorkQrCodeEntityCustom entityCustom = workQrCodeService.findQrCodeByWorkUserId(8L);
+        System.out.println(entityCustom);
+    }
+
+    @Test
     public void testCreateWorkQrCode() throws Exception{
         QrCodeBean bean = new QrCodeBean();
         bean.setWorkUserId(8L);
-        bean.setLng("");
-        bean.setLat("");
+        bean.setLng("3000");
+        bean.setLat("3000");
         WorkQrCodeEntity entity = workQrCodeService.createWorkQrCode(bean);
         System.out.println(entity.toString());
     }

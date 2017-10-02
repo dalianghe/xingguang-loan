@@ -13,11 +13,10 @@ public class WorkQrCodeEntity implements Serializable {
     private Long workUserId; // 业务员ID
     private String lng; // 经度
     private String lat; // 纬度
-    private Date createTime; // 生成时间
     @JSONField(serialize = false)
     private Integer status; // 状态(1:未使用, 2:已使用)
-    @JSONField(serialize = false)
-    private Date useTime; // 使用时间
+    private Date createTime; // 生成时间
+    private Date updateTime; // 生成时间
 
     public Long getId() {
         return id;
@@ -67,12 +66,12 @@ public class WorkQrCodeEntity implements Serializable {
         this.status = status;
     }
 
-    public Date getUseTime() {
-        return useTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUseTime(Date useTime) {
-        this.useTime = useTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -84,7 +83,6 @@ public class WorkQrCodeEntity implements Serializable {
                 ", lat='" + lat + '\'' +
                 ", createTime=" + createTime +
                 ", status=" + status +
-                ", useTime=" + useTime +
                 '}';
     }
 }
