@@ -19,7 +19,7 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     private CusUserInfoMapper cusUserInfoMapper;
 
     @Override
-    public List<CusUserInfoEntity> findCusListByWorkUserId(int workUserId) throws Exception {
+    public List<CusUserInfoEntity> findCusListByWorkUserId(Long workUserId) throws Exception {
         return cusUserInfoMapper.findCusListByWorkUserId(workUserId);
     }
 }

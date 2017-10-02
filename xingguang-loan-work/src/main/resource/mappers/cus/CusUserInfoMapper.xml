@@ -20,7 +20,7 @@
     </sql>
 
     <!-- 查询所属业务员的客户 -->
-    <select id="findCusListByWorkUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findCusListByWorkUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT a.id, a.phone, a.name, a.sex, a.income, a.education, a.occupation, b.cus_addr,
         b.status, if(b.status='1','待授信',if(b.status='2','授信通过','授信不通过')) status_name, b.create_time
         FROM cus_user_info a

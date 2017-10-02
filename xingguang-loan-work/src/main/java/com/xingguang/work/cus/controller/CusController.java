@@ -23,7 +23,7 @@ public class CusController {
     @RequestMapping(value = "/customers" , method = RequestMethod.POST)
     public ResultBean<?> customers(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
-        int workUserId = 8;
+        Long workUserId = 8L;
         List<CusUserInfoEntity> cusList = cusUserInfoService.findCusListByWorkUserId(workUserId);
         resultBean = new ResultBean<>(cusList);
         return resultBean;

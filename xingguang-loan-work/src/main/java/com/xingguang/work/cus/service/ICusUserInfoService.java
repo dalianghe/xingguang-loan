@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface ICusUserInfoService {
 
-    public List<CusUserInfoEntity> findCusListByWorkUserId(int workUserId) throws Exception;
+    public List<CusUserInfoEntity> findCusListByWorkUserId(Long workUserId) throws Exception;
 
 }

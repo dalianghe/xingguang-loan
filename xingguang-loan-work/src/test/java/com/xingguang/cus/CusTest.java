@@ -22,7 +22,7 @@ public class CusTest {
 
     @Test
     public void testFindCusListByWorkUserId() throws Exception{
-        List<CusUserInfoEntity> list = cusUserInfoService.findCusListByWorkUserId(8);
+        List<CusUserInfoEntity> list = cusUserInfoService.findCusListByWorkUserId(8L);
         System.out.println(list);
     }
 }
