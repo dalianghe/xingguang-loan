@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.work.qrcode.mapper.WorkQrCodeMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.work.qrcode.entity.custom.WorkQrCodeEntityCustom" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="work_user_id" property="workUserId" jdbcType="BIGINT" />
+        <result column="lng" property="lng" jdbcType="VARCHAR" />
+        <result column="lat" property="lat" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="use_time" property="useTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, work_user_id, lng, lat, create_time, status, use_time
+    </sql>
+
+    <!-- 业务员插入信息 -->
+    <insert id="insertWorkQrCode" parameterType="com.xingguang.work.qrcode.entity.custom.WorkQrCodeEntityCustom" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO work_qr_code (work_user_id,lng,lat,create_time)
+        VALUES (#{workUserId,jdbcType=BIGINT},#{lng,jdbcType=VARCHAR},#{lat,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+</mapper>

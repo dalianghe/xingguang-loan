@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.work.cus.mapper.CusUserInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.work.cus.entity.CusUserInfoEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="income" property="income" jdbcType="DECIMAL" />
+        <result column="education" property="education" jdbcType="BIGINT" />
+        <result column="occupation" property="occupation" jdbcType="BIGINT" />
+        <result column="cus_addr" property="cusAddr" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, phone, name, sex, income, education, occupation, cus_addr, status, status_name, create_time
+    </sql>
+
+    <!-- 查询所属业务员的客户 -->
+    <select id="findCusListByWorkUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT a.id, a.phone, a.name, a.sex, a.income, a.education, a.occupation, b.cus_addr,
+        b.status, if(b.status='1','待授信',if(b.status='2','授信通过','授信不通过')) status_name, b.create_time
+        FROM cus_user_info a
+        INNER JOIN credit_apply b on a.id = b.cus_user_id
+        WHERE a.work_user_id = #{workUserId}
+    </select>
+
+</mapper>
