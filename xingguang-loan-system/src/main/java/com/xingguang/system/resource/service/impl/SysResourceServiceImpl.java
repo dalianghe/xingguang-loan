@@ -19,7 +19,7 @@ public class SysResourceServiceImpl implements ISysResourceService {
     private SysResourceMapper sysResourceMapper;
 
     @Override
-    public List<SysResourceEntityCustom> findMenusByUserId(int userId) throws Exception {
+    public List<SysResourceEntityCustom> findMenusByUserId(Long userId) throws Exception {
         return sysResourceMapper.findMenusByUserId(userId);
     }
 }

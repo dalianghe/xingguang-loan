@@ -32,7 +32,7 @@
     delete_time, create_time, update_time
   </sql>
 
-  <select id="findMenusByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMapCustom" >
+  <select id="findMenusByUserId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
       select t1.id,t1.res_name,t1.res_url,t1.menu_level,t1.menu_icon,t2.id id2,t2.res_name res_name2,t2.res_url res_url2,t2.menu_level menu_level2,t2.menu_icon menu_icon2
       from
       (select c.* from sys_user_role a,sys_role_resource b,sys_resource c

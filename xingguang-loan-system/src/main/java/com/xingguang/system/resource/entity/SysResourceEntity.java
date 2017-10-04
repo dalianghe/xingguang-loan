@@ -1,5 +1,7 @@
 package com.xingguang.system.resource.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.Date;
 /**
  * Created by admin on 2017/9/30.
@@ -27,8 +29,10 @@ public class SysResourceEntity {
 
     private Date deleteTime;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     public Long getId() {

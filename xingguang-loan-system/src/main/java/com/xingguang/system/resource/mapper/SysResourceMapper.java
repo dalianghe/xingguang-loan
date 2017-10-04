@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface SysResourceMapper {
 
-    List<SysResourceEntityCustom> findMenusByUserId(int userId) throws Exception;
+    List<SysResourceEntityCustom> findMenusByUserId(Long userId) throws Exception;
 
 }

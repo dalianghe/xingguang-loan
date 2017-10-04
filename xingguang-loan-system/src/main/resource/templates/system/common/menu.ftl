@@ -29,15 +29,6 @@
 </div><!-- /.sidebar-shortcuts -->
 
 <ul id="menuUl" class="nav nav-list">
-
-    <#--<li class="active">
-        <a href="#" url="/router/error/500">
-            <i class="menu-icon fa fa-tachometer"></i>
-            <span class="menu-text"> 控制台 </span>
-        </a>
-        <b class="arrow"></b>
-    </li>-->
-
     <!-- 菜单列表 -->
     <li class="" v-for="(menu,index) in menus" :class="{'active':!index}" v-on:click="router">
         <a href="#" :id="menu.id" class="dropdown-toggle" :title="menu.resUrl">
@@ -62,12 +53,11 @@
     <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
 </div>
 
-<script src="/assets/js/ace-elements.min.js"></script>
-<script src="/assets/js/ace.min.js"></script>
-
 <script src="/js/lib/vue/vue.min.js"></script>
 
 <script>
+    // 定义参数json串
+    var loginJson = {"userId":"1"};
 
     var app = new Vue({
         el: '#menuUl',
@@ -80,7 +70,7 @@
                 url: "/resource/menus",
                 type: "GET",
                 contentType: "application/json",
-                data : null,
+                data : {jsonData:JSON.stringify(loginJson)},
                 dataType: "json",
                 timeout: 10000,
                 success: function (result) {
@@ -102,6 +92,7 @@
                 var id = event.target.id
                 var url = event.target.title;
                 $("#menuUl").find("li").removeClass("active");
+                $("#"+id).parent().parent().parent().addClass("open active");
                 $("#"+id).parent().addClass("active");
                 if(url != ""){
                     $("#main").load(url,function(response,status,xhr){

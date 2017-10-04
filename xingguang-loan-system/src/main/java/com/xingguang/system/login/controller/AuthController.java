@@ -25,7 +25,8 @@ public class AuthController extends BaseController {
         ResultBean<?> resultBean = null;
         String loginId = authBean.getLoginId();
         String password = authBean.getPassword();
-        UsernamePasswordToken token = new UsernamePasswordToken(loginId , password);
+        boolean rememberMe = authBean.isRememberMe().equals("0") ? false : true;
+        UsernamePasswordToken token = new UsernamePasswordToken(loginId , password , rememberMe);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);

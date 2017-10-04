@@ -16,6 +16,8 @@ public class AuthBean implements Serializable {
 
     private String verificationCode;
 
+    private String rememberMe; // 0:不记住；1：记住
+
     public String getLoginId() {
         return loginId;
     }
@@ -38,5 +40,13 @@ public class AuthBean implements Serializable {
 
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
+    }
+
+    public String isRememberMe() {
+        return rememberMe;
+    }
+
+    public void setRememberMe(String rememberMe) {
+        this.rememberMe = rememberMe;
     }
 }

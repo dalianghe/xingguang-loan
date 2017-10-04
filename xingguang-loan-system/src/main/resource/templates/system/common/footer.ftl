@@ -1,8 +1,8 @@
     <div class="footer-inner">
         <div class="footer-content">
             <span class="bigger-120">
-                <span class="blue bolder">Ace</span>
-                Application &copy; 2013-2014
+                <span class="blue bolder">睿银伟业</span>
+                星光钱包 &copy; 2017-2018
             </span>
             &nbsp; &nbsp;
             <span class="action-buttons">

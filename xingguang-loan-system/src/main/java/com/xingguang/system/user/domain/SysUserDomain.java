@@ -1,4 +1,4 @@
-package com.xingguang.system.user.entity;
+package com.xingguang.system.user.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -6,33 +6,24 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description 用户实体
- * @Author hedaliang
- * @Date 2017/9/21  10:09
- * @Version v1.0.0
+ * Created by admin on 2017/10/4.
  */
-public class SysUserEntity implements Serializable {
+public class SysUserDomain implements Serializable{
 
     private Long id; //
     private String userName; // 用户姓名
     private String loginId; // 登录账户
     private String password; // 登录密码
-    @JSONField(format="yyyy-MM-dd")
     private Date userBirthday; // 出生日期
     private String userSex; // 性别
     private String userMobile; // 手机号
     private String userEmail; // 电子邮箱
     private String workAddress; // 工作地点
     private String userJob; // 职务
-    @JSONField(format="yyyy-MM-dd")
     private Date joinDate; // 入职日期
     private String status; // 账户状态 0:正常；1：锁定；2：停用
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime; // 最后登录时间
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    private Date createTime; // 创建时间
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
-    private Date updateTime; // 更新时间
 
     public Long getId() {
         return id;
@@ -40,6 +31,14 @@ public class SysUserEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getLoginId() {
@@ -56,14 +55,6 @@ public class SysUserEntity implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public Date getUserBirthday() {
@@ -136,21 +127,5 @@ public class SysUserEntity implements Serializable {
 
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }

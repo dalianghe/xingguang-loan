@@ -84,7 +84,7 @@
 
                                                     <div class="clearfix">
                                                         <label class="inline">
-                                                            <input type="checkbox" class="ace" />
+                                                            <input id="rememberMeCheck" name="rememberMeCheck" type="checkbox" class="ace" />
                                                             <span class="lbl"> 记住我</span>
                                                         </label>
 
@@ -96,6 +96,7 @@
 
                                                     <div class="space-4"></div>
                                                 </fieldset>
+                                                <input id="rememberMe" name="rememberMe" type="hidden" class="ace" value="0" />
                                             </form>
 
                                             <div class="social-or-login center">
@@ -305,6 +306,9 @@
                     if($("#password").val()==""){
                         layer.tips("用户密码不能为空",$("#password"),{tips:1});
                         return;
+                    }
+                    if($("#rememberMeCheck").is(":checked")){
+                        $("#rememberMe").val(1);
                     }
                     var index = layer.load(2);
                     $.ajax({

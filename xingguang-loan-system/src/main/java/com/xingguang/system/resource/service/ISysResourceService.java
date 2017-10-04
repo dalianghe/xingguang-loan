@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface ISysResourceService {
 
-    List<SysResourceEntityCustom> findMenusByUserId(int userId) throws Exception;
+    List<SysResourceEntityCustom> findMenusByUserId(Long userId) throws Exception;
 }

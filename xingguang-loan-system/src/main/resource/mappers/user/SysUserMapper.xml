@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xingguang.system.user.mapper.SysUserMapper" >
-    <resultMap id="BaseResultMap" type="com.xingguang.system.user.entity.SysUserEntity" >
+    <resultMap id="BaseResultMap" type="com.xingguang.system.user.entity.custom.SysUserEntityCustom" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_name" property="userName" jdbcType="VARCHAR" />
         <result column="login_id" property="loginId" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="user_birthday" property="userBirthday" jdbcType="DATE" />
         <result column="user_sex" property="userSex" jdbcType="VARCHAR" />
+        <result column="user_sex_name" property="userSexName" jdbcType="VARCHAR" />
         <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
         <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
         <result column="work_address" property="workAddress" jdbcType="VARCHAR" />
         <result column="user_job" property="userJob" jdbcType="VARCHAR" />
         <result column="join_date" property="joinDate" jdbcType="DATE" />
         <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
         <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -24,12 +26,71 @@
         join_date, status, last_login_time, create_time, update_time
     </sql>
 
-    <select id="findUserByLoginId" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="findSysUserById" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+            SELECT
+            <include refid="Base_Column_List" />
+            ,if(user_sex='1','男','女') user_sex_name,if(status='0','正常',if(status='1','锁定','停用')) status_name
+            FROM sys_user
+            WHERE id = #{userId}
+        </select>
+
+    <select id="findSysUserByLoginId" parameterType="java.lang.String" resultMap="BaseResultMap" >
         SELECT
         <include refid="Base_Column_List" />
         FROM sys_user
         WHERE login_id = #{loginId}
         AND status = '0'
     </select>
+
+    <select id="findSysUserList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        ,if(user_sex='1','男','女') user_sex_name,if(status='0','正常',if(status='1','锁定','停用')) status_name
+        FROM sys_user
+        ORDER BY create_time
+    </select>
+
+    <update id="updateSysUserById" parameterType="com.xingguang.system.user.entity.custom.SysUserEntityCustom">
+        UPDATE sys_user
+        <set>
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null" >
+                user_birthday = #{userBirthday,jdbcType=DATE},
+            </if>
+            <if test="userSex != null" >
+                user_sex = #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null" >
+                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="workAddress != null" >
+                work_address = #{workAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="userJob != null" >
+                user_job = #{userJob,jdbcType=VARCHAR},
+            </if>
+             <if test="joinDate != null" >
+                join_date = #{joinDate,jdbcType=DATE},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null" >
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
 
 </mapper>

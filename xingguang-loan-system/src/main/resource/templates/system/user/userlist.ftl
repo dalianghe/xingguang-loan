@@ -15,7 +15,7 @@
     <div class="nav-search" id="nav-search">
         <form class="form-search">
 				<span class="input-icon">
-					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<input type="text" placeholder="百度搜索 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
 					<i class="ace-icon fa fa-search nav-search-icon"></i>
 				</span>
         </form>
@@ -23,7 +23,7 @@
 </div>
 
 <div class="page-content">
-    <div class="ace-settings-container" id="ace-settings-container">
+    <#--<div class="ace-settings-container" id="ace-settings-container">
         <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
             <i class="ace-icon fa fa-cog bigger-130"></i>
         </div>
@@ -69,7 +69,7 @@
                         <b>.container</b>
                     </label>
                 </div>
-            </div><!-- /.pull-left -->
+            </div><!-- /.pull-left &ndash;&gt;
 
             <div class="pull-left width-50">
                 <div class="ace-settings-item">
@@ -86,9 +86,9 @@
                     <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
                     <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
                 </div>
-            </div><!-- /.pull-left -->
-        </div><!-- /.ace-settings-box -->
-    </div><!-- /.ace-settings-container -->
+            </div><!-- /.pull-left &ndash;&gt;
+        </div><!-- /.ace-settings-box &ndash;&gt;
+    </div>--><!-- /.ace-settings-container -->
 
     <div class="page-header">
         <h1>
@@ -109,11 +109,12 @@
                         <tr>
                             <th class="center">序号</th>
                             <th>用户姓名</th>
+                            <th>用户性别</th>
                             <th>用户账户</th>
                             <th class="hidden-480">手机号</th>
                             <th>
                                 <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                更新时间
+                                创建时间
                             </th>
                             <th class="hidden-480">状态</th>
                             <th class="detail-col">详情</th>
@@ -122,206 +123,77 @@
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td class="center">
-                                1
-                            </td>
-                            <td>
-                                猪八戒
-                            </td>
-                            <td>zhubajie</td>
-                            <td class="hidden-480">13901234567</td>
-                            <td>2017-06-20 13:34:21</td>
+                            <tr v-for="(user,index) in users"><!-- v-on:click="show_detail(user.id)"-->
+                                <td class="center">
+                                    {{index+1}}
+                                </td>
+                                <td>{{user.userName}}</td>
+                                <td>{{user.userSexName}}</td>
+                                <td>{{user.loginId}}</td>
+                                <td class="hidden-480">{{user.userMobile}}</td>
+                                <td>{{user.createTime}}</td>
 
-                            <td class="hidden-480">
-                                <span class="label label-sm label-success">正常</span>
-                            </td>
+                                <td class="hidden-480">
+                                    <span class="label label-sm label-success">{{user.statusName}}</span>
+                                </td>
 
-                            <td class="center">
-                                <div class="action-buttons">
-                                    <a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-                                        <i class="ace-icon fa fa-angle-double-down"></i>
-                                        <span class="sr-only">Details</span>
-                                    </a>
-                                </div>
-                            </td>
+                                <td class="center">
+                                    <div class="action-buttons">
+                                        <a href="#" class="green bigger-140 show-details-btn" title="Show Details"  @click="show_detail(user.id)">
+                                            <i class="ace-icon fa fa-angle-double-down"></i>
+                                            <span class="sr-only">Details</span>
+                                        </a>
+                                    </div>
+                                </td>
 
-                            <td>
-                                <div class="hidden-sm hidden-xs btn-group">
-                                    <button class="btn btn-xs btn-success">
-                                        <i class="ace-icon fa fa-check bigger-120"></i>
-                                    </button>
-
-                                    <button class="btn btn-xs btn-info">
-                                        <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                    </button>
-
-                                    <button class="btn btn-xs btn-danger">
-                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                    </button>
-
-                                    <button class="btn btn-xs btn-warning">
-                                        <i class="ace-icon fa fa-flag bigger-120"></i>
-                                    </button>
-                                </div>
-
-                                <div class="hidden-md hidden-lg">
-                                    <div class="inline pos-rel">
-                                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-success">
+                                            <i class="ace-icon fa fa-check bigger-120"></i>
                                         </button>
-
-                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                            <li>
-                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-															<span class="blue">
-																<i class="ace-icon fa fa-search-plus bigger-120"></i>
-															</span>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-															<span class="green">
-																<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-															</span>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-															<span class="red">
-																<i class="ace-icon fa fa-trash-o bigger-120"></i>
-															</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <button class="btn btn-xs btn-info" @click="modify_user(user.id)">
+                                            <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                        <#--<button class="btn btn-xs btn-warning">
+                                            <i class="ace-icon fa fa-flag bigger-120"></i>
+                                        </button>-->
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
 
-                        <tr class="detail-row">
-                            <td colspan="8">
-                                <div class="table-detail">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-2">
-                                            <div class="text-center">
-                                                <img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owner's Avatar" src="/assets/images/avatars/profile-pic.jpg" />
-                                                <br />
-                                                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
-                                                    <div class="inline position-relative">
-                                                        <a class="user-title-label" href="#">
-                                                            <i class="ace-icon fa fa-circle light-green"></i>
-                                                            <span class="white">猪八戒</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xs-12 col-sm-7">
-                                            <div class="space visible-xs"></div>
-
-                                            <div class="profile-user-info profile-user-info-striped">
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 姓名 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>猪八戒</span>
-                                                    </div>
-                                                    <div class="profile-info-name"> 用户账户 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>zhubajie</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 出生日期 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>1990-01-01</span>
-                                                    </div>
-                                                    <div class="profile-info-name"> 性别 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>男</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 手机号 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>13901234567</span>
-                                                    </div>
-                                                    <div class="profile-info-name"> 办公地址 </div>
-                                                    <div class="profile-info-value">
-                                                        <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                                        <span>北京市大兴区亦庄经济开发区</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 入职日期  </div>
-                                                    <div class="profile-info-value">
-                                                        <span>2010-06-20</span>
-                                                    </div>
-                                                    <div class="profile-info-name"> 职务 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>销售总监</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 邮箱地址 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>hedaliangvip@gmail.com</span>
-                                                    </div>
-                                                    <div class="profile-info-name"> 账户状态 </div>
-                                                    <div class="profile-info-value">
-                                                        <span class="label label-sm label-success">正常</span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 创建时间 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>2010-06-20 20:20:20</span>
-                                                    </div>
-                                                    <div class="profile-info-name"> 更新时间 </div>
-                                                    <div class="profile-info-value">
-                                                        <span>2010-06-20 20:20:20</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-3">
-                                            <div class="space visible-xs"></div>
-                                            <h4 class="header blue lighter less-margin">修改密码</h4>
-                                            <div class="space-6"></div>
-                                            <form>
-                                                <fieldset>
-                                                    <input type="password" id="form-field-2" placeholder="请输入密码" class="col-xs-10 col-sm-12" />
-                                                </fieldset>
-                                                </br>
-                                                <fieldset>
-                                                    <input type="password" id="form-field-2" placeholder="请再次输入密码" class="col-xs-10 col-sm-12" />
-                                                </fieldset>
-                                                <div class="hr hr-dotted"></div>
-                                                <div class="clearfix">
-                                                    <label class="pull-left">
-                                                        <input type="checkbox" class="ace" />
-                                                        <span class="lbl"> 发送邮件通知</span>
-                                                    </label>
-
-                                                    <button class="pull-right btn btn-sm btn-primary btn-white btn-round" type="button">
-                                                        提交
-                                                        <i class="ace-icon fa fa-arrow-right icon-on-right bigger-110"></i>
-                                                    </button>
-                                                </div>
-                                            </form>
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                                                <span class="blue">
+                                                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                                </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" @click="modify_user(user.id)">
+                                                                <span class="green">
+                                                                    <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+                                                                </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div><!-- /.span -->
@@ -332,23 +204,78 @@
 </div><!-- /.page-content -->
 </div>
 
-<!-- page specific plugin scripts -->
-<script src="/assets/js/jquery.dataTables.min.js"></script>
-<script src="/assets/js/jquery.dataTables.bootstrap.min.js"></script>
-<script src="/assets/js/dataTables.buttons.min.js"></script>
-
-<!-- ace scripts -->
-<script src="/assets/js/ace.min.js"></script>
-<script src="/js/lib/layer/layer.js"></script>
+<script src="/js/lib/vue/vue.min.js"></script>
+<script src="/js/lib/vue/vue-resource.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    jQuery(function($) {
-        /***************/
-        $('.show-details-btn').on('click', function(e) {
-            e.preventDefault();
-            $(this).closest('tr').next().toggleClass('open');
-            $(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
-        });
-        /***************/
-    })
+    var app = new Vue({
+        el: '#simple-table',
+        data: {
+            users: ""
+        },
+        created : function(){
+            var idx = layer.load(2);
+            var that=this;
+            that.$http.get("/system/users").then(function(response){
+                // 响应成功回调
+                var result = response.data;
+                if(result.sysCode==0){
+                    if(result.bizCode==0){
+                        that.users = result.data;
+                    }
+                }
+                layer.close(idx);
+            }, function(response){
+                // 响应错误回调
+            });
+        },
+        methods : {
+            show_detail : function(userId){
+                //iframe层-父子操作
+                layer.open({
+                    title: "用户信息",
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/prouter/system/user/userinfo/'+userId,
+                    success: function(layero, index){
+                        var body = layer.getChildFrame('body',index);//建立父子联系
+                        var userIdInput = body.find('#userId');
+                        $(userIdInput).attr("value",userId);
+                        console.log($(userIdInput).val());
+                    }
+                });
+            },
+            modify_user : function(userId){
+                //iframe层-父子操作
+                /*layer.open({
+                    title: "用户信息",
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/prouter/system/user/userupdate/'+userId,
+                    success: function(layero, index){
+                        var body = layer.getChildFrame('body',index);//建立父子联系
+                        var userIdInput = body.find('#userId');
+                        $(userIdInput).attr("value",userId);
+                        console.log($(userIdInput).val());
+                    }
+                });*/
+
+                //console.log(userId);
+                var url = "/prouter/system/user/userupdate/"+userId;
+                $("#main").load(url,function(response,status,xhr){
+                    //console.log("success");
+                });
+            }
+        }
+    });
+    $('#nav-search-input').bind('keypress', function(event) {
+        if (event.keyCode == "13") {
+            event.preventDefault();
+            window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
+        }
+    });
 </script>
