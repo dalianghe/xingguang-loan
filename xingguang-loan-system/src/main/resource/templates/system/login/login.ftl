@@ -320,7 +320,7 @@
                         timeout: 10000,
                         success: function (data) {
                             layer.close(index);
-                            console.log(data);
+                            console.log(data.data);
                             if(data.sysCode==0){ // 系统正常返回
                                 if(data.bizCode==0){ // 业务处理通过
                                     window.location.href = "/router/system/common/index";

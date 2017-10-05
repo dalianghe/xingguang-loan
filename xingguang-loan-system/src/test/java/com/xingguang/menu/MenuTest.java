@@ -22,7 +22,7 @@ public class MenuTest {
 
     @Test
     public void testService() throws Exception{
-        List<SysResourceEntityCustom> list = sysResourceService.findMenusByUserId(1);
+        List<SysResourceEntityCustom> list = sysResourceService.findMenusByUserId(1L);
         System.out.println(list.size());
     }
 

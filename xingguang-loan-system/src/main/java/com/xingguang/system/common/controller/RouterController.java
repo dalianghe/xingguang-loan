@@ -1,8 +1,6 @@
 package com.xingguang.system.common.controller;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresUser;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +15,14 @@ public class RouterController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String login(){
-        return "/system/login/login";
+        //return "/system/login/login";
+        return "redirect:/router/system/common/index";
     }
 
     @RequestMapping(value = "/system/login",method = RequestMethod.GET)
     public String rlogin(){
-        return "redirect:/";
+        //return "redirect:/";
+        return "/system/login/login";
     }
 
     @RequestMapping(value = "/error/500" , method = RequestMethod.GET)

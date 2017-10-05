@@ -142,6 +142,6 @@
 </div>
         <script>
             function toLogin(){
-                window.location.href = "/";
+                window.location.href = "/system/login";
             }
         </script>

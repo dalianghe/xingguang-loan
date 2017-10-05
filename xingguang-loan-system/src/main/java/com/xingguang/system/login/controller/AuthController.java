@@ -6,7 +6,6 @@ import com.xingguang.system.login.domain.AuthUserDomain;
 import com.xingguang.system.login.params.AuthBean;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

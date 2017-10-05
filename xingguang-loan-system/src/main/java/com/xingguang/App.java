@@ -49,4 +49,5 @@ public class App {
         HttpMessageConverter<?> converter = fastConverter;
         return new HttpMessageConverters(converter);
     }
+
 }

@@ -27,7 +27,6 @@
         <span class="btn btn-danger"></span>
     </div>
 </div><!-- /.sidebar-shortcuts -->
-
 <ul id="menuUl" class="nav nav-list">
     <!-- 菜单列表 -->
     <li class="" v-for="(menu,index) in menus" :class="{'active':!index}" v-on:click="router">

@@ -323,7 +323,7 @@
                     success: function (data) {
                         if(data.sysCode==0){
                             if(data.bizCode==0){
-                                window.location.href = "/";
+                                window.location.href = "/system/login";
                             }
                         }
                     },

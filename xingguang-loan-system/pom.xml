@@ -81,5 +81,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- shiro freemarker tag-->
+        <dependency>
+            <groupId>net.mingsoft</groupId>
+            <artifactId>shiro-freemarker-tags</artifactId>
+            <version>0.1</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
+        </dependency>-->
     </dependencies>
 </project>
