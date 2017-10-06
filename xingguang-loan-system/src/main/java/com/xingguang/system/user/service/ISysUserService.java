@@ -13,11 +13,13 @@ public interface ISysUserService {
 
     public SysUserEntityCustom findSysUserById(Long userId) throws Exception;
 
-    public SysUserEntityCustom findSysUserByLoginId(String loginId) throws Exception;
+    public SysUserEntity findSysUserByLoginId(String loginId) throws Exception;
 
-    public List<SysUserEntityCustom> findSysUserList() throws Exception;
+    public List<SysUserEntityCustom> findSysUserList(String userName) throws Exception;
 
-    public SysUserEntityCustom updateSysUserById(SysUserDomain sysUserDomain) throws Exception;
+    public SysUserEntity updateSysUserById(SysUserDomain sysUserDomain) throws Exception;
 
-    public SysUserEntityCustom addSysUser(SysUserDomain sysUserDomain) throws Exception;
+    public SysUserEntity addSysUser(SysUserDomain sysUserDomain) throws Exception;
+
+    public List<SysUserEntityCustom> findSysUserRoles(String userName) throws Exception;
 }

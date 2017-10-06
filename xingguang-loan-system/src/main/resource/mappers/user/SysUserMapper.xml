@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xingguang.system.user.mapper.SysUserMapper" >
-    <resultMap id="BaseResultMap" type="com.xingguang.system.user.entity.custom.SysUserEntityCustom" >
+    <resultMap id="BaseResultMap" type="com.xingguang.system.user.entity.SysUserEntity" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_name" property="userName" jdbcType="VARCHAR" />
         <result column="login_id" property="loginId" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
         <result column="user_birthday" property="userBirthday" jdbcType="DATE" />
         <result column="user_sex" property="userSex" jdbcType="VARCHAR" />
-        <result column="user_sex_name" property="userSexName" jdbcType="VARCHAR" />
         <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
         <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
         <result column="work_address" property="workAddress" jdbcType="VARCHAR" />
         <result column="user_job" property="userJob" jdbcType="VARCHAR" />
         <result column="join_date" property="joinDate" jdbcType="DATE" />
         <result column="status" property="status" jdbcType="VARCHAR" />
-        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
         <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.system.user.entity.custom.SysUserEntityCustom" extends="BaseResultMap">
+        <result column="user_sex_name" property="userSexName" jdbcType="VARCHAR" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom2" type="com.xingguang.system.user.entity.custom.SysUserEntityCustom" extends="BaseResultMap">
+        <result column="user_sex_name" property="userSexName" jdbcType="VARCHAR" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+        <collection property="roles" javaType="list" ofType="com.xingguang.system.role.entity.SysRoleEntity">
+            <id property="id" column="id2"/>
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        </collection>
     </resultMap>
 
     <sql id="Base_Column_List" >
@@ -26,7 +38,7 @@
         join_date, status, last_login_time, create_time, update_time
     </sql>
 
-    <select id="findSysUserById" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+    <select id="findSysUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
             SELECT
             <include refid="Base_Column_List" />
             ,if(user_sex='1','男','女') user_sex_name,if(status='0','正常',if(status='1','锁定','停用')) status_name
@@ -42,15 +54,30 @@
         AND status = '0'
     </select>
 
-    <select id="findSysUserList" resultMap="BaseResultMap">
+    <select id="findSysUserList" parameterType="com.xingguang.system.user.entity.SysUserEntity" resultMap="BaseResultMapCustom">
         SELECT
         <include refid="Base_Column_List" />
         ,if(user_sex='1','男','女') user_sex_name,if(status='0','正常',if(status='1','锁定','停用')) status_name
         FROM sys_user
+        WHERE 1=1
+        <if test="userName != null" >
+            AND user_name LIKE CONCAT(CONCAT('%', #{userName}), '%')
+        </if>
         ORDER BY create_time
     </select>
 
-    <update id="updateSysUserById" parameterType="com.xingguang.system.user.entity.custom.SysUserEntityCustom">
+    <select id="findSysUserRoles" parameterType="com.xingguang.system.user.entity.SysUserEntity" resultMap="BaseResultMapCustom2">
+        SELECT t1.id,t1.user_name,t1.login_id,t1.status,if(t1.status='0','正常',if(t1.status='1','锁定','停用')) status_name,t3.id id2,t3.role_name
+        FROM sys_user t1
+        INNER join sys_user_role t2 on t1.id = t2.sys_user_id
+        INNER join sys_role t3 on t2.sys_role_id = t3.id
+        WHERE t3.delete_flag = '0'
+        <if test="userName != null" >
+            AND t1.user_name LIKE CONCAT(CONCAT('%', #{userName}), '%')
+        </if>
+    </select>
+
+    <update id="updateSysUserById" parameterType="com.xingguang.system.user.entity.SysUserEntity">
         UPDATE sys_user
         <set>
             <if test="userName != null" >
@@ -93,7 +120,7 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
-    <insert id="insertSysUser" parameterType="com.xingguang.system.user.entity.custom.SysUserEntityCustom" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSysUser" parameterType="com.xingguang.system.user.entity.SysUserEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sys_user (
         user_name, login_id, password, user_birthday,
         user_sex, user_mobile, user_email,

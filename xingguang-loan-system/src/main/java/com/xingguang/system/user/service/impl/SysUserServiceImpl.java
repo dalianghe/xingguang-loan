@@ -2,6 +2,7 @@ package com.xingguang.system.user.service.impl;
 
 import com.xingguang.exception.CustomException;
 import com.xingguang.system.user.domain.SysUserDomain;
+import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
 import com.xingguang.system.user.mapper.SysUserMapper;
 import com.xingguang.system.user.service.ISysUserService;
@@ -29,18 +30,20 @@ public class SysUserServiceImpl implements ISysUserService {
 
 
     @Override
-    public SysUserEntityCustom findSysUserByLoginId(String loginId) throws Exception {
+    public SysUserEntity findSysUserByLoginId(String loginId) throws Exception {
         return sysUserMapper.findSysUserByLoginId(loginId);
     }
 
     @Override
-    public List<SysUserEntityCustom> findSysUserList() throws Exception {
-        return sysUserMapper.findSysUserList();
+    public List<SysUserEntityCustom> findSysUserList(String userName) throws Exception {
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setUserName(userName);
+        return sysUserMapper.findSysUserList(sysUserEntity);
     }
 
     @Override
-    public SysUserEntityCustom updateSysUserById(SysUserDomain domain) throws Exception {
-        SysUserEntityCustom entity = new SysUserEntityCustom();
+    public SysUserEntity updateSysUserById(SysUserDomain domain) throws Exception {
+        SysUserEntity entity = new SysUserEntity();
         BeanUtils.copyProperties(domain,entity);
         entity.setUpdateTime(new Date());
         sysUserMapper.updateSysUserById(entity);
@@ -48,8 +51,8 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public SysUserEntityCustom addSysUser(SysUserDomain sysUserDomain) throws CustomException {
-        SysUserEntityCustom entity = null;
+    public SysUserEntity addSysUser(SysUserDomain sysUserDomain) throws CustomException {
+        SysUserEntity entity = null;
         try {
             // step 1 : 检查系统是否已存在loginId
             entity = this.findSysUserByLoginId(sysUserDomain.getLoginId());
@@ -68,5 +71,12 @@ public class SysUserServiceImpl implements ISysUserService {
             throw new CustomException(e.getMessage());
         }
         return entity;
+    }
+
+    @Override
+    public List<SysUserEntityCustom> findSysUserRoles(String userName) throws Exception {
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setUserName(userName);
+        return sysUserMapper.findSysUserRoles(sysUserEntity);
     }
 }

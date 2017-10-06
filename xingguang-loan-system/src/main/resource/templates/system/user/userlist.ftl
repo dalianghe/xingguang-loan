@@ -22,74 +22,7 @@
     </div><!-- /.nav-search -->
 </div>
 
-<div class="page-content">
-    <#--<div class="ace-settings-container" id="ace-settings-container">
-        <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-            <i class="ace-icon fa fa-cog bigger-130"></i>
-        </div>
-
-        <div class="ace-settings-box clearfix" id="ace-settings-box">
-            <div class="pull-left width-50">
-                <div class="ace-settings-item">
-                    <div class="pull-left">
-                        <select id="skin-colorpicker" class="hide">
-                            <option data-skin="no-skin" value="#438EB9">#438EB9</option>
-                            <option data-skin="skin-1" value="#222A2D">#222A2D</option>
-                            <option data-skin="skin-2" value="#C6487E">#C6487E</option>
-                            <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-                        </select>
-                    </div>
-                    <span>&nbsp; Choose Skin</span>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-navbar" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-sidebar" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-breadcrumbs" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2 ace-save-state" id="ace-settings-add-container" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-add-container">
-                        Inside
-                        <b>.container</b>
-                    </label>
-                </div>
-            </div><!-- /.pull-left &ndash;&gt;
-
-            <div class="pull-left width-50">
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
-                </div>
-
-                <div class="ace-settings-item">
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" autocomplete="off" />
-                    <label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
-                </div>
-            </div><!-- /.pull-left &ndash;&gt;
-        </div><!-- /.ace-settings-box &ndash;&gt;
-    </div>--><!-- /.ace-settings-container -->
-
+<div id="dataDiv" class="page-content">
     <div class="page-header">
         <h1>
             <small>
@@ -99,11 +32,26 @@
         </h1>
     </div><!-- /.page-header -->
 
-    <div style="margin-bottom: 10px;" align="right" onclick="addUser()">
-        <button class="btn btn-white btn-info btn-bold">
-            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
-            新增
-        </button>
+    <div style="margin-bottom: 10px; float:left;">
+        <div class="input-group" style="width: 300px;float:left;">
+                <span class="input-group-addon">
+                    <i class="ace-icon fa fa-check"></i>
+                </span>
+            <input type="text" class="form-control search-query" placeholder="请输入用户姓名" v-model="userName"/>
+            <span class="input-group-btn">
+                    <button type="button" class="btn btn-inverse btn-white" @click="queryUser">
+                        <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                        查询
+                    </button>
+                </span>
+        </div>
+        &nbsp;&nbsp;
+        <div style="float:right;" onclick="addUser()">
+            <button class="btn btn-white btn-info btn-bold"  data-toggle="modal" data-target="#my-modal">
+                <i class="ace-icon fa fa-pencil-square-o bigger-120 blue"></i>
+                添加用户
+            </button>
+        </div>
     </div>
 
     <div class="row">
@@ -225,9 +173,10 @@
     }
 
     var app = new Vue({
-        el: '#simple-table',
+        el: '#dataDiv',
         data: {
-            users: ""
+            users: {},
+            "userName":""
         },
         created : function(){
             var idx = layer.load(2);
@@ -261,6 +210,23 @@
                         $(userIdInput).attr("value",userId);
                         console.log($(userIdInput).val());
                     }
+                });
+            },
+            queryUser : function(){
+                var idx = layer.load(2);
+                var param = {"userName":this.userName};
+                var that=this;
+                that.$http.get("/system/users?op=get",{params:param},{emulateJSON: true}).then(function(response){
+                    // 响应成功回调
+                    var result = response.data;
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            that.users = result.data;
+                        }
+                    }
+                    layer.close(idx);
+                }, function(response){
+                    // 响应错误回调
                 });
             },
             modify_user : function(userId){

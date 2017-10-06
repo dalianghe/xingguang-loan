@@ -1,6 +1,7 @@
 package com.xingguang.config;
 
 import com.xingguang.system.login.domain.AuthUserDomain;
+import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
 import com.xingguang.system.user.service.ISysUserService;
 import org.apache.shiro.authc.*;
@@ -38,7 +39,7 @@ public class ShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String loginId = token.getUsername();
         AuthUserDomain authUserDomain = new AuthUserDomain();
-        SysUserEntityCustom sysUserEntity = null;
+        SysUserEntity sysUserEntity = null;
         try {
             // 从数据库中查询用户
             sysUserEntity = sysUserService.findSysUserByLoginId(loginId);

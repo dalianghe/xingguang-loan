@@ -3,6 +3,7 @@ package com.xingguang.system.user.controller;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.system.common.controller.BaseController;
 import com.xingguang.system.user.domain.SysUserDomain;
+import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
 import com.xingguang.system.user.service.ISysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,9 +24,9 @@ public class UserController extends BaseController{
 
     @RequiresPermissions("user:list")
     @RequestMapping(value = "/users" , method = RequestMethod.GET)
-    public ResultBean<?> findSysUserList() throws Exception{
+    public ResultBean<?> findSysUserList(String userName) throws Exception{
         ResultBean<?> resultBean = null;
-        List<SysUserEntityCustom> list = sysUserService.findSysUserList();
+        List<SysUserEntityCustom> list = sysUserService.findSysUserList(userName);
         resultBean = new ResultBean<>(list);
         return resultBean;
     }
@@ -41,7 +42,7 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/user/{userId}" , method = RequestMethod.PUT)
     public ResultBean<?> updateSysUserById(@RequestBody SysUserDomain sysUserDomain) throws Exception{
         ResultBean<?> resultBean = null;
-        SysUserEntityCustom entity = sysUserService.updateSysUserById(sysUserDomain);
+        SysUserEntity entity = sysUserService.updateSysUserById(sysUserDomain);
         resultBean = new ResultBean<>(entity);
         return resultBean;
     }
@@ -49,7 +50,15 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/user" , method = RequestMethod.POST)
     public ResultBean<?> addSysUser(@RequestBody SysUserDomain sysUserDomain) throws Exception{
         ResultBean<?> resultBean = null;
-        SysUserEntityCustom entity = sysUserService.addSysUser(sysUserDomain);
+        SysUserEntity entity = sysUserService.addSysUser(sysUserDomain);
+        resultBean = new ResultBean<>(entity);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/users/roles" , method = RequestMethod.GET)
+    public ResultBean<?> findUsersRoles(String userName) throws Exception{
+        ResultBean<?> resultBean = null;
+        List<SysUserEntityCustom> entity = sysUserService.findSysUserRoles(userName);
         resultBean = new ResultBean<>(entity);
         return resultBean;
     }

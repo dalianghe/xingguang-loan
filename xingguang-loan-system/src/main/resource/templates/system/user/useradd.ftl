@@ -30,7 +30,7 @@
                 <h1>
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
-                        用户修改
+                        添加用户
                     </small>
                 </h1>
             </div><!-- /.page-header -->

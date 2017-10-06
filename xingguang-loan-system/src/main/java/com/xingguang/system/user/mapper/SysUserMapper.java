@@ -13,11 +13,13 @@ public interface SysUserMapper {
 
     SysUserEntityCustom findSysUserById(Long userId) throws Exception;
 
-    SysUserEntityCustom findSysUserByLoginId(String loginId) throws Exception;
+    SysUserEntity findSysUserByLoginId(String loginId) throws Exception;
 
-    List<SysUserEntityCustom> findSysUserList() throws Exception;
+    List<SysUserEntityCustom> findSysUserList(SysUserEntity sysUserEntity) throws Exception;
 
-    void updateSysUserById(SysUserEntityCustom sysUserEntityCustom) throws Exception;
+    void updateSysUserById(SysUserEntity sysUserEntity) throws Exception;
 
-    void insertSysUser(SysUserEntityCustom sysUserEntityCustom) throws Exception;
+    void insertSysUser(SysUserEntity sysUserEntity) throws Exception;
+
+    List<SysUserEntityCustom> findSysUserRoles(SysUserEntity sysUserEntity) throws Exception;
 }

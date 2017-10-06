@@ -29,7 +29,7 @@ public class UserTest {
 
     @Test
     public void testFindUserList() throws Exception{
-        List<SysUserEntityCustom> list = sysUserService.findSysUserList();
+        List<SysUserEntityCustom> list = sysUserService.findSysUserList("");
         System.out.println(list);
     }
 
@@ -41,5 +41,14 @@ public class UserTest {
         domain.setUserBirthday(new Date());
         domain.setJoinDate(new Date());
         sysUserService.updateSysUserById(domain);
+    }
+
+    @Test
+    public void testFindUsersRoles() throws Exception{
+        List<SysUserEntityCustom> list = sysUserService.findSysUserRoles("");
+        System.out.println(list.size());
+        for(int i=0;i<list.size();i++){
+            System.out.println(list.get(i).getRoles().size());
+        }
     }
 }

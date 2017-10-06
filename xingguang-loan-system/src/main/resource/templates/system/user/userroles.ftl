@@ -1,0 +1,231 @@
+<link rel="stylesheet" href="/assets/css/bootstrap-duallistbox.min.css" />
+<div class="main-content-inner">
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="#">控制台</a>
+            </li>
+
+            <li>
+                <a href="#">系统设置</a>
+            </li>
+            <li class="active">角色分配</li>
+        </ul><!-- /.breadcrumb -->
+
+        <div class="nav-search" id="nav-search">
+            <form class="form-search">
+                    <span class="input-icon">
+                        <input type="text" placeholder="百度搜索 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                        <i class="ace-icon fa fa-search nav-search-icon"></i>
+                    </span>
+            </form>
+        </div><!-- /.nav-search -->
+    </div>
+    <div id="dataDiv" class="page-content">
+        <div class="page-header">
+            <h1>
+                <small>
+                    <i class="ace-icon fa fa-angle-double-right"></i>
+                    角色分配
+                </small>
+            </h1>
+        </div><!-- /.page-header -->
+        <div style="margin-bottom: 10px; float:left;">
+            <div class="input-group" style="width: 300px;float:left;">
+                    <span class="input-group-addon">
+                        <i class="ace-icon fa fa-check"></i>
+                    </span>
+                <input type="text" class="form-control search-query" placeholder="请输入用户姓名" v-model="userName"/>
+                <span class="input-group-btn">
+                        <button type="button" class="btn btn-inverse btn-white" @click="queryUser">
+                            <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                            查询
+                        </button>
+                    </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table id="simple-table" class="table  table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="center">序号</th>
+                                <th>用户姓名</th>
+                                <th>用户账户</th>
+                                <th class="hidden-480">状态</th>
+                                <th >拥有角色</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr v-for="(user,index) in users"><!-- v-on:click="show_detail(user.id)"-->
+                                    <td class="center">
+                                        {{index+1}}
+                                    </td>
+                                    <td>{{user.userName}}</td>
+                                    <td>{{user.loginId}}</td>
+                                    <td class="hidden-480">
+                                        <span class="label label-sm label-success" v-if="user.status==='0'">{{user.statusName}}</span>
+                                        <span class="label label-sm label-info" v-if="user.status==='1'">{{user.statusName}}</span>
+                                        <span class="label label-sm label-danger" v-if="user.status==='2'">{{user.statusName}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="action-buttons" v-for="(role,index) in user.roles">
+                                            {{role.roleName}}&nbsp;&nbsp;
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#my-modal">
+                                                <i class="glyphicon glyphicon-share-alt"></i>
+                                            </button>
+                                        </div>
+
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline pos-rel">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View"  data-toggle="modal" data-target="#my-modal">
+                                                            <span class="blue">
+                                                                <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /.span -->
+                </div><!-- /.row -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        <div id="my-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="smaller lighter blue no-margin">角色分配</h3>
+                    </div>
+
+                    <div class="page-content">
+                        <div class="row">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
+                                    <div class="col-sm-8">
+                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist">
+                                            <option value="option1">Option 1</option>
+                                            <option value="option2">Option 2</option>
+                                            <option value="option3" selected="selected">Option 3</option>
+                                            <option value="option4">Option 4</option>
+                                            <option value="option5">Option 5</option>
+                                            <option value="option6" selected="selected">Option 6</option>
+                                            <option value="option7">Option 7</option>
+                                            <option value="option8">Option 8</option>
+                                            <option value="option9">Option 9</option>
+                                            <option value="option0">Option 10</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- /.row -->
+                    </div><!-- /.page-content -->
+
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-success pull-right">
+                            <i class="ace-icon fa fa-check"></i>
+                            确定
+                        </button>
+                        <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            取消
+                        </button>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div><!-- /.page-content -->
+</div>
+
+<script src="/assets/js/jquery-2.1.4.min.js"></script>
+<script src="/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
+
+<script src="/js/lib/vue/vue.min.js"></script>
+<script src="/js/lib/vue/vue-resource.min.js"></script>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+
+    jQuery(function($){
+        var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({infoTextFiltered: '<span class="label label-purple label-lg">Filtered</span>'});
+        var container1 = demo1.bootstrapDualListbox('getContainer');
+        container1.find('.btn').addClass('btn-white btn-info btn-bold');
+    });
+
+    function addUser(){
+        $("#main").load("/router/system/user/useradd",function(response,status,xhr){
+            //console.log("success");
+        });
+    }
+
+    var app = new Vue({
+        el: '#dataDiv',
+        data: {
+            users: {},
+            "userName" : ""
+        },
+        created : function(){
+            var idx = layer.load(2);
+            var that=this;
+            that.$http.get("/system/users/roles").then(function(response){
+                // 响应成功回调
+                var result = response.data;
+                if(result.sysCode==0){
+                    if(result.bizCode==0){
+                        that.users = result.data;
+                    }
+                }
+                layer.close(idx);
+            }, function(response){
+                // 响应错误回调
+            });
+        },
+        methods : {
+            queryUser : function(){
+                var idx = layer.load(2);
+                var param = {"userName":this.userName};
+                app.$http.get("/system/users/roles?op=get",{params:param},{emulateJSON: true}).then(function(response){
+                    // 响应成功回调
+                    var result = response.data;
+                    console.log(result);
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            this.users = result.data;
+                        }
+                    }
+                    layer.close(idx);
+                }, function(response){
+                    // 响应错误回调
+                });
+            }
+        }
+    });
+    $('#nav-search-input').bind('keypress', function(event) {
+        if (event.keyCode == "13") {
+            event.preventDefault();
+            window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
+        }
+    });
+</script>

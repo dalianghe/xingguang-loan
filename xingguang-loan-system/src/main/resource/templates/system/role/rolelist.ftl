@@ -32,29 +32,26 @@
             </h1>
         </div><!-- /.page-header -->
         <div style="margin-bottom: 10px; float:left;">
-                <div class="input-group" style="width: 300px;float:left;">
-                    <span class="input-group-addon">
-                        <i class="ace-icon fa fa-check"></i>
-                    </span>
-                    <input type="text" class="form-control search-query" placeholder="请输入角色名称" v-model="roleName"/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-inverse btn-white" @click="queryRole">
-                            <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
-                            查询
-                        </button>
-                    </span>
-                </div>
-                &nbsp;&nbsp;
-                <div style="float:right;">
-                    <button class="btn btn-white btn-info btn-bold"  data-toggle="modal" data-target="#my-modal">
-                        添加角色
+            <div class="input-group" style="width: 300px;float:left;">
+                <span class="input-group-addon">
+                    <i class="ace-icon fa fa-check"></i>
+                </span>
+                <input type="text" class="form-control search-query" placeholder="请输入角色名称" v-model="roleName"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-inverse btn-white" @click="queryRole">
+                        <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
+                        查询
                     </button>
-                        <#--<a href="#my-modal" role="button" class="btn btn-white btn-info btn-bold" data-toggle="modal" align="right">
-                            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
-                            添加角色
-                        </a>-->
-                </div>
+                </span>
             </div>
+            &nbsp;&nbsp;
+            <div style="float:right;">
+                <button class="btn btn-white btn-info btn-bold"  data-toggle="modal" data-target="#my-modal">
+                    <i class="ace-icon fa fa-pencil-square-o bigger-120 blue"></i>
+                    添加角色
+                </button>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-12">
