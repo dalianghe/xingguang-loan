@@ -18,4 +18,6 @@ public interface ISysUserService {
     public List<SysUserEntityCustom> findSysUserList() throws Exception;
 
     public SysUserEntityCustom updateSysUserById(SysUserDomain sysUserDomain) throws Exception;
+
+    public SysUserEntityCustom addSysUser(SysUserDomain sysUserDomain) throws Exception;
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.system.role.mapper.SysRoleMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.system.role.entity.custom.SysRoleEntityCustom" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
+        <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        <result column="role_type" property="roleType" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+        <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+        <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, role_code, role_name, role_type, status, delete_flag, delete_time, create_time, update_time
+    </sql>
+
+    <select id="findSysRoleListByRoleName" parameterType="com.xingguang.system.role.entity.SysRoleEntity" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        ,if(status='0','有效','无效') status_name
+        FROM sys_role
+        WHERE 1=1
+        AND delete_flag = 0
+        <if test="roleName != null" >
+        AND role_name LIKE CONCAT(CONCAT('%', #{roleName}), '%')
+        </if>
+        ORDER BY create_time
+    </select>
+
+    <update id="updateSysRole" parameterType="com.xingguang.system.role.entity.SysRoleEntity" >
+        UPDATE sys_role
+         <set>
+             <if test="roleCode != null" >
+                 role_code = #{roleCode,jdbcType=VARCHAR},
+             </if>
+             <if test="roleName != null" >
+                 role_name = #{roleName,jdbcType=VARCHAR},
+             </if>
+             <if test="roleType != null" >
+                 role_type = #{roleType,jdbcType=VARCHAR},
+             </if>
+             <if test="status != null" >
+                 status = #{status,jdbcType=VARCHAR},
+             </if>
+             <if test="deleteFlag != null" >
+                 delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+             </if>
+             <if test="deleteTime != null" >
+                 delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="updateTime != null" >
+                 update_time = #{updateTime,jdbcType=TIMESTAMP},
+             </if>
+         </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertSysRole" parameterType="com.xingguang.system.role.entity.SysRoleEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_role (
+        role_code, role_name, role_type, status, create_time
+        )
+        VALUES (
+        #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR},  #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+</mapper>

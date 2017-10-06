@@ -56,7 +56,7 @@
 
 <script>
     // 定义参数json串
-    var loginJson = {"userId":"1"};
+    var loginJson = {"userId":"${id}"};
 
     var app = new Vue({
         el: '#menuUl',

@@ -99,6 +99,13 @@
         </h1>
     </div><!-- /.page-header -->
 
+    <div style="margin-bottom: 10px;" align="right" onclick="addUser()">
+        <button class="btn btn-white btn-info btn-bold">
+            <i class="ace-icon fa fa-floppy-o bigger-120 blue"></i>
+            新增
+        </button>
+    </div>
+
     <div class="row">
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
@@ -134,7 +141,9 @@
                                 <td>{{user.createTime}}</td>
 
                                 <td class="hidden-480">
-                                    <span class="label label-sm label-success">{{user.statusName}}</span>
+                                    <span class="label label-sm label-success" v-if="user.status==='0'">{{user.statusName}}</span>
+                                    <span class="label label-sm label-info" v-if="user.status==='1'">{{user.statusName}}</span>
+                                    <span class="label label-sm label-danger" v-if="user.status==='2'">{{user.statusName}}</span>
                                 </td>
 
                                 <td class="center">
@@ -208,6 +217,13 @@
 <script src="/js/lib/vue/vue-resource.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+
+    function addUser(){
+        $("#main").load("/router/system/user/useradd",function(response,status,xhr){
+            //console.log("success");
+        });
+    }
+
     var app = new Vue({
         el: '#simple-table',
         data: {
@@ -248,23 +264,6 @@
                 });
             },
             modify_user : function(userId){
-                //iframe层-父子操作
-                /*layer.open({
-                    title: "用户信息",
-                    type: 2,
-                    area: ['700px', '450px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    content: '/prouter/system/user/userupdate/'+userId,
-                    success: function(layero, index){
-                        var body = layer.getChildFrame('body',index);//建立父子联系
-                        var userIdInput = body.find('#userId');
-                        $(userIdInput).attr("value",userId);
-                        console.log($(userIdInput).val());
-                    }
-                });*/
-
-                //console.log(userId);
                 var url = "/prouter/system/user/userupdate/"+userId;
                 $("#main").load(url,function(response,status,xhr){
                     //console.log("success");

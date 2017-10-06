@@ -193,7 +193,7 @@
                 var userId = $("#userId").val();
                 var that=this;
                 $.ajax({
-                    url: "/system/users/"+userId,
+                    url: "/system/user/"+userId,
                     type: "GET",
                     contentType: "application/json",
                     data : null,

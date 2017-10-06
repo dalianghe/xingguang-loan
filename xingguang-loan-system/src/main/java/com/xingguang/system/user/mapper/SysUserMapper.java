@@ -18,4 +18,6 @@ public interface SysUserMapper {
     List<SysUserEntityCustom> findSysUserList() throws Exception;
 
     void updateSysUserById(SysUserEntityCustom sysUserEntityCustom) throws Exception;
+
+    void insertSysUser(SysUserEntityCustom sysUserEntityCustom) throws Exception;
 }

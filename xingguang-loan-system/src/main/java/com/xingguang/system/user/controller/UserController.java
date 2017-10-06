@@ -30,7 +30,7 @@ public class UserController extends BaseController{
         return resultBean;
     }
 
-    @RequestMapping(value = "/users/{userId}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{userId}" , method = RequestMethod.GET)
     public ResultBean<?> findSysUserById(@PathVariable("userId") String userId) throws Exception{
         ResultBean<?> resultBean = null;
         SysUserEntityCustom entity= sysUserService.findSysUserById(Long.parseLong(userId));
@@ -38,10 +38,18 @@ public class UserController extends BaseController{
         return resultBean;
     }
 
-    @RequestMapping(value = "/users/{userId}" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/{userId}" , method = RequestMethod.PUT)
     public ResultBean<?> updateSysUserById(@RequestBody SysUserDomain sysUserDomain) throws Exception{
         ResultBean<?> resultBean = null;
         SysUserEntityCustom entity = sysUserService.updateSysUserById(sysUserDomain);
+        resultBean = new ResultBean<>(entity);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/user" , method = RequestMethod.POST)
+    public ResultBean<?> addSysUser(@RequestBody SysUserDomain sysUserDomain) throws Exception{
+        ResultBean<?> resultBean = null;
+        SysUserEntityCustom entity = sysUserService.addSysUser(sysUserDomain);
         resultBean = new ResultBean<>(entity);
         return resultBean;
     }

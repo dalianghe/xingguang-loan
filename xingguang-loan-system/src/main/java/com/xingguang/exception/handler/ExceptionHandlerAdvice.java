@@ -25,8 +25,9 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler({CustomException.class})
     public void authenticationException(CustomException customException , HttpServletResponse response) {
         System.out.println(customException.getMessage());
-        ResultBean<?> resultBean = new ResultBean<>(customException.getMessage());
+        ResultBean<?> resultBean = new ResultBean<>();
         resultBean.setBizCode(ResultBean.FALL);
+        resultBean.setMsg(customException.getMessage());
         writeJson(resultBean, response);
     }
 

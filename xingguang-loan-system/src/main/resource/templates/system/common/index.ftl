@@ -91,11 +91,16 @@
             jQuery(function($) {
                 $(function () {
                     $("#navbar-container").load("/router/system/common/header");
-                    $("#menu").load("/router/system/common/menu");
+                    $("#menu").load("/prouter/system/common/menu/${id}");
                     $("#main").load("/router/system/common/main");
                     $("#footer").load("/router/system/common/footer");
                 });
             });
+            function callBack(url){
+                $("#main").load(url,function(response,status,xhr){
+                    console.log(status);
+                });
+            }
         </script>
 
 

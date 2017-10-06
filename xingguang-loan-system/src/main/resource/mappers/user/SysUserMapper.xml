@@ -93,4 +93,18 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
 
+    <insert id="insertSysUser" parameterType="com.xingguang.system.user.entity.custom.SysUserEntityCustom" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (
+        user_name, login_id, password, user_birthday,
+        user_sex, user_mobile, user_email,
+        work_address, user_job, join_date,
+        status, create_time)
+        VALUES (
+        #{userName,jdbcType=VARCHAR}, #{loginId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userBirthday,jdbcType=DATE},
+        #{userSex,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
+        #{workAddress,jdbcType=VARCHAR}, #{userJob,jdbcType=VARCHAR}, #{joinDate,jdbcType=DATE},
+        #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
 </mapper>
