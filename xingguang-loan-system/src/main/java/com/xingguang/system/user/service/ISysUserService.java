@@ -1,5 +1,6 @@
 package com.xingguang.system.user.service;
 
+import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.user.domain.SysUserDomain;
 import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
@@ -22,4 +23,6 @@ public interface ISysUserService {
     public SysUserEntity addSysUser(SysUserDomain sysUserDomain) throws Exception;
 
     public List<SysUserEntityCustom> findSysUserRoles(String userName) throws Exception;
+
+    public List<SysRoleEntityCustom> findSysUserHaveRoles(Long userId) throws Exception;
 }

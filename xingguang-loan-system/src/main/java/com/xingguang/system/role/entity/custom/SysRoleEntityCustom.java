@@ -9,6 +9,10 @@ import java.io.Serializable;
  */
 public class SysRoleEntityCustom extends SysRoleEntity  implements Serializable {
 
+    private String statusName;
+
+    private String marker;
+
     public String getStatusName() {
         return statusName;
     }
@@ -17,6 +21,11 @@ public class SysRoleEntityCustom extends SysRoleEntity  implements Serializable 
         this.statusName = statusName;
     }
 
-    private String statusName;
+    public String getMarker() {
+        return marker;
+    }
 
+    public void setMarker(String marker) {
+        this.marker = marker;
+    }
 }

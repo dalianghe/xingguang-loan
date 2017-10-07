@@ -1,6 +1,7 @@
 package com.xingguang.system.user.service.impl;
 
 import com.xingguang.exception.CustomException;
+import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.user.domain.SysUserDomain;
 import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
@@ -78,5 +79,10 @@ public class SysUserServiceImpl implements ISysUserService {
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setUserName(userName);
         return sysUserMapper.findSysUserRoles(sysUserEntity);
+    }
+
+    @Override
+    public List<SysRoleEntityCustom> findSysUserHaveRoles(Long userId) throws Exception {
+        return sysUserMapper.findSysUserHaveRoles(userId);
     }
 }

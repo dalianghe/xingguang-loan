@@ -1,6 +1,7 @@
 package com.xingguang.system.user.mapper;
 
 
+import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
 
@@ -22,4 +23,6 @@ public interface SysUserMapper {
     void insertSysUser(SysUserEntity sysUserEntity) throws Exception;
 
     List<SysUserEntityCustom> findSysUserRoles(SysUserEntity sysUserEntity) throws Exception;
+
+    List<SysRoleEntityCustom> findSysUserHaveRoles(Long id) throws Exception;
 }

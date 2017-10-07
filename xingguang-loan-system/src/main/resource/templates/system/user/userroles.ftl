@@ -63,47 +63,47 @@
                             </thead>
 
                             <tbody>
-                                <tr v-for="(user,index) in users"><!-- v-on:click="show_detail(user.id)"-->
-                                    <td class="center">
-                                        {{index+1}}
-                                    </td>
-                                    <td>{{user.userName}}</td>
-                                    <td>{{user.loginId}}</td>
-                                    <td class="hidden-480">
-                                        <span class="label label-sm label-success" v-if="user.status==='0'">{{user.statusName}}</span>
-                                        <span class="label label-sm label-info" v-if="user.status==='1'">{{user.statusName}}</span>
-                                        <span class="label label-sm label-danger" v-if="user.status==='2'">{{user.statusName}}</span>
-                                    </td>
-                                    <td>
+                            <tr v-for="(user,index) in users"><!-- v-on:click="show_detail(user.id)"-->
+                                <td class="center">
+                                    {{index+1}}
+                                </td>
+                                <td>{{user.userName}}</td>
+                                <td>{{user.loginId}}</td>
+                                <td class="hidden-480">
+                                    <span class="label label-sm label-success" v-if="user.status==='0'">{{user.statusName}}</span>
+                                    <span class="label label-sm label-info" v-if="user.status==='1'">{{user.statusName}}</span>
+                                    <span class="label label-sm label-danger" v-if="user.status==='2'">{{user.statusName}}</span>
+                                </td>
+                                <td>
                                         <span class="action-buttons" v-for="(role,index) in user.roles">
                                             {{role.roleName}}&nbsp;&nbsp;
                                         </span>
-                                    </td>
-                                    <td>
-                                        <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#my-modal">
-                                                <i class="glyphicon glyphicon-share-alt"></i>
-                                            </button>
-                                        </div>
+                                </td>
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#my-modal" @click="queryRoleByUserId(user.id)">
+                                            <i class="glyphicon glyphicon-share-alt"></i>
+                                        </button>
+                                    </div>
 
-                                        <div class="hidden-md hidden-lg">
-                                            <div class="inline pos-rel">
-                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                    <li>
-                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View"  data-toggle="modal" data-target="#my-modal">
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View"  data-toggle="modal" data-target="#my-modal" @click="queryRoleByUserId(user.id)">
                                                             <span class="blue">
                                                                 <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                             </span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div><!-- /.span -->
@@ -125,17 +125,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
                                     <div class="col-sm-8">
-                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist">
-                                            <option value="option1">Option 1</option>
-                                            <option value="option2">Option 2</option>
-                                            <option value="option3" selected="selected">Option 3</option>
-                                            <option value="option4">Option 4</option>
-                                            <option value="option5">Option 5</option>
-                                            <option value="option6" selected="selected">Option 6</option>
-                                            <option value="option7">Option 7</option>
-                                            <option value="option8">Option 8</option>
-                                            <option value="option9">Option 9</option>
-                                            <option value="option0">Option 10</option>
+                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected">
+                                            <#--<template  v-for="role in roles">
+                                                <option  :value="role.value" v-if="role.marker!=='0'" selected="selected">{{ role.roleName }}</option>
+                                                <option :value="role.value" v-else>{{role.roleName}}</option>
+                                            </template>-->
                                         </select>
                                     </div>
                                 </div>
@@ -144,7 +138,7 @@
                     </div><!-- /.page-content -->
 
                     <div class="modal-footer">
-                        <button class="btn btn-sm btn-success pull-right">
+                        <button class="btn btn-sm btn-success pull-right" @click="saveUserRole">
                             <i class="ace-icon fa fa-check"></i>
                             确定
                         </button>
@@ -169,32 +163,28 @@
 <script type="text/javascript">
 
     jQuery(function($){
-        var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({infoTextFiltered: '<span class="label label-purple label-lg">Filtered</span>'});
-        var container1 = demo1.bootstrapDualListbox('getContainer');
-        container1.find('.btn').addClass('btn-white btn-info btn-bold');
-    });
 
-    function addUser(){
-        $("#main").load("/router/system/user/useradd",function(response,status,xhr){
-            //console.log("success");
+        $("#my-modal").on("hidden.bs.modal", function() {
+            $('#my-modal').removeData("bs.modal");
         });
-    }
+    });
 
     var app = new Vue({
         el: '#dataDiv',
         data: {
             users: {},
-            "userName" : ""
+            "userName" : "",
+            selected:"",
+            roles: []
         },
         created : function(){
             var idx = layer.load(2);
-            var that=this;
-            that.$http.get("/system/users/roles").then(function(response){
+            this.$http.get("/system/users/roles").then(function(response){
                 // 响应成功回调
                 var result = response.data;
                 if(result.sysCode==0){
                     if(result.bizCode==0){
-                        that.users = result.data;
+                        app.users = result.data;
                     }
                 }
                 layer.close(idx);
@@ -205,22 +195,68 @@
         methods : {
             queryUser : function(){
                 var idx = layer.load(2);
-                var param = {"userName":this.userName};
+                var param = {"userName":app.userName};
                 app.$http.get("/system/users/roles?op=get",{params:param},{emulateJSON: true}).then(function(response){
                     // 响应成功回调
                     var result = response.data;
-                    console.log(result);
                     if(result.sysCode==0){
                         if(result.bizCode==0){
-                            this.users = result.data;
+                            app.users = result.data;
                         }
                     }
                     layer.close(idx);
                 }, function(response){
                     // 响应错误回调
                 });
+            },
+            queryRoleByUserId : function(userId){
+                //iframe层-父子操作
+                /*layer.open({
+                    title: "用户信息",
+                    type: 2,
+                    area: ['1000px', '380px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/prouter/system/user/grant/'+userId,
+                    success: function(layero, index){
+                        var body = layer.getChildFrame('body',index);//建立父子联系
+                        var userIdInput = body.find('#userId');
+                        $(userIdInput).attr("value",userId);
+                        console.log($(userIdInput).val());
+                    }
+                });*/
+
+                var param = {"userId":app.userId};
+                var that = this;
+                that.$http.get("/system/users/roles/"+userId+"?op=get",{params:param},{emulateJSON: true}).then(function(response){
+                    // 响应成功回调
+                    var result = response.data;
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            //that.roles = result.data;
+                            var roles = result.data;
+                            var html =[];
+                            $.each(roles,function(i){
+                                var selected = "";
+                                if(roles[i].marker != "0"){
+                                    selected = "selected='selected'";
+                                }
+                                html.push("<option value='"+roles[i].id+"' "+selected+">"+roles[i].roleName+"</option>");
+                            });
+                            $("#duallist").html(html);
+                            var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+                        }
+                    }
+                }, function(response){
+                    // 响应错误回调
+                });
+            },
+            saveUserRole : function(){
+                var aa = $("#duallist").val();
+                alert(aa);
             }
         }
+
     });
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {

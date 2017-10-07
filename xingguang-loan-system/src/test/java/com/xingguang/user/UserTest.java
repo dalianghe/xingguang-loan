@@ -1,5 +1,6 @@
 package com.xingguang.user;
 
+import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.user.domain.SysUserDomain;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
 import com.xingguang.system.user.service.ISysUserService;
@@ -50,5 +51,11 @@ public class UserTest {
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getRoles().size());
         }
+    }
+
+    @Test
+    public void testFinUserHaveRoles() throws Exception{
+        List<SysRoleEntityCustom > list = sysUserService.findSysUserHaveRoles(4L);
+        System.out.println(list.size());
     }
 }
