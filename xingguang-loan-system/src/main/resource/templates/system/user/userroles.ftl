@@ -161,21 +161,21 @@
 <script src="/js/lib/vue/vue-resource.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-
     jQuery(function($){
-
         $("#my-modal").on("hidden.bs.modal", function() {
+            alert(1);
             $('#my-modal').removeData("bs.modal");
+            $("#my-modal").find(".modal-content").children().remove();
         });
     });
-
     var app = new Vue({
         el: '#dataDiv',
         data: {
             users: {},
             "userName" : "",
             selected:"",
-            roles: []
+            roles: [],
+            userId:""
         },
         created : function(){
             var idx = layer.load(2);
@@ -210,23 +210,8 @@
                 });
             },
             queryRoleByUserId : function(userId){
-                //iframe层-父子操作
-                /*layer.open({
-                    title: "用户信息",
-                    type: 2,
-                    area: ['1000px', '380px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    content: '/prouter/system/user/grant/'+userId,
-                    success: function(layero, index){
-                        var body = layer.getChildFrame('body',index);//建立父子联系
-                        var userIdInput = body.find('#userId');
-                        $(userIdInput).attr("value",userId);
-                        console.log($(userIdInput).val());
-                    }
-                });*/
-
-                var param = {"userId":app.userId};
+                app.userId = userId;
+                var param = {"userId":userId};
                 var that = this;
                 that.$http.get("/system/users/roles/"+userId+"?op=get",{params:param},{emulateJSON: true}).then(function(response){
                     // 响应成功回调
@@ -244,7 +229,12 @@
                                 html.push("<option value='"+roles[i].id+"' "+selected+">"+roles[i].roleName+"</option>");
                             });
                             $("#duallist").html(html);
-                            var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+
+                            var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+                                nonSelectedListLabel: '所有角色',
+                                selectedListLabel: '已选角色'
+                            });
+                            $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox('refresh', true);
                         }
                     }
                 }, function(response){
@@ -252,8 +242,22 @@
                 });
             },
             saveUserRole : function(){
-                var aa = $("#duallist").val();
-                alert(aa);
+                var roles = $("#duallist").val();
+                var param = JSON.stringify({"userId":app.userId,"roles":roles});
+                app.$http.post("/system/userroles",param).then(function(response){
+                    // 响应成功回调
+                    var result = response.data;
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            $(".modal-backdrop").removeClass("modal-backdrop");
+                            layer.msg('分配成功。');
+                            callBack("/router/system/user/userroles");
+                        }
+                    }
+                    layer.close(idx);
+                }, function(response){
+                    // 响应错误回调
+                });
             }
         }
 
