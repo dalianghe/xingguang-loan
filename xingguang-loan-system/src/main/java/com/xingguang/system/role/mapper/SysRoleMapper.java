@@ -18,4 +18,6 @@ public interface SysRoleMapper {
 
     List<SysRoleEntityCustom> findSysRoleResources(SysRoleEntity sysRoleEntity) throws Exception;
 
+    List<SysRoleEntityCustom> findSysRoleHaveResources(Long id) throws Exception;
+
 }

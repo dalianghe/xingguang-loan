@@ -18,4 +18,6 @@ public interface SysResourceMapper {
 
     void updateSysResource(SysResourceEntity sysResourceEntity) throws Exception;
 
+
+
 }

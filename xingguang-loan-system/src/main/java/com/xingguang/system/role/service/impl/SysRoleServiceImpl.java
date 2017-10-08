@@ -65,4 +65,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
         List<SysRoleEntityCustom> list = sysRoleMapper.findSysRoleResources(sysRoleEntity);
         return list;
     }
+
+    @Override
+    public List<SysRoleEntityCustom> findResourcesByRoleId(Long roleId) throws Exception {
+        return sysRoleMapper.findSysRoleHaveResources(roleId);
+    }
 }

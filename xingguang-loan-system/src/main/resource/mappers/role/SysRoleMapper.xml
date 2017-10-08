@@ -54,6 +54,13 @@
         </if>
     </select>
 
+    <select id="findSysRoleHaveResources" parameterType="java.lang.Long" resultType="com.xingguang.system.resource.entity.custom.SysResourceEntityCustom">
+        SELECT t1.id,t1.res_name resName,ifnull(t2.id,0) marker
+        FROM sys_resource t1
+        LEFT JOIN (select * from sys_role_resource where sys_role_id=#{id,jdbcType=BIGINT}) t2 on t1.id=t2.sys_resource_id
+        WHERE t1.delete_flag='0'
+    </select>
+
     <update id="updateSysRole" parameterType="com.xingguang.system.role.entity.SysRoleEntity" >
         UPDATE sys_role
          <set>

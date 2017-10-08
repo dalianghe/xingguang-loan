@@ -117,26 +117,21 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h3 class="smaller lighter blue no-margin">角色分配</h3>
                     </div>
-
-                    <div class="page-content">
-                        <div class="row">
-                            <!-- PAGE CONTENT BEGINS -->
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
-                                    <div class="col-sm-8">
-                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected">
-                                            <#--<template  v-for="role in roles">
-                                                <option  :value="role.value" v-if="role.marker!=='0'" selected="selected">{{ role.roleName }}</option>
-                                                <option :value="role.value" v-else>{{role.roleName}}</option>
-                                            </template>-->
-                                        </select>
-                                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
+                                <div class="col-sm-8">
+                                    <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected">
+                                        <#--<template  v-for="role in roles">
+                                            <option  :value="role.value" v-if="role.marker!=='0'" selected="selected">{{ role.roleName }}</option>
+                                            <option :value="role.value" v-else>{{role.roleName}}</option>
+                                        </template>-->
+                                    </select>
                                 </div>
-                            </form>
-                        </div><!-- /.row -->
-                    </div><!-- /.page-content -->
-
+                            </div>
+                        </form>
+                    </div>
                     <div class="modal-footer">
                         <button class="btn btn-sm btn-success pull-right" @click="saveUserRole">
                             <i class="ace-icon fa fa-check"></i>

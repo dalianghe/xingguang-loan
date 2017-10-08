@@ -11,6 +11,8 @@ public class SysResourceEntityCustom extends SysResourceEntity{
 
     private String  menuLevelName;
 
+    private String marker;
+
     private List<SysResourceEntityCustom> subMenus;
 
     public List<SysResourceEntityCustom> getSubMenus() {
@@ -19,6 +21,14 @@ public class SysResourceEntityCustom extends SysResourceEntity{
 
     public void setSubMenus(List<SysResourceEntityCustom> subMenus) {
         this.subMenus = subMenus;
+    }
+
+    public String getMarker() {
+        return marker;
+    }
+
+    public void setMarker(String marker) {
+        this.marker = marker;
     }
 
     public String getMenuLevelName() {

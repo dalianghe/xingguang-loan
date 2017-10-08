@@ -19,4 +19,6 @@ public interface ISysRoleService {
 
     public List<SysRoleEntityCustom> findSysRoleResources(String roleName) throws Exception;
 
+    public List<SysRoleEntityCustom> findResourcesByRoleId(Long roleId) throws Exception;
+
 }

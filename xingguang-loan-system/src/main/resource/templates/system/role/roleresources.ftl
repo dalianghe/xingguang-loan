@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/assets/css/bootstrap-duallistbox.min.css" />
 <div class="main-content-inner">
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
     <ul class="breadcrumb">
@@ -45,7 +46,6 @@
                 </span>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
@@ -76,11 +76,8 @@
                                     </td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-info" @click="modifyRole(role.id)">
-                                                <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                            </button>
-                                            <button class="btn btn-xs btn-danger" @click="deleteRole(role.id)">
-                                                <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#my-modal" @click="queryResourceByRoleId(role.id)" title="分配资源">
+                                                <i class="glyphicon glyphicon-share-alt"></i>
                                             </button>
                                         </div>
                                         <div class="hidden-md hidden-lg">
@@ -90,16 +87,9 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                     <li>
-                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" @click="modifyRole(role.id)">
+                                                        <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" @click="queryResourceByRoleId(role.id)">
                                                                     <span class="green">
                                                                         <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-                                                                    </span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete" @click="deleteRole(role.id)">
-                                                                    <span class="red">
-                                                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                                                     </span>
                                                         </a>
                                                     </li>
@@ -123,35 +113,12 @@
                             <h3 class="smaller lighter blue no-margin">添加角色</h3>
                         </div>
                         <div class="modal-body">
-                            <form id="roleForm">
-                                <div class="profile-user-info profile-user-info-striped">
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name "><span style="color: red">*</span> 角色名称 </div>
-                                        <div class="profile-info-value">
-                                            <input type="text" id="roleName" name="roleName" placeholder="请输入角色名称"/>
-                                        </div>
-                                        <div class="profile-info-name"><span style="color: red">*</span> 角色编码 </div>
-                                        <div class="profile-info-value">
-                                            <input type="text" id="roleCode" name="roleCode" placeholder="请输入角色编码"/>
-                                        </div>
-                                    </div>
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name "><span style="color: red">*</span> 角色类型 </div>
-                                        <div class="profile-info-value">
-                                            <input type="text" id="roleType" name="roleType" placeholder="请输入角色类型"/>
-                                        </div>
-                                        <div class="profile-info-name"><span style="color: red">*</span> 角色状态 </div>
-                                        <div class="profile-info-value">
-                                            <label>
-                                                <input name="status" type="radio" class="ace" value="0"/>
-                                                <span class="lbl"> 有效</span>
-                                            </label>
-                                            &nbsp;&nbsp;
-                                            <label>
-                                                <input name="status" type="radio" class="ace"  value="1"/>
-                                                <span class="lbl"> 无效</span>
-                                            </label>
-                                        </div>
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
+                                    <div class="col-sm-8">
+                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected">
+                                        </select>
                                     </div>
                                 </div>
                             </form>
@@ -166,13 +133,12 @@
                                 取消
                             </button>
                         </div>
-
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
     </div><!-- /.page-content -->
 </div><!-- /.main-content-inner -->
-
+<script src="/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/vue-resource.min.js"></script>
 <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
@@ -188,7 +154,9 @@
         el: '#dataDiv',
         data: {
             roles: {},
-            "roleName" : ""
+            "roleName" : "",
+            "selected" : "",
+            "roleId" : ""
         },
         created : function(){
             var idx = layer.load(2);
@@ -224,9 +192,36 @@
                     // 响应错误回调
                 });
             },
+            queryResourceByRoleId : function(roleId){
+                var param = {"roleId":roleId};
+                this.$http.get("/system/roles/resources/"+roleId+"?op=get",{params:param},{emulateJSON: true}).then(function(response){
+                    // 响应成功回调
+                    var result = response.data;
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            var resources = result.data;
+                            var html =[];
+                            $.each(resources,function(i){
+                                var selected = "";
+                                if(resources[i].marker != "0"){
+                                    selected = "selected='selected'";
+                                }
+                                html.push("<option value='"+resources[i].id+"' "+selected+">"+resources[i].resName+"</option>");
+                            });
+                            $("#duallist").html(html);
+                            var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
+                                nonSelectedListLabel: '所有资源',
+                                selectedListLabel: '已选资源'
+                            });
+                            $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox('refresh', true);
+                        }
+                    }
+                }, function(response){
+                    // 响应错误回调
+                });
+                //layer.msg('系统正在完善，敬请恭候！');
+            },
             saveRole : function(){
-                /*$('#my-modal').modal('hide');
-                return;*/
                 app.$http.post("/system/role",JSON.stringify($("#roleForm").serializeJSON())).then(function(response){
                     // 响应成功回调
                     var result = response.data;
@@ -242,29 +237,8 @@
                 }, function(response){
                     // 响应错误回调
                 });
-            },
-            modifyRole : function(roleId){
-                layer.msg('系统正在完善，敬请恭候！');
-            },
-            deleteRole : function(roleId){
-                layer.confirm('确认要删除该角色吗？', {icon: 3, title:'系统提示'}, function(index){
-                    app.$http.put("/system/role/"+roleId,JSON.stringify({"id":roleId,"deleteFlag":"1"})).then(function(response){
-                        // 响应成功回调
-                        var result = response.data;
-                        if(result.sysCode==0){
-                            if(result.bizCode==0){
-                                layer.msg('删除成功！');
-                                app.$options.methods.queryRole();
-                            }else{
-                                layer.alert(result.msg, {icon:2,title:"系统提示"});
-                            }
-                        }
-                    }, function(response){
-                        // 响应错误回调
-                    });
-                    layer.close(index);
-                });
             }
+
         }
     });
     $('#nav-search-input').bind('keypress', function(event) {

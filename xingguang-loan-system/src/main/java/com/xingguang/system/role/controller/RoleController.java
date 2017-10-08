@@ -6,10 +6,7 @@ import com.xingguang.system.role.entity.SysRoleEntity;
 import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.role.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,6 +48,14 @@ public class RoleController {
     public ResultBean<?> rolesResources(String roleName) throws Exception{
         ResultBean<?> resultBean = null;
         List<SysRoleEntityCustom> roels = sysRoleService.findSysRoleResources(roleName);
+        resultBean = new ResultBean<>(roels);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/roles/resources/{roleId}" , method = RequestMethod.GET)
+    public ResultBean<?> findUsersHaveRoles(@PathVariable Long roleId) throws Exception{
+        ResultBean<?> resultBean = null;
+        List<SysRoleEntityCustom> roels = sysRoleService.findResourcesByRoleId(roleId);
         resultBean = new ResultBean<>(roels);
         return resultBean;
     }
