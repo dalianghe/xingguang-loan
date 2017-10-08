@@ -40,6 +40,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         sysRoleEntity.setRoleType(roleDomain.getRoleType());
         sysRoleEntity.setStatus(roleDomain.getStatus());
         sysRoleEntity.setCreateTime(new Date());
+        sysRoleEntity.setUpdateTime(new Date());
         sysRoleMapper.insertSysRole(sysRoleEntity);
         return sysRoleEntity;
     }

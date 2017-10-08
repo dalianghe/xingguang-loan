@@ -61,11 +61,11 @@
 
     <insert id="insertSysRole" parameterType="com.xingguang.system.role.entity.SysRoleEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sys_role (
-        role_code, role_name, role_type, status, create_time
+        role_code, role_name, role_type, status, create_time, update_time
         )
         VALUES (
         #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR},
-        #{status,jdbcType=VARCHAR},  #{createTime,jdbcType=TIMESTAMP}
+        #{status,jdbcType=VARCHAR},  #{createTime,jdbcType=TIMESTAMP},  #{updateTime,jdbcType=TIMESTAMP}
         )
     </insert>
 

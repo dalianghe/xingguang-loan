@@ -154,7 +154,6 @@
     </div><!-- /.page-content -->
 </div>
 
-<script src="/assets/js/jquery-2.1.4.min.js"></script>
 <script src="/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
 
 <script src="/js/lib/vue/vue.min.js"></script>
@@ -249,12 +248,13 @@
                     var result = response.data;
                     if(result.sysCode==0){
                         if(result.bizCode==0){
-                            $(".modal-backdrop").removeClass("modal-backdrop");
-                            layer.msg('分配成功。');
-                            callBack("/router/system/user/userroles");
+                            //$(".modal-backdrop").removeClass("modal-backdrop");
+                            $('#my-modal').modal('hide');
+                            layer.msg('分配成功！');
+                            app.$options.methods.queryUser();
+                            //callBack("/router/system/user/userroles");
                         }
                     }
-                    layer.close(idx);
                 }, function(response){
                     // 响应错误回调
                 });

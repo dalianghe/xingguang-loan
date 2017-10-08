@@ -66,7 +66,7 @@
         created : function(){
             var that=this;
             $.ajax({
-                url: "/resource/menus",
+                url: "/system/menus",
                 type: "GET",
                 contentType: "application/json",
                 data : {jsonData:JSON.stringify(loginJson)},
@@ -94,7 +94,8 @@
                 $("#"+id).parent().parent().parent().addClass("open active");
                 $("#"+id).parent().addClass("active");
                 if(url != ""){
-                    $("#main").load(url,function(response,status,xhr){
+                    $("#main").empty();
+                    $("#main").load(url+"?"+(new Date()).getTime(),function(response,status,xhr){
                         if(response.match("^\{(.+:.+,*){1,}\}$")){
                             var result = $.parseJSON(response);
                             if(result.sysCode==0){

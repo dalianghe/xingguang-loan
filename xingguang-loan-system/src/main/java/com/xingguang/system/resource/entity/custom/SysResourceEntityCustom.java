@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class SysResourceEntityCustom extends SysResourceEntity{
 
+    private String  menuLevelName;
+
     private List<SysResourceEntityCustom> subMenus;
 
     public List<SysResourceEntityCustom> getSubMenus() {
@@ -17,5 +19,13 @@ public class SysResourceEntityCustom extends SysResourceEntity{
 
     public void setSubMenus(List<SysResourceEntityCustom> subMenus) {
         this.subMenus = subMenus;
+    }
+
+    public String getMenuLevelName() {
+        return menuLevelName;
+    }
+
+    public void setMenuLevelName(String menuLevelName) {
+        this.menuLevelName = menuLevelName;
     }
 }

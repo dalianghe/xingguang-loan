@@ -138,4 +138,23 @@ public class SysResourceEntity {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "SysResourceEntity{" +
+                "id=" + id +
+                ", resName='" + resName + '\'' +
+                ", resType='" + resType + '\'' +
+                ", resUrl='" + resUrl + '\'' +
+                ", menuIcon='" + menuIcon + '\'' +
+                ", menuLevel=" + menuLevel +
+                ", permisCode='" + permisCode + '\'' +
+                ", parentId=" + parentId +
+                ", sortstring=" + sortstring +
+                ", deleteFlag='" + deleteFlag + '\'' +
+                ", deleteTime=" + deleteTime +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

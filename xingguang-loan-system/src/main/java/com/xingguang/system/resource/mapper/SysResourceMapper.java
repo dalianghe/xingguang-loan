@@ -12,4 +12,10 @@ public interface SysResourceMapper {
 
     List<SysResourceEntityCustom> findMenusByUserId(Long userId) throws Exception;
 
+    List<SysResourceEntityCustom> findResourceAll(SysResourceEntity sysResourceEntity) throws Exception;
+
+    void insertSysResource(SysResourceEntity sysResourceEntity) throws Exception;
+
+    void updateSysResource(SysResourceEntity sysResourceEntity) throws Exception;
+
 }
