@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xingguang.customer.credit.mapper.CreditInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.customer.credit.entity.CreditInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
+    <result column="final_amount" jdbcType="DECIMAL" property="finalAmount" />
+    <result column="unused_amount" jdbcType="DECIMAL" property="unusedAmount" />
+    <result column="used_amount" jdbcType="DECIMAL" property="usedAmount" />
+    <result column="credit_time" jdbcType="TIMESTAMP" property="creditTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, cus_user_id, final_amount, unused_amount, used_amount, credit_time, status
+  </sql>
+  <select id="selectByExample" parameterType="com.xingguang.customer.credit.entity.CreditInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from credit_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${limit} offset ${offset}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from credit_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from credit_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xingguang.customer.credit.entity.CreditInfoExample">
+    delete from credit_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditInfo" useGeneratedKeys="true">
+    insert into credit_info (cus_user_id, final_amount, unused_amount, 
+      used_amount, credit_time, status
+      )
+    values (#{cusUserId,jdbcType=BIGINT}, #{finalAmount,jdbcType=DECIMAL}, #{unusedAmount,jdbcType=DECIMAL}, 
+      #{usedAmount,jdbcType=DECIMAL}, #{creditTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditInfo" useGeneratedKeys="true">
+    insert into credit_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusUserId != null">
+        cus_user_id,
+      </if>
+      <if test="finalAmount != null">
+        final_amount,
+      </if>
+      <if test="unusedAmount != null">
+        unused_amount,
+      </if>
+      <if test="usedAmount != null">
+        used_amount,
+      </if>
+      <if test="creditTime != null">
+        credit_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusUserId != null">
+        #{cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="finalAmount != null">
+        #{finalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="unusedAmount != null">
+        #{unusedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="usedAmount != null">
+        #{usedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="creditTime != null">
+        #{creditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xingguang.customer.credit.entity.CreditInfoExample" resultType="java.lang.Long">
+    select count(*) from credit_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update credit_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.cusUserId != null">
+        cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.finalAmount != null">
+        final_amount = #{record.finalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.unusedAmount != null">
+        unused_amount = #{record.unusedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.usedAmount != null">
+        used_amount = #{record.usedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.creditTime != null">
+        credit_time = #{record.creditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update credit_info
+    set id = #{record.id,jdbcType=BIGINT},
+      cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
+      final_amount = #{record.finalAmount,jdbcType=DECIMAL},
+      unused_amount = #{record.unusedAmount,jdbcType=DECIMAL},
+      used_amount = #{record.usedAmount,jdbcType=DECIMAL},
+      credit_time = #{record.creditTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.credit.entity.CreditInfo">
+    update credit_info
+    <set>
+      <if test="cusUserId != null">
+        cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="finalAmount != null">
+        final_amount = #{finalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="unusedAmount != null">
+        unused_amount = #{unusedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="usedAmount != null">
+        used_amount = #{usedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="creditTime != null">
+        credit_time = #{creditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.credit.entity.CreditInfo">
+    update credit_info
+    set cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      final_amount = #{finalAmount,jdbcType=DECIMAL},
+      unused_amount = #{unusedAmount,jdbcType=DECIMAL},
+      used_amount = #{usedAmount,jdbcType=DECIMAL},
+      credit_time = #{creditTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

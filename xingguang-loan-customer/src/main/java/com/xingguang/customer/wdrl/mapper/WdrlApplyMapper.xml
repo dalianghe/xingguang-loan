@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xingguang.customer.wdrl.mapper.WdrlApplyMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.customer.wdrl.entity.WdrlApply">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="bank_card_id" jdbcType="BIGINT" property="bankCardId" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
+    <result column="issue_time" jdbcType="TIMESTAMP" property="issueTime" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="term_id" jdbcType="BIGINT" property="termId" />
+    <result column="service_charge" jdbcType="DECIMAL" property="serviceCharge" />
+    <result column="acc_mgmt_charge" jdbcType="DECIMAL" property="accMgmtCharge" />
+    <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bank_card_id, amount, create_time, status, operator_id, operator_name, issue_time, 
+    product_id, term_id, service_charge, acc_mgmt_charge, cus_user_id
+  </sql>
+  <select id="selectByExample" parameterType="com.xingguang.customer.wdrl.entity.WdrlApplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wdrl_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${limit} offset ${offset}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from wdrl_apply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wdrl_apply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xingguang.customer.wdrl.entity.WdrlApplyExample">
+    delete from wdrl_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply" useGeneratedKeys="true">
+    insert into wdrl_apply (bank_card_id, amount, create_time, 
+      status, operator_id, operator_name, 
+      issue_time, product_id, term_id, 
+      service_charge, acc_mgmt_charge, cus_user_id
+      )
+    values (#{bankCardId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, 
+      #{issueTime,jdbcType=TIMESTAMP}, #{productId,jdbcType=BIGINT}, #{termId,jdbcType=BIGINT}, 
+      #{serviceCharge,jdbcType=DECIMAL}, #{accMgmtCharge,jdbcType=DECIMAL}, #{cusUserId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply" useGeneratedKeys="true">
+    insert into wdrl_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bankCardId != null">
+        bank_card_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="operatorId != null">
+        operator_id,
+      </if>
+      <if test="operatorName != null">
+        operator_name,
+      </if>
+      <if test="issueTime != null">
+        issue_time,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="termId != null">
+        term_id,
+      </if>
+      <if test="serviceCharge != null">
+        service_charge,
+      </if>
+      <if test="accMgmtCharge != null">
+        acc_mgmt_charge,
+      </if>
+      <if test="cusUserId != null">
+        cus_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bankCardId != null">
+        #{bankCardId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+        #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueTime != null">
+        #{issueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="termId != null">
+        #{termId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceCharge != null">
+        #{serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="accMgmtCharge != null">
+        #{accMgmtCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cusUserId != null">
+        #{cusUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xingguang.customer.wdrl.entity.WdrlApplyExample" resultType="java.lang.Long">
+    select count(*) from wdrl_apply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wdrl_apply
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bankCardId != null">
+        bank_card_id = #{record.bankCardId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorId != null">
+        operator_id = #{record.operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.operatorName != null">
+        operator_name = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issueTime != null">
+        issue_time = #{record.issueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=BIGINT},
+      </if>
+      <if test="record.termId != null">
+        term_id = #{record.termId,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceCharge != null">
+        service_charge = #{record.serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accMgmtCharge != null">
+        acc_mgmt_charge = #{record.accMgmtCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cusUserId != null">
+        cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wdrl_apply
+    set id = #{record.id,jdbcType=BIGINT},
+      bank_card_id = #{record.bankCardId,jdbcType=BIGINT},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      operator_id = #{record.operatorId,jdbcType=BIGINT},
+      operator_name = #{record.operatorName,jdbcType=VARCHAR},
+      issue_time = #{record.issueTime,jdbcType=TIMESTAMP},
+      product_id = #{record.productId,jdbcType=BIGINT},
+      term_id = #{record.termId,jdbcType=BIGINT},
+      service_charge = #{record.serviceCharge,jdbcType=DECIMAL},
+      acc_mgmt_charge = #{record.accMgmtCharge,jdbcType=DECIMAL},
+      cus_user_id = #{record.cusUserId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply">
+    update wdrl_apply
+    <set>
+      <if test="bankCardId != null">
+        bank_card_id = #{bankCardId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null">
+        operator_id = #{operatorId,jdbcType=BIGINT},
+      </if>
+      <if test="operatorName != null">
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="issueTime != null">
+        issue_time = #{issueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="termId != null">
+        term_id = #{termId,jdbcType=BIGINT},
+      </if>
+      <if test="serviceCharge != null">
+        service_charge = #{serviceCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="accMgmtCharge != null">
+        acc_mgmt_charge = #{accMgmtCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cusUserId != null">
+        cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply">
+    update wdrl_apply
+    set bank_card_id = #{bankCardId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      operator_id = #{operatorId,jdbcType=BIGINT},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      issue_time = #{issueTime,jdbcType=TIMESTAMP},
+      product_id = #{productId,jdbcType=BIGINT},
+      term_id = #{termId,jdbcType=BIGINT},
+      service_charge = #{serviceCharge,jdbcType=DECIMAL},
+      acc_mgmt_charge = #{accMgmtCharge,jdbcType=DECIMAL},
+      cus_user_id = #{cusUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
