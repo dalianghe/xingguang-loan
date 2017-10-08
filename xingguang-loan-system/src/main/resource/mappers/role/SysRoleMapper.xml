@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xingguang.system.role.mapper.SysRoleMapper" >
-    <resultMap id="BaseResultMap" type="com.xingguang.system.role.entity.custom.SysRoleEntityCustom" >
+    <resultMap id="BaseResultMap" type="com.xingguang.system.role.entity.SysRoleEntity" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="role_code" property="roleCode" jdbcType="VARCHAR" />
         <result column="role_name" property="roleName" jdbcType="VARCHAR" />
         <result column="role_type" property="roleType" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="VARCHAR" />
-        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
         <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
         <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.system.role.entity.custom.SysRoleEntityCustom" extends="BaseResultMap">
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom2" type="com.xingguang.system.role.entity.custom.SysRoleEntityCustom" extends="BaseResultMap">
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+        <collection property="resources" javaType="java.util.List" ofType="com.xingguang.system.resource.entity.SysResourceEntity">
+            <id column="res_id" property="id" jdbcType="BIGINT" />
+            <result column="res_name" property="resName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List" >
         id, role_code, role_name, role_type, status, delete_flag, delete_time, create_time, update_time
     </sql>
 
-    <select id="findSysRoleListByRoleName" parameterType="com.xingguang.system.role.entity.SysRoleEntity" resultMap="BaseResultMap">
+    <select id="findSysRoleListByRoleName" parameterType="com.xingguang.system.role.entity.SysRoleEntity" resultMap="BaseResultMapCustom">
         SELECT
         <include refid="Base_Column_List" />
         ,if(status='0','有效','无效') status_name
@@ -29,6 +40,18 @@
         AND role_name LIKE CONCAT(CONCAT('%', #{roleName}), '%')
         </if>
         ORDER BY create_time
+    </select>
+
+    <select id="findSysRoleResources" parameterType="com.xingguang.system.role.entity.SysRoleEntity" resultMap="BaseResultMapCustom2">
+        SELECT t1.id,t1.role_name,t1.status,if(t1.status='0','有效','无效') status_name,t2.id id2,t2.res_name
+        FROM sys_role t1
+        LEFT JOIN
+        (select a.sys_role_id,b.id,b.res_name from sys_role_resource a,sys_resource b where a.sys_resource_id = b.id and b.delete_flag='0') t2
+        ON t1.id = t2.sys_role_id
+        WHERE 1=1
+        <if test="roleName != null" >
+            AND t1.role_name LIKE CONCAT(CONCAT('%', #{roleName}), '%')
+        </if>
     </select>
 
     <update id="updateSysRole" parameterType="com.xingguang.system.role.entity.SysRoleEntity" >

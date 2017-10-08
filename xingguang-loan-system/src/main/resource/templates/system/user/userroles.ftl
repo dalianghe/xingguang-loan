@@ -53,9 +53,9 @@
                         <table id="simple-table" class="table  table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th class="center">序号</th>
+                                <th class="hidden-480" class="center">序号</th>
                                 <th>用户姓名</th>
-                                <th>用户账户</th>
+                                <th class="hidden-480">用户账户</th>
                                 <th class="hidden-480">状态</th>
                                 <th >拥有角色</th>
                                 <th>操作</th>
@@ -64,11 +64,11 @@
 
                             <tbody>
                             <tr v-for="(user,index) in users"><!-- v-on:click="show_detail(user.id)"-->
-                                <td class="center">
+                                <td class="hidden-480" class="center">
                                     {{index+1}}
                                 </td>
                                 <td>{{user.userName}}</td>
-                                <td>{{user.loginId}}</td>
+                                <td class="hidden-480">{{user.loginId}}</td>
                                 <td class="hidden-480">
                                     <span class="label label-sm label-success" v-if="user.status==='0'">{{user.statusName}}</span>
                                     <span class="label label-sm label-info" v-if="user.status==='1'">{{user.statusName}}</span>

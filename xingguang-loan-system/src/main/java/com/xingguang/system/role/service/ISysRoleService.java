@@ -17,4 +17,6 @@ public interface ISysRoleService {
 
     public SysRoleEntity updateSysRole(RoleDomain roleDomain) throws Exception;
 
+    public List<SysRoleEntityCustom> findSysRoleResources(String roleName) throws Exception;
+
 }

@@ -57,4 +57,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
         sysRoleMapper.updateSysRole(sysRoleEntity);
         return sysRoleEntity;
     }
+
+    @Override
+    public List<SysRoleEntityCustom> findSysRoleResources(String roleName) throws Exception {
+        SysRoleEntity sysRoleEntity = new SysRoleEntity();
+        sysRoleEntity.setRoleName(roleName);
+        List<SysRoleEntityCustom> list = sysRoleMapper.findSysRoleResources(sysRoleEntity);
+        return list;
+    }
 }

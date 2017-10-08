@@ -48,4 +48,10 @@ public class RoleTest {
         roleDomain.setDeleteFlag("1");
         SysRoleEntity entity = sysRoleService.addSysRole(roleDomain);
     }
+
+    @Test
+    public void testFindSysRoleResources() throws Exception{
+        List<SysRoleEntityCustom> list = sysRoleService.findSysRoleResources("管理");
+        System.out.println(list.size());
+    }
 }

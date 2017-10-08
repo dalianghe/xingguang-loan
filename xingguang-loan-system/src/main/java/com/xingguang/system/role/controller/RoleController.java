@@ -46,4 +46,12 @@ public class RoleController {
         resultBean = new ResultBean<>(entity);
         return resultBean;
     }
+
+    @RequestMapping(value = "/roles/resources" , method = RequestMethod.GET)
+    public ResultBean<?> rolesResources(String roleName) throws Exception{
+        ResultBean<?> resultBean = null;
+        List<SysRoleEntityCustom> roels = sysRoleService.findSysRoleResources(roleName);
+        resultBean = new ResultBean<>(roels);
+        return resultBean;
+    }
 }

@@ -46,7 +46,9 @@ public class SysUserRoleServiceImpl implements ISysUserRoleService {
         this.deleteUserRoleByUserId(userId);
 
         // step 2: 插入用户新角色
-        this.insertUserRole(userId,roleList);
+        if(null!=roleList){
+            this.insertUserRole(userId,roleList);
+        }
 
     }
 

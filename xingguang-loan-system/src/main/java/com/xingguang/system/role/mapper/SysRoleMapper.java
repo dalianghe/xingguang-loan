@@ -16,4 +16,6 @@ public interface SysRoleMapper {
 
     void updateSysRole(SysRoleEntity sysRoleEntity) throws Exception;
 
+    List<SysRoleEntityCustom> findSysRoleResources(SysRoleEntity sysRoleEntity) throws Exception;
+
 }

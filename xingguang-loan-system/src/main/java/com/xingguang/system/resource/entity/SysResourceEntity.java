@@ -2,11 +2,12 @@ package com.xingguang.system.resource.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.io.Serializable;
 import java.util.Date;
 /**
  * Created by admin on 2017/9/30.
  */
-public class SysResourceEntity {
+public class SysResourceEntity implements Serializable{
     private Long id;
 
     private String resName;

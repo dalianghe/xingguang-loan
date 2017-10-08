@@ -67,23 +67,22 @@
     </select>
 
     <select id="findSysUserRoles" parameterType="com.xingguang.system.user.entity.SysUserEntity" resultMap="BaseResultMapCustom2">
-        SELECT t1.id,t1.user_name,t1.login_id,t1.status,if(t1.status='0','正常',if(t1.status='1','锁定','停用')) status_name,t3.id id2,t3.role_name
+        SELECT t1.id,t1.user_name,t1.login_id,t1.status,if(t1.status='0','正常',if(t1.status='1','锁定','停用')) status_name,t2.id id2,t2.role_name
         FROM sys_user t1
-        INNER join sys_user_role t2 on t1.id = t2.sys_user_id
-        INNER join sys_role t3 on t2.sys_role_id = t3.id
-        WHERE t3.delete_flag = '0'
+        LEFT JOIN
+        (select a.sys_user_id,b.id,b.role_name from sys_user_role a ,sys_role b where a.sys_role_id = b.id and b.delete_flag='0') t2
+        ON t1.id = t2.sys_user_id
+        WHERE 1=1
         <if test="userName != null" >
             AND t1.user_name LIKE CONCAT(CONCAT('%', #{userName}), '%')
         </if>
     </select>
 
     <select id="findSysUserHaveRoles" parameterType="java.lang.Long" resultType="com.xingguang.system.role.entity.custom.SysRoleEntityCustom">
-            SELECT t1.id,t1.role_name roleName,ifnull(t3.id,0) marker
+            SELECT t1.id,t1.role_name roleName,ifnull(t2.id,0) marker
             FROM sys_role t1
-            LEFT JOIN sys_user_role t2 on  t2.sys_role_id =t1.id
-            LEFT JOIN (select * from sys_user a where a.id=#{id,jdbcType=BIGINT}) t3 on t3.id = t2.sys_user_id
-            where t1.delete_flag = '0'
-            group by t1.id
+            LEFT JOIN (select * from sys_user_role where sys_user_id=#{id,jdbcType=BIGINT}) t2 on t1.id=t2.sys_role_id
+            WHERE t1.delete_flag='0'
         </select>
 
     <update id="updateSysUserById" parameterType="com.xingguang.system.user.entity.SysUserEntity">
