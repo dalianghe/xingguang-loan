@@ -124,7 +124,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-sm btn-success pull-right" @click="saveRole">
+                            <button class="btn btn-sm btn-success pull-right" @click="saveResource">
                                 <i class="ace-icon fa fa-check"></i>
                                 确定
                             </button>
@@ -193,6 +193,7 @@
                 });
             },
             queryResourceByRoleId : function(roleId){
+                this.roleId=roleId;
                 var param = {"roleId":roleId};
                 this.$http.get("/system/roles/resources/"+roleId+"?op=get",{params:param},{emulateJSON: true}).then(function(response){
                     // 响应成功回调
@@ -221,17 +222,19 @@
                 });
                 //layer.msg('系统正在完善，敬请恭候！');
             },
-            saveRole : function(){
-                app.$http.post("/system/role",JSON.stringify($("#roleForm").serializeJSON())).then(function(response){
+            saveResource : function(){
+                var resources = $("#duallist").val();
+                var param = JSON.stringify({"roleId":app.roleId,"resources":resources});
+                app.$http.post("/system/roleresources",param).then(function(response){
                     // 响应成功回调
                     var result = response.data;
                     if(result.sysCode==0){
                         if(result.bizCode==0){
+                            //$(".modal-backdrop").removeClass("modal-backdrop");
                             $('#my-modal').modal('hide');
-                            layer.msg('添加成功。');
+                            layer.msg('分配成功！');
                             app.$options.methods.queryRole();
-                        }else{
-                            layer.alert(result.msg, {icon:2,title:"系统提示"});
+                            //callBack("/router/system/user/userroles");
                         }
                     }
                 }, function(response){
