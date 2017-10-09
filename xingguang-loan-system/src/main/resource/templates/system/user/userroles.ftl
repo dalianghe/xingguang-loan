@@ -122,7 +122,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
                                 <div class="col-sm-8">
-                                    <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected">
+                                    <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected" style="height: 200px;">
                                         <#--<template  v-for="role in roles">
                                             <option  :value="role.value" v-if="role.marker!=='0'" selected="selected">{{ role.roleName }}</option>
                                             <option :value="role.value" v-else>{{role.roleName}}</option>
@@ -225,8 +225,9 @@
                             $("#duallist").html(html);
 
                             var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
-                                nonSelectedListLabel: '所有角色',
-                                selectedListLabel: '已选角色'
+                                nonSelectedListLabel: '未选角色',
+                                selectedListLabel: '已选角色',
+                                infoText:'{0}'
                             });
                             $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox('refresh', true);
                         }

@@ -117,7 +117,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label no-padding-top" for="duallist"></label>
                                     <div class="col-sm-8">
-                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected">
+                                        <select multiple="multiple" name="duallistbox_demo1[]" id="duallist" v-model="selected" style="height: 300px;">
                                         </select>
                                     </div>
                                 </div>
@@ -211,8 +211,9 @@
                             });
                             $("#duallist").html(html);
                             var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox({
-                                nonSelectedListLabel: '所有资源',
-                                selectedListLabel: '已选资源'
+                                nonSelectedListLabel: '未选资源',
+                                selectedListLabel: '已选资源',
+                                infoText:'{0}'
                             });
                             $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox('refresh', true);
                         }
