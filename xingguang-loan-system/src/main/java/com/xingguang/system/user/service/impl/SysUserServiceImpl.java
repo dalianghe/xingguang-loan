@@ -1,5 +1,7 @@
 package com.xingguang.system.user.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xingguang.exception.CustomException;
 import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.user.domain.SysUserDomain;
@@ -13,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/9/22.
@@ -36,10 +40,15 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
-    public List<SysUserEntityCustom> findSysUserList(String userName) throws Exception {
+    public Map<String , Object> findSysUserList(SysUserDomain domain) throws Exception {
         SysUserEntity sysUserEntity = new SysUserEntity();
-        sysUserEntity.setUserName(userName);
-        return sysUserMapper.findSysUserList(sysUserEntity);
+        sysUserEntity.setUserName(domain.getUserName());
+        PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
+        List<SysUserEntityCustom> users = sysUserMapper.findSysUserList(sysUserEntity);
+        Map<String,Object> map = new HashMap<>();
+        map.put("users" , users);
+        map.put("total" , ((Page) users).getTotal());
+        return map;
     }
 
     @Override

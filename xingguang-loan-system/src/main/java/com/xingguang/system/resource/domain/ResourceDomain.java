@@ -1,11 +1,13 @@
 package com.xingguang.system.resource.domain;
 
+import com.xingguang.system.common.domain.BaseDomain;
+
 import java.io.Serializable;
 
 /**
  * Created by admin on 2017/10/8.
  */
-public class ResourceDomain implements Serializable {
+public class ResourceDomain extends BaseDomain implements Serializable {
 
     private Long id;
 

@@ -30,8 +30,8 @@ public class UserTest {
 
     @Test
     public void testFindUserList() throws Exception{
-        List<SysUserEntityCustom> list = sysUserService.findSysUserList("");
-        System.out.println(list);
+        //List<SysUserEntityCustom> list = sysUserService.findSysUserList("");
+        //System.out.println(list);
     }
 
     @Test

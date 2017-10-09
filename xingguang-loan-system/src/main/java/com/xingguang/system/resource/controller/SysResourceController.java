@@ -41,9 +41,10 @@ public class SysResourceController {
     }
 
     @RequestMapping(value = "/resources" , method = RequestMethod.GET)
-    public ResultBean<?> findResourceAll(String resName) throws Exception{
+    public ResultBean<?> findResourceAll(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
-        List<SysResourceEntityCustom> resources = sysResourceService.findResourceAll(resName);
+        ResourceDomain domain = JSON.parseObject(paramJson,ResourceDomain.class);
+        Map<String,Object> resources = sysResourceService.findResourceAll(domain);
         resultBean = new ResultBean<>(resources);
         return resultBean;
     }

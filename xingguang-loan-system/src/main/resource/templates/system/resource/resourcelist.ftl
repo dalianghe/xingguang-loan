@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/js/lib/vue/page/zpageNav.css" />
 <div class="main-content-inner">
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
     <ul class="breadcrumb">
@@ -216,12 +217,16 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+        <div class="wrap pages pa-cen clearfix" id="wrap">
+            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
+        </div>
     </div><!-- /.page-content -->
 </div><!-- /.main-content-inner -->
 
 
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/vue-resource.min.js"></script>
+<script src="/js/lib/vue/page/zpageNav.js"></script>
 <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
 
 <!-- inline scripts related to this page -->
@@ -230,44 +235,20 @@
         el: '#dataDiv',
         data: {
             resources: {},
-            "resName" : ""
+            "resName" : "",
+            // 分页
+            page: 1,
+            pageSize: 10,
+            total: ''
         },
         created : function(){
-            var idx = layer.load(2);
-            var that=this;
-            that.$http.get("/system/resources").then(function(response){
-                // 响应成功回调
-                var result = response.data;
-                if(result.sysCode==0){
-                    if(result.bizCode==0){
-                        that.resources = result.data;
-                    }
-                }
-                layer.close(idx);
-            }, function(response){
-                // 响应错误回调
-            });
+            query(this);
         },
         methods : {
             queryResource : function(){
-                var idx = layer.load(2);
-                var param = {"resName":this.resName};
-                app.$http.get("/system/resources?op=get",{params:param},{emulateJSON: true}).then(function(response){
-                    // 响应成功回调
-                    var result = response.data;
-                    console.log(result);
-                    if(result.sysCode==0){
-                        if(result.bizCode==0){
-                            this.resources = result.data;
-                        }
-                    }
-                    layer.close(idx);
-                }, function(response){
-                    // 响应错误回调
-                });
+                query(this);
             },
             saveResource : function(){
-
                 console.log(JSON.stringify($("#resourceForm").serializeJSON()));
                 app.$http.post("/system/resource",JSON.stringify($("#resourceForm").serializeJSON())).then(function(response){
                     // 响应成功回调
@@ -276,7 +257,8 @@
                         if(result.bizCode==0){
                             $('#resource-modal').modal('hide');
                             layer.msg('添加成功。');
-                            app.$options.methods.queryResource();
+                            //app.$options.methods.queryResource();
+                            query(this);
                         }else{
                             layer.alert(result.msg, {icon:2,title:"系统提示"});
                         }
@@ -296,7 +278,8 @@
                         if(result.sysCode==0){
                             if(result.bizCode==0){
                                 layer.msg('删除成功！');
-                                app.$options.methods.queryResource();
+                                //app.$options.methods.queryResource();
+                                query(this);
                             }else{
                                 layer.alert(result.msg, {icon:2,title:"系统提示"});
                             }
@@ -306,9 +289,31 @@
                     });
                     layer.close(index);
                 });
+            },
+            pageHandler: function (page) {
+                this.page=page;
+                query(this);
             }
         }
     });
+    function query(obj){
+        var that = obj;
+        var idx = layer.load(2);
+        var paramJson = {"resName":that.resName,"pager":{"page":that.page,"pageSize":that.pageSize}};
+        var param = {"paramJson":JSON.stringify(paramJson)};
+        that.$http.get("/system/resources?op=get",{params:param},{emulateJSON: true}).then(function(response){
+            var result = response.data;
+            if(result.sysCode==0){
+                if(result.bizCode==0){
+                    that.resources = result.data.resources;
+                    that.total = result.data.total;
+                }
+            }
+            layer.close(idx);
+        }, function(response){
+            layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+        });
+    }
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();

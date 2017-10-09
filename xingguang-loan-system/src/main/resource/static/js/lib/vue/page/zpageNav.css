@@ -1,0 +1,64 @@
+﻿
+.zpagenav {
+    text-align: center;
+    -webkit-user-select: none;
+    height:42px;
+}
+
+.zpagenav {
+    font-family: normal;
+    color: #48576a;
+}
+
+    .zpagenav ul {
+        display: inline-block;
+        margin: 0px 0px;
+        padding: 0;
+    }
+
+        .zpagenav ul li {
+            display: inline-block;
+            margin: 1.5px;
+            padding: 0 15px;
+            border: 1px solid #f6f6f6;
+            /*border-right: 1px;*/
+            background: #fff;
+            font-size: 14px;
+            font-style: normal;
+            min-width: 40px;
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+            .zpagenav ul li:last-child {
+                border-right: 1px solid #f6f6f6;
+            }
+
+            .zpagenav ul li:hover {
+                color: #a5a5a5;
+                background-color: #f4f4f4;/*#20a0ff;*/
+                
+            }
+
+            .zpagenav ul li.active {
+                border-color: #f4f4f4;/*#20a0ff;*/
+                background-color: #f4f4f4;/*#20a0ff;*/
+                color: #a5a5a5;
+                cursor: default;
+            }
+
+                .zpagenav ul li.active:hover {
+                    /* color: #fff; */
+                }
+
+            .zpagenav ul li.disabled {
+                cursor: not-allowed;
+                color: #e4e4e4;
+            }
+
+            .zpagenav ul li.dot {
+                cursor: default;
+            }

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/js/lib/vue/page/zpageNav.css" />
 <div class="main-content-inner">
 <div class="breadcrumbs ace-save-state" id="breadcrumbs">
     <ul class="breadcrumb">
@@ -64,15 +65,15 @@
                         <tr>
                             <th class="center">序号</th>
                             <th>用户姓名</th>
-                            <th>用户性别</th>
-                            <th>用户账户</th>
-                            <th class="hidden-480">手机号</th>
+                            <th class="hidden-480">用户性别</th>
+                            <th class="hidden-480">用户账户</th>
+                            <th>手机号</th>
                             <th>
                                 <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                 创建时间
                             </th>
-                            <th class="hidden-480">状态</th>
-                            <th class="detail-col">详情</th>
+                            <th>状态</th>
+                            <th class="detail-col" class="hidden-480">详情</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -83,9 +84,9 @@
                                     {{index+1}}
                                 </td>
                                 <td>{{user.userName}}</td>
-                                <td>{{user.userSexName}}</td>
-                                <td>{{user.loginId}}</td>
-                                <td class="hidden-480">{{user.userMobile}}</td>
+                                <td class="hidden-480">{{user.userSexName}}</td>
+                                <td class="hidden-480">{{user.loginId}}</td>
+                                <td>{{user.userMobile}}</td>
                                 <td>{{user.createTime}}</td>
 
                                 <td class="hidden-480">
@@ -94,7 +95,7 @@
                                     <span class="label label-sm label-danger" v-if="user.status==='2'">{{user.statusName}}</span>
                                 </td>
 
-                                <td class="center">
+                                <td class="hidden-480" class="center">
                                     <div class="action-buttons">
                                         <a href="#" class="green bigger-140 show-details-btn" title="Show Details"  @click="show_detail(user.id)">
                                             <i class="ace-icon fa fa-angle-double-down"></i>
@@ -158,11 +159,16 @@
 
         </div><!-- /.col -->
     </div><!-- /.row -->
+
+    <div class="wrap pages pa-cen clearfix" id="wrap">
+        <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
+    </div>
 </div><!-- /.page-content -->
 </div>
 
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/vue-resource.min.js"></script>
+<script src="/js/lib/vue/page/zpageNav.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 
@@ -176,23 +182,14 @@
         el: '#dataDiv',
         data: {
             users: {},
-            "userName":""
+            "userName":"",
+            // 分页
+            page: 1,
+            pageSize: 10,
+            total: ''
         },
         created : function(){
-            var idx = layer.load(2);
-            var that=this;
-            that.$http.get("/system/users").then(function(response){
-                // 响应成功回调
-                var result = response.data;
-                if(result.sysCode==0){
-                    if(result.bizCode==0){
-                        that.users = result.data;
-                    }
-                }
-                layer.close(idx);
-            }, function(response){
-                // 响应错误回调
-            });
+            query(this);
         },
         methods : {
             show_detail : function(userId){
@@ -213,30 +210,38 @@
                 });
             },
             queryUser : function(){
-                var idx = layer.load(2);
-                var param = {"userName":this.userName};
-                var that=this;
-                that.$http.get("/system/users?op=get",{params:param},{emulateJSON: true}).then(function(response){
-                    // 响应成功回调
-                    var result = response.data;
-                    if(result.sysCode==0){
-                        if(result.bizCode==0){
-                            that.users = result.data;
-                        }
-                    }
-                    layer.close(idx);
-                }, function(response){
-                    // 响应错误回调
-                });
+                query(this);
             },
             modify_user : function(userId){
                 var url = "/prouter/system/user/userupdate/"+userId;
                 $("#main").load(url,function(response,status,xhr){
                     //console.log("success");
                 });
+            },
+            pageHandler: function (page) {
+                this.page=page;
+                query(this);
             }
         }
     });
+    function query(obj){
+        var that = obj;
+        var idx = layer.load(2);
+        var paramJson = {"userName":that.resName,"pager":{"page":that.page,"pageSize":that.pageSize}};
+        var param = {"paramJson":JSON.stringify(paramJson)};
+        that.$http.get("/system/users?op=get",{params:param},{emulateJSON: true}).then(function(response){
+            var result = response.data;
+            if(result.sysCode==0){
+                if(result.bizCode==0){
+                    that.users = result.data.users;
+                    that.total = result.data.total;
+                }
+            }
+            layer.close(idx);
+        }, function(response){
+            layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+        });
+    }
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();

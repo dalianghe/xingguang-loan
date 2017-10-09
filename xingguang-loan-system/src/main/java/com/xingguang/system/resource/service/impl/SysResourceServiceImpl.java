@@ -1,5 +1,7 @@
 package com.xingguang.system.resource.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.xingguang.constant.SystemConstant;
 import com.xingguang.system.resource.domain.ResourceDomain;
 import com.xingguang.system.resource.entity.SysResourceEntity;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/9/30.
@@ -28,10 +32,16 @@ public class SysResourceServiceImpl implements ISysResourceService {
     }
 
     @Override
-    public List<SysResourceEntityCustom> findResourceAll(String resName) throws Exception {
+    public Map<String,Object> findResourceAll(ResourceDomain domain) throws Exception {
         SysResourceEntity sysResourceEntity = new SysResourceEntity();
-        sysResourceEntity.setResName(resName);
-        return sysResourceMapper.findResourceAll(sysResourceEntity);
+        sysResourceEntity.setResName(domain.getResName());
+        PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
+        List<SysResourceEntityCustom> list = sysResourceMapper.findResourceAll(sysResourceEntity);
+        System.out.println("total: " + ((Page) list).getTotal());
+        Map<String,Object> map = new HashMap<>();
+        map.put("resources" , list);
+        map.put("total" , ((Page) list).getTotal());
+        return map;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.xingguang.system.user.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.xingguang.system.common.domain.BaseDomain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
 /**
  * Created by admin on 2017/10/4.
  */
-public class SysUserDomain implements Serializable{
+public class SysUserDomain extends BaseDomain implements Serializable{
 
     private Long id; //
     private String userName; // 用户姓名

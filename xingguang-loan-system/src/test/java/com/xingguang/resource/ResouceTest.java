@@ -24,8 +24,8 @@ public class ResouceTest {
 
     @Test
     public void testFindResourceAll() throws Exception{
-        List<SysResourceEntityCustom> list = sysResourceService.findResourceAll("系统");
-        System.out.println(list.size());
+        //List<SysResourceEntityCustom> list = sysResourceService.findResourceAll(null);
+        //System.out.println(list.size());
     }
 
     @Test

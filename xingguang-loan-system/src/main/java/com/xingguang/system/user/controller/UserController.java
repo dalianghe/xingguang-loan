@@ -1,5 +1,6 @@
 package com.xingguang.system.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.system.common.controller.BaseController;
 import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/9/24.
@@ -25,10 +27,11 @@ public class UserController extends BaseController{
 
     @RequiresPermissions("user:list")
     @RequestMapping(value = "/users" , method = RequestMethod.GET)
-    public ResultBean<?> findSysUserList(String userName) throws Exception{
+    public ResultBean<?> findSysUserList(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
-        List<SysUserEntityCustom> list = sysUserService.findSysUserList(userName);
-        resultBean = new ResultBean<>(list);
+        SysUserDomain domain = JSON.parseObject(paramJson , SysUserDomain.class);
+        Map<String , Object> users = sysUserService.findSysUserList(domain);
+        resultBean = new ResultBean<>(users);
         return resultBean;
     }
 

@@ -6,6 +6,7 @@ import com.xingguang.system.user.entity.SysUserEntity;
 import com.xingguang.system.user.entity.custom.SysUserEntityCustom;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/9/24.
@@ -16,7 +17,7 @@ public interface ISysUserService {
 
     public SysUserEntity findSysUserByLoginId(String loginId) throws Exception;
 
-    public List<SysUserEntityCustom> findSysUserList(String userName) throws Exception;
+    public Map<String , Object> findSysUserList(SysUserDomain domain) throws Exception;
 
     public SysUserEntity updateSysUserById(SysUserDomain sysUserDomain) throws Exception;
 
