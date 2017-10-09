@@ -91,7 +91,7 @@
             jQuery(function($) {
                 $(function () {
                     $("#navbar-container").load("/router/system/common/header");
-                    $("#menu").load("/prouter/system/common/menu/${id}");
+                    $("#menu").load("/router/system/common/menu");
                     $("#main").load("/router/system/common/main");
                     $("#footer").load("/router/system/common/footer");
                 });

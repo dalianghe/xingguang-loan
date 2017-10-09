@@ -56,8 +56,7 @@
 
 <script>
     // 定义参数json串
-    var loginJson = {"userId":"${id}"};
-
+    var loginJson = {"userId":"<@shiro.principal property="id"/>"};
     var app = new Vue({
         el: '#menuUl',
         data: {
