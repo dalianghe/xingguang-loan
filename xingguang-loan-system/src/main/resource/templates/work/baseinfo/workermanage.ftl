@@ -10,7 +10,7 @@
         <li>
             <a href="#">系统设置</a>
         </li>
-        <li class="active">用户管理</li>
+        <li class="active">业务员管理</li>
     </ul><!-- /.breadcrumb -->
 
     <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
         <h1>
             <small>
                 <i class="ace-icon fa fa-angle-double-right"></i>
-                用户管理
+                业务员管理
             </small>
         </h1>
     </div><!-- /.page-header -->
@@ -38,20 +38,13 @@
                 <span class="input-group-addon">
                     <i class="ace-icon fa fa-check"></i>
                 </span>
-            <input type="text" class="form-control search-query" placeholder="请输入用户姓名" v-model="userName"/>
+            <input type="text" class="form-control search-query" placeholder="请输入业务员姓名" v-model="userName"/>
             <span class="input-group-btn">
                     <button type="button" class="btn btn-inverse btn-white" @click="queryUser">
                         <span class="ace-icon fa fa-search icon-on-right bigger-110"></span>
                         查询
                     </button>
                 </span>
-        </div>
-        &nbsp;&nbsp;
-        <div style="float:right;" onclick="addUser()">
-            <button class="btn btn-white btn-info btn-bold"  data-toggle="modal" data-target="#my-modal">
-                <i class="ace-icon fa fa-pencil-square-o bigger-120 blue"></i>
-                添加用户
-            </button>
         </div>
     </div>
 
@@ -63,38 +56,41 @@
                     <table id="simple-table" class="table  table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th class="center">序号</th>
-                            <th>用户姓名</th>
-                            <th class="hidden-480">用户性别</th>
-                            <th class="hidden-480">用户账户</th>
+                            <th class="hidden-480" class="center">序号</th>
+                            <th>业务员姓名</th>
+                            <th class="hidden-480">性别</th>
                             <th>手机号</th>
+                            <th class="hidden-480">身份证号</th>
+                            <th>所在省市</th>
+                            <th>审核状态</th>
+                            <th class="hidden-480">账户状态</th>
                             <th>
                                 <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                创建时间
+                                申请时间
                             </th>
-                            <th>状态</th>
                             <th class="detail-col" class="hidden-480">详情</th>
                             <th>操作</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                            <tr v-for="(user,index) in users"><!-- v-on:click="show_detail(user.id)"-->
-                                <td class="center">
-                                    {{index+1}}
+                            <tr v-for="(user,index) in users">
+                                <td class="hidden-480" class="center"> {{index+1}}</td>
+                                <td>{{user.name}}</td>
+                                <td class="hidden-480">{{user.sexName}}</td>
+                                <td>{{user.phone}}</td>
+                                <td>{{user.idNo}}</td>
+                                <td>{{user.provinceName}}{{user.cityName}}</td>
+                                <td >
+                                    <span class="label label-sm label-info" v-if="user.status===1">{{user.statusName}}</span>
+                                    <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
+                                    <span class="label label-sm label-danger" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
-                                <td>{{user.userName}}</td>
-                                <td class="hidden-480">{{user.userSexName}}</td>
-                                <td class="hidden-480">{{user.loginId}}</td>
-                                <td>{{user.userMobile}}</td>
-                                <td>{{user.createTime}}</td>
-
                                 <td class="hidden-480">
-                                    <span class="label label-sm label-success" v-if="user.status==='0'">{{user.statusName}}</span>
-                                    <span class="label label-sm label-info" v-if="user.status==='1'">{{user.statusName}}</span>
-                                    <span class="label label-sm label-danger" v-if="user.status==='2'">{{user.statusName}}</span>
+                                    <span class="label label-sm label-success" v-if="user.enableStatus===0">{{user.enableStatusName}}</span>
+                                    <span class="label label-sm label-inverse arrowed-in" v-if="user.enableStatus===1">{{user.enableStatusName}}</span>
                                 </td>
-
+                                <td>{{user.createTime}}</td>
                                 <td class="hidden-480">
                                     <div class="action-buttons" style="text-align:center;">
                                         <a href="#" class="green bigger-140 show-details-btn" title="Show Details"  @click="show_detail(user.id)">
@@ -103,21 +99,17 @@
                                         </a>
                                     </div>
                                 </td>
-
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success">
-                                            <i class="ace-icon fa fa-check bigger-120"></i>
-                                        </button>
                                         <button class="btn btn-xs btn-info" @click="modify_user(user.id)">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-success">
+                                            <i class="ace-icon fa fa-lock bigger-120"></i>
                                         </button>
                                         <button class="btn btn-xs btn-danger">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                         </button>
-                                        <#--<button class="btn btn-xs btn-warning">
-                                            <i class="ace-icon fa fa-flag bigger-120"></i>
-                                        </button>-->
                                     </div>
 
                                     <div class="hidden-md hidden-lg">
@@ -172,12 +164,6 @@
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 
-    function addUser(){
-        $("#main").load("/router/system/user/useradd",function(response,status,xhr){
-            //console.log("success");
-        });
-    }
-
     var app = new Vue({
         el: '#dataDiv',
         data: {
@@ -195,12 +181,12 @@
             show_detail : function(userId){
                 //iframe层-父子操作
                 layer.open({
-                    title: "用户信息",
+                    title: "业务员信息",
                     type: 2,
                     area: ['700px', '450px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    content: '/prouter/system/user/userinfo/'+userId,
+                    content: '/prouter/work/baseinfo/userinfo/'+userId,
                     success: function(layero, index){
                         var body = layer.getChildFrame('body',index);//建立父子联系
                         var userIdInput = body.find('#userId');
@@ -227,9 +213,9 @@
     function query(obj){
         var that = obj;
         var idx = layer.load(2);
-        var paramJson = {"userName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
+        var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
         var param = {"paramJson":JSON.stringify(paramJson)};
-        that.$http.get("/system/users?op=get",{params:param},{emulateJSON: true}).then(function(response){
+        that.$http.get("/work/users?op=get",{params:param},{emulateJSON: true}).then(function(response){
             var result = response.data;
             if(result.sysCode==0){
                 if(result.bizCode==0){
