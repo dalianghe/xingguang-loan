@@ -323,7 +323,7 @@
                             console.log(data.data);
                             if(data.sysCode==0){ // 系统正常返回
                                 if(data.bizCode==0){ // 业务处理通过
-                                    window.location.href = "/router/system/common/index";
+                                    window.location.href = "/router/common/index";
                                 }else{
                                     $("#message").html("用户名密码错误！").show(300).delay(3000).hide(300);
                                 }

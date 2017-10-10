@@ -90,10 +90,10 @@
         <script type="text/javascript">
             jQuery(function($) {
                 $(function () {
-                    $("#navbar-container").load("/router/system/common/header");
-                    $("#menu").load("/router/system/common/menu");
-                    $("#main").load("/router/system/common/main");
-                    $("#footer").load("/router/system/common/footer");
+                    $("#navbar-container").load("/router/common/header");
+                    $("#menu").load("/router/common/menu");
+                    $("#main").load("/router/common/main");
+                    $("#footer").load("/router/common/footer");
                 });
             });
             function callBack(url){

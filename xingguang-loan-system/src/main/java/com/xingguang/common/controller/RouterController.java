@@ -16,7 +16,7 @@ public class RouterController {
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String login(){
         //return "/system/login/login";
-        return "redirect:/router/system/common/index";
+        return "redirect:/router/common/index";
     }
 
     @RequestMapping(value = "/system/login",method = RequestMethod.GET)
