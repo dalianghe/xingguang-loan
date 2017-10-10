@@ -16,4 +16,7 @@ public interface WorkUserInfoMapper {
     List<WorkUserInfoEntityCustom> findWorkUserList(WorkUserInfoEntity workUserInfoEntity) throws Exception;
 
     WorkUserInfoEntityCustom findWorkUserById(Long userId) throws Exception;
+
+    void updateWorkUserById(WorkUserInfoEntity workUserInfoEntity) throws Exception;
+
 }

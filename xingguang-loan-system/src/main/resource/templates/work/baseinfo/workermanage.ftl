@@ -57,18 +57,18 @@
                         <thead>
                         <tr>
                             <th class="hidden-480" class="center">序号</th>
-                            <th>业务员姓名</th>
+                            <th>姓名</th>
                             <th class="hidden-480">性别</th>
                             <th>手机号</th>
                             <th class="hidden-480">身份证号</th>
                             <th>所在省市</th>
                             <th>审核状态</th>
-                            <th class="hidden-480">账户状态</th>
-                            <th>
+                            <th>账户状态</th>
+                            <th class="hidden-480">
                                 <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                 申请时间
                             </th>
-                            <th class="detail-col" class="hidden-480">详情</th>
+                            <th class="detail-col hidden-480" >详情</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -79,18 +79,18 @@
                                 <td>{{user.name}}</td>
                                 <td class="hidden-480">{{user.sexName}}</td>
                                 <td>{{user.phone}}</td>
-                                <td>{{user.idNo}}</td>
+                                <td class="hidden-480">{{user.idNo}}</td>
                                 <td>{{user.provinceName}}{{user.cityName}}</td>
                                 <td >
                                     <span class="label label-sm label-info" v-if="user.status===1">{{user.statusName}}</span>
                                     <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
                                     <span class="label label-sm label-danger" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
-                                <td class="hidden-480">
+                                <td>
                                     <span class="label label-sm label-success" v-if="user.enableStatus===0">{{user.enableStatusName}}</span>
                                     <span class="label label-sm label-inverse arrowed-in" v-if="user.enableStatus===1">{{user.enableStatusName}}</span>
                                 </td>
-                                <td>{{user.createTime}}</td>
+                                <td class="hidden-480">{{user.createTime}}</td>
                                 <td class="hidden-480">
                                     <div class="action-buttons" style="text-align:center;">
                                         <a href="#" class="green bigger-140 show-details-btn" title="Show Details"  @click="show_detail(user.id)">
@@ -101,14 +101,17 @@
                                 </td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-info" @click="modify_user(user.id)">
+                                        <#--<button class="btn btn-xs btn-success" v-if="user.status===1" @click="auditUser(user.id)">
+                                            <i class="ace-icon fa fa-check bigger-120"></i>
+                                        </button>-->
+                                        <button class="btn btn-xs btn-info" @click="modifyUser(user.id)">
                                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                                         </button>
-                                        <button class="btn btn-xs btn-success">
+                                        <button class="btn btn-xs btn-danger" v-if="user.enableStatus===0" @click="enableUser(user.id , 1)">
                                             <i class="ace-icon fa fa-lock bigger-120"></i>
                                         </button>
-                                        <button class="btn btn-xs btn-danger">
-                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        <button class="btn btn-xs btn-success" v-if="user.enableStatus===1" @click="enableUser(user.id , 0)">
+                                            <i class="ace-icon fa fa-unlock bigger-120"></i>
                                         </button>
                                     </div>
 
@@ -119,23 +122,23 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-                                                                <span class="blue">
-                                                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                                </span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" @click="modify_user(user.id)">
+                                                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit" @click="modifyUser(user.id)">
                                                                 <span class="green">
                                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                                 </span>
                                                     </a>
                                                 </li>
-                                                <li>
+                                                <li  v-if="user.enableStatus===0" @click="enableUser(user.id , 1)">
                                                     <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
                                                                 <span class="red">
-                                                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                                                    <i class="ace-icon fa fa-lock bigger-120"></i>
+                                                                </span>
+                                                    </a>
+                                                </li>
+                                                <li  v-if="user.enableStatus===1" @click="enableUser(user.id , 0)">
+                                                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                                                <span class="red">
+                                                                    <i class="ace-icon fa fa-unlock bigger-120"></i>
                                                                 </span>
                                                     </a>
                                                 </li>
@@ -198,10 +201,35 @@
             queryUser : function(){
                 query(this);
             },
-            modify_user : function(userId){
-                var url = "/prouter/system/user/userupdate/"+userId;
+            /*auditUser : function(userId){
+                var url = "/prouter/work/baseinfo/useraudit/"+userId;
                 $("#main").load(url,function(response,status,xhr){
                     //console.log("success");
+                });
+            },*/
+            modifyUser : function(userId){
+                var url = "/prouter/work/baseinfo/userupdate/"+userId;
+                $("#main").load(url,function(response,status,xhr){
+                    //console.log("success");
+                });
+            },
+            enableUser : function(userId , enableStatus){
+                layer.confirm('确认执行该操作吗？', {icon: 3, title:'系统提示'}, function(index){
+                    app.$http.post("/work/enableuser",JSON.stringify({"id":userId,"enableStatus":enableStatus})).then(function(response){
+                        var result = response.data;
+                        if(result.sysCode==0){
+                            if(result.bizCode==0){
+                                $('#my-modal').modal('hide');
+                                layer.msg('操作成功！');
+                                query(this);
+                            }else{
+                                layer.alert(result.msg, {icon:2,title:"系统提示"});
+                            }
+                        }
+                    }, function(response){
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                    });
+                    layer.close(index);
                 });
             },
             pageHandler: function (page) {

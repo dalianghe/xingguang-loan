@@ -2,15 +2,16 @@ package com.xingguang.work.baseinfo.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.xingguang.common.beans.ResultBean;
+import com.xingguang.system.login.domain.AuthUserDomain;
 import com.xingguang.work.baseinfo.domain.WorkUserDomain;
 import com.xingguang.work.baseinfo.entity.custom.WorkUserInfoEntityCustom;
 import com.xingguang.work.baseinfo.service.IWorkUserInfoService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -39,6 +40,32 @@ public class WorkUserController {
         ResultBean<?> resultBean = null;
         WorkUserInfoEntityCustom entity = workUserInfoService.findWorkUserById(userId);
         resultBean = new ResultBean<>(entity);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/work/audituser" , method = RequestMethod.POST)
+    public ResultBean<?> auditWorkUser(@RequestBody WorkUserDomain domain) throws Exception{
+        ResultBean<?> resultBean = null;
+        Subject subject = SecurityUtils.getSubject();
+        AuthUserDomain loginUser = (AuthUserDomain)subject.getPrincipals().getPrimaryPrincipal();
+        domain.setAuditorId(loginUser.getId());
+        domain.setAuditorName(loginUser.getUserName());
+        domain.setAuditorTime(new Date());
+        workUserInfoService.updateWorkUserById(domain);
+        resultBean = new ResultBean<>();
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/work/enableuser" , method = RequestMethod.POST)
+    public ResultBean<?> enableWorkUser(@RequestBody WorkUserDomain domain) throws Exception{
+        ResultBean<?> resultBean = null;
+        Subject subject = SecurityUtils.getSubject();
+        AuthUserDomain loginUser = (AuthUserDomain)subject.getPrincipals().getPrimaryPrincipal();
+        domain.setEnableId(loginUser.getId());
+        domain.setEnableName(loginUser.getUserName());
+        domain.setEnableTime(new Date());
+        workUserInfoService.updateWorkUserById(domain);
+        resultBean = new ResultBean<>();
         return resultBean;
     }
 

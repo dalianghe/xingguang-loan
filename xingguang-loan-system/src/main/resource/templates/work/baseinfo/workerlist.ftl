@@ -57,7 +57,7 @@
                         <thead>
                         <tr>
                             <th class="hidden-480" class="center">序号</th>
-                            <th>业务员姓名</th>
+                            <th>姓名</th>
                             <th class="hidden-480">性别</th>
                             <th>手机号</th>
                             <th class="hidden-480">身份证号</th>
@@ -68,7 +68,8 @@
                                 <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                 申请时间
                             </th>
-                            <th class="detail-col" class="hidden-480">详情</th>
+                            <#--<th class="detail-col" class="hidden-480">详情</th>-->
+                            <th>操作</th>
                         </tr>
                         </thead>
 
@@ -90,12 +91,45 @@
                                     <span class="label label-sm label-inverse arrowed-in" v-if="user.enableStatus===1">{{user.enableStatusName}}</span>
                                 </td>
                                 <td>{{user.createTime}}</td>
-                                <td class="hidden-480">
+                                <#--<td class="hidden-480">
                                     <div class="action-buttons" style="text-align:center;">
-                                        <a href="#" class="green bigger-140 show-details-btn" title="Show Details"  @click="show_detail(user.id)">
+                                        <a href="#" class="green bigger-140 show-details-btn" title="Show Details" @click="show_detail(user.id)">
                                             <i class="ace-icon fa fa-angle-double-down"></i>
                                             <span class="sr-only">Details</span>
                                         </a>
+                                    </div>
+                                </td>-->
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-success" v-if="user.status===1" @click="auditUser(user.id)">
+                                            <i class="ace-icon fa fa-check bigger-120"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-info" @click="show_detail(user.id)">
+                                            <i class="ace-icon fa fa-angle-double-down bigger-120"></i>
+                                        </button>
+                                    </div>
+                                    <div class="hidden-md hidden-lg">
+                                        <div class="inline pos-rel">
+                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" v-if="user.status===1" @click="auditUser(user.id)">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="show_detail(user.id)">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -152,6 +186,12 @@
             },
             queryUser : function(){
                 query(this);
+            },
+            auditUser : function(userId){
+                var url = "/prouter/work/baseinfo/useraudit/"+userId;
+                $("#main").load(url,function(response,status,xhr){
+                    //console.log("success");
+                });
             },
             pageHandler: function (page) {
                 this.page=page;

@@ -7,6 +7,7 @@ import com.xingguang.work.baseinfo.entity.WorkUserInfoEntity;
 import com.xingguang.work.baseinfo.entity.custom.WorkUserInfoEntityCustom;
 import com.xingguang.work.baseinfo.mapper.WorkUserInfoMapper;
 import com.xingguang.work.baseinfo.service.IWorkUserInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,12 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
     @Override
     public WorkUserInfoEntityCustom findWorkUserById(Long userId) throws Exception {
         return workUserInfoMapper.findWorkUserById(userId);
+    }
+
+    @Override
+    public void updateWorkUserById(WorkUserDomain domain) throws Exception {
+        WorkUserInfoEntity entity = new WorkUserInfoEntity();
+        BeanUtils.copyProperties(domain,entity);
+        workUserInfoMapper.updateWorkUserById(entity);
     }
 }

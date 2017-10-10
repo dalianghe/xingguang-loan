@@ -53,46 +53,53 @@
         ORDER BY create_time desc
     </select>
 
-
-
-    <update id="updateSysUserById" parameterType="com.xingguang.system.user.entity.SysUserEntity">
-        UPDATE sys_user
+    <update id="updateWorkUserById" parameterType="com.xingguang.work.baseinfo.entity.WorkUserInfoEntity">
+        UPDATE work_user_info
         <set>
-            <if test="userName != null" >
-                user_name = #{userName,jdbcType=VARCHAR},
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
             </if>
-            <if test="password != null" >
-                password = #{password,jdbcType=VARCHAR},
+            <if test="idNo != null" >
+                id_no = #{idNo,jdbcType=VARCHAR},
             </if>
-            <if test="userBirthday != null" >
-                user_birthday = #{userBirthday,jdbcType=DATE},
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=INTEGER},
             </if>
-            <if test="userSex != null" >
-                user_sex = #{userSex,jdbcType=VARCHAR},
+            <if test="provinceId != null" >
+                province_id = #{provinceId,jdbcType=BIGINT},
             </if>
-            <if test="userMobile != null" >
-                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            <if test="provinceName != null" >
+                province_name = #{provinceName,jdbcType=VARCHAR},
             </if>
-            <if test="userEmail != null" >
-                user_email = #{userEmail,jdbcType=VARCHAR},
+            <if test="cityId != null" >
+                city_id = #{cityId,jdbcType=BIGINT},
             </if>
-            <if test="workAddress != null" >
-                work_address = #{workAddress,jdbcType=VARCHAR},
-            </if>
-            <if test="userJob != null" >
-                user_job = #{userJob,jdbcType=VARCHAR},
-            </if>
-             <if test="joinDate != null" >
-                join_date = #{joinDate,jdbcType=DATE},
+            <if test="cityName != null" >
+                city_name = #{cityName,jdbcType=VARCHAR},
             </if>
             <if test="status != null" >
-                status = #{status,jdbcType=VARCHAR},
+                status = #{status,jdbcType=INTEGER},
             </if>
-            <if test="lastLoginTime != null" >
-                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            <if test="auditorId != null" >
+                 auditor_id = #{auditorId,jdbcType=BIGINT},
             </if>
-            <if test="updateTime != null" >
-                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            <if test="auditorName != null" >
+                auditor_name = #{auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorTime != null" >
+                auditor_time = #{auditorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enableStatus != null" >
+                enable_status = #{enableStatus,jdbcType=INTEGER},
+            </if>
+            <if test="enableId != null" >
+                enable_id = #{enableId,jdbcType=BIGINT},
+            </if>
+            <if test="enableName != null" >
+                enable_name = #{enableName,jdbcType=VARCHAR},
+            </if>
+            <if test="enableTime != null" >
+                enable_time = #{enableTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         WHERE id = #{id,jdbcType=BIGINT}
