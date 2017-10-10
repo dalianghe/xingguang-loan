@@ -1,6 +1,6 @@
 package com.xingguang.system.role.controller;
 
-import com.xingguang.beans.ResultBean;
+import com.xingguang.common.beans.ResultBean;
 import com.xingguang.system.role.domain.RoleDomain;
 import com.xingguang.system.role.entity.SysRoleEntity;
 import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;

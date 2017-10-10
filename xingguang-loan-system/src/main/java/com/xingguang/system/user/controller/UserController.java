@@ -1,8 +1,8 @@
 package com.xingguang.system.user.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.xingguang.beans.ResultBean;
-import com.xingguang.system.common.controller.BaseController;
+import com.xingguang.common.beans.ResultBean;
+import com.xingguang.common.controller.BaseController;
 import com.xingguang.system.role.entity.custom.SysRoleEntityCustom;
 import com.xingguang.system.user.domain.SysUserDomain;
 import com.xingguang.system.user.entity.SysUserEntity;

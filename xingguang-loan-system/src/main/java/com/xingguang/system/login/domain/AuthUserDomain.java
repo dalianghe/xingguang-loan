@@ -1,6 +1,6 @@
 package com.xingguang.system.login.domain;
 
-import com.xingguang.system.common.domain.BaseDomain;
+import com.xingguang.common.domain.BaseDomain;
 import com.xingguang.system.resource.entity.SysResourceEntity;
 
 import java.io.Serializable;

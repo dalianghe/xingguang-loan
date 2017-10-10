@@ -1,7 +1,8 @@
 package com.xingguang.exception.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.xingguang.beans.ResultBean;
+
+import com.xingguang.common.beans.ResultBean;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.WebUtilsPro;
 import org.apache.shiro.authc.AuthenticationException;

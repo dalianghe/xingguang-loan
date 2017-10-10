@@ -1,4 +1,4 @@
-package com.xingguang.system.common.controller;
+package com.xingguang.common.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

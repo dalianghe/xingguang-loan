@@ -1,6 +1,6 @@
 package com.xingguang.system.roleresource.controller;
 
-import com.xingguang.beans.ResultBean;
+import com.xingguang.common.beans.ResultBean;
 import com.xingguang.system.roleresource.domain.RoleResourceDomain;
 import com.xingguang.system.roleresource.service.ISysRoleResouceService;
 import org.springframework.beans.factory.annotation.Autowired;

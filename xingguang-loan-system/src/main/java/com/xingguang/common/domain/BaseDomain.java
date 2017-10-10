@@ -1,4 +1,4 @@
-package com.xingguang.system.common.domain;
+package com.xingguang.common.domain;
 
 import java.util.HashMap;
 import java.util.Map;

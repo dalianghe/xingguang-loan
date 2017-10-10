@@ -1,7 +1,7 @@
 package com.xingguang.system.login.controller;
 
-import com.xingguang.beans.ResultBean;
-import com.xingguang.system.common.controller.BaseController;
+import com.xingguang.common.beans.ResultBean;
+import com.xingguang.common.controller.BaseController;
 import com.xingguang.system.login.domain.AuthUserDomain;
 import com.xingguang.system.login.params.AuthBean;
 import org.apache.shiro.SecurityUtils;

@@ -1,4 +1,4 @@
-package com.xingguang.beans;
+package com.xingguang.common.beans;
 
 import java.io.Serializable;
 

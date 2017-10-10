@@ -1,6 +1,6 @@
 package com.xingguang.system.userrole.controller;
 
-import com.xingguang.beans.ResultBean;
+import com.xingguang.common.beans.ResultBean;
 import com.xingguang.system.userrole.domain.UserRoleDomain;
 import com.xingguang.system.userrole.service.ISysUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

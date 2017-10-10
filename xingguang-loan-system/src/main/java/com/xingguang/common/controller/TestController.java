@@ -1,6 +1,6 @@
-package com.xingguang.system.common.controller;
+package com.xingguang.common.controller;
 
-import com.xingguang.beans.ResultBean;
+import com.xingguang.common.beans.ResultBean;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -32,7 +32,7 @@ public class AopConfig {
     /**
      * 定义拦截规则：拦截com.jerryspring.loan.controller.包下面的所有public类中，有@RequestMapping注解的方法。
      */
-    @Pointcut("execution(public * com.xingguang.system.*.controller..*.*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+    @Pointcut("execution(public * com.xingguang.*.*.controller..*.*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void webLogPointCut(){}
 
     @Before("webLogPointCut()")

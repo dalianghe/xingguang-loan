@@ -1,6 +1,7 @@
 package com.xingguang.system.resource.domain;
 
-import com.xingguang.system.common.domain.BaseDomain;
+
+import com.xingguang.common.domain.BaseDomain;
 
 import java.io.Serializable;
 

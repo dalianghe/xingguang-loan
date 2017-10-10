@@ -1,7 +1,7 @@
 package com.xingguang.system.user.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.xingguang.system.common.domain.BaseDomain;
+import com.xingguang.common.domain.BaseDomain;
 
 import java.io.Serializable;
 import java.util.Date;

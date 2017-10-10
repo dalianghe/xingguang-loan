@@ -1,4 +1,4 @@
-package com.xingguang.system.common.controller;
+package com.xingguang.common.controller;
 
 import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.stereotype.Controller;
