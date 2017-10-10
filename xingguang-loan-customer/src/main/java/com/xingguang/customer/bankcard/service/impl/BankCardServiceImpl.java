@@ -1,14 +1,20 @@
 package com.xingguang.customer.bankcard.service.impl;
 
+import com.xingguang.customer.bank.entity.CusBank;
+import com.xingguang.customer.bank.service.ICusBankService;
 import com.xingguang.customer.bankcard.entity.CusBankCard;
 import com.xingguang.customer.bankcard.entity.CusBankCardExample;
+import com.xingguang.customer.bankcard.entity.CusBankCardForList;
 import com.xingguang.customer.bankcard.mapper.CusBankCardMapper;
 import com.xingguang.customer.bankcard.service.IBankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/10/1.
@@ -26,8 +32,10 @@ public class BankCardServiceImpl implements IBankCardService {
     }
 
     @Override
-    public int update(CusBankCard cusBankCard) {
-        return this.cusBankCardMapper.updateByPrimaryKeySelective(cusBankCard);
+    public int update(Long id, Long userId, CusBankCard cusBankCard) {
+        CusBankCardExample example = new CusBankCardExample();
+        example.createCriteria().andIdEqualTo(id).andCusUserIdEqualTo(userId);
+        return this.cusBankCardMapper.updateByExampleSelective(cusBankCard, example);
     }
 
     @Override
@@ -36,7 +44,18 @@ public class BankCardServiceImpl implements IBankCardService {
     }
 
     @Override
-    public CusBankCard getBankCardById(Long id) {
-        return this.cusBankCardMapper.selectByPrimaryKey(id);
+    public CusBankCard getBankCardById(Long id, Long userId) {
+        CusBankCardExample example = new CusBankCardExample();
+        example.createCriteria().andIdEqualTo(id).andCusUserIdEqualTo(userId);
+        List<CusBankCard> list = this.cusBankCardMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
+    }
+
+    @Override
+    public long countByExample(CusBankCardExample example) {
+        return this.cusBankCardMapper.countByExample(example);
     }
 }

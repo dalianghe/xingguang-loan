@@ -11,8 +11,9 @@ import java.util.List;
 public interface IBankCardService {
 
     int create(CusBankCard cusBankCard);
-    int update(CusBankCard cusBankCard);
+    int update(Long id, Long userId, CusBankCard cusBankCard);
     List<CusBankCard> getBankCardList(CusBankCardExample example);
-    CusBankCard getBankCardById(Long id);
+    CusBankCard getBankCardById(Long id, Long userId);
+    long countByExample(CusBankCardExample example);
 
 }

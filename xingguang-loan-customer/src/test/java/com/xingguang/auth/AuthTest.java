@@ -3,8 +3,7 @@ package com.xingguang.auth;
 import com.xingguang.customer.auth.entity.CusUserAuthEntity;
 import com.xingguang.customer.auth.params.AuthBean;
 import com.xingguang.customer.auth.service.ICusUserAuthService;
-import com.xingguang.customer.info.entity.CusUserInfoEntity;
-import com.xingguang.customer.info.params.InfoBean;
+import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +33,9 @@ public class AuthTest {
 
     @Test
     public void testAddCusUserInfo() throws Exception{
-        InfoBean infoBean = new InfoBean();
-        infoBean.setPhone("13611201362");
-        CusUserInfoEntity entity = cusUserInfoService.addCusUserInfo(infoBean);
-        System.out.println(entity.toString());
+        CusUserInfo cusUserInfo = new CusUserInfo();
+        cusUserInfo.setPhone("13611201362");
+        cusUserInfoService.create(cusUserInfo);
     }
 
     @Test

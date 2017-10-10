@@ -1,9 +1,13 @@
 package com.xingguang.customer.auth.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.xingguang.beans.JWTToken;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.customer.auth.entity.CusUserAuthEntity;
 import com.xingguang.customer.auth.params.AuthBean;
 import com.xingguang.customer.auth.service.ICusUserAuthService;
+import com.xingguang.customer.info.entity.CusUserInfo;
+import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +26,29 @@ public class AuthController {
     @Autowired
     private ICusUserAuthService cusUserAuthService;
 
+    @Autowired
+    private ICusUserInfoService cusUserInfoService;
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception{
-
         ResultBean<?> resultBean = null;
+
+//        // 校验验证码
+//        String clientSmsCode = authBean.getSmsCode();
+//        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
+//        if(!clientSmsCode.equals(serverSmsCode)){
+//            throw new CustomException("验证码错误");
+//        }
+
         // 查询用户
-        CusUserAuthEntity cusUserAuthEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
+        CusUserInfo cusUserInfo = cusUserInfoService.findByPhone(authBean.getPhone());
         // 登陆账户是否存在
-        if(cusUserAuthEntity == null){
+        if(cusUserInfo == null){
             throw new CustomException("用户不存在");
         }
-        // 校验验证码
-        String clientSmsCode = authBean.getSmsCode();
-        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
-        if(!clientSmsCode.equals(serverSmsCode)){
-            throw new CustomException("验证码错误");
-        }
+
         // 返回token串
-        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com",authBean.getPhone(),10000);
+        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())),100*60*1000);
         // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
         return resultBean;
@@ -65,4 +74,5 @@ public class AuthController {
         resultBean = new ResultBean<>(newEntity);
         return resultBean;
     }
+
 }

@@ -4,7 +4,7 @@ import com.xingguang.customer.auth.entity.CusUserAuthEntity;
 import com.xingguang.customer.auth.mapper.CusUserAuthMapper;
 import com.xingguang.customer.auth.params.AuthBean;
 import com.xingguang.customer.auth.service.ICusUserAuthService;
-import com.xingguang.customer.info.params.InfoBean;
+import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +39,9 @@ public class CusUserAuthServiceImpl implements ICusUserAuthService {
     @Transactional
     public CusUserAuthEntity registerCusUser(AuthBean authBean) throws Exception {
         CusUserAuthEntity entity = this.addCusUserAuth(authBean);
-        InfoBean infoBean = new InfoBean();
-        infoBean.setPhone(authBean.getPhone());
-        cusUserInfoService.addCusUserInfo(infoBean);
+        CusUserInfo cusUserInfo = new CusUserInfo();
+        cusUserInfo.setPhone(authBean.getPhone());
+        this.cusUserInfoService.create(cusUserInfo);
         return entity;
     }
 
