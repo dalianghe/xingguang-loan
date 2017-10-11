@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.cus.baseinfo.mapper.CusUserInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.cus.baseinfo.entity.CusUserInfoEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+        <result column="real_status" property="realStatus" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="income" property="income" jdbcType="VARCHAR" />
+        <result column="education" property="education" jdbcType="VARCHAR" />
+        <result column="occupation" property="occupation" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="work_user_id" property="workUserId" jdbcType="BIGINT" />
+        <result column="work_user_name" property="workUserName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" extends="BaseResultMap">
+        <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
+        <result column="real_status_name" property="realStatusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, phone, name, id_no, real_status, sex, income, education, occupation, create_time,
+        work_user_id, work_user_name
+    </sql>
+
+    <select id="findCusUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
+            SELECT
+            <include refid="Base_Column_List" />
+            ,if(sex='1','男','女') sex_name,if(real_status='1','已实名','未实名') real_status_name
+            FROM cus_user_info
+            WHERE id = #{userId}
+        </select>
+
+    <select id="findCusUserList" parameterType="com.xingguang.cus.baseinfo.entity.CusUserInfoEntity" resultMap="BaseResultMapCustom">
+        SELECT
+        <include refid="Base_Column_List" />
+        ,if(sex='1','男','女') sex_name,if(real_status='1','已实名','未实名') real_status_name
+        FROM cus_user_info
+        WHERE 1=1
+        <if test="name != null" >
+            AND name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        ORDER BY create_time desc
+    </select>
+
+    <update id="updateWorkUserById" parameterType="com.xingguang.work.baseinfo.entity.WorkUserInfoEntity">
+        UPDATE work_user_info
+        <set>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="idNo != null" >
+                id_no = #{idNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="provinceId != null" >
+                province_id = #{provinceId,jdbcType=BIGINT},
+            </if>
+            <if test="provinceName != null" >
+                province_name = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null" >
+                city_id = #{cityId,jdbcType=BIGINT},
+            </if>
+            <if test="cityName != null" >
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null" >
+                 auditor_id = #{auditorId,jdbcType=BIGINT},
+            </if>
+            <if test="auditorName != null" >
+                auditor_name = #{auditorName,jdbcType=VARCHAR},
+            </if>
+            <if test="auditorTime != null" >
+                auditor_time = #{auditorTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enableStatus != null" >
+                enable_status = #{enableStatus,jdbcType=INTEGER},
+            </if>
+            <if test="enableId != null" >
+                enable_id = #{enableId,jdbcType=BIGINT},
+            </if>
+            <if test="enableName != null" >
+                enable_name = #{enableName,jdbcType=VARCHAR},
+            </if>
+            <if test="enableTime != null" >
+                enable_time = #{enableTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>

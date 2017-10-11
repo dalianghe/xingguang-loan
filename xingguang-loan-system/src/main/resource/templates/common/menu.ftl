@@ -33,10 +33,10 @@
         <a href="#" :id="menu.id" class="dropdown-toggle" :title="menu.resUrl">
             <i :class="menu.menuIcon"></i>
             <span class="menu-text"> {{menu.resName}} </span>
-            <b class="arrow fa fa-angle-down" v-if="menu.subMenus.length > 1"></b>
+            <b class="arrow fa fa-angle-down" v-if="menu.subMenus.length >= 1"></b>
         </a>
         <b class="arrow"></b>
-        <ul class="submenu" v-if="menu.subMenus.length > 1">
+        <ul class="submenu" v-if="menu.subMenus.length >= 1">
             <li class="" v-for="sub in menu.subMenus" v-on:self="router">
                 <a href="#" :id="sub.id" :title="sub.resUrl">
                     <i class="menu-icon fa fa-caret-right"></i>
