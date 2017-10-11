@@ -61,7 +61,7 @@
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> 姓名 </div>
                                                     <div class="profile-info-value">
-                                                        <input type="text" id="name" placeholder="请输入用户姓名" v-model="user.name"/>
+                                                        <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
                                                     </div>
                                                     <div class="profile-info-name"> 性别 </div>
                                                     <div class="profile-info-value">
@@ -108,7 +108,7 @@
                                                     <div class="profile-info-value"></div>
                                                 </div>
                                             </div>
-
+                                        <input type="hidden" name="id" v-model="user.id">
                                         </form>
                                     </div>
                                 </div>
@@ -125,41 +125,35 @@
         </div><!-- /.page-content -->
 
     </div>
+    <script src="/js/lib/vue/axios.min.js"></script>
     <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
+    <script src="/js/utils/vue.form.utils.js"></script>
     <script type="text/javascript">
         var app = new Vue({
             el: '#dataDiv',
             data: {
                 user: {
-                    "id" : "${id}",
-                    "name" : "",
-                    "sex" : "",
-                    "phone" : "",
-                    "idNo" : ""
+                    "id" : "${id}"
                 }
             },
             created : function(){
                 var userId = this.user.id;
                 var that=this;
-                that.$http.get("/work/user/"+userId).then(function(response){
-                    // 响应成功回调
+                axios.get("/work/user/"+userId).then(function (response) {
                     var result = response.data;
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             that.user = result.data;
                         }
                     }
-                }, function(response){
-                    // 响应错误回调
+                }).catch(function (error) {
+                    console.log(error);
                 });
             },
             methods : {
                 saveUser : function(){
-                    var formData = JSON.stringify(this.user);
-                    console.log(formData);
-                    return;
-                    this.$http.post("/work/audituser",formData).then(function(response){
-                        // 响应成功回调
+                    var formData = new VueFormSub("userForm");
+                    axios.post('/work/updateuser' , formData).then(function(response){
                         var result = response.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){
@@ -167,8 +161,8 @@
                                 layer.alert('操作成功！', {icon: 1,title: "系统提示"});
                             }
                         }
-                    }, function(response){
-                        // 响应错误回调
+                    }).catch(function(){
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
                     });
                 }
             }

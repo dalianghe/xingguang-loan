@@ -69,4 +69,12 @@ public class WorkUserController {
         return resultBean;
     }
 
+    @RequestMapping(value = "/work/updateuser" , method = RequestMethod.POST)
+    public ResultBean<?> updateWorkUser(@RequestBody WorkUserDomain domain) throws Exception{
+        ResultBean<?> resultBean = null;
+        workUserInfoService.updateWorkUserById(domain);
+        resultBean = new ResultBean<>();
+        return resultBean;
+    }
+
 }

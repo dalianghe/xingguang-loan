@@ -117,6 +117,7 @@
         </div><!-- /.page-content -->
 
     </div>
+    <script src="/js/lib/vue/axios.min.js"></script>
     <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
     <script type="text/javascript">
         var app = new Vue({
@@ -127,23 +128,21 @@
             created : function(){
                 var userId = $("#id").val();
                 var that=this;
-                that.$http.get("/work/user/"+userId).then(function(response){
-                    // 响应成功回调
+                axios.get("/work/user/"+userId).then(function (response) {
                     var result = response.data;
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             that.user = result.data;
                         }
                     }
-                }, function(response){
-                    // 响应错误回调
+                }).catch(function (error) {
+                    console.log(error);
                 });
             },
             methods : {
                 auditUser : function(){
-                    var formData = JSON.stringify($("#userForm").serializeJSON());
-                    this.$http.post("/work/audituser",formData).then(function(response){
-                        // 响应成功回调
+                    var formData = $("#userForm").serializeJSON();
+                    axios.post('/work/audituser' , formData).then(function(response){
                         var result = response.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){
@@ -151,8 +150,8 @@
                                 layer.alert('操作成功！', {icon: 1,title: "系统提示"});
                             }
                         }
-                    }, function(response){
-                        // 响应错误回调
+                    }).catch(function(){
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
                     });
                 }
             }

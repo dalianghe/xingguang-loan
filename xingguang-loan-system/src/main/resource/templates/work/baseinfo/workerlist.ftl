@@ -148,7 +148,7 @@
 </div>
 
 <script src="/js/lib/vue/vue.min.js"></script>
-<script src="/js/lib/vue/vue-resource.min.js"></script>
+<script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
@@ -203,8 +203,9 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        var param = {"paramJson":JSON.stringify(paramJson)};
-        that.$http.get("/work/users?op=get",{params:param},{emulateJSON: true}).then(function(response){
+        axios.get('/work/users', {
+            params: {paramJson: JSON.stringify(paramJson)}
+        }).then(function (response) {
             var result = response.data;
             if(result.sysCode==0){
                 if(result.bizCode==0){
@@ -213,7 +214,7 @@
                 }
             }
             layer.close(idx);
-        }, function(response){
+        }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
     }
