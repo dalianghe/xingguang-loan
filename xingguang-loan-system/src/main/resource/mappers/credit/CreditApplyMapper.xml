@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.credit.apply.mapper.CreditApplyMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.credit.apply.entity.CreditApplyEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="cus_user_id" property="cusUserId" jdbcType="BIGINT" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="credit_time" property="creditTime" jdbcType="TIMESTAMP" />
+        <result column="credit_user_id" property="creditUserId" jdbcType="BIGINT" />
+        <result column="credit_user_name" property="creditUserName" jdbcType="VARCHAR" />
+        <result column="refuse_code" property="refuseCode" jdbcType="VARCHAR" />
+        <result column="cus_lng" property="cusLng" jdbcType="VARCHAR" />
+        <result column="cus_lat" property="cusLat" jdbcType="VARCHAR" />
+        <result column="cus_province_id" property="cusProvinceId" jdbcType="BIGINT" />
+        <result column="cus_province_name" property="cusProvinceName" jdbcType="VARCHAR" />
+        <result column="cus_city_id" property="cusCityId" jdbcType="BIGINT" />
+        <result column="cus_city_name" property="cusCityName" jdbcType="VARCHAR" />
+        <result column="cus_addr" property="cusAddr" jdbcType="VARCHAR" />
+        <result column="work_user_id" property="workUserId" jdbcType="BIGINT" />
+        <result column="work_user_name" property="workUserName" jdbcType="VARCHAR" />
+        <result column="work_lng" property="workLng" jdbcType="VARCHAR" />
+        <result column="work_lat" property="workLat" jdbcType="VARCHAR" />
+        <result column="work_province_id" property="workProvinceId" jdbcType="BIGINT" />
+        <result column="work_province_name" property="workProvinceName" jdbcType="VARCHAR" />
+        <result column="work_city_id" property="workCityId" jdbcType="BIGINT" />
+        <result column="work_city_name" property="workCityName" jdbcType="VARCHAR" />
+        <result column="work_addr" property="workAddr" jdbcType="VARCHAR" />
+        <result column="cus_work_distance" property="cusWorkDistance" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.credit.apply.entity.custom.CreditApplyEntityCustom" extends="BaseResultMap">
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, cus_user_id, status, create_time, amount, credit_time, credit_user_id, credit_user_name,
+        refuse_code, cus_lng, cus_lat, cus_province_id, cus_province_name, cus_city_id, cus_city_name,
+        cus_addr, work_user_id, work_user_name, work_lng, work_lat, work_province_id, work_province_name,
+        work_city_id, work_city_name, work_addr, cus_work_distance
+  </sql>
+
+    <select id="findCreditApplyById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
+        SELECT
+        <include refid="Base_Column_List" />,
+        if(status='1','待授信',if(status='2','授信通过','授信不通过')) status_name
+        FROM credit_apply
+        WHERE id = #{id}
+    </select>
+
+</mapper>

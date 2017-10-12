@@ -36,9 +36,17 @@ public class WorkUserController {
     }
 
     @RequestMapping(value = "/work/user/{userId}" , method = RequestMethod.GET)
-    public ResultBean<?> findWorkUserAll(@PathVariable Long userId) throws Exception{
+    public ResultBean<?> findWorkUserById(@PathVariable Long userId) throws Exception{
         ResultBean<?> resultBean = null;
         WorkUserInfoEntityCustom entity = workUserInfoService.findWorkUserById(userId);
+        resultBean = new ResultBean<>(entity);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/work/cus/{cusId}" , method = RequestMethod.GET)
+    public ResultBean<?> findWorkUserByCusId(@PathVariable Long cusId) throws Exception{
+        ResultBean<?> resultBean = null;
+        WorkUserInfoEntityCustom entity = workUserInfoService.findWorkUserByCusId(cusId);
         resultBean = new ResultBean<>(entity);
         return resultBean;
     }

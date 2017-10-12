@@ -79,17 +79,17 @@
                         </div>
                         <div class="profile-info-name"> 收入 </div>
                         <div class="profile-info-value">
-                            <span>{{user.income}}</span>
+                            <span>{{user.incomeName}}</span>
                         </div>
                     </div>
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 学历 </div>
                         <div class="profile-info-value">
-                            <span>{{user.education}}</span>
+                            <span>{{user.educationName}}</span>
                         </div>
                         <div class="profile-info-name"> 职业 </div>
                         <div class="profile-info-value">
-                            <span>{{user.occupation}}</span>
+                            <span>{{user.occupationName}}</span>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="profile-info-name"> 关系 </div>
                         <div class="profile-info-value">
-                            <span>{{link.relationId}}</span>
+                            <span>{{link.relationName}}</span>
                         </div>
                     </div>
                 </div>

@@ -19,17 +19,24 @@
     <resultMap id="BaseResultMapCustom" type="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" extends="BaseResultMap">
         <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
         <result column="real_status_name" property="realStatusName" jdbcType="VARCHAR" />
+        <result column="income_name" property="incomeName" jdbcType="VARCHAR" />
+        <result column="education_name" property="educationName" jdbcType="VARCHAR" />
+        <result column="occupation_name" property="occupationName" jdbcType="VARCHAR" />
+        <result column="apply_id" property="applyId" jdbcType="BIGINT" />
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List" >
         id, phone, name, id_no, real_status, sex, income, education, occupation, create_time,
-        work_user_id, work_user_name
+        work_user_id, work_user_name, if(sex='1','男','女') sex_name,if(real_status='1','已实名','未实名') real_status_name
     </sql>
 
     <select id="findCusUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
             SELECT
-            <include refid="Base_Column_List" />
-            ,if(sex='1','男','女') sex_name,if(real_status='1','已实名','未实名') real_status_name
+            <include refid="Base_Column_List" />,
+            (select name from code_info where type_id=103 and code = income) income_name,
+            (select name from code_info where type_id=104 and code = education) education_name,
+            (select name from code_info where type_id=105 and code = occupation) occupation_name
             FROM cus_user_info
             WHERE id = #{userId}
         </select>
@@ -37,11 +44,23 @@
     <select id="findCusUserList" parameterType="com.xingguang.cus.baseinfo.entity.CusUserInfoEntity" resultMap="BaseResultMapCustom">
         SELECT
         <include refid="Base_Column_List" />
-        ,if(sex='1','男','女') sex_name,if(real_status='1','已实名','未实名') real_status_name
         FROM cus_user_info
         WHERE 1=1
         <if test="name != null" >
             AND name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        ORDER BY create_time desc
+    </select>
+
+    <select id="findCreditTodoCusUserList" parameterType="com.xingguang.cus.baseinfo.entity.CusUserInfoEntity" resultMap="BaseResultMapCustom">
+        SELECT
+        t1.*,if(t1.sex='1','男','女') sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
+        t2.id apply_id, t2.create_time apply_time
+        FROM cus_user_info t1
+        INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
+        WHERE t2.status = 1
+        <if test="name != null" >
+            AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
         </if>
         ORDER BY create_time desc
     </select>

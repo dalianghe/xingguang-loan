@@ -23,7 +23,7 @@ public class CusUserController {
     private ICusUserInfoService cusUserInfoService;
 
     @RequestMapping(value = "/cus/users" , method = RequestMethod.GET)
-    public ResultBean<?> findWorkUserAll(String paramJson) throws Exception{
+    public ResultBean<?> findCusUserAll(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
         CusUserDomain domain = JSON.parseObject(paramJson,CusUserDomain.class);
         Map<String , Object> users = cusUserInfoService.findCusUserAll(domain);
@@ -32,10 +32,19 @@ public class CusUserController {
     }
 
     @RequestMapping(value = "/cus/user/{userId}" , method = RequestMethod.GET)
-    public ResultBean<?> findWorkUserAll(@PathVariable Long userId) throws Exception{
+    public ResultBean<?> findCusUserById(@PathVariable Long userId) throws Exception{
         ResultBean<?> resultBean = null;
         CusUserInfoEntityCustom entity = cusUserInfoService.findCusUserById(userId);
         resultBean = new ResultBean<>(entity);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/cus/applies" , method = RequestMethod.GET)
+    public ResultBean<?> findCreditTodoUsers(String paramJson) throws Exception{
+        ResultBean<?> resultBean = null;
+        CusUserDomain domain = JSON.parseObject(paramJson,CusUserDomain.class);
+        Map<String , Object> users = cusUserInfoService.findCreditTodoCusUser(domain);
+        resultBean = new ResultBean<>(users);
         return resultBean;
     }
 }

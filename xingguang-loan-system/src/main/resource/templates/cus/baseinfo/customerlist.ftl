@@ -64,7 +64,7 @@
                                 <th class="hidden-480">认证状态</th>
                                 <th>
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                    申请时间
+                                    创建时间
                                 </th>
                             <#--<th class="detail-col" class="hidden-480">详情</th>-->
                                 <th>操作</th>

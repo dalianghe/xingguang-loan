@@ -1,5 +1,7 @@
 package com.xingguang.credit.apply.mapper;
 
+import com.xingguang.credit.apply.entity.custom.CreditApplyEntityCustom;
+
 /**
  * @Description 用一句话描述该文件做什么
  * @Author hedaliang
@@ -8,5 +10,5 @@ package com.xingguang.credit.apply.mapper;
  */
 public interface CreditApplyMapper {
 
-    void test();
+    CreditApplyEntityCustom findCreditApplyById(Long id) throws Exception;
 }
