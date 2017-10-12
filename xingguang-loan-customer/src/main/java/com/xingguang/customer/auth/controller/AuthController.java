@@ -29,8 +29,8 @@ public class AuthController {
     @Autowired
     private ICusUserInfoService cusUserInfoService;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception{
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception {
         ResultBean<?> resultBean = null;
 
 //        // 校验验证码
@@ -43,29 +43,44 @@ public class AuthController {
         // 查询用户
         CusUserInfo cusUserInfo = cusUserInfoService.findByPhone(authBean.getPhone());
         // 登陆账户是否存在
-        if(cusUserInfo == null){
+        if (cusUserInfo == null) {
             throw new CustomException("用户不存在");
         }
 
         // 返回token串
-        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())),100*60*1000);
+        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())), 100 * 60 * 1000);
         // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
         return resultBean;
     }
 
-    @RequestMapping(value = "/register" , method = RequestMethod.POST)
-    public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception{
+    @RequestMapping(value = "/real", method = RequestMethod.POST)
+    public ResultBean<?> real(@RequestBody CusUserInfo cusUserInfo) throws Exception {
+        String name = cusUserInfo.getName();
+        String idNo = cusUserInfo.getIdNo();
+        boolean realFlag = true;
+        CusUserInfo cusUserInfoDB = new CusUserInfo();
+        cusUserInfoDB.setId(cusUserInfo.getId());
+        cusUserInfoDB.setName(name);
+        cusUserInfoDB.setIdNo(idNo);
+        cusUserInfoDB.setRealStatus(realFlag ? 1 : 2);
+        this.cusUserInfoService.update(cusUserInfoDB);
+        ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception {
         ResultBean<?> resultBean = null;
         // 验证短信验证码是否正确
         String clientSmsCode = authBean.getSmsCode();
         String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
-        if(!clientSmsCode.equals(serverSmsCode)){
+        if (!clientSmsCode.equals(serverSmsCode)) {
             throw new CustomException("验证码错误");
         }
         // 检查手机号是否注册
         CusUserAuthEntity oldEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
-        if(oldEntity!=null){
+        if (oldEntity != null) {
             oldEntity = null;
             throw new CustomException("用户已注册");
         }

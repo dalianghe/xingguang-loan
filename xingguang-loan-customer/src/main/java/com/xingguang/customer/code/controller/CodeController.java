@@ -26,12 +26,13 @@ public class CodeController {
 
 
     @RequestMapping(value = "/codes",method = RequestMethod.GET)
-    public ResultBean<?> getCodeByTypeIds(@RequestParam List typeIds){
+    public ResultBean<?> getCodeByTypeIds(@RequestParam(required = true) List typeIds){
         ResultBean resultBean =  new ResultBean();
         if(CollectionUtils.isEmpty(typeIds)){
             return resultBean;
         }
         CodeInfoExample example = new CodeInfoExample();
+        example.setOrderByClause("type_id, sort");
         example.createCriteria().andTypeIdIn(typeIds);
         List<CodeInfo> list = this.codeService.getCodeByTypeIds(example);
         Map<String, List<CodeInfo>> map = list.stream().collect(Collectors.groupingBy(CodeInfo::getTypeIdToString));
