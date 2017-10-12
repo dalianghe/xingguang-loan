@@ -34,114 +34,141 @@
             </div><!-- /.page-header -->
             <div id="dataDiv" class="row">
                 <div class="col-xs-12">
-                    <div class="table-detail">
-                        <div class="col-xs-12 col-sm-2">
-                            <div class="text-left">
-                                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
-                                    <div class="inline position-relative">
-                                        <a class="user-title-label" href="#">
-                                            <i class="ace-icon fa fa-circle light-green"></i>
-                                            <span class="white">客户信息</span>
-                                        </a>
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#userinfo">
+                                    <i class="green ace-icon fa fa-info bigger-120"></i>
+                                    客户信息
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#userfilm">
+                                    <i class="green ace-icon fa fa-film bigger-120"></i>
+                                    客户影像
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#auditresult">
+                                    <i class="green ace-icon fa fa-check bigger-120"></i>
+                                    授信审核
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="userinfo" class="tab-pane fade in active">
+                                <div class="col-xs-12 col-sm-2">
+                                    <div class="text-left">
+                                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
+                                            <div class="inline position-relative">
+                                                <a class="user-title-label" href="#">
+                                                    <i class="ace-icon fa fa-circle light-green"></i>
+                                                    <span class="white">客户信息</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col-xs-12 col-sm-12">
+                                            <div class="space visible-xs"></div>
+                                            <div class="profile-user-info profile-user-info-striped">
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 姓名 </div>
+                                                    <div class="profile-info-value">{{user.name}}</div>
+                                                    <div class="profile-info-name"> 性别 </div>
+                                                    <div class="profile-info-value">{{user.sexName}}</div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 手机号 </div>
+                                                    <div class="profile-info-value">{{user.phone}}</div>
+                                                    <div class="profile-info-name"> 身份证号 </div>
+                                                    <div class="profile-info-value">{{user.idNo}}</div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 认证状态 </div>
+                                                    <div class="profile-info-value">{{user.realStatusName}}</div>
+                                                    <div class="profile-info-name"> 收入 </div>
+                                                    <div class="profile-info-value">{{user.incomeName}}</div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 学历  </div>
+                                                    <div class="profile-info-value">{{user.educationName}}</div>
+                                                    <div class="profile-info-name"> 职业 </div>
+                                                    <div class="profile-info-value">{{user.occupationName}}</div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 申请时间 </div>
+                                                    <div class="profile-info-value">{{user.createTime}}</div>
+                                                    <div class="profile-info-name"> 业务员 </div>
+                                                    <div class="profile-info-value">{{user.workUserName}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-xs-12 col-sm-2">
+                                    <div class="text-left">
+                                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
+                                            <div class="inline position-relative">
+                                                <a class="user-title-label" href="#">
+                                                    <i class="ace-icon fa fa-circle light-green"></i>
+                                                    <span class="white">联系人信息</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="space visible-xs"></div>
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 姓名 </div>
+                                                <div class="profile-info-value">{{user.name}}</div>
+                                                <div class="profile-info-name"> 电话 </div>
+                                                <div class="profile-info-value">{{user.sexName}}</div>
+                                                <div class="profile-info-name"> 关系 </div>
+                                                <div class="profile-info-value">{{user.sexName}}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="space visible-xs"></div>
-                                <div class="profile-user-info profile-user-info-striped">
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 姓名 </div>
-                                        <div class="profile-info-value">{{user.name}}</div>
-                                        <div class="profile-info-name"> 性别 </div>
-                                        <div class="profile-info-value">{{user.sexName}}</div>
-                                    </div>
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 手机号 </div>
-                                        <div class="profile-info-value">{{user.phone}}</div>
-                                        <div class="profile-info-name"> 身份证号 </div>
-                                        <div class="profile-info-value">{{user.idNo}}</div>
-                                    </div>
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 认证状态 </div>
-                                        <div class="profile-info-value">{{user.realStatusName}}</div>
-                                        <div class="profile-info-name"> 收入 </div>
-                                        <div class="profile-info-value">{{user.incomeName}}</div>
-                                    </div>
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 学历  </div>
-                                        <div class="profile-info-value">{{user.educationName}}</div>
-                                        <div class="profile-info-name"> 职业 </div>
-                                        <div class="profile-info-value">{{user.occupationName}}</div>
-                                    </div>
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 申请时间 </div>
-                                        <div class="profile-info-value">{{user.createTime}}</div>
-                                        <div class="profile-info-name"> 业务员 </div>
-                                        <div class="profile-info-value">{{user.workUserName}}</div>
+                            <div id="userfilm" class="tab-pane fade">
+                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                            </div>
+                            <div id="auditresult" class="tab-pane fade">
+                                <div class="col-xs-12 col-sm-2">
+                                    <div class="text-left">
+                                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
+                                            <div class="inline position-relative">
+                                                <a class="user-title-label" href="#">
+                                                    <i class="ace-icon fa fa-circle light-red"></i>
+                                                    <span class="white">审核结果</span>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-2">
-                            <div class="text-left">
-                                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
-                                    <div class="inline position-relative">
-                                        <a class="user-title-label" href="#">
-                                            <i class="ace-icon fa fa-circle light-green"></i>
-                                            <span class="white">联系人信息</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="space visible-xs"></div>
-                                <div class="profile-user-info profile-user-info-striped">
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 姓名 </div>
-                                        <div class="profile-info-value">{{user.name}}</div>
-                                        <div class="profile-info-name"> 电话 </div>
-                                        <div class="profile-info-value">{{user.sexName}}</div>
-                                        <div class="profile-info-name"> 关系 </div>
-                                        <div class="profile-info-value">{{user.sexName}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-2">
-                            <div class="text-left">
-                                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
-                                    <div class="inline position-relative">
-                                        <a class="user-title-label" href="#">
-                                            <i class="ace-icon fa fa-circle light-red"></i>
-                                            <span class="white">审核结果</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12">
-                                <div class="space visible-xs"></div>
-                                <div class="profile-user-info profile-user-info-striped">
-                                    <div class="profile-info-row">
-                                        <div class="profile-info-name"> 审核结果 </div>
-                                        <div class="profile-info-value">
-                                            <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
-                                                <label>
-                                                    <input name="sex" type="radio" class="ace"  value="1"/>
-                                                    <span class="lbl"> 通过</span>
-                                                </label>
-                                                &nbsp;&nbsp;
-                                                <label>
-                                                    <input name="sex" type="radio" class="ace" value="0"/>
-                                                    <span class="lbl"> 不通过</span>
-                                                </label>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="space visible-xs"></div>
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 审核结果 </div>
+                                                <div class="profile-info-value">
+                                                    <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
+                                                        <label>
+                                                            <input name="sex" type="radio" class="ace"  value="1"/>
+                                                            <span class="lbl"> 通过</span>
+                                                        </label>
+                                                        &nbsp;&nbsp;
+                                                        <label>
+                                                            <input name="sex" type="radio" class="ace" value="0"/>
+                                                            <span class="lbl"> 不通过</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
