@@ -176,8 +176,8 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- /.span -->
-            </div><!-- /.row -->
+                </div>
+            </div>
             <br/>
             <div align="right">
             <button class="btn btn-success" @click="saveUser">
