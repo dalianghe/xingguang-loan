@@ -8,9 +8,9 @@
             </li>
 
             <li>
-                <a href="#">系统设置</a>
+                <a href="#">审核管理</a>
             </li>
-            <li class="active">客户管理</li>
+            <li class="active">授信审核</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
             <h1>
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    客户查询
+                    授信审核
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -66,7 +66,6 @@
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     申请时间
                                 </th>
-                            <#--<th class="detail-col" class="hidden-480">详情</th>-->
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -83,18 +82,10 @@
                                     <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
                                 </td>
                                 <td>{{user.createTime}}</td>
-                            <#--<td class="hidden-480">
-                                <div class="action-buttons" style="text-align:center;">
-                                    <a href="#" class="green bigger-140 show-details-btn" title="Show Details" @click="show_detail(user.id)">
-                                        <i class="ace-icon fa fa-angle-double-down"></i>
-                                        <span class="sr-only">Details</span>
-                                    </a>
-                                </div>
-                            </td>-->
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-info" @click="show_detail(user.id)">
-                                            <i class="ace-icon fa fa-angle-double-down bigger-120"></i>
+                                        <button class="btn btn-xs btn-success" @click="auditUser(user.id)">
+                                            <i class="ace-icon fa fa-check bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -104,7 +95,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="show_detail(user.id)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id)">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -149,25 +140,14 @@
             query(this);
         },
         methods : {
-            show_detail : function(userId){
-                //iframe层-父子操作
-                layer.open({
-                    title: "客户信息",
-                    type: 2,
-                    area: ['600px', '350px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    content: '/prouter/cus/baseinfo/cususerinfo/'+userId,
-                    success: function(layero, index){
-                        var body = layer.getChildFrame('body',index);//建立父子联系
-                        var userIdInput = body.find('#userId');
-                        $(userIdInput).attr("value",userId);
-                        console.log($(userIdInput).val());
-                    }
-                });
-            },
             queryUser : function(){
                 query(this);
+            },
+            auditUser : function(userId){
+                var url = "/prouter/credit/apply/creditaudit/"+userId;
+                $("#main").load(url,function(response,status,xhr){
+                    //console.log("success");
+                });
             },
             pageHandler: function (page) {
                 this.page=page;
