@@ -26,7 +26,7 @@ public class CodeController {
 
 
     @RequestMapping(value = "/codes",method = RequestMethod.GET)
-    public ResultBean<?> getCodeByTypeIds(@RequestParam(required = true) List typeIds){
+    public ResultBean<?> getCodeByTypeIds(@RequestParam List typeIds){
         ResultBean resultBean =  new ResultBean();
         if(CollectionUtils.isEmpty(typeIds)){
             return resultBean;

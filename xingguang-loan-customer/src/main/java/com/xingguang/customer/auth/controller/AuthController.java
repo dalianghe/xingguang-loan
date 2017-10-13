@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
+    private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
+
     @Autowired
     private ICusUserAuthService cusUserAuthService;
 
@@ -48,7 +50,7 @@ public class AuthController {
         }
 
         // 返回token串
-        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())), 100 * 60 * 1000);
+        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())), EXPIR_TIME);
         // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
         return resultBean;
