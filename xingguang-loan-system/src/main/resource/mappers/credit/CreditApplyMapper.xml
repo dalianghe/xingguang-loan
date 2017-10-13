@@ -49,4 +49,29 @@
         WHERE id = #{id}
     </select>
 
+    <update id="updateCreditApply" parameterType="com.xingguang.credit.apply.entity.CreditApplyEntity">
+        UPDATE credit_apply
+        <set>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null" >
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="creditUserId != null" >
+                credit_user_id = #{creditUserId,jdbcType=BIGINT},
+            </if>
+            <if test="creditUserName != null" >
+                credit_user_name = #{creditUserName,jdbcType=VARCHAR},
+            </if>
+            <if test="creditTime != null" >
+                credit_time = #{creditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="refuseCode != null" >
+                refuse_code = #{refuseCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

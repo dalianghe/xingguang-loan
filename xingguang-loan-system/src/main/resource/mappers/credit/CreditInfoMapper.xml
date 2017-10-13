@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.credit.info.mapper.CreditInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.credit.info.entity.CreditInfoEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="cus_user_id" property="cusUserId" jdbcType="BIGINT" />
+        <result column="final_amount" property="finalAmount" jdbcType="DECIMAL" />
+        <result column="unused_amount" property="unusedAmount" jdbcType="DECIMAL" />
+        <result column="used_amount" property="usedAmount" jdbcType="DECIMAL" />
+        <result column="credit_time" property="creditTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.credit.info.entity.custom.CreditInfoEntityCustom" extends="BaseResultMap">
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, cus_user_id, final_amount, unused_amount, used_amount, credit_time, status,
+        if(status='1','正常','锁定') sex_name
+    </sql>
+
+    <select id="findCreditInfoByCusId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM credit_info
+        WHERE cus_user_id = #{cusUserId , jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertCreditInfo" parameterType="com.xingguang.credit.info.entity.CreditInfoEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO credit_info (
+        cus_user_id, final_amount, unused_amount, used_amount, credit_time
+        )
+        VALUES (
+        #{cusUserId,jdbcType=BIGINT}, #{finalAmount,jdbcType=DECIMAL}, #{unusedAmount,jdbcType=DECIMAL},
+        #{usedAmount,jdbcType=DECIMAL},  #{creditTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <update id="updateCusCreditInfo" parameterType="com.xingguang.credit.info.entity.CreditInfoEntity" >
+        UPDATE credit_info
+         <set>
+             <if test="finalAmount != null" >
+                 final_amount = #{finalAmount,jdbcType=DECIMAL},
+             </if>
+             <if test="unusedAmount != null" >
+                 unused_amount = #{unusedAmount,jdbcType=DECIMAL},
+             </if>
+             <if test="usedAmount != null" >
+                 used_amount = #{usedAmount,jdbcType=DECIMAL},
+             </if>
+             <if test="creditTime != null" >
+                 credit_time = #{creditTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="status != null" >
+                 status = #{status,jdbcType=VARCHAR},
+             </if>
+         </set>
+        WHERE cus_user_id = #{cusUserId,jdbcType=BIGINT}
+    </update>
+
+
+
+</mapper>

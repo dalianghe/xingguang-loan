@@ -1,5 +1,6 @@
 package com.xingguang.credit.apply.service;
 
+import com.xingguang.credit.apply.domain.AuditDomain;
 import com.xingguang.credit.apply.entity.custom.CreditApplyEntityCustom;
 
 /**
@@ -8,5 +9,7 @@ import com.xingguang.credit.apply.entity.custom.CreditApplyEntityCustom;
 public interface ICreditApplyService {
 
     public CreditApplyEntityCustom findCreditApplyById(Long id) throws Exception;
+
+    public void auditCreditApply(AuditDomain domain) throws Exception;
 
 }

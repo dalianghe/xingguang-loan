@@ -22,7 +22,7 @@
                 </form>
             </div><!-- /.nav-search -->
         </div>
-        <div class="page-content">
+        <div id="dataDiv" class="page-content">
             <div class="page-header">
                 <h1>
                     <small>
@@ -31,7 +31,7 @@
                     </small>
                 </h1>
             </div><!-- /.page-header -->
-            <div id="dataDiv" class="row">
+            <div class="row">
                 <div class="col-xs-12">
                     <div class="tabbable">
                         <ul class="nav nav-tabs" id="myTab">
@@ -204,24 +204,44 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="space visible-xs"></div>
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <div class="profile-info-row">
+                                        <form id="auditForm">
+                                            <div class="profile-user-info profile-user-info-striped">
+                                                <div class="profile-info-row">
                                                 <div class="profile-info-name"> 审核结果 </div>
                                                 <div class="profile-info-value">
                                                     <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                         <label>
-                                                            <input name="sex" type="radio" class="ace"  value="1"/>
+                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="2" @click="chooseResult"/>
                                                             <span class="lbl"> 通过</span>
                                                         </label>
                                                         &nbsp;&nbsp;
                                                         <label>
-                                                            <input name="sex" type="radio" class="ace" value="0"/>
+                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="3" @click="chooseResult"/>
                                                             <span class="lbl"> 不通过</span>
                                                         </label>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="profile-info-row" id="amountDiv" style="display: none">
+                                                <div class="profile-info-name"> 授信金额 </div>
+                                                <div class="profile-info-value">
+                                                    <input type="text" id="amount" name="amount" v-model="audit.amount" placeholder="请输入授信金额"/>（元）
+                                                </div>
+                                            </div>
+                                            <div class="profile-info-row" id="refuseCodeDiv" style="display: none">
+                                                <div class="profile-info-name"> 拒代码 </div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
+                                                        <option disabled value="">请选择</option>
+                                                        <option value="001">年龄不符</option>
+                                                        <option value="002">收入不符</option>
+                                                        <option value="003">地域不符</option>
+                                                        <option value="004">虚假信息</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -231,40 +251,47 @@
             </div>
             <br/>
             <div align="right">
-            <button class="btn btn-success" @click="saveUser">
-                <i class="ace-icon fa fa-check bigger-120"></i>
-                提交
-            </button>
+                <button class="btn btn-success" @click="auditCredit">
+                    <i class="ace-icon fa fa-check bigger-120"></i>
+                    提交
+                </button>
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
-
-    <input type="hidden" id="userId" name="userId" value="${id}"/>
+    <input type="hidden" id="id" name="id" value="${id}"/>
     <script src="/js/lib/vue/axios.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
-            var userId = $("#userId").val().split("&")[0];
+            var userId = $("#id").val().split("&")[0];
             return axios.get("/cus/user/"+userId);
         }
         function getCusUserLink() {
-            var userId = $("#userId").val().split("&")[0];
+            var userId = $("#id").val().split("&")[0];
             return axios.get('/cus/link/'+userId);
         }
         function getWorkUserInfo() {
-            var userId = $("#userId").val().split("&")[0];
+            var userId = $("#id").val().split("&")[0];
             return axios.get("/work/cus/"+userId);
         }
         function getCreditApplyInfo() {
-            var applyId = $("#userId").val().split("&")[1];
+            var applyId = $("#id").val().split("&")[1];
             return axios.get("/credit/apply/"+applyId);
         }
+
         var app = new Vue({
             el: '#dataDiv',
             data: {
-                user : "",
-                link : "",
-                worker : "",
-                apply : ""
+                user : {},
+                link : {},
+                worker : {},
+                apply : {},
+                audit : {
+                    id : "",
+                    cusUserId : "",
+                    status : "",
+                    amount : "",
+                    refuseCode : ""
+                }
             },
             created : function(){
                 var that=this;
@@ -297,33 +324,37 @@
                 }));
             },
             methods : {
-                saveUser : function(){
-                    var formData = JSON.stringify(this.user);
-                    console.log(formData);
-                    //return;
-                    this.$http.put("/system/user/"+userId,formData).then(function(response){
-                        // 响应成功回调
-                        var result = response.data;
+                chooseResult : function(){
+                    var result = $('input:radio[name="status"]:checked').val();
+                    if(result==3){
+                        $("#refuseCodeDiv").show();
+                        $("#amountDiv").hide();
+                        this.audit.amount = null;
+                    }else{
+                        $("#refuseCodeDiv").hide();
+                        $("#amountDiv").show();
+                        this.audit.refuseCode = null;
+                    }
+                },
+                auditCredit : function(){
+                    this.audit.cusUserId = $("#id").val().split("&")[0];
+                    this.audit.id = $("#id").val().split("&")[1];
+                    axios.all([updateCreditApplyInfo()]).then(axios.spread(function (applyResult) {
+                        var result = applyResult.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){
-                                this.user = result.data;
-                                layer.alert('操作成功！', {
-                                    icon: 1,
-                                    title: "系统提示"
-                                });
+                                layer.msg('操作成功！');
+                                $("#main").load("/router/credit/apply/applylist");
                             }
                         }
-                    }, function(response){
-                        // 响应错误回调
-                    });
-                },
-                audit : function(){
-                    var url = "/prouter/credit/apply/creditaudit/"+userId;
-                    $("#main").load(url,function(response,status,xhr){
-                        //console.log("success");
-                    });
+                    }));
                 }
             }
         });
+
+        function updateCreditApplyInfo(){
+            var formData = app.audit;
+            return axios.post('/credit/audit' , formData);
+        }
 
     </script>
