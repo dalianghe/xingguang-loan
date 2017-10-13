@@ -17,6 +17,8 @@ public interface IWorkUserInfoService {
 
     public WorkUserInfoEntityCustom findWorkUserById(Long userId) throws Exception;
 
+    public WorkUserInfoEntityCustom findWorkUserByCusId(Long cusUserId) throws Exception;
+
     public void updateWorkUserById(WorkUserDomain domain) throws Exception;
 
 }

@@ -10,13 +10,18 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.cus.linkinfo.entity.custom.CusUserLinkEntityCustom" extends="BaseResultMap">
+        <result column="relation_name" property="relationName" jdbcType="VARCHAR" />
+    </resultMap>
+
     <sql id="Base_Column_List" >
         id, cus_user_id, link_name, relation_id, phone, create_time
     </sql>
 
-    <select id="findCusUserLinkByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+    <select id="findCusUserLinkByUserId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
             SELECT
-            <include refid="Base_Column_List" />
+            <include refid="Base_Column_List" />,
+          (select name from code_info where type_id=102 and code = relation_id) relation_name
             FROM cus_user_link
             WHERE cus_user_id = #{userId}
         </select>

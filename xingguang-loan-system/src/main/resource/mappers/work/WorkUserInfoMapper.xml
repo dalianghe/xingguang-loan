@@ -29,26 +29,33 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, phone, name, id_no, sex, province_id, province_name, city_id, city_name, create_time,
-        status, auditor_id, auditor_name, auditor_time, enable_status, enable_id, enable_name, enable_time
+        t1.id, t1.phone, t1.name, t1.id_no, t1.sex, t1.province_id, t1.province_name, t1.city_id, t1.city_name, t1.create_time,
+        t1.status, t1.auditor_id, t1.auditor_name, t1.auditor_time, t1.enable_status, t1.enable_id, t1.enable_name, t1.enable_time,
+        if(t1.sex='1','男','女') sex_name, if(t1.status='1','审核中',if(t1.status='2','审核通过','审核不通过')) status_name, if(t1.enable_status='0','启用','停用') enable_status_name
     </sql>
 
     <select id="findWorkUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
-            SELECT
-            <include refid="Base_Column_List" />
-            ,if(sex='1','男','女') sex_name,if(status='1','审核中',if(status='2','审核通过','审核不通过')) status_name,if(enable_status='0','启用','停用') enable_status_name
-            FROM work_user_info
-            WHERE id = #{userId}
-        </select>
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM work_user_info t1
+        WHERE t1.id = #{userId}
+    </select>
+
+    <select id="findWorkUserByCusId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM work_user_info t1
+        INNER JOIN cus_user_info t2 on t1.id = t2.work_user_id
+        WHERE t2.id = #{cusUserId}
+    </select>
 
     <select id="findWorkUserList" parameterType="com.xingguang.work.baseinfo.entity.WorkUserInfoEntity" resultMap="BaseResultMapCustom">
         SELECT
         <include refid="Base_Column_List" />
-        ,if(sex='1','男','女') sex_name,if(status='1','审核中',if(status='2','审核通过','审核不通过')) status_name,if(enable_status='0','启用','停用') enable_status_name
-        FROM work_user_info
+        FROM work_user_info t1
         WHERE 1=1
         <if test="name != null" >
-            AND name LIKE CONCAT(CONCAT('%', #{name}), '%')
+            AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
         </if>
         ORDER BY create_time desc
     </select>
@@ -81,7 +88,7 @@
                 status = #{status,jdbcType=INTEGER},
             </if>
             <if test="auditorId != null" >
-                 auditor_id = #{auditorId,jdbcType=BIGINT},
+                auditor_id = #{auditorId,jdbcType=BIGINT},
             </if>
             <if test="auditorName != null" >
                 auditor_name = #{auditorName,jdbcType=VARCHAR},
@@ -104,19 +111,4 @@
         </set>
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
-
-    <insert id="insertSysUser" parameterType="com.xingguang.system.user.entity.SysUserEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sys_user (
-        user_name, login_id, password, user_birthday,
-        user_sex, user_mobile, user_email,
-        work_address, user_job, join_date,
-        status, create_time)
-        VALUES (
-        #{userName,jdbcType=VARCHAR}, #{loginId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userBirthday,jdbcType=DATE},
-        #{userSex,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR},
-        #{workAddress,jdbcType=VARCHAR}, #{userJob,jdbcType=VARCHAR}, #{joinDate,jdbcType=DATE},
-        #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
-        )
-    </insert>
-
 </mapper>

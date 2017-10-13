@@ -81,10 +81,10 @@
                                     <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
                                     <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
                                 </td>
-                                <td>{{user.createTime}}</td>
+                                <td>{{user.applyTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="auditUser(user.id)">
+                                        <button class="btn btn-xs btn-success" @click="creditUser(user.id , user.applyId)">
                                             <i class="ace-icon fa fa-check bigger-120"></i>
                                         </button>
                                     </div>
@@ -143,8 +143,8 @@
             queryUser : function(){
                 query(this);
             },
-            auditUser : function(userId){
-                var url = "/prouter/credit/apply/creditaudit/"+userId;
+            creditUser : function(userId , applyId){
+                var url = "/prouter/credit/apply/creditaudit/"+userId+"&"+applyId;
                 $("#main").load(url,function(response,status,xhr){
                     //console.log("success");
                 });
@@ -159,7 +159,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/cus/users', {
+        axios.get('/cus/applies', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;

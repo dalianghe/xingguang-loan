@@ -39,6 +39,7 @@ public class CreditApplyEntity implements Serializable{
     private Long workCityId; // 客户市ID
     private String workCityName; // 客户市名称
     private String workAddr; // 客户地址全称
+    private String cusWorkDistance; // 客户与业务员距离（单位：米）
 
     public Long getId() {
         return id;
@@ -238,5 +239,13 @@ public class CreditApplyEntity implements Serializable{
 
     public void setWorkAddr(String workAddr) {
         this.workAddr = workAddr;
+    }
+
+    public String getCusWorkDistance() {
+        return cusWorkDistance;
+    }
+
+    public void setCusWorkDistance(String cusWorkDistance) {
+        this.cusWorkDistance = cusWorkDistance;
     }
 }

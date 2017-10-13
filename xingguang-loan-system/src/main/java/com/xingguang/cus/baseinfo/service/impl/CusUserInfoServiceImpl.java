@@ -38,6 +38,19 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     }
 
     @Override
+    public Map<String, Object> findCreditTodoCusUser(CusUserDomain domain) throws Exception {
+        CusUserInfoEntity cusUserInfoEntity = new CusUserInfoEntity();
+        cusUserInfoEntity.setName(domain.getName());
+        PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
+        BeanUtils.copyProperties(domain,cusUserInfoEntity);
+        List<CusUserInfoEntityCustom> users = cusUserInfoMapper.findCreditTodoCusUserList(cusUserInfoEntity);
+        Map<String,Object> map = new HashMap<>();
+        map.put("users" , users);
+        map.put("total" , ((Page) users).getTotal());
+        return map;
+    }
+
+    @Override
     public CusUserInfoEntityCustom findCusUserById(Long userId) throws Exception {
         return cusUserInfoMapper.findCusUserById(userId);
     }

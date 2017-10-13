@@ -7,7 +7,6 @@
                     <i class="ace-icon fa fa-home home-icon"></i>
                     <a href="#">控制台</a>
                 </li>
-
                 <li>
                     <a href="#">审核管理</a>
                 </li>
@@ -46,6 +45,12 @@
                                 <a data-toggle="tab" href="#userfilm">
                                     <i class="green ace-icon fa fa-film bigger-120"></i>
                                     客户影像
+                                </a>
+                            </li>
+                            <li>
+                                <a data-toggle="tab" href="#callrecord">
+                                    <i class="green ace-icon fa fa-phone bigger-120"></i>
+                                    通话记录
                                 </a>
                             </li>
                             <li>
@@ -100,8 +105,14 @@
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> 申请时间 </div>
                                                     <div class="profile-info-value">{{user.createTime}}</div>
-                                                    <div class="profile-info-name"> 业务员 </div>
-                                                    <div class="profile-info-value">{{user.workUserName}}</div>
+                                                    <div class="profile-info-name"> 与业务员距离 </div>
+                                                    <div class="profile-info-value">{{apply.cusWorkDistance}}</div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 经度 </div>
+                                                    <div class="profile-info-value">{{apply.cusLng}}</div>
+                                                    <div class="profile-info-name"> 纬度 </div>
+                                                    <div class="profile-info-value">{{apply.cusLat}}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,18 +134,58 @@
                                         <div class="space visible-xs"></div>
                                         <div class="profile-user-info profile-user-info-striped">
                                             <div class="profile-info-row">
-                                                <div class="profile-info-name"> 姓名 </div>
-                                                <div class="profile-info-value">{{user.name}}</div>
+                                                <div class="profile-info-name"> 联系人姓名 </div>
+                                                <div class="profile-info-value">{{link.linkName}}</div>
                                                 <div class="profile-info-name"> 电话 </div>
-                                                <div class="profile-info-value">{{user.sexName}}</div>
+                                                <div class="profile-info-value">{{link.phone}}</div>
                                                 <div class="profile-info-name"> 关系 </div>
-                                                <div class="profile-info-value">{{user.sexName}}</div>
+                                                <div class="profile-info-value">{{link.relationName}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-2">
+                                    <div class="text-left">
+                                        <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
+                                            <div class="inline position-relative">
+                                                <a class="user-title-label" href="#">
+                                                    <i class="ace-icon fa fa-circle light-green"></i>
+                                                    <span class="white">业务员信息</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="space visible-xs"></div>
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 业务员姓名 </div>
+                                                <div class="profile-info-value">{{worker.name}}</div>
+                                                <div class="profile-info-name"> 电话 </div>
+                                                <div class="profile-info-value">{{worker.phone}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 所在省份 </div>
+                                                <div class="profile-info-value">{{worker.provinceName}}</div>
+                                                <div class="profile-info-name"> 所在城市 </div>
+                                                <div class="profile-info-value">{{worker.cityName}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 经度 </div>
+                                                <div class="profile-info-value">{{apply.workLng}}</div>
+                                                <div class="profile-info-name"> 维度 </div>
+                                                <div class="profile-info-value">{{apply.workLat}}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div id="userfilm" class="tab-pane fade">
+                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                            </div>
+                            <div id="callrecord" class="tab-pane fade">
                                 <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
                             </div>
                             <div id="auditresult" class="tab-pane fade">
@@ -189,52 +240,63 @@
     </div><!-- /.row -->
 
     <input type="hidden" id="userId" name="userId" value="${id}"/>
-    <script src="/assets/js/bootstrap-datepicker.min.js"></script>
-
+    <script src="/js/lib/vue/axios.min.js"></script>
     <script type="text/javascript">
+        function getCusUserInfo() {
+            var userId = $("#userId").val().split("&")[0];
+            return axios.get("/cus/user/"+userId);
+        }
+        function getCusUserLink() {
+            var userId = $("#userId").val().split("&")[0];
+            return axios.get('/cus/link/'+userId);
+        }
+        function getWorkUserInfo() {
+            var userId = $("#userId").val().split("&")[0];
+            return axios.get("/work/cus/"+userId);
+        }
+        function getCreditApplyInfo() {
+            var applyId = $("#userId").val().split("&")[1];
+            return axios.get("/credit/apply/"+applyId);
+        }
         var app = new Vue({
             el: '#dataDiv',
             data: {
-                user: {
-                    userName:"",
-                    loginId:"",
-                    userBirthday:"",
-                    userSex:"",
-                    userMobile:"",
-                    workAddress:"",
-                    joinDate:"",
-                    userJob:"",
-                    userEmail:"",
-                    status:""
-                }
+                user : "",
+                link : "",
+                worker : "",
+                apply : ""
             },
             created : function(){
-                var userId = $("#userId").val();
                 var that=this;
-                that.$http.get("/system/user/"+userId).then(function(response){
-                    // 响应成功回调
-                    var result = response.data;
-                    if(result.sysCode==0){
-                        if(result.bizCode==0){
-                            that.user = result.data;
+                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo()])
+                        .then(axios.spread(function (cusUser, cusLink, worker, apply) {
+                    var user = cusUser.data;
+                    if(user.sysCode==0){
+                        if(user.bizCode==0){
+                            that.user = user.data;
                         }
                     }
-                }, function(response){
-                    // 响应错误回调
-                });
+                    var link = cusLink.data;
+                    if(link.sysCode==0){
+                        if(link.bizCode==0){
+                            that.link = link.data;
+                        }
+                    }
+                    var worker = worker.data;
+                    if(worker.sysCode==0){
+                        if(worker.bizCode==0){
+                            that.worker = worker.data;
+                        }
+                    }
+                    var apply = apply.data;
+                    if(apply.sysCode==0){
+                        if(apply.bizCode==0){
+                            that.apply = apply.data;
+                        }
+                    }
+                }));
             },
             methods : {
-                datePicker : function(){
-                    $('.date-picker').datepicker({
-                        autoclose: true,
-                        todayHighlight: true
-                    }).on("hide",function(){
-                        alert(2);
-                    })
-                    .next().on(ace.click_event, function(){ //show datepicker when clicking on the icon
-                        $(this).prev().focus();
-                    });
-                },
                 saveUser : function(){
                     var formData = JSON.stringify(this.user);
                     console.log(formData);

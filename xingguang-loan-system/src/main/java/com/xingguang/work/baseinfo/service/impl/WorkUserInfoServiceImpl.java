@@ -45,6 +45,11 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
     }
 
     @Override
+    public WorkUserInfoEntityCustom findWorkUserByCusId(Long cusUserId) throws Exception {
+        return workUserInfoMapper.findWorkUserByCusId(cusUserId);
+    }
+
+    @Override
     public void updateWorkUserById(WorkUserDomain domain) throws Exception {
         WorkUserInfoEntity entity = new WorkUserInfoEntity();
         BeanUtils.copyProperties(domain,entity);

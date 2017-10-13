@@ -12,6 +12,8 @@ public interface ICusUserInfoService {
 
     public Map<String , Object> findCusUserAll(CusUserDomain domain) throws Exception;
 
+    public Map<String , Object> findCreditTodoCusUser(CusUserDomain domain) throws Exception;
+
     public CusUserInfoEntityCustom findCusUserById(Long userId) throws Exception;
 
 }
