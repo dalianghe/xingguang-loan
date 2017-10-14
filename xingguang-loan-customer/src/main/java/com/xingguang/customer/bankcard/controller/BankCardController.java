@@ -27,7 +27,7 @@ public class BankCardController {
     private ICusBankService cusBankService;
 
     @RequestMapping(value = "/bank/cards",method = RequestMethod.POST)
-    public ResultBean<?> create(@RequestBody CusBankCard cusBankCard, @JWTParam(key = "userId", required = true) long userId){
+    public ResultBean<?> create(@RequestBody CusBankCard cusBankCard, @JWTParam(key = "userId", required = true) Long userId){
         ResultBean resultBean =  new ResultBean();
         CusBankCardExample example = new CusBankCardExample();
         example.createCriteria().andCardNoEqualTo(cusBankCard.getCardNo());
@@ -43,14 +43,14 @@ public class BankCardController {
 
     @RequestMapping(value = "/bank/cards/{id}",method = RequestMethod.PATCH)
     public ResultBean<?> update(@RequestBody CusBankCard cusBankCard, @PathVariable Long id,
-                                @JWTParam(key = "userId", required = true) long userId){
+                                @JWTParam(key = "userId", required = true) Long userId){
         ResultBean resultBean =  new ResultBean();
         this.bankCardService.update(id, userId, cusBankCard);
         return resultBean;
     }
 
     @RequestMapping(value = "/bank/cards/{id}",method = RequestMethod.DELETE)
-    public ResultBean<?> delete(@PathVariable Long id, @JWTParam(key = "userId", required = true) long userId){
+    public ResultBean<?> delete(@PathVariable Long id, @JWTParam(key = "userId", required = true) Long userId){
         ResultBean resultBean =  new ResultBean();
         CusBankCard cusBankCard = new CusBankCard();
         cusBankCard.setStatus(2);
@@ -59,14 +59,14 @@ public class BankCardController {
     }
 
     @RequestMapping(value = "/bank/cards/{id}",method = RequestMethod.GET)
-    public ResultBean<?> getBankCardById(@PathVariable Long id, @JWTParam(key = "userId", required = true) long userId){
+    public ResultBean<?> getBankCardById(@PathVariable Long id, @JWTParam(key = "userId", required = true) Long userId){
         ResultBean resultBean =  new ResultBean();
         resultBean.setData(this.bankCardService.getBankCardById(id, userId));
         return resultBean;
     }
 
     @RequestMapping(value = "/bank/cards",method = RequestMethod.GET)
-    public ResultBean<?> getBankCardList(@JWTParam(key = "userId", required = true) long userId){
+    public ResultBean<?> getBankCardList(@JWTParam(key = "userId", required = true) Long userId){
         ResultBean resultBean =  new ResultBean<>();
         CusBankCardExample example = new CusBankCardExample();
         CusBankCardExample.Criteria criteria = example.createCriteria();

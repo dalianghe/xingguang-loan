@@ -36,6 +36,10 @@ public class CreditApply {
 
     private String cusAddr;
 
+    private Long workUserId;
+
+    private String workUserName;
+
     private String workLng;
 
     private String workLat;
@@ -49,6 +53,8 @@ public class CreditApply {
     private String workCityName;
 
     private String workAddr;
+
+    private String cusWorkDistance;
 
     public Long getId() {
         return id;
@@ -178,6 +184,22 @@ public class CreditApply {
         this.cusAddr = cusAddr == null ? null : cusAddr.trim();
     }
 
+    public Long getWorkUserId() {
+        return workUserId;
+    }
+
+    public void setWorkUserId(Long workUserId) {
+        this.workUserId = workUserId;
+    }
+
+    public String getWorkUserName() {
+        return workUserName;
+    }
+
+    public void setWorkUserName(String workUserName) {
+        this.workUserName = workUserName == null ? null : workUserName.trim();
+    }
+
     public String getWorkLng() {
         return workLng;
     }
@@ -232,5 +254,13 @@ public class CreditApply {
 
     public void setWorkAddr(String workAddr) {
         this.workAddr = workAddr == null ? null : workAddr.trim();
+    }
+
+    public String getCusWorkDistance() {
+        return cusWorkDistance;
+    }
+
+    public void setCusWorkDistance(String cusWorkDistance) {
+        this.cusWorkDistance = cusWorkDistance == null ? null : cusWorkDistance.trim();
     }
 }

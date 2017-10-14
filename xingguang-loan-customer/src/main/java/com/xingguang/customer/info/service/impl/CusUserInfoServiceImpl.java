@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
 
     @Override
     public int create(CusUserInfo cusUserInfo) {
+        cusUserInfo.setCreateTime(new Date());
         return this.cusUserInfoMapper.insertSelective(cusUserInfo);
     }
 

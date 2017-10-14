@@ -1156,6 +1156,136 @@ public class CreditApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andWorkUserIdIsNull() {
+            addCriterion("work_user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdIsNotNull() {
+            addCriterion("work_user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdEqualTo(Long value) {
+            addCriterion("work_user_id =", value, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdNotEqualTo(Long value) {
+            addCriterion("work_user_id <>", value, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdGreaterThan(Long value) {
+            addCriterion("work_user_id >", value, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("work_user_id >=", value, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdLessThan(Long value) {
+            addCriterion("work_user_id <", value, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("work_user_id <=", value, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdIn(List<Long> values) {
+            addCriterion("work_user_id in", values, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdNotIn(List<Long> values) {
+            addCriterion("work_user_id not in", values, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdBetween(Long value1, Long value2) {
+            addCriterion("work_user_id between", value1, value2, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("work_user_id not between", value1, value2, "workUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameIsNull() {
+            addCriterion("work_user_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameIsNotNull() {
+            addCriterion("work_user_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameEqualTo(String value) {
+            addCriterion("work_user_name =", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameNotEqualTo(String value) {
+            addCriterion("work_user_name <>", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameGreaterThan(String value) {
+            addCriterion("work_user_name >", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameGreaterThanOrEqualTo(String value) {
+            addCriterion("work_user_name >=", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameLessThan(String value) {
+            addCriterion("work_user_name <", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameLessThanOrEqualTo(String value) {
+            addCriterion("work_user_name <=", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameLike(String value) {
+            addCriterion("work_user_name like", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameNotLike(String value) {
+            addCriterion("work_user_name not like", value, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameIn(List<String> values) {
+            addCriterion("work_user_name in", values, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameNotIn(List<String> values) {
+            addCriterion("work_user_name not in", values, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameBetween(String value1, String value2) {
+            addCriterion("work_user_name between", value1, value2, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkUserNameNotBetween(String value1, String value2) {
+            addCriterion("work_user_name not between", value1, value2, "workUserName");
+            return (Criteria) this;
+        }
+
         public Criteria andWorkLngIsNull() {
             addCriterion("work_lng is null");
             return (Criteria) this;
@@ -1623,6 +1753,76 @@ public class CreditApplyExample {
 
         public Criteria andWorkAddrNotBetween(String value1, String value2) {
             addCriterion("work_addr not between", value1, value2, "workAddr");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceIsNull() {
+            addCriterion("cus_work_distance is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceIsNotNull() {
+            addCriterion("cus_work_distance is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceEqualTo(String value) {
+            addCriterion("cus_work_distance =", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceNotEqualTo(String value) {
+            addCriterion("cus_work_distance <>", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceGreaterThan(String value) {
+            addCriterion("cus_work_distance >", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceGreaterThanOrEqualTo(String value) {
+            addCriterion("cus_work_distance >=", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceLessThan(String value) {
+            addCriterion("cus_work_distance <", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceLessThanOrEqualTo(String value) {
+            addCriterion("cus_work_distance <=", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceLike(String value) {
+            addCriterion("cus_work_distance like", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceNotLike(String value) {
+            addCriterion("cus_work_distance not like", value, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceIn(List<String> values) {
+            addCriterion("cus_work_distance in", values, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceNotIn(List<String> values) {
+            addCriterion("cus_work_distance not in", values, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceBetween(String value1, String value2) {
+            addCriterion("cus_work_distance between", value1, value2, "cusWorkDistance");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusWorkDistanceNotBetween(String value1, String value2) {
+            addCriterion("cus_work_distance not between", value1, value2, "cusWorkDistance");
             return (Criteria) this;
         }
     }

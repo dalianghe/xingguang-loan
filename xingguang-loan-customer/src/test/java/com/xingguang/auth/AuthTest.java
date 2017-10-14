@@ -42,7 +42,7 @@ public class AuthTest {
     public void testRegisterCusUser() throws Exception{
         AuthBean authBean = new AuthBean();
         authBean.setPhone("13611201362");
-        CusUserAuthEntity entity = cusUserAuthService.registerCusUser(authBean);
+        CusUserInfo entity = cusUserAuthService.registerCusUser(authBean);
         System.out.println(entity.toString());
     }
 

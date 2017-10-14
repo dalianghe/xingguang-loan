@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xingguang.customer.credit.mapper.CreditInfoMapper">
-  <resultMap id="BaseResultMap" type="com.xingguang.customer.credit.entity.CreditInfo">
+<mapper namespace="com.xingguang.customer.link.mapper.CusUserLinkMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.customer.link.entity.CusUserLink">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
-    <result column="final_amount" jdbcType="DECIMAL" property="finalAmount" />
-    <result column="unused_amount" jdbcType="DECIMAL" property="unusedAmount" />
-    <result column="used_amount" jdbcType="DECIMAL" property="usedAmount" />
-    <result column="credit_time" jdbcType="TIMESTAMP" property="creditTime" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="link_name" jdbcType="VARCHAR" property="linkName" />
+    <result column="relation_id" jdbcType="BIGINT" property="relationId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, cus_user_id, final_amount, unused_amount, used_amount, credit_time, status
+    id, cus_user_id, link_name, relation_id, phone, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.xingguang.customer.credit.entity.CreditInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.xingguang.customer.link.entity.CusUserLinkExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from credit_info
+    from cus_user_link
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,80 +93,72 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
-    from credit_info
+    from cus_user_link
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from credit_info
+    delete from cus_user_link
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.xingguang.customer.credit.entity.CreditInfoExample">
-    delete from credit_info
+  <delete id="deleteByExample" parameterType="com.xingguang.customer.link.entity.CusUserLinkExample">
+    delete from cus_user_link
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditInfo" useGeneratedKeys="true">
-    insert into credit_info (cus_user_id, final_amount, unused_amount,
-      used_amount, credit_time, status
-      )
-    values (#{cusUserId,jdbcType=BIGINT}, #{finalAmount,jdbcType=DECIMAL}, #{unusedAmount,jdbcType=DECIMAL},
-      #{usedAmount,jdbcType=DECIMAL}, #{creditTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
-      )
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.link.entity.CusUserLink" useGeneratedKeys="true">
+    insert into cus_user_link (cus_user_id, link_name, relation_id, 
+      phone, create_time)
+    values (#{cusUserId,jdbcType=BIGINT}, #{linkName,jdbcType=VARCHAR}, #{relationId,jdbcType=BIGINT}, 
+      #{phone,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditInfo" useGeneratedKeys="true">
-    insert into credit_info
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.link.entity.CusUserLink" useGeneratedKeys="true">
+    insert into cus_user_link
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="cusUserId != null">
         cus_user_id,
       </if>
-      <if test="finalAmount != null">
-        final_amount,
+      <if test="linkName != null">
+        link_name,
       </if>
-      <if test="unusedAmount != null">
-        unused_amount,
+      <if test="relationId != null">
+        relation_id,
       </if>
-      <if test="usedAmount != null">
-        used_amount,
+      <if test="phone != null">
+        phone,
       </if>
-      <if test="creditTime != null">
-        credit_time,
-      </if>
-      <if test="status != null">
-        status,
+      <if test="createTime != null">
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="cusUserId != null">
         #{cusUserId,jdbcType=BIGINT},
       </if>
-      <if test="finalAmount != null">
-        #{finalAmount,jdbcType=DECIMAL},
+      <if test="linkName != null">
+        #{linkName,jdbcType=VARCHAR},
       </if>
-      <if test="unusedAmount != null">
-        #{unusedAmount,jdbcType=DECIMAL},
+      <if test="relationId != null">
+        #{relationId,jdbcType=BIGINT},
       </if>
-      <if test="usedAmount != null">
-        #{usedAmount,jdbcType=DECIMAL},
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="creditTime != null">
-        #{creditTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.xingguang.customer.credit.entity.CreditInfoExample" resultType="java.lang.Long">
-    select count(*) from credit_info
+  <select id="countByExample" parameterType="com.xingguang.customer.link.entity.CusUserLinkExample" resultType="java.lang.Long">
+    select count(*) from cus_user_link
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update credit_info
+    update cus_user_link
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -175,20 +166,17 @@
       <if test="record.cusUserId != null">
         cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
       </if>
-      <if test="record.finalAmount != null">
-        final_amount = #{record.finalAmount,jdbcType=DECIMAL},
+      <if test="record.linkName != null">
+        link_name = #{record.linkName,jdbcType=VARCHAR},
       </if>
-      <if test="record.unusedAmount != null">
-        unused_amount = #{record.unusedAmount,jdbcType=DECIMAL},
+      <if test="record.relationId != null">
+        relation_id = #{record.relationId,jdbcType=BIGINT},
       </if>
-      <if test="record.usedAmount != null">
-        used_amount = #{record.usedAmount,jdbcType=DECIMAL},
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.creditTime != null">
-        credit_time = #{record.creditTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -196,50 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update credit_info
+    update cus_user_link
     set id = #{record.id,jdbcType=BIGINT},
       cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
-      final_amount = #{record.finalAmount,jdbcType=DECIMAL},
-      unused_amount = #{record.unusedAmount,jdbcType=DECIMAL},
-      used_amount = #{record.usedAmount,jdbcType=DECIMAL},
-      credit_time = #{record.creditTime,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=INTEGER}
+      link_name = #{record.linkName,jdbcType=VARCHAR},
+      relation_id = #{record.relationId,jdbcType=BIGINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.credit.entity.CreditInfo">
-    update credit_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.link.entity.CusUserLink">
+    update cus_user_link
     <set>
       <if test="cusUserId != null">
         cus_user_id = #{cusUserId,jdbcType=BIGINT},
       </if>
-      <if test="finalAmount != null">
-        final_amount = #{finalAmount,jdbcType=DECIMAL},
+      <if test="linkName != null">
+        link_name = #{linkName,jdbcType=VARCHAR},
       </if>
-      <if test="unusedAmount != null">
-        unused_amount = #{unusedAmount,jdbcType=DECIMAL},
+      <if test="relationId != null">
+        relation_id = #{relationId,jdbcType=BIGINT},
       </if>
-      <if test="usedAmount != null">
-        used_amount = #{usedAmount,jdbcType=DECIMAL},
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="creditTime != null">
-        credit_time = #{creditTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=INTEGER},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.credit.entity.CreditInfo">
-    update credit_info
+  <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.link.entity.CusUserLink">
+    update cus_user_link
     set cus_user_id = #{cusUserId,jdbcType=BIGINT},
-      final_amount = #{finalAmount,jdbcType=DECIMAL},
-      unused_amount = #{unusedAmount,jdbcType=DECIMAL},
-      used_amount = #{usedAmount,jdbcType=DECIMAL},
-      credit_time = #{creditTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
+      link_name = #{linkName,jdbcType=VARCHAR},
+      relation_id = #{relationId,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

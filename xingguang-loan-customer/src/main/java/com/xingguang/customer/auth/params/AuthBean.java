@@ -6,6 +6,7 @@ package com.xingguang.customer.auth.params;
 public class AuthBean {
     private String phone;
     private String smsCode;
+    private Long workUserId;
 
     public String getPhone() {
         return phone;
@@ -21,5 +22,13 @@ public class AuthBean {
 
     public void setSmsCode(String smsCode) {
         this.smsCode = smsCode;
+    }
+
+    public Long getWorkUserId() {
+        return workUserId;
+    }
+
+    public void setWorkUserId(Long workUserId) {
+        this.workUserId = workUserId;
     }
 }

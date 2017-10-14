@@ -18,6 +18,8 @@
     <result column="cus_city_id" jdbcType="BIGINT" property="cusCityId" />
     <result column="cus_city_name" jdbcType="VARCHAR" property="cusCityName" />
     <result column="cus_addr" jdbcType="VARCHAR" property="cusAddr" />
+    <result column="work_user_id" jdbcType="BIGINT" property="workUserId" />
+    <result column="work_user_name" jdbcType="VARCHAR" property="workUserName" />
     <result column="work_lng" jdbcType="VARCHAR" property="workLng" />
     <result column="work_lat" jdbcType="VARCHAR" property="workLat" />
     <result column="work_province_id" jdbcType="BIGINT" property="workProvinceId" />
@@ -25,6 +27,7 @@
     <result column="work_city_id" jdbcType="BIGINT" property="workCityId" />
     <result column="work_city_name" jdbcType="VARCHAR" property="workCityName" />
     <result column="work_addr" jdbcType="VARCHAR" property="workAddr" />
+    <result column="cus_work_distance" jdbcType="VARCHAR" property="cusWorkDistance" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -87,8 +90,8 @@
   <sql id="Base_Column_List">
     id, cus_user_id, status, create_time, amount, credit_time, credit_user_id, credit_user_name, 
     refuse_code, cus_lng, cus_lat, cus_province_id, cus_province_name, cus_city_id, cus_city_name, 
-    cus_addr, work_lng, work_lat, work_province_id, work_province_name, work_city_id, 
-    work_city_name, work_addr
+    cus_addr, work_user_id, work_user_name, work_lng, work_lat, work_province_id, work_province_name, 
+    work_city_id, work_city_name, work_addr, cus_work_distance
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.credit.entity.CreditApplyExample" resultMap="BaseResultMap">
     select
@@ -134,17 +137,19 @@
       credit_user_name, refuse_code, cus_lng, 
       cus_lat, cus_province_id, cus_province_name, 
       cus_city_id, cus_city_name, cus_addr, 
-      work_lng, work_lat, work_province_id, 
-      work_province_name, work_city_id, work_city_name, 
-      work_addr)
+      work_user_id, work_user_name, work_lng, 
+      work_lat, work_province_id, work_province_name, 
+      work_city_id, work_city_name, work_addr, 
+      cus_work_distance)
     values (#{cusUserId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{amount,jdbcType=DECIMAL}, #{creditTime,jdbcType=TIMESTAMP}, #{creditUserId,jdbcType=BIGINT}, 
       #{creditUserName,jdbcType=VARCHAR}, #{refuseCode,jdbcType=VARCHAR}, #{cusLng,jdbcType=VARCHAR}, 
       #{cusLat,jdbcType=VARCHAR}, #{cusProvinceId,jdbcType=BIGINT}, #{cusProvinceName,jdbcType=VARCHAR}, 
       #{cusCityId,jdbcType=BIGINT}, #{cusCityName,jdbcType=VARCHAR}, #{cusAddr,jdbcType=VARCHAR}, 
-      #{workLng,jdbcType=VARCHAR}, #{workLat,jdbcType=VARCHAR}, #{workProvinceId,jdbcType=BIGINT}, 
-      #{workProvinceName,jdbcType=VARCHAR}, #{workCityId,jdbcType=BIGINT}, #{workCityName,jdbcType=VARCHAR}, 
-      #{workAddr,jdbcType=VARCHAR})
+      #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR}, #{workLng,jdbcType=VARCHAR}, 
+      #{workLat,jdbcType=VARCHAR}, #{workProvinceId,jdbcType=BIGINT}, #{workProvinceName,jdbcType=VARCHAR}, 
+      #{workCityId,jdbcType=BIGINT}, #{workCityName,jdbcType=VARCHAR}, #{workAddr,jdbcType=VARCHAR}, 
+      #{cusWorkDistance,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditApply" useGeneratedKeys="true">
     insert into credit_apply
@@ -194,6 +199,12 @@
       <if test="cusAddr != null">
         cus_addr,
       </if>
+      <if test="workUserId != null">
+        work_user_id,
+      </if>
+      <if test="workUserName != null">
+        work_user_name,
+      </if>
       <if test="workLng != null">
         work_lng,
       </if>
@@ -214,6 +225,9 @@
       </if>
       <if test="workAddr != null">
         work_addr,
+      </if>
+      <if test="cusWorkDistance != null">
+        cus_work_distance,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -262,6 +276,12 @@
       <if test="cusAddr != null">
         #{cusAddr,jdbcType=VARCHAR},
       </if>
+      <if test="workUserId != null">
+        #{workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="workUserName != null">
+        #{workUserName,jdbcType=VARCHAR},
+      </if>
       <if test="workLng != null">
         #{workLng,jdbcType=VARCHAR},
       </if>
@@ -282,6 +302,9 @@
       </if>
       <if test="workAddr != null">
         #{workAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cusWorkDistance != null">
+        #{cusWorkDistance,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -342,6 +365,12 @@
       <if test="record.cusAddr != null">
         cus_addr = #{record.cusAddr,jdbcType=VARCHAR},
       </if>
+      <if test="record.workUserId != null">
+        work_user_id = #{record.workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workUserName != null">
+        work_user_name = #{record.workUserName,jdbcType=VARCHAR},
+      </if>
       <if test="record.workLng != null">
         work_lng = #{record.workLng,jdbcType=VARCHAR},
       </if>
@@ -362,6 +391,9 @@
       </if>
       <if test="record.workAddr != null">
         work_addr = #{record.workAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cusWorkDistance != null">
+        cus_work_distance = #{record.cusWorkDistance,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -386,13 +418,16 @@
       cus_city_id = #{record.cusCityId,jdbcType=BIGINT},
       cus_city_name = #{record.cusCityName,jdbcType=VARCHAR},
       cus_addr = #{record.cusAddr,jdbcType=VARCHAR},
+      work_user_id = #{record.workUserId,jdbcType=BIGINT},
+      work_user_name = #{record.workUserName,jdbcType=VARCHAR},
       work_lng = #{record.workLng,jdbcType=VARCHAR},
       work_lat = #{record.workLat,jdbcType=VARCHAR},
       work_province_id = #{record.workProvinceId,jdbcType=BIGINT},
       work_province_name = #{record.workProvinceName,jdbcType=VARCHAR},
       work_city_id = #{record.workCityId,jdbcType=BIGINT},
       work_city_name = #{record.workCityName,jdbcType=VARCHAR},
-      work_addr = #{record.workAddr,jdbcType=VARCHAR}
+      work_addr = #{record.workAddr,jdbcType=VARCHAR},
+      cus_work_distance = #{record.cusWorkDistance,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -445,6 +480,12 @@
       <if test="cusAddr != null">
         cus_addr = #{cusAddr,jdbcType=VARCHAR},
       </if>
+      <if test="workUserId != null">
+        work_user_id = #{workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="workUserName != null">
+        work_user_name = #{workUserName,jdbcType=VARCHAR},
+      </if>
       <if test="workLng != null">
         work_lng = #{workLng,jdbcType=VARCHAR},
       </if>
@@ -466,6 +507,9 @@
       <if test="workAddr != null">
         work_addr = #{workAddr,jdbcType=VARCHAR},
       </if>
+      <if test="cusWorkDistance != null">
+        cus_work_distance = #{cusWorkDistance,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -486,13 +530,16 @@
       cus_city_id = #{cusCityId,jdbcType=BIGINT},
       cus_city_name = #{cusCityName,jdbcType=VARCHAR},
       cus_addr = #{cusAddr,jdbcType=VARCHAR},
+      work_user_id = #{workUserId,jdbcType=BIGINT},
+      work_user_name = #{workUserName,jdbcType=VARCHAR},
       work_lng = #{workLng,jdbcType=VARCHAR},
       work_lat = #{workLat,jdbcType=VARCHAR},
       work_province_id = #{workProvinceId,jdbcType=BIGINT},
       work_province_name = #{workProvinceName,jdbcType=VARCHAR},
       work_city_id = #{workCityId,jdbcType=BIGINT},
       work_city_name = #{workCityName,jdbcType=VARCHAR},
-      work_addr = #{workAddr,jdbcType=VARCHAR}
+      work_addr = #{workAddr,jdbcType=VARCHAR},
+      cus_work_distance = #{cusWorkDistance,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

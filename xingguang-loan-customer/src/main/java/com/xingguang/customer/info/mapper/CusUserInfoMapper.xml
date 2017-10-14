@@ -8,11 +8,12 @@
     <result column="id_no" jdbcType="VARCHAR" property="idNo" />
     <result column="real_status" jdbcType="INTEGER" property="realStatus" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="income" jdbcType="DECIMAL" property="income" />
-    <result column="education" jdbcType="BIGINT" property="education" />
-    <result column="occupation" jdbcType="BIGINT" property="occupation" />
+    <result column="income" jdbcType="VARCHAR" property="income" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="occupation" jdbcType="VARCHAR" property="occupation" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="work_user_id" jdbcType="BIGINT" property="workUserId" />
+    <result column="work_user_name" jdbcType="VARCHAR" property="workUserName" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, phone, name, id_no, real_status, sex, income, education, occupation, create_time, 
-    work_user_id
+    work_user_id, work_user_name
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.info.entity.CusUserInfoExample" resultMap="BaseResultMap">
     select
@@ -118,11 +119,11 @@
     insert into cus_user_info (phone, name, id_no, 
       real_status, sex, income, 
       education, occupation, create_time, 
-      work_user_id)
+      work_user_id, work_user_name)
     values (#{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
-      #{realStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{income,jdbcType=DECIMAL}, 
-      #{education,jdbcType=BIGINT}, #{occupation,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{workUserId,jdbcType=BIGINT})
+      #{realStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{income,jdbcType=VARCHAR}, 
+      #{education,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.info.entity.CusUserInfo" useGeneratedKeys="true">
     insert into cus_user_info
@@ -157,6 +158,9 @@
       <if test="workUserId != null">
         work_user_id,
       </if>
+      <if test="workUserName != null">
+        work_user_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="phone != null">
@@ -175,19 +179,22 @@
         #{sex,jdbcType=INTEGER},
       </if>
       <if test="income != null">
-        #{income,jdbcType=DECIMAL},
+        #{income,jdbcType=VARCHAR},
       </if>
       <if test="education != null">
-        #{education,jdbcType=BIGINT},
+        #{education,jdbcType=VARCHAR},
       </if>
       <if test="occupation != null">
-        #{occupation,jdbcType=BIGINT},
+        #{occupation,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="workUserId != null">
         #{workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="workUserName != null">
+        #{workUserName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -219,19 +226,22 @@
         sex = #{record.sex,jdbcType=INTEGER},
       </if>
       <if test="record.income != null">
-        income = #{record.income,jdbcType=DECIMAL},
+        income = #{record.income,jdbcType=VARCHAR},
       </if>
       <if test="record.education != null">
-        education = #{record.education,jdbcType=BIGINT},
+        education = #{record.education,jdbcType=VARCHAR},
       </if>
       <if test="record.occupation != null">
-        occupation = #{record.occupation,jdbcType=BIGINT},
+        occupation = #{record.occupation,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.workUserId != null">
         work_user_id = #{record.workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.workUserName != null">
+        work_user_name = #{record.workUserName,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -246,11 +256,12 @@
       id_no = #{record.idNo,jdbcType=VARCHAR},
       real_status = #{record.realStatus,jdbcType=INTEGER},
       sex = #{record.sex,jdbcType=INTEGER},
-      income = #{record.income,jdbcType=DECIMAL},
-      education = #{record.education,jdbcType=BIGINT},
-      occupation = #{record.occupation,jdbcType=BIGINT},
+      income = #{record.income,jdbcType=VARCHAR},
+      education = #{record.education,jdbcType=VARCHAR},
+      occupation = #{record.occupation,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      work_user_id = #{record.workUserId,jdbcType=BIGINT}
+      work_user_id = #{record.workUserId,jdbcType=BIGINT},
+      work_user_name = #{record.workUserName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,19 +285,22 @@
         sex = #{sex,jdbcType=INTEGER},
       </if>
       <if test="income != null">
-        income = #{income,jdbcType=DECIMAL},
+        income = #{income,jdbcType=VARCHAR},
       </if>
       <if test="education != null">
-        education = #{education,jdbcType=BIGINT},
+        education = #{education,jdbcType=VARCHAR},
       </if>
       <if test="occupation != null">
-        occupation = #{occupation,jdbcType=BIGINT},
+        occupation = #{occupation,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="workUserId != null">
         work_user_id = #{workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="workUserName != null">
+        work_user_name = #{workUserName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -298,11 +312,12 @@
       id_no = #{idNo,jdbcType=VARCHAR},
       real_status = #{realStatus,jdbcType=INTEGER},
       sex = #{sex,jdbcType=INTEGER},
-      income = #{income,jdbcType=DECIMAL},
-      education = #{education,jdbcType=BIGINT},
-      occupation = #{occupation,jdbcType=BIGINT},
+      income = #{income,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      work_user_id = #{workUserId,jdbcType=BIGINT}
+      work_user_id = #{workUserId,jdbcType=BIGINT},
+      work_user_name = #{workUserName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

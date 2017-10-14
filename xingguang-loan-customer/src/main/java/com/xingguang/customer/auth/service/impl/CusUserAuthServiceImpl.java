@@ -6,6 +6,9 @@ import com.xingguang.customer.auth.params.AuthBean;
 import com.xingguang.customer.auth.service.ICusUserAuthService;
 import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
+import com.xingguang.customer.worker.entity.WorkUserInfo;
+import com.xingguang.customer.worker.service.IWorkUserInfoService;
+import com.xingguang.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,8 @@ public class CusUserAuthServiceImpl implements ICusUserAuthService {
     private CusUserAuthMapper cusUserAuthMapper;
     @Autowired
     private ICusUserInfoService cusUserInfoService;
+    @Autowired
+    private IWorkUserInfoService workUserInfoService;
 
     @Override
     public CusUserAuthEntity findUserByPhone(String phone) throws Exception {
@@ -37,12 +42,18 @@ public class CusUserAuthServiceImpl implements ICusUserAuthService {
 
     @Override
     @Transactional
-    public CusUserAuthEntity registerCusUser(AuthBean authBean) throws Exception {
+    public CusUserInfo registerCusUser(AuthBean authBean) throws Exception {
         CusUserAuthEntity entity = this.addCusUserAuth(authBean);
         CusUserInfo cusUserInfo = new CusUserInfo();
         cusUserInfo.setPhone(authBean.getPhone());
+        cusUserInfo.setWorkUserId(authBean.getWorkUserId());
+        WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserInfoById(authBean.getWorkUserId());
+        if(workUserInfo == null){
+            throw new CustomException("业务员不存在");
+        }
+        cusUserInfo.setWorkUserName(workUserInfo.getName());
         this.cusUserInfoService.create(cusUserInfo);
-        return entity;
+        return cusUserInfo;
     }
 
 }

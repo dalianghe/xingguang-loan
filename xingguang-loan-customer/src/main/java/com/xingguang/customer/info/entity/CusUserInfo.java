@@ -1,6 +1,5 @@
 package com.xingguang.customer.info.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class CusUserInfo {
@@ -16,15 +15,17 @@ public class CusUserInfo {
 
     private Integer sex;
 
-    private BigDecimal income;
+    private String income;
 
-    private Long education;
+    private String education;
 
-    private Long occupation;
+    private String occupation;
 
     private Date createTime;
 
     private Long workUserId;
+
+    private String workUserName;
 
     public Long getId() {
         return id;
@@ -74,28 +75,28 @@ public class CusUserInfo {
         this.sex = sex;
     }
 
-    public BigDecimal getIncome() {
+    public String getIncome() {
         return income;
     }
 
-    public void setIncome(BigDecimal income) {
-        this.income = income;
+    public void setIncome(String income) {
+        this.income = income == null ? null : income.trim();
     }
 
-    public Long getEducation() {
+    public String getEducation() {
         return education;
     }
 
-    public void setEducation(Long education) {
-        this.education = education;
+    public void setEducation(String education) {
+        this.education = education == null ? null : education.trim();
     }
 
-    public Long getOccupation() {
+    public String getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(Long occupation) {
-        this.occupation = occupation;
+    public void setOccupation(String occupation) {
+        this.occupation = occupation == null ? null : occupation.trim();
     }
 
     public Date getCreateTime() {
@@ -112,5 +113,13 @@ public class CusUserInfo {
 
     public void setWorkUserId(Long workUserId) {
         this.workUserId = workUserId;
+    }
+
+    public String getWorkUserName() {
+        return workUserName;
+    }
+
+    public void setWorkUserName(String workUserName) {
+        this.workUserName = workUserName == null ? null : workUserName.trim();
     }
 }

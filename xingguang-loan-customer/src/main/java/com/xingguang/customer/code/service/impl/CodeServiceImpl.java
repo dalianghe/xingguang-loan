@@ -24,7 +24,7 @@ public class CodeServiceImpl implements ICodeService {
     private CodeInfoMapper codeInfoMapper;
 
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = true)
     public List<CodeInfo> getCodeByTypeIds(CodeInfoExample example) {
         return this.codeInfoMapper.selectByExample(example);
     }
