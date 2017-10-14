@@ -227,7 +227,7 @@
             </div>
             <br/>
             <div>
-                <button class="btn btn-info" @click="backward">
+                <button class="btn btn-sm btn-info" @click="backward">
                     <i class="ace-icon fa fa-backward bigger-120"></i>
                     返回
                 </button>

@@ -250,10 +250,14 @@
                 </div>
             </div>
             <br/>
-            <div align="right">
-                <button class="btn btn-success" @click="auditCredit">
-                    <i class="ace-icon fa fa-check bigger-120"></i>
+            <div style="text-align:justify;text-align-last:justify;">
+                <button class="btn btn-sm btn-info" @click="backward">
+                    <i class="ace-icon fa fa-backward bigger-120"></i>
+                    返回
+                </button>
+                <button class="btn btn-sm btn-success" @click="auditCredit">
                     提交
+                    <i class="ace-icon fa fa-forward bigger-120"></i>
                 </button>
             </div>
         </div><!-- /.col -->
@@ -344,10 +348,13 @@
                         if(result.sysCode==0){
                             if(result.bizCode==0){
                                 layer.msg('操作成功！');
-                                $("#main").load("/router/credit/apply/applytodulist");
+                                $("#main").load("/router/credit/apply/applytodolist");
                             }
                         }
                     }));
+                },
+                backward : function(){
+                    $("#main").load("/router/credit/apply/applytodolist");
                 }
             }
         });
