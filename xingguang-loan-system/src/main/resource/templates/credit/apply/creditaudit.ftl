@@ -343,15 +343,18 @@
                 auditCredit : function(){
                     this.audit.cusUserId = $("#id").val().split("&")[0];
                     this.audit.id = $("#id").val().split("&")[1];
-                    axios.all([updateCreditApplyInfo()]).then(axios.spread(function (applyResult) {
-                        var result = applyResult.data;
-                        if(result.sysCode==0){
-                            if(result.bizCode==0){
-                                layer.msg('操作成功！');
-                                $("#main").load("/router/credit/apply/applytodolist");
+                    layer.confirm('确认执行提交操作吗？', {icon: 3, title:'系统提示'}, function(index){
+                        axios.all([updateCreditApplyInfo()]).then(axios.spread(function (applyResult) {
+                            var result = applyResult.data;
+                            if(result.sysCode==0){
+                                if(result.bizCode==0){
+                                    layer.msg('操作成功！');
+                                    $("#main").load("/router/credit/apply/applytodolist");
+                                }
                             }
-                        }
-                    }));
+                        }));
+                        layer.close(index);
+                    });
                 },
                 backward : function(){
                     $("#main").load("/router/credit/apply/applytodolist");
