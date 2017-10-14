@@ -250,7 +250,7 @@
                 </div>
             </div>
             <br/>
-            <div>
+            <div align="right">
                 <button class="btn btn-success" @click="auditCredit">
                     <i class="ace-icon fa fa-check bigger-120"></i>
                     提交
