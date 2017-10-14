@@ -62,7 +62,23 @@
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
         </if>
-        ORDER BY create_time desc
+        ORDER BY t2.create_time desc
+    </select>
+
+    <select id="findMyCreditDoneCusUser" parameterType="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" resultMap="BaseResultMapCustom">
+        SELECT
+        t1.*,if(t1.sex='1','男','女') sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
+        t2.id apply_id, t2.create_time apply_time
+        FROM cus_user_info t1
+        INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
+        WHERE t2.status in (2 , 3)
+        <if test="name != null" >
+            AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="creditUserId != null" >
+            AND t2.credit_user_id = #{creditUserId}
+        </if>
+        ORDER BY t2.create_time desc
     </select>
 
     <update id="updateWorkUserById" parameterType="com.xingguang.work.baseinfo.entity.WorkUserInfoEntity">

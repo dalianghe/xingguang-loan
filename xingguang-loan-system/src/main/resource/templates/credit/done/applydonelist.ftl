@@ -10,7 +10,7 @@
             <li>
                 <a href="#">审核管理</a>
             </li>
-            <li class="active">授信审核</li>
+            <li class="active">我的已办</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
             <h1>
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    授信审核
+                    已办列表
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -84,8 +84,8 @@
                                 <td>{{user.applyTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="creditUser(user.id , user.applyId)">
-                                            <i class="ace-icon fa fa-check bigger-120"></i>
+                                        <button class="btn btn-xs btn-info" @click="creditUser(user.id , user.applyId)">
+                                            &nbsp;<i class="ace-icon fa fa-info bigger-120"></i>&nbsp;
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -97,7 +97,7 @@
                                                 <li>
                                                     <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id)">
                                                         <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                            <i class="ace-icon fa fa-info bigger-120"></i>
                                                         </span>
                                                     </a>
                                                 </li>
@@ -144,7 +144,7 @@
                 query(this);
             },
             creditUser : function(userId , applyId){
-                var url = "/prouter/credit/apply/creditaudit/"+userId+"&"+applyId;
+                var url = "/prouter/credit/done/creditview/"+userId+"&"+applyId;
                 $("#main").load(url,function(response,status,xhr){
                     //console.log("success");
                 });
@@ -159,7 +159,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/cus/applies', {
+        axios.get('/cus/my/applies', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;

@@ -5,6 +5,9 @@ import com.xingguang.common.beans.ResultBean;
 import com.xingguang.cus.baseinfo.domain.CusUserDomain;
 import com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom;
 import com.xingguang.cus.baseinfo.service.ICusUserInfoService;
+import com.xingguang.system.login.domain.AuthUserDomain;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +47,18 @@ public class CusUserController {
         ResultBean<?> resultBean = null;
         CusUserDomain domain = JSON.parseObject(paramJson,CusUserDomain.class);
         Map<String , Object> users = cusUserInfoService.findCreditTodoCusUser(domain);
+        resultBean = new ResultBean<>(users);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/cus/my/applies" , method = RequestMethod.GET)
+    public ResultBean<?> findCreditDoneUsers(String paramJson) throws Exception{
+        ResultBean<?> resultBean = null;
+        CusUserDomain domain = JSON.parseObject(paramJson,CusUserDomain.class);
+        Subject subject = SecurityUtils.getSubject();
+        AuthUserDomain loginUser = (AuthUserDomain)subject.getPrincipals().getPrimaryPrincipal();
+        domain.setCreditUserId(loginUser.getId());
+        Map<String , Object> users = cusUserInfoService.findMyCreditDoneCusUser(domain);
         resultBean = new ResultBean<>(users);
         return resultBean;
     }

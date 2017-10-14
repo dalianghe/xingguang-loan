@@ -16,4 +16,6 @@ public interface CusUserInfoMapper {
 
     List<CusUserInfoEntityCustom> findCreditTodoCusUserList(CusUserInfoEntity cusUserInfoEntity) throws Exception;
 
+    List<CusUserInfoEntityCustom> findMyCreditDoneCusUser(CusUserInfoEntityCustom cusUserInfoEntityCustom) throws Exception;
+
 }

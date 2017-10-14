@@ -19,6 +19,7 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
     private Long applyId;
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date applyTime;
+    private Long creditUserId;
 
     public String getRealStatusName() {
         return realStatusName;
@@ -74,5 +75,13 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
 
     public void setOccupationName(String occupationName) {
         this.occupationName = occupationName;
+    }
+
+    public Long getCreditUserId() {
+        return creditUserId;
+    }
+
+    public void setCreditUserId(Long creditUserId) {
+        this.creditUserId = creditUserId;
     }
 }

@@ -9,11 +9,21 @@ public class CusUserDomain extends BaseDomain{
 
     private String name;
 
+    private Long creditUserId;
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getCreditUserId() {
+        return creditUserId;
+    }
+
+    public void setCreditUserId(Long creditUserId) {
+        this.creditUserId = creditUserId;
     }
 }

@@ -26,7 +26,7 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
 
     @Override
     public Map<String, Object> findCusUserAll(CusUserDomain domain) throws Exception {
-        CusUserInfoEntity cusUserInfoEntity = new CusUserInfoEntity();
+        CusUserInfoEntityCustom cusUserInfoEntity = new CusUserInfoEntityCustom();
         cusUserInfoEntity.setName(domain.getName());
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
         BeanUtils.copyProperties(domain,cusUserInfoEntity);
@@ -44,6 +44,19 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
         BeanUtils.copyProperties(domain,cusUserInfoEntity);
         List<CusUserInfoEntityCustom> users = cusUserInfoMapper.findCreditTodoCusUserList(cusUserInfoEntity);
+        Map<String,Object> map = new HashMap<>();
+        map.put("users" , users);
+        map.put("total" , ((Page) users).getTotal());
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> findMyCreditDoneCusUser(CusUserDomain domain) throws Exception {
+        CusUserInfoEntityCustom cusUserInfoEntity = new CusUserInfoEntityCustom();
+        cusUserInfoEntity.setName(domain.getName());
+        PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
+        BeanUtils.copyProperties(domain,cusUserInfoEntity);
+        List<CusUserInfoEntityCustom> users = cusUserInfoMapper.findMyCreditDoneCusUser(cusUserInfoEntity);
         Map<String,Object> map = new HashMap<>();
         map.put("users" , users);
         map.put("total" , ((Page) users).getTotal());

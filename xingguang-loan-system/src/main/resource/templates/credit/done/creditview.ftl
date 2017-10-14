@@ -16,7 +16,7 @@
             <div class="nav-search" id="nav-search">
                 <form class="form-search">
 				<span class="input-icon">
-					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<input type="text" placeholder="百度搜索 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
 					<i class="ace-icon fa fa-search nav-search-icon"></i>
 				</span>
                 </form>
@@ -207,39 +207,15 @@
                                         <form id="auditForm">
                                             <div class="profile-user-info profile-user-info-striped">
                                                 <div class="profile-info-row">
-                                                <div class="profile-info-name"> 审核结果 </div>
-                                                <div class="profile-info-value">
-                                                    <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
-                                                        <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="2" @click="chooseResult"/>
-                                                            <span class="lbl"> 通过</span>
-                                                        </label>
-                                                        &nbsp;&nbsp;
-                                                        <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="3" @click="chooseResult"/>
-                                                            <span class="lbl"> 不通过</span>
-                                                        </label>
+                                                    <div class="profile-info-name"> 审核结果 </div>
+                                                    <div class="profile-info-value">
+                                                        {{apply.statusName}}
                                                     </div>
+                                                    <div class="profile-info-name" v-if="apply.status===2"> 授信金额 </div>
+                                                    <div class="profile-info-value" v-if="apply.status===2">{{apply.amount}}（元）</div>
+                                                    <div class="profile-info-name" v-if="apply.status===3"> 拒贷码 </div>
+                                                    <div class="profile-info-value" v-if="apply.status===3">{{apply.refuseCode}}</div>
                                                 </div>
-                                            </div>
-                                            <div class="profile-info-row" id="amountDiv" style="display: none">
-                                                <div class="profile-info-name"> 授信金额 </div>
-                                                <div class="profile-info-value">
-                                                    <input type="text" id="amount" name="amount" v-model="audit.amount" placeholder="请输入授信金额"/>（元）
-                                                </div>
-                                            </div>
-                                            <div class="profile-info-row" id="refuseCodeDiv" style="display: none">
-                                                <div class="profile-info-name"> 拒代码 </div>
-                                                <div class="profile-info-value">
-                                                    <select class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
-                                                        <option disabled value=null>请选择</option>
-                                                        <option value="001">年龄不符</option>
-                                                        <option value="002">收入不符</option>
-                                                        <option value="003">地域不符</option>
-                                                        <option value="004">虚假信息</option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                             </div>
                                         </form>
                                     </div>
@@ -251,9 +227,9 @@
             </div>
             <br/>
             <div>
-                <button class="btn btn-success" @click="auditCredit">
-                    <i class="ace-icon fa fa-check bigger-120"></i>
-                    提交
+                <button class="btn btn-info" @click="backward">
+                    <i class="ace-icon fa fa-backward bigger-120"></i>
+                    返回
                 </button>
             </div>
         </div><!-- /.col -->
@@ -284,14 +260,7 @@
                 user : {},
                 link : {},
                 worker : {},
-                apply : {},
-                audit : {
-                    id : "",
-                    cusUserId : "",
-                    status : "",
-                    amount : "",
-                    refuseCode : null
-                }
+                apply : {}
             },
             created : function(){
                 var that=this;
@@ -306,7 +275,7 @@
                     var link = cusLink.data;
                     if(link.sysCode==0){
                         if(link.bizCode==0){
-                            that.link = link.data;
+                            that.link = link.data==null ? {} : link.data;
                         }
                     }
                     var worker = worker.data;
@@ -336,18 +305,8 @@
                         this.audit.refuseCode = null;
                     }
                 },
-                auditCredit : function(){
-                    this.audit.cusUserId = $("#id").val().split("&")[0];
-                    this.audit.id = $("#id").val().split("&")[1];
-                    axios.all([updateCreditApplyInfo()]).then(axios.spread(function (applyResult) {
-                        var result = applyResult.data;
-                        if(result.sysCode==0){
-                            if(result.bizCode==0){
-                                layer.msg('操作成功！');
-                                $("#main").load("/router/credit/apply/applytodulist");
-                            }
-                        }
-                    }));
+                backward : function(){
+                    $("#main").load("/router/credit/done/applydonelist");
                 }
             }
         });
@@ -356,5 +315,12 @@
             var formData = app.audit;
             return axios.post('/credit/audit' , formData);
         }
+
+        $('#nav-search-input').bind('keypress', function(event) {
+            if (event.keyCode == "13") {
+                event.preventDefault();
+                window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
+            }
+        });
 
     </script>
