@@ -95,7 +95,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id , user.applyId)">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-info bigger-120"></i>
                                                         </span>

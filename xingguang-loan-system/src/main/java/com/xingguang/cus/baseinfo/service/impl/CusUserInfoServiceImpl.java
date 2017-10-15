@@ -40,7 +40,7 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     @Override
     public Map<String, Object> findCreditTodoCusUser(CusUserDomain domain) throws Exception {
         CusUserInfoEntity cusUserInfoEntity = new CusUserInfoEntity();
-        cusUserInfoEntity.setName(domain.getName());
+        //cusUserInfoEntity.setName(domain.getName());
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
         BeanUtils.copyProperties(domain,cusUserInfoEntity);
         List<CusUserInfoEntityCustom> users = cusUserInfoMapper.findCreditTodoCusUserList(cusUserInfoEntity);
@@ -53,7 +53,7 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     @Override
     public Map<String, Object> findMyCreditDoneCusUser(CusUserDomain domain) throws Exception {
         CusUserInfoEntityCustom cusUserInfoEntity = new CusUserInfoEntityCustom();
-        cusUserInfoEntity.setName(domain.getName());
+        //cusUserInfoEntity.setName(domain.getName());
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
         BeanUtils.copyProperties(domain,cusUserInfoEntity);
         List<CusUserInfoEntityCustom> users = cusUserInfoMapper.findMyCreditDoneCusUser(cusUserInfoEntity);

@@ -8,9 +8,9 @@
             </li>
 
             <li>
-                <a href="#">审核管理</a>
+                <a href="#">财务管理</a>
             </li>
-            <li class="active">授信审核</li>
+            <li class="active">放款管理</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
             <h1>
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    审核列表
+                    放款列表
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -58,11 +58,10 @@
                             <tr>
                                 <th class="hidden-480" class="center">序号</th>
                                 <th>姓名</th>
-                                <th class="hidden-480">性别</th>
-                                <th>手机号</th>
-                                <th class="hidden-480">身份证号</th>
-                                <th class="hidden-480">认证状态</th>
-                                <th>
+                                <th>提款金额（元）</th>
+                                <th>银行卡号</th>
+                                <th class="hidden-480">预留手机</th>
+                                <th class="hidden-480">
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     申请时间
                                 </th>
@@ -71,21 +70,17 @@
                             </thead>
 
                             <tbody>
-                            <tr v-for="(user,index) in users">
+                            <tr v-for="(user,index) in applies">
                                 <td class="hidden-480" class="center"> {{index+1}}</td>
-                                <td>{{user.name}}</td>
-                                <td class="hidden-480">{{user.sexName}}</td>
-                                <td>{{user.phone}}</td>
-                                <td class="hidden-480">{{user.idNo}}</td>
-                                <td>
-                                    <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
-                                    <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
-                                </td>
-                                <td>{{user.applyTime}}</td>
+                                <td>{{user.cusUserName}}</td>
+                                <td>{{user.amount}}</td>
+                                <td>{{user.bankCardId}}</td>
+                                <td>{{user.reservePhone}}</td>
+                                <td class="hidden-480">{{user.createTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="creditUser(user.id , user.applyId)">
-                                            <i class="ace-icon fa fa-check bigger-120"></i>
+                                        <button class="btn btn-xs btn-success" @click="paypal(user.id)">
+                                            <i class="ace-icon fa fa-paypal bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -95,7 +90,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id , user.applyId)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="paypal(user.id)">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                                         </span>
@@ -129,7 +124,7 @@
     var app = new Vue({
         el: '#dataDiv',
         data: {
-            users: {},
+            applies: {},
             "userName":null,
             // 分页
             page: 1,
@@ -143,11 +138,8 @@
             queryUser : function(){
                 query(this);
             },
-            creditUser : function(userId , applyId){
-                var url = "/prouter/credit/apply/creditaudit/"+userId+"&"+applyId;
-                $("#main").load(url,function(response,status,xhr){
-                    //console.log("success");
-                });
+            paypal : function(userId , applyId){
+                layer.msg('开发中。。。');
             },
             pageHandler: function (page) {
                 this.page=page;
@@ -158,14 +150,14 @@
     function query(obj){
         var that = obj;
         var idx = layer.load(2);
-        var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/cus/applies', {
+        var paramJson = {"cusUserName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
+        axios.get('/finance/wdrl/applies', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
             if(result.sysCode==0){
                 if(result.bizCode==0){
-                    that.users = result.data.users;
+                    that.applies = result.data.applies;
                     that.total = result.data.total;
                 }
             }
