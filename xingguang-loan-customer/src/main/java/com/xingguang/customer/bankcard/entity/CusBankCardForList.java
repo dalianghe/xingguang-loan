@@ -15,7 +15,10 @@ public class CusBankCardForList {
         this.cusBankCard = cusBankCard;
         this.id = cusBankCard.getId();
         String cardNo = cusBankCard.getCardNo();
-        this.cusBankCard.setCardNo(cardNo.substring(cardNo.length() - 4, cardNo.length()));
+        if(cardNo.length() > 4){
+            cardNo = cardNo.substring(cardNo.length() - 4, cardNo.length());
+        }
+        this.cusBankCard.setCardNo(cardNo);
     }
 
     public Long getId() {

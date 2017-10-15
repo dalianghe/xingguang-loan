@@ -7,7 +7,7 @@ public class CodeInfo {
 
     private Long typeId;
 
-    private Long code;
+    private Integer code;
 
     private String name;
 
@@ -37,11 +37,11 @@ public class CodeInfo {
         this.typeId = typeId;
     }
 
-    public Long getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(Long code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
@@ -96,4 +96,5 @@ public class CodeInfo {
     public String getTypeIdToString(){
         return this.typeId.toString();
     }
+
 }

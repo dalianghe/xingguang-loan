@@ -11,4 +11,6 @@ public interface ICusUserLinkService {
     void create(CusUserLink cusUserLinks);
 
     void delete(CusUserLinkExample example);
+
+    CusUserLink findByCusUserId(Long cusUserId);
 }

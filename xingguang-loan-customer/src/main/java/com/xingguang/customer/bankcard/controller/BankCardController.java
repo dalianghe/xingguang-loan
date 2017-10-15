@@ -34,6 +34,8 @@ public class BankCardController {
         Long count = this.bankCardService.countByExample(example);
         if(count == 0){
             cusBankCard.setCusUserId(userId);
+            CusBank cusBank = this.cusBankService.findByKey(cusBankCard.getBankId());
+            cusBankCard.setBankName(cusBank.getName());
             this.bankCardService.create(cusBankCard);
         }else{
             resultBean.setBizCode(1);

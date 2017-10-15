@@ -9,7 +9,7 @@ public class CusUserLink {
 
     private String linkName;
 
-    private Long relationId;
+    private Integer relationId;
 
     private String phone;
 
@@ -39,11 +39,11 @@ public class CusUserLink {
         this.linkName = linkName == null ? null : linkName.trim();
     }
 
-    public Long getRelationId() {
+    public Integer getRelationId() {
         return relationId;
     }
 
-    public void setRelationId(Long relationId) {
+    public void setRelationId(Integer relationId) {
         this.relationId = relationId;
     }
 

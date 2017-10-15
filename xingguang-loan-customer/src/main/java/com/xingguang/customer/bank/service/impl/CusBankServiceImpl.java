@@ -21,8 +21,24 @@ public class CusBankServiceImpl implements ICusBankService {
 
     @Override
     @Transactional(readOnly = true)
+    public CusBank findByKey(Long id) {
+        return this.cusBankMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<CusBank> findAll() {
         CusBankExample example = new CusBankExample();
+        example.setOrderByClause("create_time");
+        return this.cusBankMapper.selectByExample(example);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CusBank> findAvail() {
+        CusBankExample example = new CusBankExample();
+        example.createCriteria().andStatusEqualTo(1);
+        example.setOrderByClause("create_time");
         return this.cusBankMapper.selectByExample(example);
     }
 

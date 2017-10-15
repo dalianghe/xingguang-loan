@@ -8,9 +8,9 @@
     <result column="id_no" jdbcType="VARCHAR" property="idNo" />
     <result column="real_status" jdbcType="INTEGER" property="realStatus" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
-    <result column="income" jdbcType="VARCHAR" property="income" />
-    <result column="education" jdbcType="VARCHAR" property="education" />
-    <result column="occupation" jdbcType="VARCHAR" property="occupation" />
+    <result column="income" jdbcType="INTEGER" property="income" />
+    <result column="education" jdbcType="INTEGER" property="education" />
+    <result column="occupation" jdbcType="INTEGER" property="occupation" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="work_user_id" jdbcType="BIGINT" property="workUserId" />
     <result column="work_user_name" jdbcType="VARCHAR" property="workUserName" />
@@ -121,8 +121,8 @@
       education, occupation, create_time, 
       work_user_id, work_user_name)
     values (#{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
-      #{realStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{income,jdbcType=VARCHAR}, 
-      #{education,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{realStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{income,jdbcType=INTEGER}, 
+      #{education,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.info.entity.CusUserInfo" useGeneratedKeys="true">
@@ -179,13 +179,13 @@
         #{sex,jdbcType=INTEGER},
       </if>
       <if test="income != null">
-        #{income,jdbcType=VARCHAR},
+        #{income,jdbcType=INTEGER},
       </if>
       <if test="education != null">
-        #{education,jdbcType=VARCHAR},
+        #{education,jdbcType=INTEGER},
       </if>
       <if test="occupation != null">
-        #{occupation,jdbcType=VARCHAR},
+        #{occupation,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -226,13 +226,13 @@
         sex = #{record.sex,jdbcType=INTEGER},
       </if>
       <if test="record.income != null">
-        income = #{record.income,jdbcType=VARCHAR},
+        income = #{record.income,jdbcType=INTEGER},
       </if>
       <if test="record.education != null">
-        education = #{record.education,jdbcType=VARCHAR},
+        education = #{record.education,jdbcType=INTEGER},
       </if>
       <if test="record.occupation != null">
-        occupation = #{record.occupation,jdbcType=VARCHAR},
+        occupation = #{record.occupation,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -256,9 +256,9 @@
       id_no = #{record.idNo,jdbcType=VARCHAR},
       real_status = #{record.realStatus,jdbcType=INTEGER},
       sex = #{record.sex,jdbcType=INTEGER},
-      income = #{record.income,jdbcType=VARCHAR},
-      education = #{record.education,jdbcType=VARCHAR},
-      occupation = #{record.occupation,jdbcType=VARCHAR},
+      income = #{record.income,jdbcType=INTEGER},
+      education = #{record.education,jdbcType=INTEGER},
+      occupation = #{record.occupation,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       work_user_id = #{record.workUserId,jdbcType=BIGINT},
       work_user_name = #{record.workUserName,jdbcType=VARCHAR}
@@ -285,13 +285,13 @@
         sex = #{sex,jdbcType=INTEGER},
       </if>
       <if test="income != null">
-        income = #{income,jdbcType=VARCHAR},
+        income = #{income,jdbcType=INTEGER},
       </if>
       <if test="education != null">
-        education = #{education,jdbcType=VARCHAR},
+        education = #{education,jdbcType=INTEGER},
       </if>
       <if test="occupation != null">
-        occupation = #{occupation,jdbcType=VARCHAR},
+        occupation = #{occupation,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -312,9 +312,9 @@
       id_no = #{idNo,jdbcType=VARCHAR},
       real_status = #{realStatus,jdbcType=INTEGER},
       sex = #{sex,jdbcType=INTEGER},
-      income = #{income,jdbcType=VARCHAR},
-      education = #{education,jdbcType=VARCHAR},
-      occupation = #{occupation,jdbcType=VARCHAR},
+      income = #{income,jdbcType=INTEGER},
+      education = #{education,jdbcType=INTEGER},
+      occupation = #{occupation,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       work_user_id = #{workUserId,jdbcType=BIGINT},
       work_user_name = #{workUserName,jdbcType=VARCHAR}

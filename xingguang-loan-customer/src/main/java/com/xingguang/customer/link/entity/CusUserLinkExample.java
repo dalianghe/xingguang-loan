@@ -325,52 +325,52 @@ public class CusUserLinkExample {
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdEqualTo(Long value) {
+        public Criteria andRelationIdEqualTo(Integer value) {
             addCriterion("relation_id =", value, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdNotEqualTo(Long value) {
+        public Criteria andRelationIdNotEqualTo(Integer value) {
             addCriterion("relation_id <>", value, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdGreaterThan(Long value) {
+        public Criteria andRelationIdGreaterThan(Integer value) {
             addCriterion("relation_id >", value, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andRelationIdGreaterThanOrEqualTo(Integer value) {
             addCriterion("relation_id >=", value, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdLessThan(Long value) {
+        public Criteria andRelationIdLessThan(Integer value) {
             addCriterion("relation_id <", value, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdLessThanOrEqualTo(Long value) {
+        public Criteria andRelationIdLessThanOrEqualTo(Integer value) {
             addCriterion("relation_id <=", value, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdIn(List<Long> values) {
+        public Criteria andRelationIdIn(List<Integer> values) {
             addCriterion("relation_id in", values, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdNotIn(List<Long> values) {
+        public Criteria andRelationIdNotIn(List<Integer> values) {
             addCriterion("relation_id not in", values, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdBetween(Long value1, Long value2) {
+        public Criteria andRelationIdBetween(Integer value1, Integer value2) {
             addCriterion("relation_id between", value1, value2, "relationId");
             return (Criteria) this;
         }
 
-        public Criteria andRelationIdNotBetween(Long value1, Long value2) {
+        public Criteria andRelationIdNotBetween(Integer value1, Integer value2) {
             addCriterion("relation_id not between", value1, value2, "relationId");
             return (Criteria) this;
         }

@@ -525,62 +525,52 @@ public class CusUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andIncomeEqualTo(String value) {
+        public Criteria andIncomeEqualTo(Integer value) {
             addCriterion("income =", value, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeNotEqualTo(String value) {
+        public Criteria andIncomeNotEqualTo(Integer value) {
             addCriterion("income <>", value, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeGreaterThan(String value) {
+        public Criteria andIncomeGreaterThan(Integer value) {
             addCriterion("income >", value, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeGreaterThanOrEqualTo(String value) {
+        public Criteria andIncomeGreaterThanOrEqualTo(Integer value) {
             addCriterion("income >=", value, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeLessThan(String value) {
+        public Criteria andIncomeLessThan(Integer value) {
             addCriterion("income <", value, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeLessThanOrEqualTo(String value) {
+        public Criteria andIncomeLessThanOrEqualTo(Integer value) {
             addCriterion("income <=", value, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeLike(String value) {
-            addCriterion("income like", value, "income");
-            return (Criteria) this;
-        }
-
-        public Criteria andIncomeNotLike(String value) {
-            addCriterion("income not like", value, "income");
-            return (Criteria) this;
-        }
-
-        public Criteria andIncomeIn(List<String> values) {
+        public Criteria andIncomeIn(List<Integer> values) {
             addCriterion("income in", values, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeNotIn(List<String> values) {
+        public Criteria andIncomeNotIn(List<Integer> values) {
             addCriterion("income not in", values, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeBetween(String value1, String value2) {
+        public Criteria andIncomeBetween(Integer value1, Integer value2) {
             addCriterion("income between", value1, value2, "income");
             return (Criteria) this;
         }
 
-        public Criteria andIncomeNotBetween(String value1, String value2) {
+        public Criteria andIncomeNotBetween(Integer value1, Integer value2) {
             addCriterion("income not between", value1, value2, "income");
             return (Criteria) this;
         }
@@ -595,62 +585,52 @@ public class CusUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andEducationEqualTo(String value) {
+        public Criteria andEducationEqualTo(Integer value) {
             addCriterion("education =", value, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationNotEqualTo(String value) {
+        public Criteria andEducationNotEqualTo(Integer value) {
             addCriterion("education <>", value, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationGreaterThan(String value) {
+        public Criteria andEducationGreaterThan(Integer value) {
             addCriterion("education >", value, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationGreaterThanOrEqualTo(String value) {
+        public Criteria andEducationGreaterThanOrEqualTo(Integer value) {
             addCriterion("education >=", value, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationLessThan(String value) {
+        public Criteria andEducationLessThan(Integer value) {
             addCriterion("education <", value, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationLessThanOrEqualTo(String value) {
+        public Criteria andEducationLessThanOrEqualTo(Integer value) {
             addCriterion("education <=", value, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationLike(String value) {
-            addCriterion("education like", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationNotLike(String value) {
-            addCriterion("education not like", value, "education");
-            return (Criteria) this;
-        }
-
-        public Criteria andEducationIn(List<String> values) {
+        public Criteria andEducationIn(List<Integer> values) {
             addCriterion("education in", values, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationNotIn(List<String> values) {
+        public Criteria andEducationNotIn(List<Integer> values) {
             addCriterion("education not in", values, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationBetween(String value1, String value2) {
+        public Criteria andEducationBetween(Integer value1, Integer value2) {
             addCriterion("education between", value1, value2, "education");
             return (Criteria) this;
         }
 
-        public Criteria andEducationNotBetween(String value1, String value2) {
+        public Criteria andEducationNotBetween(Integer value1, Integer value2) {
             addCriterion("education not between", value1, value2, "education");
             return (Criteria) this;
         }
@@ -665,62 +645,52 @@ public class CusUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andOccupationEqualTo(String value) {
+        public Criteria andOccupationEqualTo(Integer value) {
             addCriterion("occupation =", value, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationNotEqualTo(String value) {
+        public Criteria andOccupationNotEqualTo(Integer value) {
             addCriterion("occupation <>", value, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationGreaterThan(String value) {
+        public Criteria andOccupationGreaterThan(Integer value) {
             addCriterion("occupation >", value, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationGreaterThanOrEqualTo(String value) {
+        public Criteria andOccupationGreaterThanOrEqualTo(Integer value) {
             addCriterion("occupation >=", value, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationLessThan(String value) {
+        public Criteria andOccupationLessThan(Integer value) {
             addCriterion("occupation <", value, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationLessThanOrEqualTo(String value) {
+        public Criteria andOccupationLessThanOrEqualTo(Integer value) {
             addCriterion("occupation <=", value, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationLike(String value) {
-            addCriterion("occupation like", value, "occupation");
-            return (Criteria) this;
-        }
-
-        public Criteria andOccupationNotLike(String value) {
-            addCriterion("occupation not like", value, "occupation");
-            return (Criteria) this;
-        }
-
-        public Criteria andOccupationIn(List<String> values) {
+        public Criteria andOccupationIn(List<Integer> values) {
             addCriterion("occupation in", values, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationNotIn(List<String> values) {
+        public Criteria andOccupationNotIn(List<Integer> values) {
             addCriterion("occupation not in", values, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationBetween(String value1, String value2) {
+        public Criteria andOccupationBetween(Integer value1, Integer value2) {
             addCriterion("occupation between", value1, value2, "occupation");
             return (Criteria) this;
         }
 
-        public Criteria andOccupationNotBetween(String value1, String value2) {
+        public Criteria andOccupationNotBetween(Integer value1, Integer value2) {
             addCriterion("occupation not between", value1, value2, "occupation");
             return (Criteria) this;
         }

@@ -15,11 +15,11 @@ public class CusUserInfo {
 
     private Integer sex;
 
-    private String income;
+    private Integer income;
 
-    private String education;
+    private Integer education;
 
-    private String occupation;
+    private Integer occupation;
 
     private Date createTime;
 
@@ -75,28 +75,28 @@ public class CusUserInfo {
         this.sex = sex;
     }
 
-    public String getIncome() {
+    public Integer getIncome() {
         return income;
     }
 
-    public void setIncome(String income) {
-        this.income = income == null ? null : income.trim();
+    public void setIncome(Integer income) {
+        this.income = income;
     }
 
-    public String getEducation() {
+    public Integer getEducation() {
         return education;
     }
 
-    public void setEducation(String education) {
-        this.education = education == null ? null : education.trim();
+    public void setEducation(Integer education) {
+        this.education = education;
     }
 
-    public String getOccupation() {
+    public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation == null ? null : occupation.trim();
+    public void setOccupation(Integer occupation) {
+        this.occupation = occupation;
     }
 
     public Date getCreateTime() {

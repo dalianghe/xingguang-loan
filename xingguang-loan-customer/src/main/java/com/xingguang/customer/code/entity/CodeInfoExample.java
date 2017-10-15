@@ -255,52 +255,52 @@ public class CodeInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCodeEqualTo(Long value) {
+        public Criteria andCodeEqualTo(Integer value) {
             addCriterion("code =", value, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeNotEqualTo(Long value) {
+        public Criteria andCodeNotEqualTo(Integer value) {
             addCriterion("code <>", value, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeGreaterThan(Long value) {
+        public Criteria andCodeGreaterThan(Integer value) {
             addCriterion("code >", value, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeGreaterThanOrEqualTo(Long value) {
+        public Criteria andCodeGreaterThanOrEqualTo(Integer value) {
             addCriterion("code >=", value, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeLessThan(Long value) {
+        public Criteria andCodeLessThan(Integer value) {
             addCriterion("code <", value, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeLessThanOrEqualTo(Long value) {
+        public Criteria andCodeLessThanOrEqualTo(Integer value) {
             addCriterion("code <=", value, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeIn(List<Long> values) {
+        public Criteria andCodeIn(List<Integer> values) {
             addCriterion("code in", values, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeNotIn(List<Long> values) {
+        public Criteria andCodeNotIn(List<Integer> values) {
             addCriterion("code not in", values, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeBetween(Long value1, Long value2) {
+        public Criteria andCodeBetween(Integer value1, Integer value2) {
             addCriterion("code between", value1, value2, "code");
             return (Criteria) this;
         }
 
-        public Criteria andCodeNotBetween(Long value1, Long value2) {
+        public Criteria andCodeNotBetween(Integer value1, Integer value2) {
             addCriterion("code not between", value1, value2, "code");
             return (Criteria) this;
         }

@@ -34,7 +34,7 @@ public class CodeController {
         CodeInfoExample example = new CodeInfoExample();
         example.setOrderByClause("type_id, sort");
         example.createCriteria().andTypeIdIn(typeIds);
-        List<CodeInfo> list = this.codeService.getCodeByTypeIds(example);
+        List<CodeInfo> list = this.codeService.getCodeList(example);
         Map<String, List<CodeInfo>> map = list.stream().collect(Collectors.groupingBy(CodeInfo::getTypeIdToString));
         resultBean.setData(map);
         return resultBean;

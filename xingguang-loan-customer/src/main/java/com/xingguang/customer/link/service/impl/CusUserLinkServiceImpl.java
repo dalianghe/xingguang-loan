@@ -7,6 +7,7 @@ import com.xingguang.customer.link.service.ICusUserLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -28,5 +29,17 @@ public class CusUserLinkServiceImpl implements ICusUserLinkService {
     @Override
     public void delete(CusUserLinkExample example) {
         this.cusUserLinkMapper.deleteByExample(example);
+    }
+
+    @Override
+    public CusUserLink findByCusUserId(Long cusUserId) {
+        CusUserLinkExample example = new CusUserLinkExample();
+        example.createCriteria().andCusUserIdEqualTo(cusUserId);
+        example.setLimit(1);
+        List<CusUserLink> list = this.cusUserLinkMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
     }
 }
