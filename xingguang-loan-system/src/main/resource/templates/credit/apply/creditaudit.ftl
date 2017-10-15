@@ -233,10 +233,7 @@
                                                 <div class="profile-info-value">
                                                     <select class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
                                                         <option disabled value=null>请选择</option>
-                                                        <option value="001">年龄不符</option>
-                                                        <option value="002">收入不符</option>
-                                                        <option value="003">地域不符</option>
-                                                        <option value="004">虚假信息</option>
+                                                        <option v-for="refuse in refuses" :value="refuse.refuseCode">{{refuse.refuseName}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -281,6 +278,9 @@
             var applyId = $("#id").val().split("&")[1];
             return axios.get("/credit/apply/"+applyId);
         }
+        function getCodeResuse() {
+            return axios.get("/code/refuse",{params:{"id":0}});
+        }
 
         var app = new Vue({
             el: '#dataDiv',
@@ -289,6 +289,7 @@
                 link : {},
                 worker : {},
                 apply : {},
+                refuses : {},
                 audit : {
                     id : "",
                     cusUserId : "",
@@ -299,8 +300,8 @@
             },
             created : function(){
                 var that=this;
-                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo()])
-                        .then(axios.spread(function (cusUser, cusLink, worker, apply) {
+                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo(), getCodeResuse()])
+                        .then(axios.spread(function (cusUser, cusLink, worker, apply, refuses) {
                     var user = cusUser.data;
                     if(user.sysCode==0){
                         if(user.bizCode==0){
@@ -323,6 +324,12 @@
                     if(apply.sysCode==0){
                         if(apply.bizCode==0){
                             that.apply = apply.data;
+                        }
+                    }
+                    var refuses = refuses.data;
+                    if(refuses.sysCode==0){
+                        if(refuses.bizCode==0){
+                            that.refuses = refuses.data;
                         }
                     }
                 }));
