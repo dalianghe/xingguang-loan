@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,7 @@ public class BankCardController {
             cusBankCard.setCusUserId(userId);
             CusBank cusBank = this.cusBankService.findByKey(cusBankCard.getBankId());
             cusBankCard.setBankName(cusBank.getName());
+            cusBankCard.setCreateTime(new Date());
             this.bankCardService.create(cusBankCard);
         }else{
             resultBean.setBizCode(1);
