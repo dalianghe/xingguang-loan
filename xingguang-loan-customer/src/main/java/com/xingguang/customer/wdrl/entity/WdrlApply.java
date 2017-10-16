@@ -6,7 +6,13 @@ import java.util.Date;
 public class WdrlApply {
     private Long id;
 
+    private Long cusUserId;
+
+    private String cusUserName;
+
     private Long bankCardId;
+
+    private String reservePhone;
 
     private BigDecimal amount;
 
@@ -28,8 +34,6 @@ public class WdrlApply {
 
     private BigDecimal accMgmtCharge;
 
-    private Long cusUserId;
-
     public Long getId() {
         return id;
     }
@@ -38,12 +42,36 @@ public class WdrlApply {
         this.id = id;
     }
 
+    public Long getCusUserId() {
+        return cusUserId;
+    }
+
+    public void setCusUserId(Long cusUserId) {
+        this.cusUserId = cusUserId;
+    }
+
+    public String getCusUserName() {
+        return cusUserName;
+    }
+
+    public void setCusUserName(String cusUserName) {
+        this.cusUserName = cusUserName == null ? null : cusUserName.trim();
+    }
+
     public Long getBankCardId() {
         return bankCardId;
     }
 
     public void setBankCardId(Long bankCardId) {
         this.bankCardId = bankCardId;
+    }
+
+    public String getReservePhone() {
+        return reservePhone;
+    }
+
+    public void setReservePhone(String reservePhone) {
+        this.reservePhone = reservePhone == null ? null : reservePhone.trim();
     }
 
     public BigDecimal getAmount() {
@@ -124,13 +152,5 @@ public class WdrlApply {
 
     public void setAccMgmtCharge(BigDecimal accMgmtCharge) {
         this.accMgmtCharge = accMgmtCharge;
-    }
-
-    public Long getCusUserId() {
-        return cusUserId;
-    }
-
-    public void setCusUserId(Long cusUserId) {
-        this.cusUserId = cusUserId;
     }
 }

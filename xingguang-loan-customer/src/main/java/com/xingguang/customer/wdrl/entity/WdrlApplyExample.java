@@ -186,6 +186,136 @@ public class WdrlApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andCusUserIdIsNull() {
+            addCriterion("cus_user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdIsNotNull() {
+            addCriterion("cus_user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdEqualTo(Long value) {
+            addCriterion("cus_user_id =", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdNotEqualTo(Long value) {
+            addCriterion("cus_user_id <>", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdGreaterThan(Long value) {
+            addCriterion("cus_user_id >", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("cus_user_id >=", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdLessThan(Long value) {
+            addCriterion("cus_user_id <", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("cus_user_id <=", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdIn(List<Long> values) {
+            addCriterion("cus_user_id in", values, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdNotIn(List<Long> values) {
+            addCriterion("cus_user_id not in", values, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdBetween(Long value1, Long value2) {
+            addCriterion("cus_user_id between", value1, value2, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("cus_user_id not between", value1, value2, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameIsNull() {
+            addCriterion("cus_user_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameIsNotNull() {
+            addCriterion("cus_user_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameEqualTo(String value) {
+            addCriterion("cus_user_name =", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameNotEqualTo(String value) {
+            addCriterion("cus_user_name <>", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameGreaterThan(String value) {
+            addCriterion("cus_user_name >", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameGreaterThanOrEqualTo(String value) {
+            addCriterion("cus_user_name >=", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameLessThan(String value) {
+            addCriterion("cus_user_name <", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameLessThanOrEqualTo(String value) {
+            addCriterion("cus_user_name <=", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameLike(String value) {
+            addCriterion("cus_user_name like", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameNotLike(String value) {
+            addCriterion("cus_user_name not like", value, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameIn(List<String> values) {
+            addCriterion("cus_user_name in", values, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameNotIn(List<String> values) {
+            addCriterion("cus_user_name not in", values, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameBetween(String value1, String value2) {
+            addCriterion("cus_user_name between", value1, value2, "cusUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserNameNotBetween(String value1, String value2) {
+            addCriterion("cus_user_name not between", value1, value2, "cusUserName");
+            return (Criteria) this;
+        }
+
         public Criteria andBankCardIdIsNull() {
             addCriterion("bank_card_id is null");
             return (Criteria) this;
@@ -243,6 +373,76 @@ public class WdrlApplyExample {
 
         public Criteria andBankCardIdNotBetween(Long value1, Long value2) {
             addCriterion("bank_card_id not between", value1, value2, "bankCardId");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneIsNull() {
+            addCriterion("reserve_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneIsNotNull() {
+            addCriterion("reserve_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneEqualTo(String value) {
+            addCriterion("reserve_phone =", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneNotEqualTo(String value) {
+            addCriterion("reserve_phone <>", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneGreaterThan(String value) {
+            addCriterion("reserve_phone >", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("reserve_phone >=", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneLessThan(String value) {
+            addCriterion("reserve_phone <", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneLessThanOrEqualTo(String value) {
+            addCriterion("reserve_phone <=", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneLike(String value) {
+            addCriterion("reserve_phone like", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneNotLike(String value) {
+            addCriterion("reserve_phone not like", value, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneIn(List<String> values) {
+            addCriterion("reserve_phone in", values, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneNotIn(List<String> values) {
+            addCriterion("reserve_phone not in", values, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneBetween(String value1, String value2) {
+            addCriterion("reserve_phone between", value1, value2, "reservePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andReservePhoneNotBetween(String value1, String value2) {
+            addCriterion("reserve_phone not between", value1, value2, "reservePhone");
             return (Criteria) this;
         }
 
@@ -853,66 +1053,6 @@ public class WdrlApplyExample {
 
         public Criteria andAccMgmtChargeNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("acc_mgmt_charge not between", value1, value2, "accMgmtCharge");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdIsNull() {
-            addCriterion("cus_user_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdIsNotNull() {
-            addCriterion("cus_user_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdEqualTo(Long value) {
-            addCriterion("cus_user_id =", value, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdNotEqualTo(Long value) {
-            addCriterion("cus_user_id <>", value, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdGreaterThan(Long value) {
-            addCriterion("cus_user_id >", value, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("cus_user_id >=", value, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdLessThan(Long value) {
-            addCriterion("cus_user_id <", value, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdLessThanOrEqualTo(Long value) {
-            addCriterion("cus_user_id <=", value, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdIn(List<Long> values) {
-            addCriterion("cus_user_id in", values, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdNotIn(List<Long> values) {
-            addCriterion("cus_user_id not in", values, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdBetween(Long value1, Long value2) {
-            addCriterion("cus_user_id between", value1, value2, "cusUserId");
-            return (Criteria) this;
-        }
-
-        public Criteria andCusUserIdNotBetween(Long value1, Long value2) {
-            addCriterion("cus_user_id not between", value1, value2, "cusUserId");
             return (Criteria) this;
         }
     }

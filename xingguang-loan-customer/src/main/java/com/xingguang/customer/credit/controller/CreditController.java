@@ -40,8 +40,8 @@ public class CreditController {
         return new ResultBean();
     }
 
-    @RequestMapping(value = "/credit/info/{cusUserId}",method = RequestMethod.GET)
-    public ResultBean<?> findCredit(@PathVariable final Long cusUserId){
+    @RequestMapping(value = "/credit/info",method = RequestMethod.GET)
+    public ResultBean<?> findCredit(@JWTParam(key = "userId", required = true) Long cusUserId){
         CreditInfo creditInfo = this.creditInfoService.findByCusUserId(cusUserId);
         return new ResultBean(creditInfo);
     }

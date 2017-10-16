@@ -3,7 +3,10 @@
 <mapper namespace="com.xingguang.customer.wdrl.mapper.WdrlApplyMapper">
   <resultMap id="BaseResultMap" type="com.xingguang.customer.wdrl.entity.WdrlApply">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
+    <result column="cus_user_name" jdbcType="VARCHAR" property="cusUserName" />
     <result column="bank_card_id" jdbcType="BIGINT" property="bankCardId" />
+    <result column="reserve_phone" jdbcType="VARCHAR" property="reservePhone" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
@@ -14,7 +17,6 @@
     <result column="term_id" jdbcType="BIGINT" property="termId" />
     <result column="service_charge" jdbcType="DECIMAL" property="serviceCharge" />
     <result column="acc_mgmt_charge" jdbcType="DECIMAL" property="accMgmtCharge" />
-    <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,8 +77,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, bank_card_id, amount, create_time, status, operator_id, operator_name, issue_time, 
-    product_id, term_id, service_charge, acc_mgmt_charge, cus_user_id
+    id, cus_user_id, cus_user_name, bank_card_id, reserve_phone, amount, create_time, 
+    status, operator_id, operator_name, issue_time, product_id, term_id, service_charge, 
+    acc_mgmt_charge
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.wdrl.entity.WdrlApplyExample" resultMap="BaseResultMap">
     select
@@ -117,22 +120,31 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply" useGeneratedKeys="true">
-    insert into wdrl_apply (bank_card_id, amount, create_time, 
+    insert into wdrl_apply (cus_user_id, cus_user_name, bank_card_id, 
+      reserve_phone, amount, create_time, 
       status, operator_id, operator_name, 
       issue_time, product_id, term_id, 
-      service_charge, acc_mgmt_charge, cus_user_id
-      )
-    values (#{bankCardId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      service_charge, acc_mgmt_charge)
+    values (#{cusUserId,jdbcType=BIGINT}, #{cusUserName,jdbcType=VARCHAR}, #{bankCardId,jdbcType=BIGINT}, 
+      #{reservePhone,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, 
       #{issueTime,jdbcType=TIMESTAMP}, #{productId,jdbcType=BIGINT}, #{termId,jdbcType=BIGINT}, 
-      #{serviceCharge,jdbcType=DECIMAL}, #{accMgmtCharge,jdbcType=DECIMAL}, #{cusUserId,jdbcType=BIGINT}
-      )
+      #{serviceCharge,jdbcType=DECIMAL}, #{accMgmtCharge,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply" useGeneratedKeys="true">
     insert into wdrl_apply
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusUserId != null">
+        cus_user_id,
+      </if>
+      <if test="cusUserName != null">
+        cus_user_name,
+      </if>
       <if test="bankCardId != null">
         bank_card_id,
+      </if>
+      <if test="reservePhone != null">
+        reserve_phone,
       </if>
       <if test="amount != null">
         amount,
@@ -164,13 +176,19 @@
       <if test="accMgmtCharge != null">
         acc_mgmt_charge,
       </if>
-      <if test="cusUserId != null">
-        cus_user_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusUserId != null">
+        #{cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="cusUserName != null">
+        #{cusUserName,jdbcType=VARCHAR},
+      </if>
       <if test="bankCardId != null">
         #{bankCardId,jdbcType=BIGINT},
+      </if>
+      <if test="reservePhone != null">
+        #{reservePhone,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         #{amount,jdbcType=DECIMAL},
@@ -202,9 +220,6 @@
       <if test="accMgmtCharge != null">
         #{accMgmtCharge,jdbcType=DECIMAL},
       </if>
-      <if test="cusUserId != null">
-        #{cusUserId,jdbcType=BIGINT},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.xingguang.customer.wdrl.entity.WdrlApplyExample" resultType="java.lang.Long">
@@ -219,8 +234,17 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.cusUserId != null">
+        cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cusUserName != null">
+        cus_user_name = #{record.cusUserName,jdbcType=VARCHAR},
+      </if>
       <if test="record.bankCardId != null">
         bank_card_id = #{record.bankCardId,jdbcType=BIGINT},
+      </if>
+      <if test="record.reservePhone != null">
+        reserve_phone = #{record.reservePhone,jdbcType=VARCHAR},
       </if>
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=DECIMAL},
@@ -252,9 +276,6 @@
       <if test="record.accMgmtCharge != null">
         acc_mgmt_charge = #{record.accMgmtCharge,jdbcType=DECIMAL},
       </if>
-      <if test="record.cusUserId != null">
-        cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
-      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -263,7 +284,10 @@
   <update id="updateByExample" parameterType="map">
     update wdrl_apply
     set id = #{record.id,jdbcType=BIGINT},
+      cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
+      cus_user_name = #{record.cusUserName,jdbcType=VARCHAR},
       bank_card_id = #{record.bankCardId,jdbcType=BIGINT},
+      reserve_phone = #{record.reservePhone,jdbcType=VARCHAR},
       amount = #{record.amount,jdbcType=DECIMAL},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
@@ -273,8 +297,7 @@
       product_id = #{record.productId,jdbcType=BIGINT},
       term_id = #{record.termId,jdbcType=BIGINT},
       service_charge = #{record.serviceCharge,jdbcType=DECIMAL},
-      acc_mgmt_charge = #{record.accMgmtCharge,jdbcType=DECIMAL},
-      cus_user_id = #{record.cusUserId,jdbcType=BIGINT}
+      acc_mgmt_charge = #{record.accMgmtCharge,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -282,8 +305,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply">
     update wdrl_apply
     <set>
+      <if test="cusUserId != null">
+        cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="cusUserName != null">
+        cus_user_name = #{cusUserName,jdbcType=VARCHAR},
+      </if>
       <if test="bankCardId != null">
         bank_card_id = #{bankCardId,jdbcType=BIGINT},
+      </if>
+      <if test="reservePhone != null">
+        reserve_phone = #{reservePhone,jdbcType=VARCHAR},
       </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=DECIMAL},
@@ -315,15 +347,15 @@
       <if test="accMgmtCharge != null">
         acc_mgmt_charge = #{accMgmtCharge,jdbcType=DECIMAL},
       </if>
-      <if test="cusUserId != null">
-        cus_user_id = #{cusUserId,jdbcType=BIGINT},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply">
     update wdrl_apply
-    set bank_card_id = #{bankCardId,jdbcType=BIGINT},
+    set cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      cus_user_name = #{cusUserName,jdbcType=VARCHAR},
+      bank_card_id = #{bankCardId,jdbcType=BIGINT},
+      reserve_phone = #{reservePhone,jdbcType=VARCHAR},
       amount = #{amount,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
@@ -333,8 +365,7 @@
       product_id = #{productId,jdbcType=BIGINT},
       term_id = #{termId,jdbcType=BIGINT},
       service_charge = #{serviceCharge,jdbcType=DECIMAL},
-      acc_mgmt_charge = #{accMgmtCharge,jdbcType=DECIMAL},
-      cus_user_id = #{cusUserId,jdbcType=BIGINT}
+      acc_mgmt_charge = #{accMgmtCharge,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
