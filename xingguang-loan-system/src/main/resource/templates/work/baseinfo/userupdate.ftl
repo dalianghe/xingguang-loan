@@ -94,9 +94,19 @@
 
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> 所在省 </div>
-                                                    <div class="profile-info-value">{{user.provinceName}}</div>
+                                                    <div class="profile-info-value">
+                                                        <select class="form-control" v-model="provinceSelected">
+                                                            <option disabled value=null>请选择</option>
+                                                            <option v-for="province in provinces" :value="province.regionCode">{{province.regionName}}</option>
+                                                        </select>
+                                                    </div>
                                                     <div class="profile-info-name"> 所在市 </div>
-                                                    <div class="profile-info-value">{{user.cityName}}</div>
+                                                    <div class="profile-info-value">
+                                                        <select class="form-control" v-model="citySelected">
+                                                            <option disabled value=null>请选择</option>
+                                                            <option v-for="city in cities" :value="city.regionCode">{{city.regionName}}</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
 
                                                 <div class="profile-info-row">
@@ -123,36 +133,77 @@
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.page-content -->
-
+        <input type="hidden" id="id" name="id" value="${id}"/>
     </div>
     <script src="/js/lib/vue/axios.min.js"></script>
     <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
     <script src="/js/utils/vue.form.utils.js"></script>
     <script type="text/javascript">
+        function getWorkInfo() {
+            var userId = $("#id").val();
+            return axios.get("/work/user/"+userId);
+        }
+        function getProvince(that){
+            return axios.get("/code/region/1").then(function (provinces) {
+                var provinces = provinces.data;
+                if(provinces.sysCode==0){
+                    if(provinces.bizCode==0){
+                        that.provinces = provinces.data;
+                        var provinceId= "";
+                        for(var i=0;i<provinces.data.length;i++){
+                            if(provinces.data[i].regionCode == that.provinceSelected){
+                                provinceId = provinces.data[i].id;
+                                break;
+                            }
+                        }
+                        getCity(that , provinceId);
+                    }
+                }
+            });
+        }
+        function getCity(that , pId){
+            return axios.get("/code/region/"+pId).then(function (cities) {
+                var cities = cities.data;
+                if(cities.sysCode==0){
+                    if(cities.bizCode==0){
+                        that.cities = cities.data;
+                    }
+                }
+            });
+        }
+
         var app = new Vue({
             el: '#dataDiv',
             data: {
-                user: {
-                    "id" : "${id}"
-                }
+                user : {},
+                provinces : {},
+                cities : {},
+                provinceSelected : "",
+                citySelected : ""
             },
             created : function(){
-                var userId = this.user.id;
                 var that=this;
-                axios.get("/work/user/"+userId).then(function (response) {
-                    var result = response.data;
+                axios.all([getWorkInfo()]).then(axios.spread(function (worker) {
+                    var result = worker.data;
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             that.user = result.data;
+                            that.provinceSelected = that.user.provinceId;
+                            that.citySelected = that.user.cityId;
+                            getProvince(that);
                         }
                     }
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                }));
+            },
+            watch: {
+                provinceSelected : function(val){
+                    getProvince(this);
+                }
             },
             methods : {
                 saveUser : function(){
                     var formData = new VueFormSub("userForm");
+                    console.log(formData);
                     axios.post('/work/updateuser' , formData).then(function(response){
                         var result = response.data;
                         if(result.sysCode==0){
