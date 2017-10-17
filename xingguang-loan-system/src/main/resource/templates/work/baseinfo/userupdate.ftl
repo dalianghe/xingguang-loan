@@ -95,17 +95,20 @@
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> 所在省 </div>
                                                     <div class="profile-info-value">
-                                                        <select class="form-control" v-model="provinceSelected">
+                                                        <select class="form-control" id="provinceId" name="provinceId" v-model="provinceSelected">
                                                             <option disabled value=null>请选择</option>
                                                             <option v-for="province in provinces" :value="province.regionCode">{{province.regionName}}</option>
                                                         </select>
+
+                                                        <input type="hidden" id="provinceName" name="provinceName"/>
                                                     </div>
                                                     <div class="profile-info-name"> 所在市 </div>
                                                     <div class="profile-info-value">
-                                                        <select class="form-control" v-model="citySelected">
+                                                        <select class="form-control" id="cityId" name="cityId" v-model="citySelected">
                                                             <option disabled value=null>请选择</option>
                                                             <option v-for="city in cities" :value="city.regionCode">{{city.regionName}}</option>
                                                         </select>
+                                                        <input type="hidden" id="cityName" name="cityName"/>
                                                     </div>
                                                 </div>
 
@@ -178,7 +181,7 @@
                 user : {},
                 provinces : {},
                 cities : {},
-                provinceSelected : "",
+                provinceSelected : {},
                 citySelected : ""
             },
             created : function(){
@@ -202,9 +205,13 @@
             },
             methods : {
                 saveUser : function(){
-                    var formData = new VueFormSub("userForm");
-                    console.log(formData);
-                    axios.post('/work/updateuser' , formData).then(function(response){
+                    var provinceName=$("#provinceId option:selected").text();
+                    var cityName=$("#cityId option:selected").text();
+                    $("#provinceName").val(provinceName);
+                    $("#cityName").val(cityName);
+                    var data = $(this.$el).find('#userForm').serialize();
+                    var json=DataDeal.formToJson(data);
+                    axios.post('/work/updateuser' , json).then(function(response){
                         var result = response.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){
@@ -218,5 +225,14 @@
                 }
             }
         });
-
+        var DataDeal = {
+            //将从form中通过$('#form').serialize()获取的值转成json
+            formToJson: function (data) {
+                data= decodeURIComponent(data,true);
+                data=data.replace(/&/g,"\",\"");
+                data=data.replace(/=/g,"\":\"");
+                data="{\""+data+"\"}";
+                return $.parseJSON(data);
+            },
+        };
     </script>
