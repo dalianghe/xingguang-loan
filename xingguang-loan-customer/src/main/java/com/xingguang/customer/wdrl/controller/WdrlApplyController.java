@@ -50,17 +50,15 @@ public class WdrlApplyController {
             return resultBean;
         }
 
-        WdrlApply wdrlApplyDB = new WdrlApply();
         CusUserInfo cusUserInfo = this.userInfoService.findById(userId);
-        wdrlApplyDB.setCusUserId(userId);
-        wdrlApplyDB.setCusUserName(cusUserInfo.getName());
+        wdrlApply.setCusUserId(userId);
+        wdrlApply.setCusUserName(cusUserInfo.getName());
         ProductInfo productInfo = this.productService.getProductById(wdrlApply.getProductId());
-        wdrlApplyDB.setServiceCharge(wdrlApply.getAmount().multiply(productInfo.getServiceRate()));
-        wdrlApplyDB.setAccMgmtCharge(wdrlApply.getAmount().multiply(productInfo.getAccMgmtRate()));
-
-        wdrlApplyDB.setStatus(1);
-        wdrlApplyDB.setCreateTime(new Date());
-        this.wdrlApplyService.create(wdrlApplyDB);
+        wdrlApply.setServiceCharge(wdrlApply.getAmount().multiply(productInfo.getServiceRate()));
+        wdrlApply.setAccMgmtCharge(wdrlApply.getAmount().multiply(productInfo.getAccMgmtRate()));
+        wdrlApply.setStatus(1);
+        wdrlApply.setCreateTime(new Date());
+        this.wdrlApplyService.create(wdrlApply);
         return resultBean;
     }
 
