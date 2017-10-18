@@ -8,9 +8,9 @@
             </li>
 
             <li>
-                <a href="#">系统设置</a>
+                <a href="#">客户管理</a>
             </li>
-            <li class="active">客户管理</li>
+            <li class="active">授信管理</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
             <h1>
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    客户查询
+                    客户列表
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -58,15 +58,21 @@
                             <tr>
                                 <th class="hidden-480" class="center">序号</th>
                                 <th>姓名</th>
-                                <th class="hidden-480">性别</th>
                                 <th>手机号</th>
                                 <th class="hidden-480">身份证号</th>
-                                <th class="hidden-480">认证状态</th>
-                                <th>
+                                <th  class="hidden-480">
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                    创建时间
+                                    申请时间
                                 </th>
-                            <#--<th class="detail-col" class="hidden-480">详情</th>-->
+                                <th class="hidden-480">授信状态</th>
+                                <th>
+                                    <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
+                                    授信时间
+                                </th>
+                                <th>
+                                    <i class="ace-icon fa fa-cny bigger-110 hidden-480"></i>
+                                    授信额度
+                                </th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -75,26 +81,24 @@
                             <tr v-for="(user,index) in users">
                                 <td class="hidden-480" class="center"> {{index+1}}</td>
                                 <td>{{user.name}}</td>
-                                <td class="hidden-480">{{user.sexName}}</td>
-                                <td>{{user.phone}}</td>
-                                <td class="hidden-480">{{user.idNo}}</td>
+                                <td class="hidden-480">{{user.phone}}</td>
+                                <td>{{user.idNo}}</td>
+                                <td class="hidden-480">{{user.applyTime}}</td>
                                 <td>
-                                    <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
-                                    <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
+                                    <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
+                                    <span class="label label-sm label-danger" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
-                                <td>{{user.createTime}}</td>
-                            <#--<td class="hidden-480">
-                                <div class="action-buttons" style="text-align:center;">
-                                    <a href="#" class="green bigger-140 show-details-btn" title="Show Details" @click="show_detail(user.id)">
-                                        <i class="ace-icon fa fa-angle-double-down"></i>
-                                        <span class="sr-only">Details</span>
-                                    </a>
-                                </div>
-                            </td>-->
+                                <td>{{user.creditTime}}</td>
+                                <td>{{user.amount}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-info" @click="show_detail(user.id)">
-                                            <i class="ace-icon fa fa-angle-double-down bigger-120"></i>
+                                        <button class="btn btn-xs btn-success" @click="lockCredit(user.id)">
+                                            <i class="ace-icon fa fa-history bigger-120"></i>
+                                        </button>
+                                    </div>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-danger" @click="lockCredit(user.id)">
+                                            <i class="ace-icon fa fa-lock bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -104,9 +108,18 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="show_detail(user.id)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id , user.applyId)">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="lockCredit(user.id)">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-lock bigger-120"></i>
                                                         </span>
                                                     </a>
                                                 </li>
@@ -149,24 +162,11 @@
             query(this);
         },
         methods : {
-            show_detail : function(userId){
-                //iframe层-父子操作
-                layer.open({
-                    title: "客户信息",
-                    type: 2,
-                    area: ['600px', '350px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    content: '/prouter/cus/baseinfo/cususerinfo/'+userId,
-                    success: function(layero, index){
-                        var body = layer.getChildFrame('body',index);//建立父子联系
-                        var userIdInput = body.find('#userId');
-                        $(userIdInput).attr("value",userId);
-                    }
-                });
-            },
             queryUser : function(){
                 query(this);
+            },
+            lockCredit : function(userId){
+                alert(userId);
             },
             pageHandler: function (page) {
                 this.page=page;
@@ -178,7 +178,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/cus/users', {
+        axios.get('/credit/customeres', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;

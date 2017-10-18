@@ -187,7 +187,7 @@
                     var link = cusLink.data;
                     if(link.sysCode==0){
                         if(link.bizCode==0){
-                            that.link = link.data;
+                            that.link = link.data==null ? "" : link.data;
                         }
                     }
                 }));

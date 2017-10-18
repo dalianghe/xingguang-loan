@@ -28,7 +28,7 @@
 
     <sql id="Base_Column_List" >
         id, phone, name, id_no, real_status, sex, income, education, occupation, create_time,
-        work_user_id, work_user_name, if(sex='1','男','女') sex_name,if(real_status='1','已实名','未实名') real_status_name
+        work_user_id, work_user_name, t3.label sex_name,if(real_status='1','已实名','未实名') real_status_name
     </sql>
 
     <select id="findCusUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
@@ -38,6 +38,7 @@
             (select name from code_info where type_id=104 and code = education) education_name,
             (select name from code_info where type_id=105 and code = occupation) occupation_name
             FROM cus_user_info
+            LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
             WHERE id = #{userId}
         </select>
 
@@ -45,6 +46,7 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM cus_user_info
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
         WHERE 1=1
         <if test="name != null" >
             AND name LIKE CONCAT(CONCAT('%', #{name}), '%')
@@ -54,10 +56,11 @@
 
     <select id="findCreditTodoCusUserList" parameterType="com.xingguang.cus.baseinfo.entity.CusUserInfoEntity" resultMap="BaseResultMapCustom">
         SELECT
-        t1.*,if(t1.sex='1','男','女') sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
+        t1.*,t3.name sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
         t2.id apply_id, t2.create_time apply_time
         FROM cus_user_info t1
         INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
+        LEFT JOIN (select code,name from code_info where type_id=101) t3 on sex = t3.code
         WHERE t2.status = 1
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
@@ -67,10 +70,11 @@
 
     <select id="findMyCreditDoneCusUser" parameterType="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" resultMap="BaseResultMapCustom">
         SELECT
-        t1.*,if(t1.sex='1','男','女') sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
+        t1.*,t3.name sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
         t2.id apply_id, t2.create_time apply_time
         FROM cus_user_info t1
         INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
+        LEFT JOIN (select code,name from code_info where type_id=101) t3 on sex = t3.code
         WHERE t2.status in (2 , 3)
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')

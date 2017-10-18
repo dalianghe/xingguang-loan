@@ -31,13 +31,14 @@
     <sql id="Base_Column_List" >
         t1.id, t1.phone, t1.name, t1.id_no, t1.sex, t1.province_id, t1.province_name, t1.city_id, t1.city_name, t1.create_time,
         t1.status, t1.auditor_id, t1.auditor_name, t1.auditor_time, t1.enable_status, t1.enable_id, t1.enable_name, t1.enable_time,
-        if(t1.sex='1','男','女') sex_name, if(t1.status='1','审核中',if(t1.status='2','审核通过','审核不通过')) status_name, if(t1.enable_status='0','启用','停用') enable_status_name
+        t3.label sex_name, if(t1.status='1','审核中',if(t1.status='2','审核通过','审核不通过')) status_name, if(t1.enable_status='0','启用','停用') enable_status_name
     </sql>
 
     <select id="findWorkUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
         SELECT
         <include refid="Base_Column_List" />
         FROM work_user_info t1
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
         WHERE t1.id = #{userId}
     </select>
 
@@ -46,6 +47,7 @@
         <include refid="Base_Column_List" />
         FROM work_user_info t1
         INNER JOIN cus_user_info t2 on t1.id = t2.work_user_id
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
         WHERE t2.id = #{cusUserId}
     </select>
 
@@ -53,6 +55,7 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM work_user_info t1
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
         WHERE 1=1
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')

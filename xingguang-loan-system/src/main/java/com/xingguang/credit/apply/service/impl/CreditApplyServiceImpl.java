@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -47,11 +48,13 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
                 entity = new CreditInfoEntityCustom();
                 entity.setCusUserId(domain.getCusUserId());
                 entity.setFinalAmount(domain.getAmount());
+                entity.setUnusedAmount(domain.getAmount());
                 entity.setCreditTime(new Date());
                 creditInfoService.insertCreditInfo(entity);
             }else{
                 entity.setCusUserId(domain.getCusUserId());
                 entity.setFinalAmount(domain.getAmount());
+                entity.setUnusedAmount(domain.getAmount().subtract(entity.getUsedAmount()==null?new BigDecimal(0):entity.getUsedAmount()));
                 entity.setCreditTime(new Date());
                 creditInfoService.updateCusCreditInfo(entity);
             }

@@ -67,12 +67,12 @@
                                                     <div class="profile-info-value">
                                                         <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                             <label>
-                                                                <input name="sex" type="radio" class="ace" v-model="user.sex" value="1"/>
+                                                                <input name="sex" type="radio" class="ace" v-model="user.sex" value="101001"/>
                                                                 <span class="lbl"> 男</span>
                                                             </label>
                                                             &nbsp;&nbsp;
                                                             <label>
-                                                                <input name="sex" type="radio" class="ace" v-model="user.sex" value="0"/>
+                                                                <input name="sex" type="radio" class="ace" v-model="user.sex" value="101002"/>
                                                                 <span class="lbl"> 女</span>
                                                             </label>
                                                         </div>
