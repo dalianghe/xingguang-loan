@@ -71,23 +71,5 @@ public class RouterController {
         Map<String , Object > map = JSON.parseObject(paramJson,Map.class);
         return  new ModelAndView(first + "/" + second + "/" +third , map);
     }
-    @RequiresUser
-    @RequestMapping(value = "/prouter/{first}/{second}/{third}/{id}",method = RequestMethod.GET)
-    public String third1(@PathVariable String first, @PathVariable String second, @PathVariable String third, @PathVariable("id") String id,Model model){
-        model.addAttribute("id",id);
-        return first + "/" + second + "/" +third;
-    }
-
-    private Model putParam2Model(String json ,  Model model){
-        Map<String , Object > paramMap = JSON.parseObject(json,Map.class);
-        Set keySet= paramMap.keySet();
-        Iterator iterator = keySet.iterator();
-        while(iterator.hasNext()) {
-            String key = (String)iterator.next();
-            Object value = paramMap.get(key);
-            model.addAttribute(key , value);
-        }
-        return model;
-    }
 
 }
