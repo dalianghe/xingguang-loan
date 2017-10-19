@@ -170,7 +170,24 @@
                 query(this);
             },
             lockCredit : function(userId){
-                alert(userId);
+                var that = this;
+                layer.confirm('确认执行该操作吗？', {icon: 3, title:'系统提示'}, function(index){
+                    axios.post('/credit/lock/'+userId).then(function (response) {
+                        var result = response.data;
+                        if(result.sysCode==0){
+                            if(result.bizCode==0){
+                                layer.msg('操作成功！');
+                                query(that);
+                            }else{
+                                layer.alert(result.msg, {icon:2,title:"系统提示"});
+                            }
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                    });
+                    layer.close(index);
+                });
             },
             pageHandler: function (page) {
                 this.page=page;

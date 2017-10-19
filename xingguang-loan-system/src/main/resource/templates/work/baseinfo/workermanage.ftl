@@ -217,7 +217,6 @@
                 var that = this;
                 layer.confirm('确认执行该操作吗？', {icon: 3, title:'系统提示'}, function(index){
                     axios.post('/work/enableuser', {"id":userId,"enableStatus":enableStatus}).then(function (response) {
-                        console.log(response);
                         var result = response.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){
