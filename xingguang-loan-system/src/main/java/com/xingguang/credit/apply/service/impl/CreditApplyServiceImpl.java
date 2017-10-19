@@ -54,7 +54,10 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
             }else{
                 entity.setCusUserId(domain.getCusUserId());
                 entity.setFinalAmount(domain.getAmount());
-                entity.setUnusedAmount(domain.getAmount().subtract(entity.getUsedAmount()==null?new BigDecimal(0):entity.getUsedAmount()));
+                BigDecimal finalAmount = domain.getAmount()==null ? BigDecimal.ZERO : domain.getAmount();
+                BigDecimal usedAmount = entity.getUsedAmount()==null ? BigDecimal.ZERO : entity.getUsedAmount();
+                BigDecimal unusedAmount = finalAmount.compareTo(usedAmount)==1 ? finalAmount.subtract(usedAmount) : BigDecimal.ZERO;
+                entity.setUnusedAmount(unusedAmount);
                 entity.setCreditTime(new Date());
                 creditInfoService.updateCusCreditInfo(entity);
             }
