@@ -38,7 +38,7 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM work_user_info t1
-        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on t1.sex = t3.code
         WHERE t1.id = #{userId}
     </select>
 
@@ -47,7 +47,7 @@
         <include refid="Base_Column_List" />
         FROM work_user_info t1
         INNER JOIN cus_user_info t2 on t1.id = t2.work_user_id
-        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on t1.sex = t3.code
         WHERE t2.id = #{cusUserId}
     </select>
 
@@ -55,7 +55,7 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM work_user_info t1
-        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on sex = t3.code
+        LEFT JOIN (select code,name label from code_info where type_id=101) t3 on t1.sex = t3.code
         WHERE 1=1
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')

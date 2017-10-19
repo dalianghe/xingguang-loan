@@ -144,8 +144,10 @@
                 query(this);
             },
             creditUser : function(userId , applyId){
-                var url = "/prouter/credit/apply/creditaudit/"+userId+"&"+applyId;
-                $("#main").load(url,function(response,status,xhr){
+                var paramJson = {"userId":userId , "applyId":applyId};
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                var url = "/router/credit/apply/creditaudit";
+                $("#main").load(url, param, function(response,status,xhr){
                     //console.log("success");
                 });
             },

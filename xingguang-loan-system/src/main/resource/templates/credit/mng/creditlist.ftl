@@ -65,7 +65,7 @@
                                     申请时间
                                 </th>
                                 <th class="hidden-480">授信状态</th>
-                                <th>
+                                <th class="hidden-480">
                                     <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
                                     授信时间
                                 </th>
@@ -81,23 +81,23 @@
                             <tr v-for="(user,index) in users">
                                 <td class="hidden-480" class="center"> {{index+1}}</td>
                                 <td>{{user.name}}</td>
-                                <td class="hidden-480">{{user.phone}}</td>
-                                <td>{{user.idNo}}</td>
+                                <td>{{user.phone}}</td>
+                                <td class="hidden-480">{{user.idNo}}</td>
                                 <td class="hidden-480">{{user.applyTime}}</td>
-                                <td>
+                                <td class="hidden-480">
                                     <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
                                     <span class="label label-sm label-danger" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
-                                <td>{{user.creditTime}}</td>
-                                <td>{{user.amount}}</td>
+                                <td class="hidden-480">{{user.creditTime}}</td>
+                                <td>{{user.amount | numberFormatFilter}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="lockCredit(user.id)">
+                                        <button class="btn btn-xs btn-success" @click="lockCredit(user.id)" title="查看授信历史">
                                             <i class="ace-icon fa fa-history bigger-120"></i>
                                         </button>
                                     </div>
-                                    <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-danger" @click="lockCredit(user.id)">
+                                    <div class="hidden-sm hidden-xs btn-group" v-if="user.status===2">
+                                        <button class="btn btn-xs btn-danger" @click="lockCredit(user.id)" title="锁定授信额度">
                                             <i class="ace-icon fa fa-lock bigger-120"></i>
                                         </button>
                                     </div>
@@ -110,17 +110,15 @@
                                                 <li>
                                                     <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id , user.applyId)">
                                                         <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                            <i class="ace-icon fa fa-history bigger-120"></i>
                                                         </span>
                                                     </a>
                                                 </li>
-                                            </ul>
-                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
+                                                <li v-if="user.status===2">
                                                     <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="lockCredit(user.id)">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-lock bigger-120"></i>
-                                                        </span>
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-lock bigger-120"></i>
+                                                    </span>
                                                     </a>
                                                 </li>
                                             </ul>
@@ -145,6 +143,7 @@
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
+<script src="/js/utils/numeral.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 
@@ -157,6 +156,11 @@
             page: 1,
             pageSize: 10,
             total: ''
+        },
+        filters : {
+            numberFormatFilter : function(value){
+                return numeral(value).format('0,0.00');
+            }
         },
         created : function(){
             query(this);

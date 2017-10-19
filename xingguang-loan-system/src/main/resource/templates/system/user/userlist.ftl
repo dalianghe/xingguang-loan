@@ -213,8 +213,10 @@
                 query(this);
             },
             modify_user : function(userId){
-                var url = "/prouter/system/user/userupdate/"+userId;
-                $("#main").load(url,function(response,status,xhr){
+                var url = "/router/system/user/userupdate";
+                var paramJson = {"id":userId };
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                $("#main").load(url, param, function(response,status,xhr){
                     //console.log("success");
                 });
             },

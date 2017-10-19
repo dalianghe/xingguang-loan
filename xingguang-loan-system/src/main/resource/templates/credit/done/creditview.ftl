@@ -234,24 +234,24 @@
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
-    <input type="hidden" id="id" name="id" value="${id}"/>
+    <#--<input type="hidden" id="id" name="id" value="${id}"/>-->
     <script src="/js/lib/vue/axios.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
-            var userId = $("#id").val().split("&")[0];
-            return axios.get("/cus/user/"+userId);
+            //var userId = $("#id").val().split("&")[0];
+            return axios.get("/cus/user/${userId}");
         }
         function getCusUserLink() {
-            var userId = $("#id").val().split("&")[0];
-            return axios.get('/cus/link/'+userId);
+            //var userId = $("#id").val().split("&")[0];
+            return axios.get('/cus/link/${userId}');
         }
         function getWorkUserInfo() {
-            var userId = $("#id").val().split("&")[0];
-            return axios.get("/work/cus/"+userId);
+            //var userId = $("#id").val().split("&")[0];
+            return axios.get("/work/cus/${userId}");
         }
         function getCreditApplyInfo() {
-            var applyId = $("#id").val().split("&")[1];
-            return axios.get("/credit/apply/"+applyId);
+            //var applyId = $("#id").val().split("&")[1];
+            return axios.get("/credit/apply/${applyId}");
         }
 
         var app = new Vue({

@@ -259,24 +259,24 @@
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
-    <input type="hidden" id="id" name="id" value="${id}"/>
+    <#--<input type="hidden" id="id" name="id" value="${id}"/>-->
     <script src="/js/lib/vue/axios.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
-            var userId = $("#id").val().split("&")[0];
-            return axios.get("/cus/user/"+userId);
+            //var userId = $("#id").val().split("&")[0];
+            return axios.get("/cus/user/${userId}");
         }
         function getCusUserLink() {
-            var userId = $("#id").val().split("&")[0];
-            return axios.get('/cus/link/'+userId);
+            //var userId = $("#id").val().split("&")[0];
+            return axios.get('/cus/link/${userId}');
         }
         function getWorkUserInfo() {
-            var userId = $("#id").val().split("&")[0];
-            return axios.get("/work/cus/"+userId);
+            //var userId = $("#id").val().split("&")[0];
+            return axios.get("/work/cus/${userId}");
         }
         function getCreditApplyInfo() {
-            var applyId = $("#id").val().split("&")[1];
-            return axios.get("/credit/apply/"+applyId);
+            //var applyId = $("#id").val().split("&")[1];
+            return axios.get("/credit/apply/${applyId}");
         }
         function getCodeResuse() {
             return axios.get("/code/refuse",{params:{"id":0}});
@@ -348,8 +348,8 @@
                     }
                 },
                 auditCredit : function(){
-                    this.audit.cusUserId = $("#id").val().split("&")[0];
-                    this.audit.id = $("#id").val().split("&")[1];
+                    this.audit.cusUserId = "${userId}";
+                    this.audit.id = "${applyId}";
                     layer.confirm('确认执行提交操作吗？', {icon: 3, title:'系统提示'}, function(index){
                         axios.all([updateCreditApplyInfo()]).then(axios.spread(function (applyResult) {
                             var result = applyResult.data;
