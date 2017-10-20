@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2017/10/12.
@@ -26,6 +27,14 @@ public class CreditApplyController {
         ResultBean<?> resultBean = null;
         CreditApplyEntityCustom entity = creditApplyService.findCreditApplyById(id);
         resultBean = new ResultBean<>(entity);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/credit/apply/cus/{cusId}" , method = RequestMethod.GET)
+    public ResultBean<?> findCreditApplyByCusId(@PathVariable Long cusId) throws Exception{
+        ResultBean<?> resultBean = null;
+        List<CreditApplyEntityCustom> list = creditApplyService.findCreditApplyByCusId(cusId);
+        resultBean = new ResultBean<>(list);
         return resultBean;
     }
 

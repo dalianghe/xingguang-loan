@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2017/10/12.
@@ -29,6 +30,11 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     @Override
     public CreditApplyEntityCustom findCreditApplyById(Long id) throws Exception {
         return creditApplyMapper.findCreditApplyById(id);
+    }
+
+    @Override
+    public List<CreditApplyEntityCustom> findCreditApplyByCusId(Long cusId) throws Exception {
+        return creditApplyMapper.findCreditApplyByCusId(cusId);
     }
 
     @Transactional

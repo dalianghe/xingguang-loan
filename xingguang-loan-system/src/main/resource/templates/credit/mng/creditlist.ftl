@@ -92,7 +92,7 @@
                                 <td>{{user.amount | numberFormatFilter}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="lockCredit(user.id)" title="查看授信历史">
+                                        <button class="btn btn-xs btn-success" title="查看授信历史" data-toggle="modal" data-target="#my-modal" @click="creditHistory(user.id , user.name)">
                                             <i class="ace-icon fa fa-history bigger-120"></i>
                                         </button>
                                     </div>
@@ -134,6 +134,60 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
 
+        <div id="my-modal" class="modal fade" tabindex="1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="smaller lighter blue no-margin">授信记录</h3>
+                    </div>
+                    <div class="modal-body">
+                            <div class="widget-box widget-color-blue" id="widget-box-2">
+                                <div class="widget-header">
+                                    <h5 class="widget-title bigger lighter">
+                                        <i class="ace-icon fa fa-user"></i>{{historyName}}
+                                    </h5>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-main no-padding">
+                                        <table class="table table-striped table-bordered table-hover">
+                                            <thead class="thin-border-bottom">
+                                            <tr>
+                                                <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>申请时间</th>
+                                                <th>授信状态</th>
+                                                <th>授信额度</th>
+                                                <th><i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>授信时间</th>
+                                                <th class="hidden-480">操作人</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="record in histories">
+                                                    <td class="hidden-480">{{record.createTime}}</td>
+                                                    <td>
+                                                        <span class="label label-success arrowed-in arrowed-in-right" v-if="record.status===2">{{record.statusName}}</span>
+                                                        <span class="label label-warning" v-if="record.status===3">{{record.statusName}}</span>
+                                                    </td>
+                                                    <td>{{record.amount | numberFormatFilter}}</td>
+                                                    <td>{{record.creditTime}}</td>
+                                                    <td class="hidden-480">{{record.creditUserName}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            关闭
+                        </button>
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
         <div class="wrap pages pa-cen clearfix" id="wrap">
             <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
         </div>
@@ -152,6 +206,8 @@
         data: {
             users: {},
             "userName":null,
+            histories : {},
+            historyName : "",
             // 分页
             page: 1,
             pageSize: 10,
@@ -169,6 +225,23 @@
             queryUser : function(){
                 query(this);
             },
+            creditHistory : function(userId , name){
+                var that = this;
+                that.historyName = name;
+                axios.get('/credit/apply/cus/'+userId).then(function (response) {
+                    var result = response.data;
+                    if(result.sysCode==0){
+                        if(result.bizCode==0){
+                            that.histories = result.data;
+                            console.log(that.histories);
+                        }else{
+                            layer.alert(result.msg, {icon:2,title:"系统提示"});
+                        }
+                    }
+                }).catch(function (error) {
+                    layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                });
+            },
             lockCredit : function(userId){
                 var that = this;
                 layer.confirm('确认执行该操作吗？', {icon: 3, title:'系统提示'}, function(index){
@@ -183,7 +256,6 @@
                             }
                         }
                     }).catch(function (error) {
-                        console.log(error);
                         layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
                     });
                     layer.close(index);

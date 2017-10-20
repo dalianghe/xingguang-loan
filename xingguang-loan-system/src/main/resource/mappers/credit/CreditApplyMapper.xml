@@ -49,6 +49,16 @@
         WHERE id = #{id}
     </select>
 
+    <select id="findCreditApplyByCusId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
+        SELECT
+        <include refid="Base_Column_List" />,
+        if(status='1','待授信',if(status='2','授信通过','授信不通过')) status_name
+        FROM credit_apply
+        WHERE status in (2,3)
+        AND cus_user_id = #{cusId}
+        order by credit_time desc
+    </select>
+
     <update id="updateCreditApply" parameterType="com.xingguang.credit.apply.entity.CreditApplyEntity">
         UPDATE credit_apply
         <set>
