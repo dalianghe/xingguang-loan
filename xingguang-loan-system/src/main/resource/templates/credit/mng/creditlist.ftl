@@ -86,7 +86,7 @@
                                 <td class="hidden-480">{{user.applyTime}}</td>
                                 <td class="hidden-480">
                                     <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
-                                    <span class="label label-sm label-danger" v-if="user.status===3">{{user.statusName}}</span>
+                                    <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
                                 <td class="hidden-480">{{user.creditTime}}</td>
                                 <td>{{user.amount | numberFormatFilter}}</td>
@@ -108,7 +108,7 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                 <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="auditUser(user.id , user.applyId)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" data-toggle="modal" data-target="#my-modal" @click="creditHistory(user.id , user.name)">
                                                         <span class="blue">
                                                             <i class="ace-icon fa fa-history bigger-120"></i>
                                                         </span>
@@ -164,8 +164,8 @@
                                                 <tr v-for="record in histories">
                                                     <td class="hidden-480">{{record.createTime}}</td>
                                                     <td>
-                                                        <span class="label label-success arrowed-in arrowed-in-right" v-if="record.status===2">{{record.statusName}}</span>
-                                                        <span class="label label-warning" v-if="record.status===3">{{record.statusName}}</span>
+                                                        <span class="label label-success" v-if="record.status===2">{{record.statusName}}</span>
+                                                        <span class="label label-danger  arrowed-in arrowed-in-right" v-if="record.status===3">{{record.statusName}}</span>
                                                     </td>
                                                     <td>{{record.amount | numberFormatFilter}}</td>
                                                     <td>{{record.creditTime}}</td>
@@ -233,7 +233,6 @@
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             that.histories = result.data;
-                            console.log(that.histories);
                         }else{
                             layer.alert(result.msg, {icon:2,title:"系统提示"});
                         }
@@ -244,7 +243,7 @@
             },
             lockCredit : function(userId){
                 var that = this;
-                layer.confirm('确认执行该操作吗？', {icon: 3, title:'系统提示'}, function(index){
+                layer.confirm('锁定授信客户将无法提现，确认执行该操作？', {icon: 3, title:'系统提示'}, function(index){
                     axios.post('/credit/lock/'+userId).then(function (response) {
                         var result = response.data;
                         if(result.sysCode==0){
