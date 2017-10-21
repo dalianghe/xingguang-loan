@@ -108,5 +108,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- httpclient -->
+        <dependency>
+            <groupId>com.xingguang</groupId>
+            <artifactId>spring-boot-httpclient-stater</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

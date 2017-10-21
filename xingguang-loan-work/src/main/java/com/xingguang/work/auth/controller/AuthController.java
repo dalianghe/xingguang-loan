@@ -1,5 +1,7 @@
 package com.xingguang.work.auth.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.xingguang.beans.JWTToken;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
@@ -16,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by admin on 2017/10/1.
  */
 @RestController
-@RequestMapping("/auth")
 public class AuthController {
+
+    private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
 
     @Autowired
     private IWorkUserAuthService workUserAuthService;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/login",method = RequestMethod.POST)
     public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception{
         ResultBean<?> resultBean = null;
 
@@ -46,7 +49,7 @@ public class AuthController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/register" , method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/register" , method = RequestMethod.POST)
     public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception{
         ResultBean<?> resultBean = null;
         // 验证短信验证码是否正确
@@ -63,7 +66,10 @@ public class AuthController {
         }
         //  调用注册服务
         WorkUserAuthEntity newEntity = workUserAuthService.registerWorkUser(authBean);
-        resultBean = new ResultBean<>(newEntity);
+        // 返回token串
+        String jwtToken = JwtUtils.createJWT("work.xingguanqb.com", JSON.toJSONString(new JWTToken(newEntity.getId(), newEntity.getPhone())), EXPIR_TIME);
+        // 返回实体对象
+        resultBean = new ResultBean<>(jwtToken);
         return resultBean;
     }
 }

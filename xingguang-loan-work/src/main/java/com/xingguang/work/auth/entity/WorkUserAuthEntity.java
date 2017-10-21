@@ -6,15 +6,15 @@ import java.util.Date;
  * Created by admin on 2017/10/1.
  */
 public class WorkUserAuthEntity {
-    private int id;
+    private Long id;
     private String phone;
     private Date createTime ;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
