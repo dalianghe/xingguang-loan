@@ -40,53 +40,20 @@
             ORDER BY create_time
         </select>
 
-    <update id="updateWorkUserById" parameterType="com.xingguang.work.baseinfo.entity.WorkUserInfoEntity">
-        UPDATE work_user_info
+    <update id="updateWdrlApply" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity">
+        UPDATE wdrl_apply
         <set>
-            <if test="name != null" >
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="idNo != null" >
-                id_no = #{idNo,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null" >
-                sex = #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="provinceId != null" >
-                province_id = #{provinceId,jdbcType=BIGINT},
-            </if>
-            <if test="provinceName != null" >
-                province_name = #{provinceName,jdbcType=VARCHAR},
-            </if>
-            <if test="cityId != null" >
-                city_id = #{cityId,jdbcType=BIGINT},
-            </if>
-            <if test="cityName != null" >
-                city_name = #{cityName,jdbcType=VARCHAR},
-            </if>
             <if test="status != null" >
                 status = #{status,jdbcType=INTEGER},
             </if>
-            <if test="auditorId != null" >
-                 auditor_id = #{auditorId,jdbcType=BIGINT},
+            <if test="operatorId != null" >
+                operator_id = #{operatorId,jdbcType=BIGINT},
             </if>
-            <if test="auditorName != null" >
-                auditor_name = #{auditorName,jdbcType=VARCHAR},
+            <if test="operatorName != null" >
+                operator_name = #{operatorName,jdbcType=VARCHAR},
             </if>
-            <if test="auditorTime != null" >
-                auditor_time = #{auditorTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="enableStatus != null" >
-                enable_status = #{enableStatus,jdbcType=INTEGER},
-            </if>
-            <if test="enableId != null" >
-                enable_id = #{enableId,jdbcType=BIGINT},
-            </if>
-            <if test="enableName != null" >
-                enable_name = #{enableName,jdbcType=VARCHAR},
-            </if>
-            <if test="enableTime != null" >
-                enable_time = #{enableTime,jdbcType=TIMESTAMP},
+            <if test="issueTime != null" >
+                issue_time = #{issueTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         WHERE id = #{id,jdbcType=BIGINT}

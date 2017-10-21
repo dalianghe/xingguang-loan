@@ -58,9 +58,11 @@
                             <tr>
                                 <th class="hidden-480" class="center">序号</th>
                                 <th>姓名</th>
+                                <th class="hidden-480">产品名称</th>
+                                <th class="hidden-480">期限</th>
                                 <th>提款金额（元）</th>
                                 <th>银行卡号</th>
-                                <th class="hidden-480">预留手机</th>
+                                <th>预留手机</th>
                                 <th class="hidden-480">
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     申请时间
@@ -73,14 +75,19 @@
                             <tr v-for="(user,index) in applies">
                                 <td class="hidden-480" class="center"> {{index+1}}</td>
                                 <td>{{user.cusUserName}}</td>
+                                <td class="hidden-480">{{user.productId}}</td>
+                                <td class="hidden-480">{{user.termId}}</td>
                                 <td>{{user.amount}}</td>
                                 <td>{{user.bankCardId}}</td>
                                 <td>{{user.reservePhone}}</td>
                                 <td class="hidden-480">{{user.createTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="paypal(user.id)">
+                                        <button class="btn btn-xs btn-success" @click="paypal(user.id)" title="点击放款">
                                             <i class="ace-icon fa fa-paypal bigger-120"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" @click="stopPaypal(user.id)" title="终止放款">
+                                            <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -92,7 +99,14 @@
                                                 <li>
                                                     <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="paypal(user.id)">
                                                         <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                                            <i class="ace-icon fa fa-paypal bigger-120"></i>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="stopPaypal(user.id)">
+                                                        <span class="blue">
+                                                            <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
                                                         </span>
                                                     </a>
                                                 </li>
@@ -138,8 +152,45 @@
             queryUser : function(){
                 query(this);
             },
-            paypal : function(userId , applyId){
-                layer.msg('开发中。。。');
+            paypal : function(applyId){
+                var that = this;
+                layer.confirm('确认对该客户执行放款操作？', {icon: 3, title:'系统提示'}, function(index) {
+                    var json = {"id":applyId , "status":"2"};
+                    axios.post('/finance/wdrl/pay' , json).then(function (response) {
+                        var result = response.data;
+                        if(result.sysCode==0){
+                            if(result.bizCode==0){
+                                layer.msg('操作成功！');
+                                query(that);
+                            }else{
+                                layer.alert(result.msg, {icon:2,title:"系统提示"});
+                            }
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                    });
+                });
+            },
+            stopPaypal : function(applyId){
+                var that = this;
+                layer.confirm('确认终止该客户放款操作？', {icon: 3, title:'系统提示'}, function(index) {
+                    var json = {"id":applyId , "status":"3"};
+                    axios.post('/finance/wdrl/stop' , json).then(function (response) {
+                        var result = response.data;
+                        if(result.sysCode==0){
+                            if(result.bizCode==0){
+                                layer.msg('操作成功！');
+                                query(that);
+                            }else{
+                                layer.alert(result.msg, {icon:2,title:"系统提示"});
+                            }
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                    });
+                });
             },
             pageHandler: function (page) {
                 this.page=page;

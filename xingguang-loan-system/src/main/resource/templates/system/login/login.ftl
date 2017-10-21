@@ -294,46 +294,46 @@
         <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
         <script src="/js/lib/layer/layer.js"></script>
         <script type="text/javascript">
-            function loginError(){
-                $("#message").text("用户名密码错误！");
+            function login(){
+                if($("#loginId").val()==""){
+                    layer.tips("用户名不能为空",$("#loginId"),{tips:1});
+                    return;
+                }
+                if($("#password").val()==""){
+                    layer.tips("用户密码不能为空",$("#password"),{tips:1});
+                    return;
+                }
+                if($("#rememberMeCheck").is(":checked")){
+                    $("#rememberMe").val(1);
+                }
+                var index = layer.load(2);
+                $.ajax({
+                    url: "/system/login",
+                    type: "POST",
+                    contentType: "application/json",
+                    data : JSON.stringify($("#loginForm").serializeJSON()),
+                    dataType: "json",
+                    timeout: 10000,
+                    success: function (data) {
+                        layer.close(index);
+                        console.log(data.data);
+                        if(data.sysCode==0){ // 系统正常返回
+                            if(data.bizCode==0){ // 业务处理通过
+                                window.location.href = "/router/common/index";
+                            }else{
+                                $("#message").html("用户名密码错误！").show(300).delay(3000).hide(300);
+                            }
+                        }
+                    },
+                    fail: function (err) {
+                        console.log(err)
+                    }
+                })
             }
             jQuery(function($) {
                 $("#loginButton").on("click",function(e){
-                    if($("#loginId").val()==""){
-                        layer.tips("用户名不能为空",$("#loginId"),{tips:1});
-                        return;
-                    }
-                    if($("#password").val()==""){
-                        layer.tips("用户密码不能为空",$("#password"),{tips:1});
-                        return;
-                    }
-                    if($("#rememberMeCheck").is(":checked")){
-                        $("#rememberMe").val(1);
-                    }
-                    var index = layer.load(2);
-                    $.ajax({
-                        url: "/system/login",
-                        type: "POST",
-                        contentType: "application/json",
-                        data : JSON.stringify($("#loginForm").serializeJSON()),
-                        dataType: "json",
-                        timeout: 10000,
-                        success: function (data) {
-                            layer.close(index);
-                            console.log(data.data);
-                            if(data.sysCode==0){ // 系统正常返回
-                                if(data.bizCode==0){ // 业务处理通过
-                                    window.location.href = "/router/common/index";
-                                }else{
-                                    $("#message").html("用户名密码错误！").show(300).delay(3000).hide(300);
-                                }
-                            }
-                        },
-                        fail: function (err) {
-                            console.log(err)
-                        }
-                    })
-                })
+                    login();
+                });
             });
 
             jQuery(function($) {

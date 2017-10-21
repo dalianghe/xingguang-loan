@@ -12,4 +12,6 @@ public interface WdrlApplyMapper {
 
     List<WdrlApplyEntityCuston> findWdrlApplyList(WdrlApplyEntity entity) throws Exception;
 
+    void updateWdrlApply(WdrlApplyEntity entity) throws Exception;
+
 }

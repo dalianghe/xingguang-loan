@@ -7,6 +7,7 @@ import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
 import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
 import com.xingguang.finance.wdrl.mapper.WdrlApplyMapper;
 import com.xingguang.finance.wdrl.service.IWdrlApplyService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +35,19 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
         map.put("total" , ((Page) applies).getTotal());
         return map;
     }
+
+    @Override
+    public void paypal(WdrlDomain domain) throws Exception {
+        WdrlApplyEntity entity = new WdrlApplyEntity();
+        BeanUtils.copyProperties(domain,entity);
+        wdrlApplyMapper.updateWdrlApply(entity);
+    }
+
+    @Override
+    public void stopPaypal(WdrlDomain domain) throws Exception {
+        WdrlApplyEntity entity = new WdrlApplyEntity();
+        BeanUtils.copyProperties(domain,entity);
+        wdrlApplyMapper.updateWdrlApply(entity);
+    }
+
 }
