@@ -4,7 +4,7 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <RollingFile name="RollingFile" fileName="/opt/logs/xg_cus.log"
-                     filePattern="/opt/logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+                     filePattern="/opt/logs/$${date:yyyy-MM}/cus-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="%d{yyyy-MM-dd 'at' HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n"/>
             <SizeBasedTriggeringPolicy size="50MB"/>
         </RollingFile>
