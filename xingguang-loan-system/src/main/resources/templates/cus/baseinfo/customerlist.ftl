@@ -122,7 +122,7 @@
 
             </div><!-- /.col -->
         </div><!-- /.row -->
-
+        <input type="hidden" id="userId" name="userId" value=""/>
         <div class="wrap pages pa-cen clearfix" id="wrap">
             <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
         </div>
@@ -150,6 +150,7 @@
         },
         methods : {
             show_detail : function(userId){
+                $("#userId").val(userId);
                 //iframe层-父子操作
                 layer.open({
                     title: "客户信息",
@@ -157,11 +158,11 @@
                     area: ['600px', '350px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    content: '/prouter/cus/baseinfo/cususerinfo/'+userId,
+                    content: '/router/cus/baseinfo/cususerinfo',
                     success: function(layero, index){
-                        var body = layer.getChildFrame('body',index);//建立父子联系
+                        /*var body = layer.getChildFrame('body',index);//建立父子联系
                         var userIdInput = body.find('#userId');
-                        $(userIdInput).attr("value",userId);
+                        $("#userId").attr("value",userId);*/
                     }
                 });
             },

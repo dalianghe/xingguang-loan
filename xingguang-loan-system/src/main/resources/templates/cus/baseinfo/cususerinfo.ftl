@@ -54,42 +54,42 @@
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 姓名 </div>
                         <div class="profile-info-value">
-                            <span>{{user.name}}</span>
+                            <span v-text="user.name"></span>
                         </div>
                         <div class="profile-info-name"> 性别 </div>
                         <div class="profile-info-value">
-                            <span>{{user.sexName}}</span>
+                            <span v-text="user.sexName"></span>
                         </div>
                     </div>
 
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 手机号 </div>
                         <div class="profile-info-value">
-                            <span>{{user.phone}}</span>
+                            <span v-text="user.phone"></span>
                         </div>
                         <div class="profile-info-name"> 身份证号 </div>
                         <div class="profile-info-value">
-                            <span>{{user.idNo}}</span>
+                            <span v-text="user.idNo"></span>
                         </div>
                     </div>
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 认证状态  </div>
                         <div class="profile-info-value">
-                            <span>{{user.realStatusName}}</span>
+                            <span v-text="user.realStatusName"></span>
                         </div>
                         <div class="profile-info-name"> 收入 </div>
                         <div class="profile-info-value">
-                            <span>{{user.incomeName}}</span>
+                            <span v-text="user.incomeName"></span>
                         </div>
                     </div>
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 学历 </div>
                         <div class="profile-info-value">
-                            <span>{{user.educationName}}</span>
+                            <span v-text="user.educationName"></span>
                         </div>
                         <div class="profile-info-name"> 职业 </div>
                         <div class="profile-info-value">
-                            <span>{{user.occupationName}}</span>
+                            <span v-text="user.occupationName"></span>
                         </div>
                     </div>
                 </div>
@@ -113,22 +113,22 @@
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 姓名 </div>
                         <div class="profile-info-value">
-                            <span>{{link.linkName}}</span>
+                            <span v-text="link.linkName"></span>
                         </div>
                         <div class="profile-info-name"> 电话 </div>
                         <div class="profile-info-value">
-                            <span>{{link.phone}}</span>
+                            <span v-text="link.phone"></span>
                         </div>
                         <div class="profile-info-name"> 关系 </div>
                         <div class="profile-info-value">
-                            <span>{{link.relationName}}</span>
+                            <span v-text="link.relationName"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <input type="hidden" id="userId" name="userId" value="${id}"/>
+
     <!-- basic scripts -->
     <!--[if !IE]> -->
     <script src="/assets/js/jquery-2.1.4.min.js"></script>
@@ -160,15 +160,13 @@
     <script src="/js/lib/vue/axios.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
-            var userId = $("#userId").val();
+            var userId = parent.$("#userId").val();
             return axios.get("/cus/user/"+userId);
         }
-
         function getCusUserLink() {
-            var userId = $("#userId").val();
+            var userId = parent.$("#userId").val();
             return axios.get('/cus/link/'+userId);
         }
-
         var app = new Vue({
             el: '#dataDiv',
             data: {

@@ -30,15 +30,22 @@
     </sql>
 
     <select id="findWdrlApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
-            SELECT
-            <include refid="Base_Column_List" />
-            FROM wdrl_apply
-            WHERE status = 1
-            <if test="cusUserName != null" >
-                AND cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
-            </if>
-            ORDER BY create_time
-        </select>
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM wdrl_apply
+        WHERE status = 1
+        <if test="cusUserName != null" >
+            AND cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
+        </if>
+        ORDER BY create_time
+    </select>
+
+    <select id="findWdrlApplyById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM wdrl_apply
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
 
     <update id="updateWdrlApply" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity">
         UPDATE wdrl_apply
@@ -54,6 +61,12 @@
             </if>
             <if test="issueTime != null" >
                 issue_time = #{issueTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceCharge != null" >
+                service_charge = #{serviceCharge,jdbcType=TIMESTAMP},
+            </if>
+            <if test="accMgmtCharge != null" >
+                acc_mgmt_charge = #{accMgmtCharge,jdbcType=TIMESTAMP},
             </if>
         </set>
         WHERE id = #{id,jdbcType=BIGINT}

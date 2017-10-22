@@ -44,7 +44,7 @@
                         <div class="inline position-relative">
                             <a class="user-title-label" href="#">
                                 <i class="ace-icon fa fa-circle light-green"></i>
-                                <span class="white">{{user.name}}</span>
+                                <span class="white" v-text="user.name"></span>
                             </a>
                         </div>
                     </div>
@@ -58,61 +58,61 @@
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 姓名 </div>
                         <div class="profile-info-value">
-                            <span>{{user.name}}</span>
+                            <span v-text="user.name"></span>
                         </div>
                         <div class="profile-info-name"> 性别 </div>
                         <div class="profile-info-value">
-                            <span>{{user.sexName}}</span>
+                            <span v-text="user.sexName"></span>
                         </div>
                     </div>
 
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 手机号 </div>
                         <div class="profile-info-value">
-                            <span>{{user.phone}}</span>
+                            <span v-text="user.phone"></span>
                         </div>
                         <div class="profile-info-name"> 身份证号 </div>
                         <div class="profile-info-value">
-                            <span>{{user.idNo}}</span>
+                            <span v-text="user.idNo"></span>
                         </div>
                     </div>
 
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 所在省 </div>
                         <div class="profile-info-value">
-                            <span>{{user.provinceName}}</span>
+                            <span v-text="user.provinceName"></span>
                         </div>
                         <div class="profile-info-name"> 所在市 </div>
                         <div class="profile-info-value">
                             <i class="fa fa-map-marker light-orange bigger-110"></i>
-                            <span>{{user.cityName}}</span>
+                            <span v-text="user.cityName"></span>
                         </div>
                     </div>
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 申请时间  </div>
                         <div class="profile-info-value">
-                            <span>{{user.createTime}}</span>
+                            <span v-text="user.createTime"></span>
                         </div>
                         <div class="profile-info-name"> 当前状态 </div>
                         <div class="profile-info-value">
-                            <span>{{user.statusName}}</span>
+                            <span v-text="user.statusName"></span>
                         </div>
                     </div>
                     <div class="profile-info-row">
                         <div class="profile-info-name"> 审核人 </div>
                         <div class="profile-info-value">
-                            <span>{{user.auditorName}}</span>
+                            <span v-text="user.auditorName"></span>
                         </div>
                         <div class="profile-info-name"> 审核时间 </div>
                         <div class="profile-info-value">
-                            <span>{{user.auditorTime}}</span>
+                            <span v-text="user.auditorTime"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <input type="hidden" id="userId" name="userId" value="${id}"/>
+
     <!-- basic scripts -->
     <!--[if !IE]> -->
     <script src="/assets/js/jquery-2.1.4.min.js"></script>
@@ -149,7 +149,7 @@
                 user: ""
             },
             created : function(){
-                var userId = $("#userId").val();
+                var userId = parent.$("#userId").val();
                 var that=this;
                 $.ajax({
                     url: "/work/user/"+userId,

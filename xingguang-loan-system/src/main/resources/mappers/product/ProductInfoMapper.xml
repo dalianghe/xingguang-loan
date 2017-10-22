@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.product.info.mapper.ProductInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.product.info.entity.ProductInfoEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="service_rate" property="serviceRate" jdbcType="DECIMAL" />
+        <result column="acc_mgmt_rate" property="accMgmtRate" jdbcType="DECIMAL" />
+        <result column="penalty_ratio" property="penaltyRatio" jdbcType="DECIMAL" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+        <result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="up_time" property="upTime" jdbcType="TIMESTAMP" />
+        <result column="down_time" property="downTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.product.info.entity.custom.ProductInfoEntityCustom" extends="BaseResultMap">
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, name, service_rate, acc_mgmt_rate, penalty_ratio, status, create_user_id, create_user_name,
+        create_time, up_time, down_time, if(status='1','待上架',if(status='2','上架','下架')) status_name
+    </sql>
+
+    <select id="findProductInfoById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM product_info
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+</mapper>
