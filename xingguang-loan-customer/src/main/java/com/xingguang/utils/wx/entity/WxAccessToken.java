@@ -1,7 +1,9 @@
-package com.xingguang.utils.wx;
+package com.xingguang.utils.wx.entity;
 
 public class WxAccessToken {
+
     private String access_token;
+
     private Long expires_in;
 
     public String getAccess_token() {

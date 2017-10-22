@@ -1,9 +1,13 @@
 package com.xingguang.utils.wx;
 
 import com.xingguang.beans.ResultBean;
+import com.xingguang.utils.wx.entity.WxAccessToken;
+import com.xingguang.utils.wx.entity.WxConfig;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +28,15 @@ public class WxController {
         return new ResultBean(wxAccessToken);
     }
 
+    @RequestMapping(value = "/wx/getWxConfig",method = RequestMethod.GET)
+    public ResultBean<?> getWxConfig(@RequestParam(value = "url", required = false) final String url, HttpServletRequest request){
+        String requestUrl = url;
+        if(StringUtils.isBlank(requestUrl)){
+            requestUrl = request.getRequestURL().toString();
+        }
+        WxConfig wxConfig = this.wxUtils.getWxConfig(requestUrl);
+        return new ResultBean(wxConfig);
+    }
 
     @RequestMapping(value = "/wx", method = RequestMethod.GET)
     public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
