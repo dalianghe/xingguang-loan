@@ -4,6 +4,8 @@ import com.xingguang.beans.ResultBean;
 import com.xingguang.utils.wx.entity.WxAccessToken;
 import com.xingguang.utils.wx.entity.WxConfig;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 public class WxController {
+
+    private static Logger logger = LogManager.getLogger(WxController.class);
 
     @Autowired
     private WxUtils wxUtils;
@@ -34,6 +38,7 @@ public class WxController {
         if(StringUtils.isBlank(requestUrl)){
             requestUrl = request.getRequestURL().toString();
         }
+        logger.debug("==获取WxConfig的==requestUrl==" + requestUrl);
         WxConfig wxConfig = this.wxUtils.getWxConfig(requestUrl);
         return new ResultBean(wxConfig);
     }
