@@ -46,7 +46,7 @@ public class WxUtils {
         String nonceStr = UUID.randomUUID().toString();
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
         // 注意这里参数名必须全部小写，且必须有序
-        String sign = "jsapi_ticket=" + wxTicket.getTicket() + "&nonceStr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + requestUrl;
+        String sign = "jsapi_ticket=" + wxTicket.getTicket() + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + requestUrl;
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
