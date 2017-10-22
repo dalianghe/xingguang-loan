@@ -11,9 +11,13 @@ import java.util.Map;
  */
 public interface IWdrlApplyService {
 
-    public Map<String, Object> findWdrlApplyList(WdrlDomain domain) throws Exception;
+    public Map<String, Object> findAuditApplyList(WdrlDomain domain) throws Exception;
+
+    public Map<String, Object> findPayApplyList(WdrlDomain domain) throws Exception;
 
     public WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
+
+    public void updateWdrlApply(WdrlDomain domain) throws Exception;
 
     public void paypal(WdrlDomain domain) throws Exception;
 

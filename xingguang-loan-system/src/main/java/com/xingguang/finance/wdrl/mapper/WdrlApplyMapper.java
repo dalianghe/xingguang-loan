@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface WdrlApplyMapper {
 
-    List<WdrlApplyEntityCuston> findWdrlApplyList(WdrlApplyEntity entity) throws Exception;
+    List<WdrlApplyEntityCuston> findAuditApplyList(WdrlApplyEntity entity) throws Exception;
+
+    List<WdrlApplyEntityCuston> findPayApplyList(WdrlApplyEntity entity) throws Exception;
 
     WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
 

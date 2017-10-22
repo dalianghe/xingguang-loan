@@ -20,6 +20,10 @@ public class WdrlApplyEntity implements Serializable {
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
     private Date createTime; // 提款时间
     private Integer status; // 状态(1:待处理, 2:已放款, 3:结清)
+    private Long auditorId; // 提现审核人ID
+    private String auditorName; // 提现审核人姓名
+    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Date auditorTime; // 提现审核时间
     private Long operatorId; // 操作人ID
     private String operatorName; // 操作人姓名
     @JSONField(format="yyyy-MM-dd HH:mm:ss")
@@ -91,6 +95,30 @@ public class WdrlApplyEntity implements Serializable {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getAuditorId() {
+        return auditorId;
+    }
+
+    public void setAuditorId(Long auditorId) {
+        this.auditorId = auditorId;
+    }
+
+    public String getAuditorName() {
+        return auditorName;
+    }
+
+    public void setAuditorName(String auditorName) {
+        this.auditorName = auditorName;
+    }
+
+    public Date getAuditorTime() {
+        return auditorTime;
+    }
+
+    public void setAuditorTime(Date auditorTime) {
+        this.auditorTime = auditorTime;
     }
 
     public Long getOperatorId() {

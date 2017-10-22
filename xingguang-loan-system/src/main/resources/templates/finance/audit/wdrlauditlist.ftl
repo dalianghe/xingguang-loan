@@ -8,9 +8,9 @@
             </li>
 
             <li>
-                <a href="#">审核管理</a>
+                <a href="#">财务管理</a>
             </li>
-            <li class="active">授信审核</li>
+            <li class="active">放款管理</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
             <h1>
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    审核列表
+                    放款列表
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -55,57 +55,52 @@
                     <div class="col-xs-12">
                         <table id="simple-table" class="table  table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th class="hidden-480" class="center">序号</th>
-                                <th>姓名</th>
-                                <th class="hidden-480">性别</th>
-                                <th>手机号</th>
-                                <th class="hidden-480">身份证号</th>
-                                <th class="hidden-480">认证状态</th>
-                                <th>
-                                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                    申请时间
-                                </th>
-                                <th>操作</th>
-                            </tr>
+                                <tr>
+                                    <th class="center">序号</th>
+                                    <th>姓名</th>
+                                    <th class="hidden-480">产品名称</th>
+                                    <th class="hidden-480">期限</th>
+                                    <th>提款金额（元）</th>
+                                    <th class="hidden-480">
+                                        <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                        申请时间
+                                    </th>
+                                    <th>操作</th>
+                                </tr>
                             </thead>
 
                             <tbody>
-                            <tr v-for="(user,index) in users">
-                                <td class="hidden-480" class="center"> {{index+1}}</td>
-                                <td>{{user.name}}</td>
-                                <td class="hidden-480">{{user.sexName}}</td>
-                                <td>{{user.phone}}</td>
-                                <td class="hidden-480">{{user.idNo}}</td>
-                                <td>
-                                    <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
-                                    <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
-                                </td>
-                                <td>{{user.applyTime}}</td>
-                                <td>
-                                    <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="creditUser(user.id , user.applyId)">
-                                            <i class="ace-icon fa fa-check bigger-120"></i>
-                                        </button>
-                                    </div>
-                                    <div class="hidden-md hidden-lg">
-                                        <div class="inline pos-rel">
-                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                <tr v-for="(user,index) in applies">
+                                    <td class="center">{{index+1}}</td>
+                                    <td v-text="user.cusUserName"></td>
+                                    <td class="hidden-480" v-text="user.productId"></td>
+                                    <td class="hidden-480" v-text="user.termId"></td>
+                                    <td v-text="user.amount"></td>
+                                    <td class="hidden-480" v-text="user.createTime"></td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button class="btn btn-xs btn-success" @click="audit(user.cusUserId , user.id)" title="点击放款">
+                                                <i class="ace-icon fa fa-check bigger-120"></i>
                                             </button>
-                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="creditUser(user.id , user.applyId)">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline pos-rel">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="audit(user.cusUserId , user.id)">
+                                                            <span class="blue">
+                                                                <i class="ace-icon fa fa-paypal bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div><!-- /.span -->
@@ -119,7 +114,6 @@
         </div>
     </div><!-- /.page-content -->
 </div>
-
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
@@ -129,9 +123,8 @@
     var app = new Vue({
         el: '#dataDiv',
         data: {
-            users: {},
-            "userName":null,
-            // 分页
+            applies: {},
+            userName:null,
             page: 1,
             pageSize: 10,
             total: ''
@@ -143,12 +136,11 @@
             queryUser : function(){
                 query(this);
             },
-            creditUser : function(userId , applyId){
-                var paramJson = {"userId":userId , "applyId":applyId};
+            audit : function(cusUserId , applyId){
+                var paramJson = {"userId":cusUserId , "applyId":applyId};
                 var param = {"paramJson":JSON.stringify(paramJson)};
-                var url = "/router/credit/apply/creditaudit";
+                var url = "/router/finance/audit/wdrlaudit";
                 $("#main").load(url, param, function(response,status,xhr){
-                    //console.log("success");
                 });
             },
             pageHandler: function (page) {
@@ -160,14 +152,14 @@
     function query(obj){
         var that = obj;
         var idx = layer.load(2);
-        var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/cus/applies', {
+        var paramJson = {"cusUserName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
+        axios.get('/finance/audit/applies', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
             if(result.sysCode==0){
                 if(result.bizCode==0){
-                    that.users = result.data.users;
+                    that.applies = result.data.applies;
                     that.total = result.data.total;
                 }
             }
@@ -176,6 +168,7 @@
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
     }
+
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();

@@ -79,6 +79,10 @@
                                         <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                         申请时间
                                     </th>
+                                    <th class="hidden-480">
+                                        <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
+                                        审核时间
+                                    </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -98,6 +102,7 @@
                                     <td v-text="user.bankCardId"></td>
                                     <td v-text="user.reservePhone"></td>
                                     <td class="hidden-480" v-text="user.createTime"></td>
+                                    <td class="hidden-480" v-text="user.auditorTime"></td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
                                             <button class="btn btn-xs btn-success" @click="paypal(user.id)" title="点击放款">
@@ -213,8 +218,8 @@
             stopPaypal : function(applyId){
                 var that = this;
                 layer.confirm('确认终止该客户放款操作？', {icon: 3, title:'系统提示'}, function(index) {
-                    var json = {"id":applyId , "status":"3"};
-                    axios.post('/finance/wdrl/stop' , json).then(function (response) {
+                    var json = {"id":applyId , "status":"50"};
+                    axios.post('/finance/pay/stop' , json).then(function (response) {
                         var result = response.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){
@@ -240,7 +245,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"cusUserName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/finance/wdrl/applies', {
+        axios.get('/finance/pay/applies', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
@@ -257,8 +262,8 @@
     }
     function pay(obj){
         layer.confirm('确认执行批量放款操作？', {icon: 3, title:'系统提示'}, function(index) {
-            var json = {"ids":obj.checkedIds , "status":"2"};
-            axios.post('/finance/wdrl/pay' , json).then(function (response) {
+            var json = {"ids":obj.checkedIds , "status":"40"};
+            axios.post('/finance/pay/pay' , json).then(function (response) {
                 var result = response.data;
                 if(result.sysCode==0){
                     if(result.bizCode==0){

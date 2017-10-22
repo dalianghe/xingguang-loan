@@ -8,10 +8,7 @@ import com.xingguang.system.login.domain.AuthUserDomain;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Map;
@@ -25,16 +22,38 @@ public class WdrlController {
     @Autowired
     private IWdrlApplyService wdrlApplyService;
 
-    @RequestMapping(value = "/finance/wdrl/applies" , method = RequestMethod.GET)
-    public ResultBean<?> findCreditDoneUsers(String paramJson) throws Exception{
+    @RequestMapping(value = "/finance/audit/applies" , method = RequestMethod.GET)
+    public ResultBean<?> findAuditApplyList(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
         WdrlDomain domain = JSON.parseObject(paramJson,WdrlDomain.class);
-        Map<String , Object> applies = wdrlApplyService.findWdrlApplyList(domain);
+        Map<String , Object> applies = wdrlApplyService.findAuditApplyList(domain);
         resultBean = new ResultBean<>(applies);
         return resultBean;
     }
 
-    @RequestMapping(value = "/finance/wdrl/pay" , method = RequestMethod.POST)
+    @RequestMapping(value = "/finance/audit" , method = RequestMethod.POST)
+    public ResultBean<?> audit(@RequestBody WdrlDomain domain) throws Exception{
+        ResultBean<?> resultBean = null;
+        Subject subject = SecurityUtils.getSubject();
+        AuthUserDomain loginUser = (AuthUserDomain)subject.getPrincipals().getPrimaryPrincipal();
+        domain.setAuditorId(loginUser.getId());
+        domain.setAuditorName(loginUser.getUserName());
+        domain.setAuditorTime(new Date());
+        wdrlApplyService.updateWdrlApply(domain);
+        resultBean = new ResultBean<>();
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/finance/pay/applies" , method = RequestMethod.GET)
+    public ResultBean<?> findPayApplyList(String paramJson) throws Exception{
+        ResultBean<?> resultBean = null;
+        WdrlDomain domain = JSON.parseObject(paramJson,WdrlDomain.class);
+        Map<String , Object> applies = wdrlApplyService.findPayApplyList(domain);
+        resultBean = new ResultBean<>(applies);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/finance/pay/pay" , method = RequestMethod.POST)
     public ResultBean<?> pay(@RequestBody WdrlDomain domain) throws Exception{
         ResultBean<?> resultBean = null;
         Subject subject = SecurityUtils.getSubject();
@@ -47,7 +66,7 @@ public class WdrlController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/finance/wdrl/stop" , method = RequestMethod.POST)
+    @RequestMapping(value = "/finance/pay/stop" , method = RequestMethod.POST)
     public ResultBean<?> stopPay(@RequestBody WdrlDomain domain) throws Exception{
         ResultBean<?> resultBean = null;
         Subject subject = SecurityUtils.getSubject();

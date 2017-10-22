@@ -31,11 +31,30 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     private ProductInfoMapper productInfoMapper;
 
     @Override
-    public Map<String, Object> findWdrlApplyList(WdrlDomain domain) throws Exception {
+    public Map<String, Object> findAuditApplyList(WdrlDomain domain) throws Exception {
         WdrlApplyEntity entity = new WdrlApplyEntity();
         entity.setCusUserName(domain.getCusUserName());
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
-        List<WdrlApplyEntityCuston> applies = wdrlApplyMapper.findWdrlApplyList(entity);
+        List<WdrlApplyEntityCuston> applies = wdrlApplyMapper.findAuditApplyList(entity);
+        Map<String,Object> map = new HashMap<>();
+        map.put("applies" , applies);
+        map.put("total" , ((Page) applies).getTotal());
+        return map;
+    }
+
+    @Override
+    public void updateWdrlApply(WdrlDomain domain) throws Exception {
+        WdrlApplyEntity entity = new WdrlApplyEntity();
+        BeanUtils.copyProperties(domain,entity);
+        wdrlApplyMapper.updateWdrlApply(entity);
+    }
+
+    @Override
+    public Map<String, Object> findPayApplyList(WdrlDomain domain) throws Exception {
+        WdrlApplyEntity entity = new WdrlApplyEntity();
+        entity.setCusUserName(domain.getCusUserName());
+        PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
+        List<WdrlApplyEntityCuston> applies = wdrlApplyMapper.findPayApplyList(entity);
         Map<String,Object> map = new HashMap<>();
         map.put("applies" , applies);
         map.put("total" , ((Page) applies).getTotal());

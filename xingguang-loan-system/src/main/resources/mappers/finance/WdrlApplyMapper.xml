@@ -10,6 +10,9 @@
         <result column="amount" property="amount" jdbcType="DECIMAL" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="auditor_id" property="auditorId" jdbcType="BIGINT" />
+        <result column="auditor_name" property="auditorName" jdbcType="VARCHAR" />
+        <result column="auditor_time" property="auditorTime" jdbcType="TIMESTAMP" />
         <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
         <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
         <result column="issue_time" property="issueTime" jdbcType="TIMESTAMP" />
@@ -24,16 +27,28 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, cus_user_id, cus_user_name, bank_card_id, reserve_phone, amount, create_time, status, operator_id, operator_name,
+        id, cus_user_id, cus_user_name, bank_card_id, reserve_phone, amount, create_time, status,
+        auditor_id, auditor_name, auditor_time, operator_id, operator_name,
         issue_time, product_id, term_id, service_charge, acc_mgmt_charge,
-         if(status='1','待处理',if(status='2','已放款','结清')) status_name
+         if(status='10','待审核',if(status='20','审核不通过',if(status=30,'待放款',if(status=40,'已放款',if(status=50,'终止放款','结清'))))) status_name
     </sql>
 
-    <select id="findWdrlApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
+    <select id="findAuditApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
         SELECT
         <include refid="Base_Column_List" />
         FROM wdrl_apply
-        WHERE status = 1
+        WHERE status = 10
+        <if test="cusUserName != null" >
+            AND cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
+        </if>
+        ORDER BY create_time
+    </select>
+
+    <select id="findPayApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM wdrl_apply
+        WHERE status = 30
         <if test="cusUserName != null" >
             AND cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
         </if>
@@ -52,6 +67,15 @@
         <set>
             <if test="status != null" >
                 status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="auditorId != null" >
+                auditor_id = #{auditorId,jdbcType=BIGINT},
+            </if>
+            <if test="auditorName != null" >
+                auditor_name = #{auditorName,jdbcType=BIGINT},
+            </if>
+            <if test="auditorTime != null" >
+                auditor_time = #{auditorTime,jdbcType=BIGINT},
             </if>
             <if test="operatorId != null" >
                 operator_id = #{operatorId,jdbcType=BIGINT},
