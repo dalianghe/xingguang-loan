@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by admin on 2017/9/30.
  */
 @RestController
-@RequestMapping("/auth")
 public class AuthController {
 
     private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
@@ -32,7 +34,7 @@ public class AuthController {
     @Autowired
     private ICusUserInfoService cusUserInfoService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
     public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception {
         // 验证短信验证码是否正确
         String clientSmsCode = authBean.getSmsCode();
@@ -55,7 +57,7 @@ public class AuthController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
     public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception {
         ResultBean<?> resultBean = null;
 
@@ -80,7 +82,7 @@ public class AuthController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/real", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/real", method = RequestMethod.POST)
     public ResultBean<?> real(@RequestBody CusUserInfo cusUserInfo, @JWTParam(key = "userId", required = true) Long userId) throws Exception {
         String name = cusUserInfo.getName();
         String idNo = cusUserInfo.getIdNo();
@@ -93,6 +95,12 @@ public class AuthController {
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
         return resultBean;
+    }
+
+    @RequestMapping(value = "/wx", method = RequestMethod.GET)
+    public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String echostr = request.getParameter("echostr");
+        response.getWriter().append(echostr).flush();
     }
 
 }
