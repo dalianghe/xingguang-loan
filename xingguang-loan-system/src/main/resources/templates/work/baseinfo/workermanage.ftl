@@ -208,8 +208,10 @@
                 });
             },*/
             modifyUser : function(userId){
-                var url = "/prouter/work/baseinfo/userupdate/"+userId;
-                $("#main").load(url,function(response,status,xhr){
+                var paramJson = {"id":userId};
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                var url = "/router/work/baseinfo/userupdate";
+                $("#main").load(url, param, function(response,status,xhr){
                     //console.log("success");
                 });
             },

@@ -2,6 +2,7 @@ package com.xingguang.finance.wdrl.service;
 
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
 import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
+import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
 
 import java.util.Map;
 
@@ -11,6 +12,8 @@ import java.util.Map;
 public interface IWdrlApplyService {
 
     public Map<String, Object> findWdrlApplyList(WdrlDomain domain) throws Exception;
+
+    public WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
 
     public void paypal(WdrlDomain domain) throws Exception;
 

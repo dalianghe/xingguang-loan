@@ -137,7 +137,7 @@
                     </table>
                 </div><!-- /.span -->
             </div><!-- /.row -->
-
+            <input type="hidden" id="userId" name="userId" value=""/>
         </div><!-- /.col -->
     </div><!-- /.row -->
 
@@ -168,6 +168,7 @@
         },
         methods : {
             show_detail : function(userId){
+                $("#userId").val(userId);
                 //iframe层-父子操作
                 layer.open({
                     title: "业务员信息",
@@ -175,12 +176,12 @@
                     area: ['700px', '450px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    content: '/prouter/work/baseinfo/userinfo/'+userId,
+                    content: '/router/work/baseinfo/userinfo',
                     success: function(layero, index){
-                        var body = layer.getChildFrame('body',index);//建立父子联系
+                        /*var body = layer.getChildFrame('body',index);//建立父子联系
                         var userIdInput = body.find('#userId');
                         $(userIdInput).attr("value",userId);
-                        console.log($(userIdInput).val());
+                        console.log($(userIdInput).val());*/
                     }
                 });
             },
