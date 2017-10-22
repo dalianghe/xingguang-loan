@@ -50,24 +50,29 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     @Override
     @Transactional
     public void paypal(WdrlDomain domain) throws Exception {
-        WdrlApplyEntityCuston applyEntity = this.findWdrlApplyById(domain.getId());
-        if(null == applyEntity){
-            throw new Exception("无付款记录！");
-        }
-        // step 1: 计算服务费和账户管理费
-        ProductInfoEntityCustom product = productInfoMapper.findProductInfoById(applyEntity.getProductId());
-        // 服务费
-        BigDecimal serviceCharge = applyEntity.getAmount().multiply(product.getServiceRate());
-        // 账户管理费
-        BigDecimal accMgmtCharge = applyEntity.getAmount().multiply(product.getAccMgmtRate());
-        // step 2: 生成还款计划
 
-        // step 3: 更新提现记录表
-        WdrlApplyEntity entity = new WdrlApplyEntity();
-        BeanUtils.copyProperties(domain,entity);
-        entity.setServiceCharge(serviceCharge.setScale(2 , BigDecimal.ROUND_HALF_UP));
-        entity.setAccMgmtCharge(accMgmtCharge.setScale(2 , BigDecimal.ROUND_HALF_UP));
-        wdrlApplyMapper.updateWdrlApply(entity);
+        for(Long id : domain.getIds()){
+            domain.setId(id);
+            WdrlApplyEntityCuston applyEntity = this.findWdrlApplyById(domain.getId());
+            if(null == applyEntity){
+                throw new Exception("无付款记录！");
+            }
+            // step 1: 计算服务费和账户管理费
+            ProductInfoEntityCustom product = productInfoMapper.findProductInfoById(applyEntity.getProductId());
+            // 服务费
+            BigDecimal serviceCharge = applyEntity.getAmount().multiply(product.getServiceRate());
+            // 账户管理费
+            BigDecimal accMgmtCharge = applyEntity.getAmount().multiply(product.getAccMgmtRate());
+            // step 2: 生成还款计划
+
+            // step 3: 更新提现记录表
+            WdrlApplyEntity entity = new WdrlApplyEntity();
+            BeanUtils.copyProperties(domain,entity);
+            entity.setServiceCharge(serviceCharge.setScale(2 , BigDecimal.ROUND_HALF_UP));
+            entity.setAccMgmtCharge(accMgmtCharge.setScale(2 , BigDecimal.ROUND_HALF_UP));
+            wdrlApplyMapper.updateWdrlApply(entity);
+        }
+
     }
 
     @Override
