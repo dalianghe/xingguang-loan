@@ -51,7 +51,7 @@ public class WxUtils {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
             crypt.reset();
             crypt.update(sign.getBytes("UTF-8"));
-            signature = byteToHex(crypt.digest());
+            signature = SHA1(sign);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
