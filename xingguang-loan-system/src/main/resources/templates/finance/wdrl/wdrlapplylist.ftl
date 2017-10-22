@@ -175,7 +175,6 @@
             applies: {},
             checkedIds : [],
             userName:null,
-            // 分页
             page: 1,
             pageSize: 10,
             total: ''

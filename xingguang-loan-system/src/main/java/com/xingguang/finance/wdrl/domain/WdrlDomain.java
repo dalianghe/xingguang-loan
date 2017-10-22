@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by admin on 2017/10/15.
+ * 放款domain
  */
 public class WdrlDomain extends BaseDomain implements Serializable {
 

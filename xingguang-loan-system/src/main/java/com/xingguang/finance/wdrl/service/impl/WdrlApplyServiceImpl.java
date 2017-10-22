@@ -59,9 +59,9 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
             }
             // step 1: 计算服务费和账户管理费
             ProductInfoEntityCustom product = productInfoMapper.findProductInfoById(applyEntity.getProductId());
-            // 服务费
+            // 计算服务费
             BigDecimal serviceCharge = applyEntity.getAmount().multiply(product.getServiceRate());
-            // 账户管理费
+            // 计算账户管理费
             BigDecimal accMgmtCharge = applyEntity.getAmount().multiply(product.getAccMgmtRate());
             // step 2: 生成还款计划
 
