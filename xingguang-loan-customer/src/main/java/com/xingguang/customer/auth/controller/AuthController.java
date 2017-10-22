@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by admin on 2017/9/30.
@@ -97,9 +98,9 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/wx", method = RequestMethod.GET)
-    public String wx(HttpServletRequest request) throws Exception {
+    public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String echostr = request.getParameter("echostr");
-        return echostr;
+        response.getWriter().append(echostr).flush();
     }
 
 }
