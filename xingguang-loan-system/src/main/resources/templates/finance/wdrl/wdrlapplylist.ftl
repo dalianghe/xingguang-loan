@@ -46,6 +46,13 @@
                     </button>
                 </span>
             </div>
+            &nbsp;&nbsp;
+            <div style="float:right;">
+                <button class="btn btn-white btn-info btn-bold" @click="batchPaypal">
+                    <i class="ace-icon fa fa-paypal bigger-120 blue"></i>
+                    批量放款
+                </button>
+            </div>
         </div>
 
         <div class="row">
@@ -55,66 +62,76 @@
                     <div class="col-xs-12">
                         <table id="simple-table" class="table  table-bordered table-hover">
                             <thead>
-                            <tr>
-                                <th class="hidden-480" class="center">序号</th>
-                                <th>姓名</th>
-                                <th class="hidden-480">产品名称</th>
-                                <th class="hidden-480">期限</th>
-                                <th>提款金额（元）</th>
-                                <th>银行卡号</th>
-                                <th>预留手机</th>
-                                <th class="hidden-480">
-                                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                    申请时间
-                                </th>
-                                <th>操作</th>
-                            </tr>
+                                <tr>
+                                    <th class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" @click="selectAll"/>
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th>姓名</th>
+                                    <th class="hidden-480">产品名称</th>
+                                    <th class="hidden-480">期限</th>
+                                    <th>提款金额（元）</th>
+                                    <th>银行卡号</th>
+                                    <th>预留手机</th>
+                                    <th class="hidden-480">
+                                        <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                        申请时间
+                                    </th>
+                                    <th>操作</th>
+                                </tr>
                             </thead>
 
                             <tbody>
-                            <tr v-for="(user,index) in applies">
-                                <td class="hidden-480" class="center"> {{index+1}}</td>
-                                <td>{{user.cusUserName}}</td>
-                                <td class="hidden-480">{{user.productId}}</td>
-                                <td class="hidden-480">{{user.termId}}</td>
-                                <td>{{user.amount}}</td>
-                                <td>{{user.bankCardId}}</td>
-                                <td>{{user.reservePhone}}</td>
-                                <td class="hidden-480">{{user.createTime}}</td>
-                                <td>
-                                    <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" @click="paypal(user.id)" title="点击放款">
-                                            <i class="ace-icon fa fa-paypal bigger-120"></i>
-                                        </button>
-                                        <button class="btn btn-xs btn-danger" @click="stopPaypal(user.id)" title="终止放款">
-                                            <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
-                                        </button>
-                                    </div>
-                                    <div class="hidden-md hidden-lg">
-                                        <div class="inline pos-rel">
-                                            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                <tr v-for="(user,index) in applies">
+                                    <td class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" :value="user.id" v-model="checkedIds"/>
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
+                                    <td v-text="user.cusUserName"></td>
+                                    <td class="hidden-480" v-text="user.productId"></td>
+                                    <td class="hidden-480" v-text="user.termId"></td>
+                                    <td v-text="user.amount"></td>
+                                    <td v-text="user.bankCardId"></td>
+                                    <td v-text="user.reservePhone"></td>
+                                    <td class="hidden-480" v-text="user.createTime"></td>
+                                    <td>
+                                        <div class="hidden-sm hidden-xs btn-group">
+                                            <button class="btn btn-xs btn-success" @click="paypal(user.id)" title="点击放款">
+                                                <i class="ace-icon fa fa-paypal bigger-120"></i>
                                             </button>
-                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="paypal(user.id)">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-paypal bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="stopPaypal(user.id)">
-                                                        <span class="blue">
-                                                            <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <button class="btn btn-xs btn-danger" @click="stopPaypal(user.id)" title="终止放款">
+                                                <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
+                                            </button>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                        <div class="hidden-md hidden-lg">
+                                            <div class="inline pos-rel">
+                                                <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+                                                    <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+                                                    <li>
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="paypal(user.id)">
+                                                            <span class="blue">
+                                                                <i class="ace-icon fa fa-paypal bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="stopPaypal(user.id)">
+                                                            <span class="blue">
+                                                                <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div><!-- /.span -->
@@ -128,19 +145,36 @@
         </div>
     </div><!-- /.page-content -->
 </div>
-
+<script src="/assets/js/jquery-2.1.4.min.js"></script>
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+    jQuery(function($) {
+        var active_class = 'active';
+        $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+            var th_checked = this.checked;//checkbox inside "TH" table header
+            $(this).closest('table').find('tbody > tr').each(function(){
+                var row = this;
+                if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+            });
+        });
+        $('#simple-table').on('click', 'td input[type=checkbox]' , function(){
+            var $row = $(this).closest('tr');
+            if($row.is('.detail-row ')) return;
+            if(this.checked) $row.addClass(active_class);
+            else $row.removeClass(active_class);
+        });
+    });
 
     var app = new Vue({
         el: '#dataDiv',
         data: {
             applies: {},
-            "userName":null,
-            // 分页
+            checkedIds : [],
+            userName:null,
             page: 1,
             pageSize: 10,
             total: ''
@@ -152,25 +186,29 @@
             queryUser : function(){
                 query(this);
             },
+            selectAll : function(event) {
+                var that = this;
+                if(!event.currentTarget.checked) { // 全部取消
+                    this.checkedIds = [];
+                }else{ // 全部选中
+                    that.checkedIds = [];
+                    that.applies.forEach(function(item) {
+                        that.checkedIds.push(item.id);
+                    });
+                }
+            },
+            batchPaypal : function(){
+                var that = this;
+                if(that.checkedIds.length==0){
+                    layer.msg('请选择放款客户！');
+                    return;
+                }
+                pay(that);
+            },
             paypal : function(applyId){
                 var that = this;
-                layer.confirm('确认对该客户执行放款操作？', {icon: 3, title:'系统提示'}, function(index) {
-                    var json = {"id":applyId , "status":"2"};
-                    axios.post('/finance/wdrl/pay' , json).then(function (response) {
-                        var result = response.data;
-                        if(result.sysCode==0){
-                            if(result.bizCode==0){
-                                layer.msg('操作成功！');
-                                query(that);
-                            }else{
-                                layer.alert(result.msg, {icon:2,title:"系统提示"});
-                            }
-                        }
-                    }).catch(function (error) {
-                        console.log(error);
-                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
-                    });
-                });
+                that.checkedIds.push(applyId);
+                pay(that);
             },
             stopPaypal : function(applyId){
                 var that = this;
@@ -215,6 +253,25 @@
             layer.close(idx);
         }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+        });
+    }
+    function pay(obj){
+        layer.confirm('确认执行批量放款操作？', {icon: 3, title:'系统提示'}, function(index) {
+            var json = {"ids":obj.checkedIds , "status":"2"};
+            axios.post('/finance/wdrl/pay' , json).then(function (response) {
+                var result = response.data;
+                if(result.sysCode==0){
+                    if(result.bizCode==0){
+                        layer.msg('操作成功！');
+                        query(obj);
+                    }else{
+                        layer.alert(result.msg, {icon:2,title:"系统提示"});
+                    }
+                }
+            }).catch(function (error) {
+                console.log(error);
+                layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+            });
         });
     }
     $('#nav-search-input').bind('keypress', function(event) {

@@ -6,11 +6,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by admin on 2017/10/15.
+ * 放款domain
  */
 public class WdrlDomain extends BaseDomain implements Serializable {
 
     private Long id;
+    private Long[] ids;
     private String cusUserName;
     private Integer status;
     private Long operatorId;
@@ -19,6 +20,14 @@ public class WdrlDomain extends BaseDomain implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Long[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Long[] ids) {
+        this.ids = ids;
     }
 
     public void setId(Long id) {
