@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by admin on 2017/9/30.
  */
@@ -93,6 +95,12 @@ public class AuthController {
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
         return resultBean;
+    }
+
+    @RequestMapping(value = "/wx", method = RequestMethod.GET)
+    public String wx(HttpServletRequest request) throws Exception {
+        String echostr = request.getParameter("echostr");
+        return echostr;
     }
 
 }
