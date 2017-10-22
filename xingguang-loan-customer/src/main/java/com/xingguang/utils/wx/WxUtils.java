@@ -3,13 +3,14 @@ package com.xingguang.utils.wx;
 import com.xingguang.utils.wx.entity.WxAccessToken;
 import com.xingguang.utils.wx.entity.WxConfig;
 import com.xingguang.utils.wx.entity.WxTicket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
@@ -19,6 +20,8 @@ import java.util.UUID;
 
 @Service
 public class WxUtils {
+
+    protected static final Logger logger = LogManager.getLogger(WxUtils.class);
 
     @Value("${WX.APP_ID}")
     private String appId;
@@ -44,19 +47,12 @@ public class WxUtils {
         WxTicket wxTicket = this.getTicket(wxAccessToken.getAccess_token());
         String signature = "";
         String nonceStr = UUID.randomUUID().toString();
+
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
         // 注意这里参数名必须全部小写，且必须有序
         String sign = "jsapi_ticket=" + wxTicket.getTicket() + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + requestUrl;
-        try {
-            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
-            crypt.reset();
-            crypt.update(sign.getBytes("UTF-8"));
-            signature = SHA1(sign);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        logger.info("sign:===============:" + sign);
+        signature = SHA1(sign);
         WxConfig wxConfig = new WxConfig(appId, timestamp, nonceStr, signature);
         return wxConfig;
     }
