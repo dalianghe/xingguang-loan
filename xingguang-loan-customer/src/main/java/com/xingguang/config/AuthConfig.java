@@ -24,7 +24,8 @@ public class AuthConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns("/auth/login")
                 .excludePathPatterns("/auth/register")
-                .excludePathPatterns("/codes");
+                .excludePathPatterns("/codes")
+                .excludePathPatterns("/wx");
         super.addInterceptors(registry);
     }
 }
