@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 public class WxController {
 
-    private static Logger logger = LogManager.getLogger(WxController.class);
+    protected static final Logger logger = LogManager.getLogger(WxController.class);
 
     @Autowired
     private WxUtils wxUtils;
@@ -38,7 +38,10 @@ public class WxController {
         if(StringUtils.isBlank(requestUrl)){
             requestUrl = request.getRequestURL().toString();
         }
-        logger.debug("==获取WxConfig的==requestUrl==" + requestUrl);
+        String path = request.getContextPath();
+        String url1 = request.getScheme() + "://" + request.getServerName() +  path + "/";
+        logger.info("==获取WxConfig的==url1==" + url1);
+        logger.info("==获取WxConfig的==requestUrl==" + requestUrl);
         WxConfig wxConfig = this.wxUtils.getWxConfig(requestUrl);
         return new ResultBean(wxConfig);
     }
