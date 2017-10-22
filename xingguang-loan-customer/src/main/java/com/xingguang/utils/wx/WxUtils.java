@@ -14,8 +14,6 @@ import javax.annotation.PostConstruct;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -45,14 +43,12 @@ public class WxUtils {
 
         }
         WxTicket wxTicket = this.getTicket(wxAccessToken.getAccess_token());
-        String signature = "";
         String nonceStr = UUID.randomUUID().toString();
-
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
         // 注意这里参数名必须全部小写，且必须有序
         String sign = "jsapi_ticket=" + wxTicket.getTicket() + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + requestUrl;
         logger.info("sign:===============:" + sign);
-        signature = SHA1(sign);
+        String signature = SHA1(sign);
         WxConfig wxConfig = new WxConfig(appId, timestamp, nonceStr, signature);
         return wxConfig;
     }
@@ -63,11 +59,8 @@ public class WxUtils {
     }
 
     public WxTicket getTicket(String accessToken) {
-        Map param = new HashMap();
-        param.put("type", "jsapi");
-        param.put("access_token", accessToken);
         //https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
-        return this.restTemplate.getForObject(this.ticketUrl, WxTicket.class, param);
+        return this.restTemplate.getForObject(this.ticketUrl + "?access_token=" + accessToken + "&access_token=" + accessToken, WxTicket.class);
     }
 
     private static String byteToHex(final byte[] hash) {
