@@ -43,7 +43,7 @@ public class WxController {
         logger.info("==获取WxConfig的==url1==" + url1);
         logger.info("==获取WxConfig的==requestUrl==" + requestUrl);
         WxConfig wxConfig = this.wxUtils.getWxConfig(requestUrl);
-        logger.info("wxConfig============" + wxConfig);
+        logger.info("wxConfig:===============:" + wxConfig);
         return new ResultBean(wxConfig);
     }
 

@@ -39,10 +39,12 @@ public class WxUtils {
 
     public WxConfig getWxConfig(String requestUrl) {
         WxAccessToken wxAccessToken = this.getAccessToken();
+        logger.info("wxAccessToken:===============:" + wxAccessToken);
         if (wxAccessToken == null) {
 
         }
         WxTicket wxTicket = this.getTicket(wxAccessToken.getAccess_token());
+        logger.info("wxTicket:===============:" + wxTicket);
         String nonceStr = UUID.randomUUID().toString();
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
         // 注意这里参数名必须全部小写，且必须有序
