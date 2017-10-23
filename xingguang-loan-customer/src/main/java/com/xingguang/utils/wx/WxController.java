@@ -38,6 +38,12 @@ public class WxController {
         if(StringUtils.isBlank(requestUrl)){
             requestUrl = request.getRequestURL().toString();
         }
+
+        logger.info("head.referer=" + request.getHeader("referer"));
+        logger.info("RemoteHost=" + request.getRemoteHost());
+        logger.info("getRemoteAddr=" + request.getRemoteAddr()+ ":" + request.getRemotePort());
+
+
         String path = request.getContextPath();
         String url1 = request.getScheme() + "://" + request.getServerName() +  path + "/";
         logger.info("==获取WxConfig的==url1==" + url1);
