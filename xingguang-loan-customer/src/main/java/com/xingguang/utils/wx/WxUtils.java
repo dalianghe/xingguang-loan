@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
@@ -50,7 +51,17 @@ public class WxUtils {
         // 注意这里参数名必须全部小写，且必须有序
         String sign = "jsapi_ticket=" + wxTicket.getTicket() + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + requestUrl;
         logger.info("sign:===============:" + sign);
-        String signature = SHA1(sign);
+        String signature = null;
+        try {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(sign.getBytes("UTF-8"));
+            signature = byteToHex(crypt.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         WxConfig wxConfig = new WxConfig(appId, timestamp, nonceStr, signature);
         return wxConfig;
     }
@@ -73,7 +84,6 @@ public class WxUtils {
         String result = formatter.toString();
         formatter.close();
         return result;
-
     }
 
     private static String SHA1(String str) {
