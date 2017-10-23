@@ -62,7 +62,7 @@ public class WxUtils {
 
     public WxTicket getTicket(String accessToken) {
         //https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
-        return this.restTemplate.getForObject(this.ticketUrl + "?access_token=" + accessToken + "&access_token=" + accessToken, WxTicket.class);
+        return this.restTemplate.getForObject(this.ticketUrl + "?access_token=" + accessToken + "&type=jsapi", WxTicket.class);
     }
 
     private static String byteToHex(final byte[] hash) {
