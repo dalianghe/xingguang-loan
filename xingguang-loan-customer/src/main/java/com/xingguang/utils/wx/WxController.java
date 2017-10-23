@@ -36,7 +36,8 @@ public class WxController {
     public ResultBean<?> getWxConfig(@RequestParam(value = "url", required = false) final String url, HttpServletRequest request){
         String requestUrl = url;
         if(StringUtils.isBlank(requestUrl)){
-            requestUrl = request.getRequestURL().toString();
+//            requestUrl = request.getRequestURL().toString();
+            requestUrl = request.getHeader("referer");
         }
 
         logger.info("head.referer=" + request.getHeader("referer"));
