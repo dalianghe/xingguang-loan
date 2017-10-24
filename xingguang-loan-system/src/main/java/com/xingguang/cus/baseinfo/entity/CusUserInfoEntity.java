@@ -19,7 +19,8 @@ public class CusUserInfoEntity implements Serializable {
     private String income;
     private String education;
     private String occupation;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    private Integer status;
+    @JSONField(format="yyyy-MM-dd")
     private Date createTime;
     private Long workUserId;
     private String workUserName;
@@ -70,6 +71,14 @@ public class CusUserInfoEntity implements Serializable {
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getIncome() {

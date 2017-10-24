@@ -66,6 +66,10 @@
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     申请时间
                                 </th>
+                                <th>
+                                    <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
+                                    审核时间
+                                </th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -79,9 +83,10 @@
                                 <td class="hidden-480">{{user.idNo}}</td>
                                 <td>
                                     <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
-                                    <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
+                                    <span class="label label-sm label-success" v-if="user.realStatus!==1">{{user.realStatusName}}</span>
                                 </td>
                                 <td>{{user.applyTime}}</td>
+                                <td>{{user.creditTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
                                         <button class="btn btn-xs btn-info" @click="creditUser(user.id , user.applyId)">

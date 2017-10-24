@@ -11,6 +11,7 @@
         <result column="income" property="income" jdbcType="VARCHAR" />
         <result column="education" property="education" jdbcType="VARCHAR" />
         <result column="occupation" property="occupation" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="work_user_id" property="workUserId" jdbcType="BIGINT" />
         <result column="work_user_name" property="workUserName" jdbcType="VARCHAR" />
@@ -19,16 +20,19 @@
     <resultMap id="BaseResultMapCustom" type="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" extends="BaseResultMap">
         <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
         <result column="real_status_name" property="realStatusName" jdbcType="VARCHAR" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
         <result column="income_name" property="incomeName" jdbcType="VARCHAR" />
         <result column="education_name" property="educationName" jdbcType="VARCHAR" />
         <result column="occupation_name" property="occupationName" jdbcType="VARCHAR" />
         <result column="apply_id" property="applyId" jdbcType="BIGINT" />
         <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+        <result column="credit_time" property="creditTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
     <sql id="Base_Column_List" >
         id, phone, name, id_no, real_status, sex, income, education, occupation, create_time,
-        work_user_id, work_user_name, t3.label sex_name,if(real_status='1','已实名','未实名') real_status_name
+        work_user_id, work_user_name, t3.label sex_name,if(real_status='1','已实名','未实名') real_status_name,
+        if(status=10,'未提交',if(status=20,'已提交','未知状态')) status_name
     </sql>
 
     <select id="findCusUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
@@ -61,7 +65,7 @@
         FROM cus_user_info t1
         INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
         LEFT JOIN (select code,name from code_info where type_id=101) t3 on sex = t3.code
-        WHERE t2.status = 1
+        WHERE t1.status=20 and t2.status = 1
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
         </if>
@@ -71,11 +75,11 @@
     <select id="findMyCreditDoneCusUser" parameterType="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" resultMap="BaseResultMapCustom">
         SELECT
         t1.*,t3.name sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
-        t2.id apply_id, t2.create_time apply_time
+        t2.id apply_id, t2.create_time apply_time, t2.credit_time
         FROM cus_user_info t1
         INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
         LEFT JOIN (select code,name from code_info where type_id=101) t3 on sex = t3.code
-        WHERE t2.status in (2 , 3)
+        WHERE t1.status=20 and t2.status in (2 , 3)
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
         </if>

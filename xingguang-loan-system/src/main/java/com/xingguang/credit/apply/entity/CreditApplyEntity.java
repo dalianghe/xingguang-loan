@@ -17,10 +17,10 @@ public class CreditApplyEntity implements Serializable{
     private Long id;
     private Long cusUserId; // 客户ID
     private Integer status; // 状态(1:待授信, 2:授信通过, 3:授信不通过)
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date createTime; // 申请时间
     private BigDecimal amount; // 授信金额
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date creditTime; // 授信时间
     private Long creditUserId; // 授信操作人ID
     private String creditUserName; // 授信操作人姓名
