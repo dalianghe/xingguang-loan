@@ -15,12 +15,12 @@ public class CreditEntity implements Serializable {
     private String name;
     private String phone;
     private String idNo;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date applyTime;
     private Integer status;
     private String statusName;
     private BigDecimal amount;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date creditTime;
 
     public Long getId() {

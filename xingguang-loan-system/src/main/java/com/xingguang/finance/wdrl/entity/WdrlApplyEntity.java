@@ -17,16 +17,16 @@ public class WdrlApplyEntity implements Serializable {
     private Long bankCardId; // 银行卡ID
     private String reservePhone; // 预留手机号
     private BigDecimal amount; // 提款额度
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date createTime; // 提款时间
     private Integer status; // 状态(1:待处理, 2:已放款, 3:结清)
     private Long auditorId; // 提现审核人ID
     private String auditorName; // 提现审核人姓名
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date auditorTime; // 提现审核时间
     private Long operatorId; // 操作人ID
     private String operatorName; // 操作人姓名
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date issueTime; // 放款时间
     private Long productId; // 产品ID
     private Long termId; // 产品期限ID

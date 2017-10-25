@@ -208,12 +208,12 @@
                     layer.msg('请选择放款客户！');
                     return;
                 }
-                pay(that);
+                pay(that,'确认执行批量放款操作？');
             },
             paypal : function(applyId){
                 var that = this;
                 that.checkedIds.push(applyId);
-                pay(that);
+                pay(that,'确认执行放款操作？');
             },
             stopPaypal : function(applyId){
                 var that = this;
@@ -260,8 +260,8 @@
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
     }
-    function pay(obj){
-        layer.confirm('确认执行批量放款操作？', {icon: 3, title:'系统提示'}, function(index) {
+    function pay(obj , msg){
+        layer.confirm(msg, {icon: 3, title:'系统提示'}, function(index) {
             var json = {"ids":obj.checkedIds , "status":"40"};
             axios.post('/finance/pay/pay' , json).then(function (response) {
                 var result = response.data;

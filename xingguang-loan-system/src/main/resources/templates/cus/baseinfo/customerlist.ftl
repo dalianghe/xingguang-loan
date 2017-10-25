@@ -61,7 +61,8 @@
                                 <th class="hidden-480">性别</th>
                                 <th>手机号</th>
                                 <th class="hidden-480">身份证号</th>
-                                <th class="hidden-480">认证状态</th>
+                                <th class="hidden-480">是否实名</th>
+                                <th class="hidden-480">状态</th>
                                 <th>
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     创建时间
@@ -79,18 +80,11 @@
                                 <td>{{user.phone}}</td>
                                 <td class="hidden-480">{{user.idNo}}</td>
                                 <td>
-                                    <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
-                                    <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
+                                    <span class="label label-sm label-success" v-if="user.realStatus===1">{{user.realStatusName}}</span>
+                                    <span class="label label-sm label-info" v-if="user.realStatus!==1">{{user.realStatusName}}</span>
                                 </td>
+                                <td>{{user.statusName}}</td>
                                 <td>{{user.createTime}}</td>
-                            <#--<td class="hidden-480">
-                                <div class="action-buttons" style="text-align:center;">
-                                    <a href="#" class="green bigger-140 show-details-btn" title="Show Details" @click="show_detail(user.id)">
-                                        <i class="ace-icon fa fa-angle-double-down"></i>
-                                        <span class="sr-only">Details</span>
-                                    </a>
-                                </div>
-                            </td>-->
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
                                         <button class="btn btn-xs btn-info" @click="show_detail(user.id)">

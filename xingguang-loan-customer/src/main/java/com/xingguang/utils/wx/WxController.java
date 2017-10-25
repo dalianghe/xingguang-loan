@@ -61,4 +61,11 @@ public class WxController {
     }
 
 
+    @RequestMapping(value = "/wx/self/test", method = RequestMethod.GET)
+    public void wxSelfTest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String token = "A3ci5j70D1m4nvRuti5w6xm1vw9o";
+        response.getWriter().append(token).flush();
+    }
+
+
 }

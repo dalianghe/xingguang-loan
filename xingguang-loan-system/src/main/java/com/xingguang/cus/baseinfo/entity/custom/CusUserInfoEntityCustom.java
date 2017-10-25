@@ -13,13 +13,16 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
 
     private String realStatusName;
     private String sexName;
+    private String statusName;
     private String incomeName;
     private String educationName;
     private String occupationName;
     private Long applyId;
-    @JSONField(format="yyyy-MM-dd HH:mm:ss")
+    @JSONField(format="yyyy-MM-dd")
     private Date applyTime;
     private Long creditUserId;
+    @JSONField(format="yyyy-MM-dd")
+    private Date creditTime;
 
     public String getRealStatusName() {
         return realStatusName;
@@ -35,6 +38,14 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
 
     public void setSexName(String sexName) {
         this.sexName = sexName;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
     public String getIncomeName() {
@@ -83,5 +94,13 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
 
     public void setCreditUserId(Long creditUserId) {
         this.creditUserId = creditUserId;
+    }
+
+    public Date getCreditTime() {
+        return creditTime;
+    }
+
+    public void setCreditTime(Date creditTime) {
+        this.creditTime = creditTime;
     }
 }
