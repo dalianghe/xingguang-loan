@@ -65,13 +65,13 @@
                                     申请时间
                                 </th>
                                 <th class="hidden-480">授信状态</th>
-                                <th class="hidden-480">
-                                    <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
-                                    授信时间
-                                </th>
                                 <th>
                                     <i class="ace-icon fa fa-cny bigger-110 hidden-480"></i>
                                     授信额度
+                                </th>
+                                <th class="hidden-480">
+                                    <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
+                                    授信时间
                                 </th>
                                 <th>操作</th>
                             </tr>
@@ -88,8 +88,8 @@
                                     <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
                                     <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
-                                <td class="hidden-480">{{user.creditTime}}</td>
                                 <td>{{user.amount | numberFormatFilter}}</td>
+                                <td class="hidden-480">{{user.creditTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
                                         <button class="btn btn-xs btn-success" title="查看授信历史" data-toggle="modal" data-target="#my-modal" @click="creditHistory(user.id , user.name)">
