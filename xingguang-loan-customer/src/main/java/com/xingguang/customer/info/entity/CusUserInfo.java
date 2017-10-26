@@ -21,11 +21,21 @@ public class CusUserInfo {
 
     private Integer occupation;
 
+    private Integer status;
+
     private Date createTime;
 
     private Long workUserId;
 
     private String workUserName;
+
+    private String headImgUrl;
+
+    private String realImg1Url;
+
+    private String realImg2Url;
+
+    private String realImg3Url;
 
     public Long getId() {
         return id;
@@ -99,6 +109,14 @@ public class CusUserInfo {
         this.occupation = occupation;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -121,5 +139,37 @@ public class CusUserInfo {
 
     public void setWorkUserName(String workUserName) {
         this.workUserName = workUserName == null ? null : workUserName.trim();
+    }
+
+    public String getHeadImgUrl() {
+        return headImgUrl;
+    }
+
+    public void setHeadImgUrl(String headImgUrl) {
+        this.headImgUrl = headImgUrl == null ? null : headImgUrl.trim();
+    }
+
+    public String getRealImg1Url() {
+        return realImg1Url;
+    }
+
+    public void setRealImg1Url(String realImg1Url) {
+        this.realImg1Url = realImg1Url == null ? null : realImg1Url.trim();
+    }
+
+    public String getRealImg2Url() {
+        return realImg2Url;
+    }
+
+    public void setRealImg2Url(String realImg2Url) {
+        this.realImg2Url = realImg2Url == null ? null : realImg2Url.trim();
+    }
+
+    public String getRealImg3Url() {
+        return realImg3Url;
+    }
+
+    public void setRealImg3Url(String realImg3Url) {
+        this.realImg3Url = realImg3Url == null ? null : realImg3Url.trim();
     }
 }

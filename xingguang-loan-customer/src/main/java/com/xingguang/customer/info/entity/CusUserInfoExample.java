@@ -695,6 +695,66 @@ public class CusUserInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateTimeIsNull() {
             addCriterion("create_time is null");
             return (Criteria) this;
@@ -882,6 +942,286 @@ public class CusUserInfoExample {
 
         public Criteria andWorkUserNameNotBetween(String value1, String value2) {
             addCriterion("work_user_name not between", value1, value2, "workUserName");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlIsNull() {
+            addCriterion("head_img_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlIsNotNull() {
+            addCriterion("head_img_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlEqualTo(String value) {
+            addCriterion("head_img_url =", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlNotEqualTo(String value) {
+            addCriterion("head_img_url <>", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlGreaterThan(String value) {
+            addCriterion("head_img_url >", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("head_img_url >=", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlLessThan(String value) {
+            addCriterion("head_img_url <", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlLessThanOrEqualTo(String value) {
+            addCriterion("head_img_url <=", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlLike(String value) {
+            addCriterion("head_img_url like", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlNotLike(String value) {
+            addCriterion("head_img_url not like", value, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlIn(List<String> values) {
+            addCriterion("head_img_url in", values, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlNotIn(List<String> values) {
+            addCriterion("head_img_url not in", values, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlBetween(String value1, String value2) {
+            addCriterion("head_img_url between", value1, value2, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andHeadImgUrlNotBetween(String value1, String value2) {
+            addCriterion("head_img_url not between", value1, value2, "headImgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlIsNull() {
+            addCriterion("real_img1_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlIsNotNull() {
+            addCriterion("real_img1_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlEqualTo(String value) {
+            addCriterion("real_img1_url =", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlNotEqualTo(String value) {
+            addCriterion("real_img1_url <>", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlGreaterThan(String value) {
+            addCriterion("real_img1_url >", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlGreaterThanOrEqualTo(String value) {
+            addCriterion("real_img1_url >=", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlLessThan(String value) {
+            addCriterion("real_img1_url <", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlLessThanOrEqualTo(String value) {
+            addCriterion("real_img1_url <=", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlLike(String value) {
+            addCriterion("real_img1_url like", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlNotLike(String value) {
+            addCriterion("real_img1_url not like", value, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlIn(List<String> values) {
+            addCriterion("real_img1_url in", values, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlNotIn(List<String> values) {
+            addCriterion("real_img1_url not in", values, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlBetween(String value1, String value2) {
+            addCriterion("real_img1_url between", value1, value2, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg1UrlNotBetween(String value1, String value2) {
+            addCriterion("real_img1_url not between", value1, value2, "realImg1Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlIsNull() {
+            addCriterion("real_img2_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlIsNotNull() {
+            addCriterion("real_img2_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlEqualTo(String value) {
+            addCriterion("real_img2_url =", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlNotEqualTo(String value) {
+            addCriterion("real_img2_url <>", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlGreaterThan(String value) {
+            addCriterion("real_img2_url >", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlGreaterThanOrEqualTo(String value) {
+            addCriterion("real_img2_url >=", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlLessThan(String value) {
+            addCriterion("real_img2_url <", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlLessThanOrEqualTo(String value) {
+            addCriterion("real_img2_url <=", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlLike(String value) {
+            addCriterion("real_img2_url like", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlNotLike(String value) {
+            addCriterion("real_img2_url not like", value, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlIn(List<String> values) {
+            addCriterion("real_img2_url in", values, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlNotIn(List<String> values) {
+            addCriterion("real_img2_url not in", values, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlBetween(String value1, String value2) {
+            addCriterion("real_img2_url between", value1, value2, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg2UrlNotBetween(String value1, String value2) {
+            addCriterion("real_img2_url not between", value1, value2, "realImg2Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlIsNull() {
+            addCriterion("real_img3_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlIsNotNull() {
+            addCriterion("real_img3_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlEqualTo(String value) {
+            addCriterion("real_img3_url =", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlNotEqualTo(String value) {
+            addCriterion("real_img3_url <>", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlGreaterThan(String value) {
+            addCriterion("real_img3_url >", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlGreaterThanOrEqualTo(String value) {
+            addCriterion("real_img3_url >=", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlLessThan(String value) {
+            addCriterion("real_img3_url <", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlLessThanOrEqualTo(String value) {
+            addCriterion("real_img3_url <=", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlLike(String value) {
+            addCriterion("real_img3_url like", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlNotLike(String value) {
+            addCriterion("real_img3_url not like", value, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlIn(List<String> values) {
+            addCriterion("real_img3_url in", values, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlNotIn(List<String> values) {
+            addCriterion("real_img3_url not in", values, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlBetween(String value1, String value2) {
+            addCriterion("real_img3_url between", value1, value2, "realImg3Url");
+            return (Criteria) this;
+        }
+
+        public Criteria andRealImg3UrlNotBetween(String value1, String value2) {
+            addCriterion("real_img3_url not between", value1, value2, "realImg3Url");
             return (Criteria) this;
         }
     }

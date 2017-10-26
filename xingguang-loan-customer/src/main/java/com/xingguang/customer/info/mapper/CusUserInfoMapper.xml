@@ -11,9 +11,14 @@
     <result column="income" jdbcType="INTEGER" property="income" />
     <result column="education" jdbcType="INTEGER" property="education" />
     <result column="occupation" jdbcType="INTEGER" property="occupation" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="work_user_id" jdbcType="BIGINT" property="workUserId" />
     <result column="work_user_name" jdbcType="VARCHAR" property="workUserName" />
+    <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl" />
+    <result column="real_img1_url" jdbcType="VARCHAR" property="realImg1Url" />
+    <result column="real_img2_url" jdbcType="VARCHAR" property="realImg2Url" />
+    <result column="real_img3_url" jdbcType="VARCHAR" property="realImg3Url" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,8 +79,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, phone, name, id_no, real_status, sex, income, education, occupation, create_time, 
-    work_user_id, work_user_name
+    id, phone, name, id_no, real_status, sex, income, education, occupation, status, 
+    create_time, work_user_id, work_user_name, head_img_url, real_img1_url, real_img2_url, 
+    real_img3_url
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.info.entity.CusUserInfoExample" resultMap="BaseResultMap">
     select
@@ -118,12 +124,16 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.info.entity.CusUserInfo" useGeneratedKeys="true">
     insert into cus_user_info (phone, name, id_no, 
       real_status, sex, income, 
-      education, occupation, create_time, 
-      work_user_id, work_user_name)
+      education, occupation, status, 
+      create_time, work_user_id, work_user_name, 
+      head_img_url, real_img1_url, real_img2_url, 
+      real_img3_url)
     values (#{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
       #{realStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{income,jdbcType=INTEGER}, 
-      #{education,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR})
+      #{education,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR}, 
+      #{headImgUrl,jdbcType=VARCHAR}, #{realImg1Url,jdbcType=VARCHAR}, #{realImg2Url,jdbcType=VARCHAR}, 
+      #{realImg3Url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.info.entity.CusUserInfo" useGeneratedKeys="true">
     insert into cus_user_info
@@ -152,6 +162,9 @@
       <if test="occupation != null">
         occupation,
       </if>
+      <if test="status != null">
+        status,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -160,6 +173,18 @@
       </if>
       <if test="workUserName != null">
         work_user_name,
+      </if>
+      <if test="headImgUrl != null">
+        head_img_url,
+      </if>
+      <if test="realImg1Url != null">
+        real_img1_url,
+      </if>
+      <if test="realImg2Url != null">
+        real_img2_url,
+      </if>
+      <if test="realImg3Url != null">
+        real_img3_url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -187,6 +212,9 @@
       <if test="occupation != null">
         #{occupation,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -195,6 +223,18 @@
       </if>
       <if test="workUserName != null">
         #{workUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="realImg1Url != null">
+        #{realImg1Url,jdbcType=VARCHAR},
+      </if>
+      <if test="realImg2Url != null">
+        #{realImg2Url,jdbcType=VARCHAR},
+      </if>
+      <if test="realImg3Url != null">
+        #{realImg3Url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -234,6 +274,9 @@
       <if test="record.occupation != null">
         occupation = #{record.occupation,jdbcType=INTEGER},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
@@ -242,6 +285,18 @@
       </if>
       <if test="record.workUserName != null">
         work_user_name = #{record.workUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImgUrl != null">
+        head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realImg1Url != null">
+        real_img1_url = #{record.realImg1Url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realImg2Url != null">
+        real_img2_url = #{record.realImg2Url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realImg3Url != null">
+        real_img3_url = #{record.realImg3Url,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -259,9 +314,14 @@
       income = #{record.income,jdbcType=INTEGER},
       education = #{record.education,jdbcType=INTEGER},
       occupation = #{record.occupation,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       work_user_id = #{record.workUserId,jdbcType=BIGINT},
-      work_user_name = #{record.workUserName,jdbcType=VARCHAR}
+      work_user_name = #{record.workUserName,jdbcType=VARCHAR},
+      head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+      real_img1_url = #{record.realImg1Url,jdbcType=VARCHAR},
+      real_img2_url = #{record.realImg2Url,jdbcType=VARCHAR},
+      real_img3_url = #{record.realImg3Url,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,6 +353,9 @@
       <if test="occupation != null">
         occupation = #{occupation,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -301,6 +364,18 @@
       </if>
       <if test="workUserName != null">
         work_user_name = #{workUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="realImg1Url != null">
+        real_img1_url = #{realImg1Url,jdbcType=VARCHAR},
+      </if>
+      <if test="realImg2Url != null">
+        real_img2_url = #{realImg2Url,jdbcType=VARCHAR},
+      </if>
+      <if test="realImg3Url != null">
+        real_img3_url = #{realImg3Url,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -315,9 +390,14 @@
       income = #{income,jdbcType=INTEGER},
       education = #{education,jdbcType=INTEGER},
       occupation = #{occupation,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       work_user_id = #{workUserId,jdbcType=BIGINT},
-      work_user_name = #{workUserName,jdbcType=VARCHAR}
+      work_user_name = #{workUserName,jdbcType=VARCHAR},
+      head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      real_img1_url = #{realImg1Url,jdbcType=VARCHAR},
+      real_img2_url = #{realImg2Url,jdbcType=VARCHAR},
+      real_img3_url = #{realImg3Url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
