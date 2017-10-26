@@ -38,58 +38,59 @@
 
                 <div class="widget-body">
                     <div class="widget-main">
-                        <div class="profile-user-info profile-user-info-striped">
+                        <form id="searchForm">
+                            <div class="profile-user-info profile-user-info-striped">
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> 姓名 </div>
                                 <div class="profile-info-value">
-                                    <input type="text" name="name" placeholder="请输入用户姓名"/>
+                                    <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
                                 </div>
                                 <div class="profile-info-name"> 手机号 </div>
                                 <div class="profile-info-value">
-                                    <input type="text" name="name" placeholder="请输入用户手机号"/>
+                                    <input type="text" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
                                 </div>
                                 <div class="profile-info-name"> 身份证号 </div>
                                 <div class="profile-info-value">
-                                    <input type="text" name="name" placeholder="请输入用户身份证号"/>
+                                    <input type="text" name="idNo" placeholder="请输入用户身份证号" v-model="user.idNo"/>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> 产品 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="provinceId" name="provinceId">
+                                    <select class="form-control" id="productId" name="productId" v-model="user.productId">
                                         <option value=null>请选择</option>
-                                        <option value="1">待授信</option>
-                                        <option value="2">授信通过</option>
-                                        <option value="3">授信不通过</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
                                     </select>
                                 </div>
                                 <div class="profile-info-name"> 期限 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="provinceId" name="provinceId">
+                                    <select class="form-control" id="termId" name="termId">
                                         <option value=null>请选择</option>
-                                        <option value="">待审核</option>
-                                        <option value="">审核通过</option>
-                                        <option value="">审核不通过</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
                                     </select>
                                 </div>
                                 <div class="profile-info-name"> 授信额度 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="provinceId" name="provinceId">
+                                    <select class="form-control" id="amount" name="amount">
                                         <option value=null>请选择</option>
-                                        <option value="">1000及以下</option>
-                                        <option value="">1000-2000</option>
-                                        <option value="">2000-3000</option>
-                                        <option value="">3000-5000</option>
-                                        <option value="">5000-8000</option>
-                                        <option value="">8000-10000</option>
-                                        <option value="">10000及以上</option>
+                                        <option value="1">1000及以下</option>
+                                        <option value="2">1000-2000</option>
+                                        <option value="3">2000-3000</option>
+                                        <option value="4">3000-5000</option>
+                                        <option value="5">5000-8000</option>
+                                        <option value="6">8000-10000</option>
+                                        <option value="7">10000及以上</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> 审核状态 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="provinceId" name="provinceId">
+                                    <select class="form-control" id="status" name="status" v-model="user.status">
                                         <option value=null>请选择</option>
                                         <option value="1">待授信</option>
                                         <option value="2">授信通过</option>
@@ -98,27 +99,29 @@
                                 </div>
                                 <div class="profile-info-name"> 提现状态 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="provinceId" name="provinceId">
+                                    <select class="form-control" id="wdrlStatus" name="wdrlStatus">
                                         <option value=null>请选择</option>
-                                        <option value="">待审核</option>
-                                        <option value="">审核通过</option>
-                                        <option value="">审核不通过</option>
+                                        <option value="10">待审核</option>
+                                        <option value="20">提现不通过</option>
+                                        <option value="30">待放款</option>
+                                        <option value="40">已放款</option>
+                                        <option value="50">终止放款</option>
                                     </select>
                                 </div>
-                                <div class="profile-info-name"> 放款状态 </div>
+                                <div class="profile-info-name"> 授信状态 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="provinceId" name="provinceId">
+                                    <select class="form-control" id="payStatus" name="payStatus">
                                         <option value=null>请选择</option>
-                                        <option value="">待放款</option>
-                                        <option value="">已放款</option>
-                                        <option value="">终止放款</option>
+                                        <option value="1">正常</option>
+                                        <option value="2">锁定</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                     <div class="widget-toolbox padding-8 clearfix">
-                        <button class="btn btn-xs btn-success pull-right">
+                        <button class="btn btn-xs btn-success pull-right" @click="search">
                             <i class="ace-icon fa fa-search icon-on-right"></i>
                             <span class="bigger-110">查询</span>
                         </button>
@@ -179,6 +182,7 @@
                                 <td class="hidden-480">{{user.idNo}}</td>
                                 <td class="hidden-480">{{user.applyTime}}</td>
                                 <td class="hidden-480">
+                                    <span class="label label-sm label-info" v-if="user.status===1">{{user.statusName}}</span>
                                     <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
                                     <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
@@ -198,7 +202,7 @@
                                         </button>
                                     </div>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-warning" @click="lockCredit(user.id)" title="查看提现信息">
+                                        <button class="btn btn-xs btn-warning" @click="" title="查看提现信息">
                                             <i class="ace-icon fa fa-cny bigger-120"></i>
                                         </button>
                                     </div>
@@ -216,7 +220,7 @@
                                                     </a>
                                                 </li>
                                                 <li v-if="user.status===2">
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="lockCredit(user.id)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="">
                                                     <span class="blue">
                                                         <i class="ace-icon fa fa-lock bigger-120"></i>
                                                     </span>
@@ -313,6 +317,16 @@
     var app = new Vue({
         el: '#dataDiv',
         data: {
+            user : {
+                name : null,
+                phone : null,
+                idNo : null,
+                productId : null,
+                termId : null,
+                status : null,
+                wdrlStatus : null,
+                creditStatus : null
+            },
             users: {},
             "userName":null,
             histories : {},
@@ -331,6 +345,10 @@
             query(this);
         },
         methods : {
+            search : function(){
+                query(this);
+
+            },
             queryUser : function(){
                 query(this);
             },
@@ -359,25 +377,6 @@
                     layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
                 });*/
             },
-            lockCredit : function(userId){
-                var that = this;
-                layer.confirm('锁定授信客户将无法提现，确认执行该操作？', {icon: 3, title:'系统提示'}, function(index){
-                    axios.post('/credit/lock/'+userId).then(function (response) {
-                        var result = response.data;
-                        if(result.sysCode==0){
-                            if(result.bizCode==0){
-                                layer.msg('操作成功！');
-                                query(that);
-                            }else{
-                                layer.alert(result.msg, {icon:2,title:"系统提示"});
-                            }
-                        }
-                    }).catch(function (error) {
-                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
-                    });
-                    layer.close(index);
-                });
-            },
             pageHandler: function (page) {
                 this.page=page;
                 query(this);
@@ -387,8 +386,13 @@
     function query(obj){
         var that = obj;
         var idx = layer.load(2);
-        var paramJson = {"name":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/credit/customeres', {
+        var paramJson = {
+            "name":that.user.name,"phone":that.user.phone,"idNo":that.user.idNo,
+            "productId":that.user.productId,"termId":that.user.termId,
+            "status":that.user.status,
+            "pager":{"page":that.page,"pageSize":that.pageSize}
+        };
+        axios.get('/search/users', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
@@ -403,6 +407,16 @@
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
     }
+    var DataDeal = {
+        //将从form中通过$('#form').serialize()获取的值转成json
+        formToJson: function (data) {
+            data= decodeURIComponent(data,true);
+            data=data.replace(/&/g,"\",\"");
+            data=data.replace(/=/g,"\":\"");
+            data="{\""+data+"\"}";
+            return $.parseJSON(data);
+        },
+    };
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();

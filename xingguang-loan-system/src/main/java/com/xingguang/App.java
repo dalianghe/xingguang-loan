@@ -17,7 +17,7 @@ import org.springframework.http.converter.HttpMessageConverter;
  *
  */
 @SpringBootApplication
-@MapperScan("com.xingguang.*.*.mapper")
+@MapperScan("com.xingguang.**.mapper")
 public class App {
     public static void main( String[] args ) {
         SpringApplication.run(App.class,args);

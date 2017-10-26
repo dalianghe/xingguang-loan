@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.report.search.mapper.SearchMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.report.search.entity.SearchEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+        <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="credit_time" property="creditTime" jdbcType="TIMESTAMP" />
+        <result column="product_id" property="productId" jdbcType="BIGINT" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" />
+        <result column="term_id" property="termId" jdbcType="BIGINT" />
+        <result column="term_name" property="termName" jdbcType="VARCHAR" />
+        <result column="credit_status" property="creditStatus" jdbcType="INTEGER" />
+        <result column="credit_status_name" property="creditStatusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <select id="findUsers" parameterType="com.xingguang.report.search.entity.SearchEntity" resultMap="BaseResultMap">
+        select t1.id ,t1.name,t1.phone,t1.id_no,t2.create_time apply_time,t2.status,if(t2.status='1','待授信',if(t2.status='2','授信通过','授信不通过')) status_name,t3.final_amount amount,t2.credit_time,
+        t2.product_id,(select name from product_info where id=t2.product_id) product_name,
+        t2.term_id,(select name from product_term_info where id=t2.term_id) term_name,
+        t3.status credit_status,
+        if(t3.status=1,'正常','冻结') credit_status_name
+        from cus_user_info t1
+        inner join
+        (SELECT a.id,a.cus_user_id,a.status,a.create_time,a.product_id,a.term_id,a.credit_time
+        FROM credit_apply a
+        INNER JOIN (SELECT MAX(id) id FROM credit_apply where 1=1
+                            <if test="status != null" >
+                                and status = #{status}
+                            </if>
+                            <if test="productId != null" >
+                                and product_id = #{productId}
+                            </if>
+                            <if test="termId != null" >
+                                and term_id = #{termId}
+                            </if>
+                              GROUP BY cus_user_id) b ON a.id = b.id) t2 on t1.id = t2.cus_user_id
+        left join credit_info t3 on t1.id = t3.cus_user_id
+        where t1.status=20
+        <if test="name != null" >
+          and t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="phone != null" >
+            and t1.phone = #{phone}
+        </if>
+        <if test="idNo != null" >
+            and t1.id_no = #{idNo}
+        </if>
+        <if test="creditStatus != null" >
+            and t3.status = #{creditStatus}
+        </if>
+        order by t2.id desc
+    </select>
+
+</mapper>
