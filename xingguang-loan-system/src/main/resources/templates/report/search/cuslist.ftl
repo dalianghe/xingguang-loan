@@ -153,15 +153,21 @@
                                     申请时间
                                 </th>
                                 <th class="hidden-480">授信状态</th>
-                                <th class="hidden-480">
-                                    <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
-                                    授信时间
-                                </th>
                                 <th>
                                     <i class="ace-icon fa fa-cny bigger-110 hidden-480"></i>
                                     授信额度
                                 </th>
-                                <th>操作</th>
+                                <th>
+                                    批贷产品
+                                </th>
+                                <th>
+                                    批贷期限
+                                </th>
+                                <th class="hidden-480">
+                                    <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
+                                    授信时间
+                                </th>
+                                <th>查询信息</th>
                             </tr>
                             </thead>
 
@@ -176,17 +182,24 @@
                                     <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
                                     <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.status===3">{{user.statusName}}</span>
                                 </td>
-                                <td class="hidden-480">{{user.creditTime}}</td>
                                 <td>{{user.amount | numberFormatFilter}}</td>
+                                <td class="hidden-480">{{user.creditTime}}</td>
+                                <td class="hidden-480">{{user.creditTime}}</td>
+                                <td class="hidden-480">{{user.creditTime}}</td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" title="查看授信历史" data-toggle="modal" data-target="#my-modal" @click="creditHistory(user.id , user.name)">
+                                        <button class="btn btn-xs btn-info" title="查看客户信息"  data-toggle="modal" data-target="#user-modal" @click="viewUser(user.id)">
+                                            <i class="ace-icon fa fa-user bigger-120"></i>
+                                        </button>
+                                    </div>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-success" title="查看授信信息" data-toggle="modal" data-target="#credit-modal" @click="creditHistory(user.id , user.name)">
                                             <i class="ace-icon fa fa-history bigger-120"></i>
                                         </button>
                                     </div>
-                                    <div class="hidden-sm hidden-xs btn-group" v-if="user.status===2">
-                                        <button class="btn btn-xs btn-danger" @click="lockCredit(user.id)" title="锁定授信额度">
-                                            <i class="ace-icon fa fa-lock bigger-120"></i>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <button class="btn btn-xs btn-warning" @click="lockCredit(user.id)" title="查看提现信息">
+                                            <i class="ace-icon fa fa-cny bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -222,48 +235,56 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
 
-        <div id="my-modal" class="modal fade" tabindex="1">
+        <div id="user-modal" class="modal fade " tabindex="1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div id="user-content" class="modal-content">
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div id="credit-modal" class="modal fade" tabindex="2" role="dialog">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div id="credit-content" class="modal-content">
+                <#--
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h3 class="smaller lighter blue no-margin">授信记录</h3>
                     </div>
                     <div class="modal-body">
-                            <div class="widget-box widget-color-blue" id="widget-box-2">
-                                <div class="widget-header">
-                                    <h5 class="widget-title bigger lighter">
-                                        <i class="ace-icon fa fa-user"></i>{{historyName}}
-                                    </h5>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="widget-main no-padding">
-                                        <table class="table table-striped table-bordered table-hover">
-                                            <thead class="thin-border-bottom">
-                                            <tr>
-                                                <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>申请时间</th>
-                                                <th>授信状态</th>
-                                                <th>授信额度</th>
-                                                <th><i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>授信时间</th>
-                                                <th class="hidden-480">操作人</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="record in histories">
-                                                    <td class="hidden-480">{{record.createTime}}</td>
-                                                    <td>
-                                                        <span class="label label-success" v-if="record.status===2">{{record.statusName}}</span>
-                                                        <span class="label label-danger  arrowed-in arrowed-in-right" v-if="record.status===3">{{record.statusName}}</span>
-                                                    </td>
-                                                    <td>{{record.amount | numberFormatFilter}}</td>
-                                                    <td>{{record.creditTime}}</td>
-                                                    <td class="hidden-480">{{record.creditUserName}}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <div class="widget-box widget-color-blue" id="widget-box-2">
+                            <div class="widget-header">
+                                <h5 class="widget-title bigger lighter">
+                                    <i class="ace-icon fa fa-user"></i>{{historyName}}
+                                </h5>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main no-padding">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thin-border-bottom">
+                                        <tr>
+                                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>申请时间</th>
+                                            <th>授信状态</th>
+                                            <th>授信额度</th>
+                                            <th><i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>授信时间</th>
+                                            <th class="hidden-480">操作人</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="record in histories">
+                                            <td class="hidden-480">{{record.createTime}}</td>
+                                            <td>
+                                                <span class="label label-success" v-if="record.status===2">{{record.statusName}}</span>
+                                                <span class="label label-danger  arrowed-in arrowed-in-right" v-if="record.status===3">{{record.statusName}}</span>
+                                            </td>
+                                            <td>{{record.amount | numberFormatFilter}}</td>
+                                            <td>{{record.creditTime}}</td>
+                                            <td class="hidden-480">{{record.creditUserName}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
@@ -271,7 +292,7 @@
                             关闭
                         </button>
                     </div>
-
+                    -->
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
@@ -313,8 +334,17 @@
             queryUser : function(){
                 query(this);
             },
+            viewUser : function(userId){
+                var paramJson = {"userId":userId};
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                $("#user-content").load("/router/report/search/userinfo" , param );
+            },
             creditHistory : function(userId , name){
-                var that = this;
+                var paramJson = {"userId":userId , "name":name};
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                $("#credit-content").load("/router/report/search/credithistory" , param );
+
+                /*var that = this;
                 that.historyName = name;
                 axios.get('/credit/apply/cus/'+userId).then(function (response) {
                     var result = response.data;
@@ -327,7 +357,7 @@
                     }
                 }).catch(function (error) {
                     layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
-                });
+                });*/
             },
             lockCredit : function(userId){
                 var that = this;
