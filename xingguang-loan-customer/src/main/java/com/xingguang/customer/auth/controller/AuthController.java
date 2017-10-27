@@ -12,10 +12,8 @@ import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Created by admin on 2017/9/30.
@@ -80,7 +78,11 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/auth/real", method = RequestMethod.POST)
-    public ResultBean<?> real(@RequestBody CusUserInfo cusUserInfo, @JWTParam(key = "userId", required = true) Long userId) throws Exception {
+    public ResultBean<?> real(CusUserInfo cusUserInfo,
+                              @JWTParam(key = "userId", required = true) Long userId,
+                              @RequestParam("img1") MultipartFile img1,
+                              @RequestParam("img2") MultipartFile img2,
+                              @RequestParam("img3") MultipartFile img3) throws Exception {
         String name = cusUserInfo.getName();
         String idNo = cusUserInfo.getIdNo();
         boolean realFlag = true;
