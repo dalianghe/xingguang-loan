@@ -21,7 +21,7 @@ public class SearchUserDomain extends BaseDomain implements Serializable {
     private Date applyTime;
     private Integer status;
     private String statusName;
-    private BigDecimal amount;
+    private Integer amountScope;
     private Date creditTime;
     private Long productId;
     private String productName;
@@ -87,12 +87,12 @@ public class SearchUserDomain extends BaseDomain implements Serializable {
         this.statusName = statusName;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public Integer getAmountScope() {
+        return amountScope;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setAmountScope(Integer amountScope) {
+        this.amountScope = amountScope;
     }
 
     public Date getCreditTime() {

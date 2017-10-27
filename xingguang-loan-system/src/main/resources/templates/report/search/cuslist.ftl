@@ -40,54 +40,52 @@
                     <div class="widget-main">
                         <form id="searchForm">
                             <div class="profile-user-info profile-user-info-striped">
-                            <div class="profile-info-row">
-                                <div class="profile-info-name"> 姓名 </div>
-                                <div class="profile-info-value">
-                                    <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 姓名 </div>
+                                    <div class="profile-info-value">
+                                        <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
+                                    </div>
+                                    <div class="profile-info-name"> 手机号 </div>
+                                    <div class="profile-info-value">
+                                        <input type="text" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
+                                    </div>
+                                    <div class="profile-info-name"> 身份证号 </div>
+                                    <div class="profile-info-value">
+                                        <input type="text" name="idNo" placeholder="请输入用户身份证号" v-model="user.idNo"/>
+                                    </div>
                                 </div>
-                                <div class="profile-info-name"> 手机号 </div>
-                                <div class="profile-info-value">
-                                    <input type="text" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 产品 </div>
+                                    <div class="profile-info-value">
+                                        <select class="form-control" id="productId" name="productId" v-model="user.productId">
+                                            <option value=null>请选择</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                    <div class="profile-info-name"> 期限 </div>
+                                    <div class="profile-info-value">
+                                        <select class="form-control" id="termId" name="termId" v-model="user.termId">
+                                            <option value=null>请选择</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                    <div class="profile-info-name"> 授信额度 </div>
+                                    <div class="profile-info-value">
+                                        <select class="form-control" id="amount" name="amountScope" v-model="user.amountScope">
+                                            <option value=null>请选择</option>
+                                            <option value="1">1000及以下</option>
+                                            <option value="2">1000-2000</option>
+                                            <option value="3">2000-3000</option>
+                                            <option value="4">3000-5000</option>
+                                            <option value="5">5000及以上</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="profile-info-name"> 身份证号 </div>
-                                <div class="profile-info-value">
-                                    <input type="text" name="idNo" placeholder="请输入用户身份证号" v-model="user.idNo"/>
-                                </div>
-                            </div>
-                            <div class="profile-info-row">
-                                <div class="profile-info-name"> 产品 </div>
-                                <div class="profile-info-value">
-                                    <select class="form-control" id="productId" name="productId" v-model="user.productId">
-                                        <option value=null>请选择</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </div>
-                                <div class="profile-info-name"> 期限 </div>
-                                <div class="profile-info-value">
-                                    <select class="form-control" id="termId" name="termId">
-                                        <option value=null>请选择</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </div>
-                                <div class="profile-info-name"> 授信额度 </div>
-                                <div class="profile-info-value">
-                                    <select class="form-control" id="amount" name="amount">
-                                        <option value=null>请选择</option>
-                                        <option value="1">1000及以下</option>
-                                        <option value="2">1000-2000</option>
-                                        <option value="3">2000-3000</option>
-                                        <option value="4">3000-5000</option>
-                                        <option value="5">5000-8000</option>
-                                        <option value="6">8000-10000</option>
-                                        <option value="7">10000及以上</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="profile-info-row">
+                                <div class="profile-info-row">
                                 <div class="profile-info-name"> 审核状态 </div>
                                 <div class="profile-info-value">
                                     <select class="form-control" id="status" name="status" v-model="user.status">
@@ -99,7 +97,7 @@
                                 </div>
                                 <div class="profile-info-name"> 提现状态 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="wdrlStatus" name="wdrlStatus">
+                                    <select class="form-control" id="wdrlStatus" name="wdrlStatus" v-model="user.wdrlStatus">
                                         <option value=null>请选择</option>
                                         <option value="10">待审核</option>
                                         <option value="20">提现不通过</option>
@@ -110,14 +108,28 @@
                                 </div>
                                 <div class="profile-info-name"> 授信状态 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="payStatus" name="payStatus">
+                                    <select class="form-control" id="creditStatus" name="creditStatus" v-model="user.creditStatus">
                                         <option value=null>请选择</option>
                                         <option value="1">正常</option>
                                         <option value="2">锁定</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> 申请日期 </div>
+                                    <div class="profile-info-value">
+                                        <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
+                                    </div>
+                                    <div class="profile-info-name"> 授信日期 </div>
+                                    <div class="profile-info-value">
+                                        <input type="text" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
+                                    </div>
+                                    <div class="profile-info-name"> 放款日期 </div>
+                                    <div class="profile-info-value">
+                                        <input type="text" name="idNo" placeholder="请输入用户身份证号" v-model="user.idNo"/>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="widget-toolbox padding-8 clearfix">
@@ -176,20 +188,20 @@
 
                             <tbody>
                             <tr v-for="(user,index) in users">
-                                <td class="hidden-480" class="center"> {{index+1}}</td>
-                                <td>{{user.name}}</td>
-                                <td>{{user.phone}}</td>
-                                <td class="hidden-480">{{user.idNo}}</td>
-                                <td class="hidden-480">{{user.applyTime}}</td>
+                                <td class="hidden-480" class="center" v-text="index+1"> </td>
+                                <td v-text="user.name"></td>
+                                <td v-text="user.phone"></td>
+                                <td class="hidden-480" v-text="user.idNo"></td>
+                                <td class="hidden-480" v-text="user.applyTime"></td>
                                 <td class="hidden-480">
-                                    <span class="label label-sm label-info" v-if="user.status===1">{{user.statusName}}</span>
-                                    <span class="label label-sm label-success" v-if="user.status===2">{{user.statusName}}</span>
-                                    <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.status===3">{{user.statusName}}</span>
+                                    <span class="label label-sm label-info" v-if="user.status===1" v-text="user.statusName"></span>
+                                    <span class="label label-sm label-success" v-if="user.status===2" v-text="user.statusName"></span>
+                                    <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.status===3" v-text="user.statusName"></span>
                                 </td>
-                                <td>{{user.amount | numberFormatFilter}}</td>
-                                <td class="hidden-480">{{user.creditTime}}</td>
-                                <td class="hidden-480">{{user.creditTime}}</td>
-                                <td class="hidden-480">{{user.creditTime}}</td>
+                                <td align="right">{{user.amount | numberFormatFilter}}</td>
+                                <td class="hidden-480" v-text="user.productName"></td>
+                                <td class="hidden-480" v-text="user.termName"></td>
+                                <td class="hidden-480" v-text="user.creditTime"></td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
                                         <button class="btn btn-xs btn-info" title="查看客户信息"  data-toggle="modal" data-target="#user-modal" @click="viewUser(user.id)">
@@ -202,7 +214,7 @@
                                         </button>
                                     </div>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-warning" @click="" title="查看提现信息">
+                                        <button class="btn btn-xs btn-warning" data-toggle="modal" data-target="#wdrl-modal" @click="wdrlHistory(user.id , user.name)" title="查看提现信息">
                                             <i class="ace-icon fa fa-cny bigger-120"></i>
                                         </button>
                                     </div>
@@ -242,63 +254,22 @@
         <div id="user-modal" class="modal fade " tabindex="1" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div id="user-content" class="modal-content">
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>
+            </div>
         </div>
 
         <div id="credit-modal" class="modal fade" tabindex="2" role="dialog">
             <div class="modal-dialog">
                 <div id="credit-content" class="modal-content">
-                <#--
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3 class="smaller lighter blue no-margin">授信记录</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="widget-box widget-color-blue" id="widget-box-2">
-                            <div class="widget-header">
-                                <h5 class="widget-title bigger lighter">
-                                    <i class="ace-icon fa fa-user"></i>{{historyName}}
-                                </h5>
-                            </div>
-                            <div class="widget-body">
-                                <div class="widget-main no-padding">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <thead class="thin-border-bottom">
-                                        <tr>
-                                            <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>申请时间</th>
-                                            <th>授信状态</th>
-                                            <th>授信额度</th>
-                                            <th><i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>授信时间</th>
-                                            <th class="hidden-480">操作人</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr v-for="record in histories">
-                                            <td class="hidden-480">{{record.createTime}}</td>
-                                            <td>
-                                                <span class="label label-success" v-if="record.status===2">{{record.statusName}}</span>
-                                                <span class="label label-danger  arrowed-in arrowed-in-right" v-if="record.status===3">{{record.statusName}}</span>
-                                            </td>
-                                            <td>{{record.amount | numberFormatFilter}}</td>
-                                            <td>{{record.creditTime}}</td>
-                                            <td class="hidden-480">{{record.creditUserName}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
-                            <i class="ace-icon fa fa-times"></i>
-                            关闭
-                        </button>
-                    </div>
-                    -->
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>
+            </div>
+        </div>
+
+        <div id="wdrl-modal" class="modal fade " tabindex="3" role="dialog">
+            <div class="modal-dialog">
+                <div id="wdrl-content" class="modal-content">
+                </div>
+            </div>
         </div>
 
         <div class="wrap pages pa-cen clearfix" id="wrap">
@@ -323,6 +294,7 @@
                 idNo : null,
                 productId : null,
                 termId : null,
+                amountScope : null,
                 status : null,
                 wdrlStatus : null,
                 creditStatus : null
@@ -361,21 +333,11 @@
                 var paramJson = {"userId":userId , "name":name};
                 var param = {"paramJson":JSON.stringify(paramJson)};
                 $("#credit-content").load("/router/report/search/credithistory" , param );
-
-                /*var that = this;
-                that.historyName = name;
-                axios.get('/credit/apply/cus/'+userId).then(function (response) {
-                    var result = response.data;
-                    if(result.sysCode==0){
-                        if(result.bizCode==0){
-                            that.histories = result.data;
-                        }else{
-                            layer.alert(result.msg, {icon:2,title:"系统提示"});
-                        }
-                    }
-                }).catch(function (error) {
-                    layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
-                });*/
+            },
+            wdrlHistory : function(userId , name){
+                var paramJson = {"userId":userId , "name":name};
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                $("#wdrl-content").load("/router/report/search/wdrlhistory" , param );
             },
             pageHandler: function (page) {
                 this.page=page;
@@ -388,10 +350,11 @@
         var idx = layer.load(2);
         var paramJson = {
             "name":that.user.name,"phone":that.user.phone,"idNo":that.user.idNo,
-            "productId":that.user.productId,"termId":that.user.termId,
-            "status":that.user.status,
+            "productId":that.user.productId,"termId":that.user.termId,"amountScope":that.user.amountScope,
+            "status":that.user.status,"wdrlStatus":that.user.wdrlStatus,"creditStatus":that.user.creditStatus,
             "pager":{"page":that.page,"pageSize":that.pageSize}
         };
+        console.log(paramJson);
         axios.get('/search/users', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
@@ -407,16 +370,7 @@
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
     }
-    var DataDeal = {
-        //将从form中通过$('#form').serialize()获取的值转成json
-        formToJson: function (data) {
-            data= decodeURIComponent(data,true);
-            data=data.replace(/&/g,"\",\"");
-            data=data.replace(/=/g,"\":\"");
-            data="{\""+data+"\"}";
-            return $.parseJSON(data);
-        },
-    };
+
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();

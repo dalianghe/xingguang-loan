@@ -62,6 +62,14 @@
         WHERE id = #{id,jdbcType=BIGINT}
     </select>
 
+    <select id="findWdrlApplyByCusId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM wdrl_apply
+        WHERE cus_user_id = #{cusUserId,jdbcType=BIGINT}
+        order by create_time desc
+    </select>
+
     <update id="updateWdrlApply" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity">
         UPDATE wdrl_apply
         <set>
