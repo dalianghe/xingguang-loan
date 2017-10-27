@@ -1,6 +1,6 @@
 ﻿
 .zpagenav {
-    text-align: center;
+    text-align: right;
     -webkit-user-select: none;
     height:42px;
 }
@@ -22,7 +22,7 @@
             padding: 0 15px;
             border: 1px solid #f6f6f6;
             /*border-right: 1px;*/
-            background: #fff;
+            background: #FAFAFA;
             font-size: 14px;
             font-style: normal;
             min-width: 40px;
@@ -45,13 +45,13 @@
 
             .zpagenav ul li.active {
                 border-color: #f4f4f4;/*#20a0ff;*/
-                background-color: #f4f4f4;/*#20a0ff;*/
-                color: #a5a5a5;
+                background-color: #6FAED9;/*#20a0ff;*/
+                color: #fff;
                 cursor: default;
             }
 
                 .zpagenav ul li.active:hover {
-                    /* color: #fff; */
+                     color: #fff;
                 }
 
             .zpagenav ul li.disabled {
