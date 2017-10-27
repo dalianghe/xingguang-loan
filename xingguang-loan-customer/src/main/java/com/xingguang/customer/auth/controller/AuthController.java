@@ -1,5 +1,6 @@
 package com.xingguang.customer.auth.controller;
 
+import cn.id5.gboss.http.HttpResponseData;
 import com.alibaba.fastjson.JSON;
 import com.xingguang.beans.JWTToken;
 import com.xingguang.beans.ResultBean;
@@ -12,6 +13,10 @@ import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import com.xingguang.utils.oss.OssUtils;
+import com.xingguang.utils.real.RealUtils;
+import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +33,8 @@ import java.util.UUID;
 @RestController
 public class AuthController {
 
+    private final Logger logger = LogManager.getLogger(AuthController.class);
+
     private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
 
     @Autowired
@@ -39,8 +46,14 @@ public class AuthController {
     @Autowired
     private OssUtils ossUtils;
 
+    @Autowired
+    private RealUtils realUtils;
+
     @Value("${OSS.CUS.REAL}")
     private String realImgPath;
+
+    @Value("${REAL.PRODUCT_TYPE}")
+    String productType;
 
 
     @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
@@ -97,9 +110,16 @@ public class AuthController {
                               @RequestParam("img1") MultipartFile realImg1,
                               @RequestParam("img2") MultipartFile realImg2,
                               @RequestParam("img3") MultipartFile realImg3) throws Exception {
-        String name = cusUserInfo.getName();
-        String idNo = cusUserInfo.getIdNo();
-        boolean realFlag = true;
+
+        String param = cusUserInfo.getName() + "," + cusUserInfo.getIdNo();
+        HttpResponseData httpdata = realUtils.getClient().invokeSingle(this.productType, param);
+        logger.info("实名认证耗时------------------>" + httpdata.getTime());
+        logger.info("实名认证时间------------------>" + httpdata.getData());
+        logger.info("实名认证内容------------------>" + httpdata.getData());
+        boolean realFlag = false;
+        if (httpdata.getStatus() == HttpStatus.SC_OK) {
+            realFlag = true;
+        }
         List<MultipartFile> files = new ArrayList(3);
         files.add(realImg1);
         files.add(realImg2);
@@ -110,8 +130,8 @@ public class AuthController {
         cusUserInfoDB.setRealImg2Url(paths.get(1));
         cusUserInfoDB.setRealImg3Url(paths.get(2));
         cusUserInfoDB.setId(userId);
-        cusUserInfoDB.setName(name);
-        cusUserInfoDB.setIdNo(idNo);
+        cusUserInfoDB.setName(cusUserInfo.getName());
+        cusUserInfoDB.setIdNo(cusUserInfo.getIdNo());
         cusUserInfoDB.setRealStatus(realFlag ? 1 : 2);
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
@@ -119,11 +139,11 @@ public class AuthController {
     }
 
     private List<String> putFiles(Long userId, List<MultipartFile> files) throws IOException {
-        List<String> list =  new ArrayList(files.size());
+        List<String> list = new ArrayList(files.size());
         for (MultipartFile f : files) {
             String fileName = new String(f.getOriginalFilename().getBytes("ISO-8859-1"), "UTF-8");
             String postfix = fileName.substring(fileName.lastIndexOf("."));
-            String path = ossUtils.putFile(this.realImgPath + "/" + userId + "_" + UUID.randomUUID().toString()  + postfix, f.getInputStream());
+            String path = ossUtils.putFile(this.realImgPath + "/" + userId + "_" + UUID.randomUUID().toString() + postfix, f.getInputStream());
             list.add(path);
         }
         return list;
