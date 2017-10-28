@@ -113,8 +113,8 @@ public class AuthController {
 
         String param = cusUserInfo.getName() + "," + cusUserInfo.getIdNo();
         HttpResponseData httpdata = realUtils.getClient().invokeSingle(this.productType, param);
+        logger.info("实名认证状态------------------>" + httpdata.getStatus());
         logger.info("实名认证耗时------------------>" + httpdata.getTime());
-        logger.info("实名认证时间------------------>" + httpdata.getData());
         logger.info("实名认证内容------------------>" + httpdata.getData());
         boolean realFlag = false;
         if (httpdata.getStatus() == HttpStatus.SC_OK) {
