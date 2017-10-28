@@ -31,6 +31,12 @@
         (SELECT a.id,a.cus_user_id,a.status,a.create_time,a.product_id,a.term_id,a.credit_time
         FROM credit_apply a
         INNER JOIN (SELECT MAX(id) id FROM credit_apply where 1=1
+                            <if test="applyDate != null" >
+                                and date_format(create_time,'%Y-%m-%d') = #{applyDate}
+                            </if>
+                            <if test="creditDate != null" >
+                                and date_format(credit_time,'%Y-%m-%d') = #{creditDate}
+                            </if>
                             <if test="status != null" >
                                 and status = #{status}
                             </if>
@@ -42,11 +48,17 @@
                             </if>
                               GROUP BY cus_user_id) b ON a.id = b.id) t2 on t1.id = t2.cus_user_id
         left join credit_info t3 on t1.id = t3.cus_user_id
-        <if test="wdrlStatus != null" >
+        <if test="wdrlStatus != null or payDate != null" >
         inner join
         (select a.id,a.cus_user_id
         from wdrl_apply a
-        inner join (select max(id) id from wdrl_apply where status=#{wdrlStatus}
+        inner join (select max(id) id from wdrl_apply where 1=1
+                        <if test="wdrlStatus != null" >
+                            and status=#{wdrlStatus}
+                        </if>
+                        <if test="payDate != null" >
+                            and date_format(issue_time,'%Y-%m-%d') =#{payDate}
+                        </if>
                         group by cus_user_id) b on a.id = b.id) t4 on t1.id = t4.cus_user_id
         </if>
         where t1.status=20

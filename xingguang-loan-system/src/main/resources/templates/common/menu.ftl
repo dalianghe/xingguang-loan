@@ -72,8 +72,6 @@
                 dataType: "json",
                 timeout: 10000,
                 success: function (result) {
-                    console.log(result);
-                    console.log(result.data);
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             that.menus = result.data;

@@ -210,7 +210,7 @@
                         autoclose: true,
                         todayHighlight: true
                     }).on("hide",function(){
-                        alert(2);
+                        //alert(2);
                     })
                     .next().on(ace.click_event, function(){ //show datepicker when clicking on the icon
                         $(this).prev().focus();

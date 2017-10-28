@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/assets/css/bootstrap-datepicker3.min.css" />
 <link rel="stylesheet" href="/js/lib/vue/page/zpageNav.css" />
 <div class="main-content-inner">
     <div class="breadcrumbs ace-save-state" id="breadcrumbs">
@@ -86,47 +87,47 @@
                                     </div>
                                 </div>
                                 <div class="profile-info-row">
-                                <div class="profile-info-name"> 审核状态 </div>
-                                <div class="profile-info-value">
-                                    <select class="form-control" id="status" name="status" v-model="user.status">
-                                        <option value=null>请选择</option>
-                                        <option value="1">待授信</option>
-                                        <option value="2">授信通过</option>
-                                        <option value="3">授信不通过</option>
-                                    </select>
+                                    <div class="profile-info-name"> 审核状态 </div>
+                                    <div class="profile-info-value">
+                                        <select class="form-control" id="status" name="status" v-model="user.status">
+                                            <option value=null>请选择</option>
+                                            <option value="1">待授信</option>
+                                            <option value="2">授信通过</option>
+                                            <option value="3">授信不通过</option>
+                                        </select>
+                                    </div>
+                                    <div class="profile-info-name"> 提现状态 </div>
+                                    <div class="profile-info-value">
+                                        <select class="form-control" id="wdrlStatus" name="wdrlStatus" v-model="user.wdrlStatus">
+                                            <option value=null>请选择</option>
+                                            <option value="10">待审核</option>
+                                            <option value="20">提现不通过</option>
+                                            <option value="30">待放款</option>
+                                            <option value="40">已放款</option>
+                                            <option value="50">终止放款</option>
+                                        </select>
+                                    </div>
+                                    <div class="profile-info-name"> 授信状态 </div>
+                                    <div class="profile-info-value">
+                                        <select class="form-control" id="creditStatus" name="creditStatus" v-model="user.creditStatus">
+                                            <option value=null>请选择</option>
+                                            <option value="1">正常</option>
+                                            <option value="2">锁定</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="profile-info-name"> 提现状态 </div>
-                                <div class="profile-info-value">
-                                    <select class="form-control" id="wdrlStatus" name="wdrlStatus" v-model="user.wdrlStatus">
-                                        <option value=null>请选择</option>
-                                        <option value="10">待审核</option>
-                                        <option value="20">提现不通过</option>
-                                        <option value="30">待放款</option>
-                                        <option value="40">已放款</option>
-                                        <option value="50">终止放款</option>
-                                    </select>
-                                </div>
-                                <div class="profile-info-name"> 授信状态 </div>
-                                <div class="profile-info-value">
-                                    <select class="form-control" id="creditStatus" name="creditStatus" v-model="user.creditStatus">
-                                        <option value=null>请选择</option>
-                                        <option value="1">正常</option>
-                                        <option value="2">锁定</option>
-                                    </select>
-                                </div>
-                            </div>
                                 <div class="profile-info-row">
                                     <div class="profile-info-name"> 申请日期 </div>
                                     <div class="profile-info-value">
-                                        <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
+                                        <input type="text" id="applyDate" placeholder="请选择申请日期" class="form-control date-picker" readonly="true"/>
                                     </div>
                                     <div class="profile-info-name"> 授信日期 </div>
                                     <div class="profile-info-value">
-                                        <input type="text" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
+                                        <input type="text" id="creditDate" placeholder="请选择授信日期" class="form-control date-picker" readonly="true"/>
                                     </div>
                                     <div class="profile-info-name"> 放款日期 </div>
                                     <div class="profile-info-value">
-                                        <input type="text" name="idNo" placeholder="请输入用户身份证号" v-model="user.idNo"/>
+                                        <input type="text" id="payDate" placeholder="请选择放款日期" class="form-control date-picker" readonly="true"/>
                                     </div>
                                 </div>
                             </div>
@@ -282,6 +283,8 @@
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
 <script src="/js/utils/numeral.min.js"></script>
+<script src="/assets/js/bootstrap-datepicker.min.js"></script>
+<script src="/assets/js/bootstrap-datepicker.zh-CN.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 
@@ -297,7 +300,10 @@
                 amountScope : null,
                 status : null,
                 wdrlStatus : null,
-                creditStatus : null
+                creditStatus : null,
+                applyDate : null,
+                creditDate : null,
+                payDate : null
             },
             users: {},
             "userName":null,
@@ -317,11 +323,33 @@
             query(this);
         },
         methods : {
+            datePicker : function(){
+                console.log("-----in");
+                $('.date-picker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                }).on("hide",function(){
+                    //alert(2);
+                }).next().on(ace.click_event, function(){ //show datepicker when clicking on the icon
+                    $(this).prev().focus();
+                });
+            },
             search : function(){
+                var applyDate = $("#applyDate").val()==''?null:$("#applyDate").val();
+                var creditDate = $("#creditDate").val()==''?null:$("#creditDate").val();
+                var payDate = $("#payDate").val()==''?null:$("#payDate").val();
+                this.user.applyDate = applyDate;
+                this.user.creditDate = creditDate;
+                this.user.payDate = payDate;
                 query(this);
-
             },
             queryUser : function(){
+                var applyDate = $("#applyDate").val()==''?null:$("#applyDate").val();
+                var creditDate = $("#creditDate").val()==''?null:$("#creditDate").val();
+                var payDate = $("#payDate").val()==''?null:$("#payDate").val();
+                this.user.applyDate = applyDate;
+                this.user.creditDate = creditDate;
+                this.user.payDate = payDate;
                 query(this);
             },
             viewUser : function(userId){
@@ -340,6 +368,12 @@
                 $("#wdrl-content").load("/router/report/search/wdrlhistory" , param );
             },
             pageHandler: function (page) {
+                var applyDate = $("#applyDate").val()==''?null:$("#applyDate").val();
+                var creditDate = $("#creditDate").val()==''?null:$("#creditDate").val();
+                var payDate = $("#payDate").val()==''?null:$("#payDate").val();
+                this.user.applyDate = applyDate;
+                this.user.creditDate = creditDate;
+                this.user.payDate = payDate;
                 this.page=page;
                 query(this);
             }
@@ -352,6 +386,7 @@
             "name":that.user.name,"phone":that.user.phone,"idNo":that.user.idNo,
             "productId":that.user.productId,"termId":that.user.termId,"amountScope":that.user.amountScope,
             "status":that.user.status,"wdrlStatus":that.user.wdrlStatus,"creditStatus":that.user.creditStatus,
+            "applyDate":that.user.applyDate,"creditDate":that.user.creditDate,"payDate":that.user.payDate,
             "pager":{"page":that.page,"pageSize":that.pageSize}
         };
         console.log(paramJson);
@@ -371,10 +406,23 @@
         });
     }
 
+    jQuery(function($) {
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            language:"zh-CN",
+            format:"yyyy-mm-dd",
+            clearBtn:true
+        }).next().on(ace.click_event, function(){
+            $(this).prev().focus();
+        });
+    });
+
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();
             window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
         }
     });
+
 </script>
