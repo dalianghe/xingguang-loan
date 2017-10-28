@@ -116,7 +116,25 @@
                             </div>
                     </div>
                     <div id="userfilm" class="tab-pane fade">
-                        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                        <div>
+                            <ul class="ace-thumbnails clearfix">
+                                <li>
+                                    <a :href="user.realImg1Url" data-rel="colorbox">
+                                        <img width="150" height="150" alt="150x150" :src="user.realImg1Url" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a :href="user.realImg2Url" data-rel="colorbox">
+                                        <img width="150" height="150" alt="150x150" :src="user.realImg2Url" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a :href="user.realImg3Url" data-rel="colorbox">
+                                        <img width="150" height="150" alt="150x150" :src="user.realImg3Url" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
