@@ -160,28 +160,16 @@
 
         <plugins>
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-install-plugin</artifactId>
-            <version>2.5.2</version>
-            <executions>
-                <execution>
-                    <id>install-external</id>
-                    <phase>clean</phase>
-                    <configuration>
-                        <file>${basedir}/lib/gboss-client-1.0.0.jar</file>
-                        <repositoryLayout>default</repositoryLayout>
-                        <groupId>com.xingguang</groupId>
-                        <artifactId>mylib-core</artifactId>
-                        <version>0.0.1</version>
-                        <packaging>jar</packaging>
-                        <generatePom>true</generatePom>
-                    </configuration>
-                    <goals>
-                        <goal>install-file</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArguments>
+                        <extdirs>${project.basedir}/lib</extdirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
         </plugins>
 
         <resources>
@@ -204,10 +192,10 @@
                 </includes>
             </resource>
             <resource>
-                <targetPath>lib</targetPath>
                 <directory>lib</directory>
+                <targetPath>BOOT-INF/lib/</targetPath>
                 <includes>
-                    <include>*.jar</include>
+                    <include>**/*.jar</include>
                 </includes>
             </resource>
         </resources>
