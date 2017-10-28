@@ -45,6 +45,10 @@ public class CreditApplyEntity implements Serializable{
     private String workAddr; // 客户地址全称
     private String cusWorkDistance; // 客户与业务员距离（单位：米）
 
+    private Long productId; // 产品ID
+    private Long termId; // 期限ID
+    private String creditRemark; // 审核意见
+
     public Long getId() {
         return id;
     }
@@ -251,5 +255,29 @@ public class CreditApplyEntity implements Serializable{
 
     public void setCusWorkDistance(String cusWorkDistance) {
         this.cusWorkDistance = cusWorkDistance;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
+    }
+
+    public String getCreditRemark() {
+        return creditRemark;
+    }
+
+    public void setCreditRemark(String creditRemark) {
+        this.creditRemark = creditRemark;
     }
 }

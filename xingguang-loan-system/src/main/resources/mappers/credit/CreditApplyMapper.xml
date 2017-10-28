@@ -28,6 +28,9 @@
         <result column="work_city_name" property="workCityName" jdbcType="VARCHAR" />
         <result column="work_addr" property="workAddr" jdbcType="VARCHAR" />
         <result column="cus_work_distance" property="cusWorkDistance" jdbcType="VARCHAR" />
+        <result column="product_id" property="productId" jdbcType="BIGINT" />
+        <result column="term_id" property="termId" jdbcType="BIGINT" />
+        <result column="credit_remark" property="creditRemark" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="BaseResultMapCustom" type="com.xingguang.credit.apply.entity.custom.CreditApplyEntityCustom" extends="BaseResultMap">
@@ -65,8 +68,17 @@
             <if test="status != null" >
                 status = #{status,jdbcType=INTEGER},
             </if>
+            <if test="productId != null" >
+                product_id = #{productId,jdbcType=INTEGER},
+            </if>
+            <if test="termId != null" >
+                term_id = #{termId,jdbcType=INTEGER},
+            </if>
             <if test="amount != null" >
                 amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="creditRemark != null" >
+                credit_remark = #{creditRemark,jdbcType=INTEGER},
             </if>
             <if test="creditUserId != null" >
                 credit_user_id = #{creditUserId,jdbcType=BIGINT},

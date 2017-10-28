@@ -19,6 +19,9 @@ public class AuditDomain implements Serializable {
     private Long creditUserId; // 授信操作人ID
     private String creditUserName; // 授信操作人姓名
     private String refuseCode; // 拒代码
+    private Long productId; // 产品ID
+    private Long termId; // 期限ID
+    private String creditRemark; // 审核意见
 
     private Long cusUserId;
 
@@ -86,4 +89,27 @@ public class AuditDomain implements Serializable {
         this.cusUserId = cusUserId;
     }
 
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
+    }
+
+    public String getCreditRemark() {
+        return creditRemark;
+    }
+
+    public void setCreditRemark(String creditRemark) {
+        this.creditRemark = creditRemark;
+    }
 }
