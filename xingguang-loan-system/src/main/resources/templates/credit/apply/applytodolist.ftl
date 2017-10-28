@@ -136,7 +136,7 @@
             pageSize: 10,
             total: ''
         },
-        created : function(){
+        mounted : function(){
             query(this);
         },
         methods : {

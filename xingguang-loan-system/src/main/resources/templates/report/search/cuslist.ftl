@@ -319,12 +319,11 @@
                 return numeral(value).format('0,0.00');
             }
         },
-        created : function(){
+        mounted : function(){
             query(this);
         },
         methods : {
             datePicker : function(){
-                console.log("-----in");
                 $('.date-picker').datepicker({
                     autoclose: true,
                     todayHighlight: true
@@ -400,10 +399,10 @@
                     that.total = result.data.total;
                 }
             }
-            layer.close(idx);
         }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
+        layer.close(idx);
     }
 
     jQuery(function($) {

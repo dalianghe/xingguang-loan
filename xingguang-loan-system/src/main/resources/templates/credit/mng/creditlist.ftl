@@ -218,7 +218,7 @@
                 return numeral(value).format('0,0.00');
             }
         },
-        created : function(){
+        mounted : function(){
             query(this);
         },
         methods : {

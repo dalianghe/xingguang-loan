@@ -203,7 +203,7 @@
             roles: {},
             "roleName" : ""
         },
-        created : function(){
+        mounted : function(){
             var idx = layer.load(2);
             var that=this;
             that.$http.get("/system/roles").then(function(response){
