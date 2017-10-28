@@ -150,9 +150,9 @@
         <dependency>
             <groupId>com.xingguang</groupId>
             <artifactId>gboss_client</artifactId>
-            <version>1.0</version>
+            <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/gboss_client_1.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/gboss_client-1.0.0.jar</systemPath>
         </dependency>
     </dependencies>
 
