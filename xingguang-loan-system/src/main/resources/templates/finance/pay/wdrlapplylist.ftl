@@ -83,6 +83,7 @@
                                         <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
                                         审核时间
                                     </th>
+                                    <th>授信状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -90,7 +91,7 @@
                             <tbody>
                                 <tr v-for="(user,index) in applies">
                                     <td class="center">
-                                        <label class="pos-rel">
+                                        <label class="pos-rel" v-if="user.creditStatus===1">
                                             <input type="checkbox" class="ace" :value="user.id" v-model="checkedIds"/>
                                             <span class="lbl"></span>
                                         </label>
@@ -104,11 +105,15 @@
                                     <td class="hidden-480" v-text="user.createTime"></td>
                                     <td class="hidden-480" v-text="user.auditorTime"></td>
                                     <td>
+                                        <span class="label label-sm label-info" v-if="user.creditStatus===1" v-text="user.creditStatusName"></span>
+                                        <span class="label label-sm label-danger arrowed-in arrowed-in-right" v-if="user.creditStatus!==1" v-text="user.creditStatusName"></span>
+                                    </td>
+                                    <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-success" @click="paypal(user.id)" title="点击放款">
+                                            <button class="btn btn-xs btn-success" v-if="user.creditStatus===1" @click="paypal(user.id)" title="点击放款">
                                                 <i class="ace-icon fa fa-paypal bigger-120"></i>
                                             </button>
-                                            <button class="btn btn-xs btn-danger" @click="stopPaypal(user.id)" title="终止放款">
+                                            <button class="btn btn-xs btn-warning" @click="stopPaypal(user.id)" title="终止放款">
                                                 <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
                                             </button>
                                         </div>
@@ -119,7 +124,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                     <li>
-                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="paypal(user.id)">
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" v-if="user.creditStatus===1" @click="paypal(user.id)">
                                                             <span class="blue">
                                                                 <i class="ace-icon fa fa-paypal bigger-120"></i>
                                                             </span>
@@ -258,6 +263,7 @@
             layer.close(idx);
         }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+            layer.close(idx);
         });
     }
     function pay(obj , msg){

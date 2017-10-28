@@ -13,6 +13,8 @@ import java.io.Serializable;
 public class CreditApplyEntityCustom extends CreditApplyEntity implements Serializable {
 
     private String statusName;
+    private String productName;
+    private String termName;
 
     public String getStatusName() {
         return statusName;
@@ -20,5 +22,21 @@ public class CreditApplyEntityCustom extends CreditApplyEntity implements Serial
 
     public void setStatusName(String statusName) {
         this.statusName = statusName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getTermName() {
+        return termName;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
     }
 }

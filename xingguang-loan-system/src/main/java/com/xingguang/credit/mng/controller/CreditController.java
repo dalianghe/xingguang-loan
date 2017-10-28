@@ -37,4 +37,13 @@ public class CreditController {
         resultBean = new ResultBean<>();
         return resultBean;
     }
+
+    @RequestMapping(value = "/credit/unlock/{id}" , method = RequestMethod.POST)
+    public ResultBean<?> unLockCredit(@PathVariable Long id) throws Exception{
+        ResultBean<?> resultBean = null;
+        creditService.unLockCreditByCusId(id);
+        resultBean = new ResultBean<>();
+        return resultBean;
+    }
+
 }

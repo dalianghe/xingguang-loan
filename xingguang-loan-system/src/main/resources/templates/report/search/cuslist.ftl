@@ -173,10 +173,10 @@
                                     <i class="ace-icon fa fa-cny bigger-110 hidden-480"></i>
                                     授信额度
                                 </th>
-                                <th>
+                                <th class="hidden-480">
                                     批贷产品
                                 </th>
-                                <th>
+                                <th class="hidden-480">
                                     批贷期限
                                 </th>
                                 <th class="hidden-480">
@@ -388,7 +388,6 @@
             "applyDate":that.user.applyDate,"creditDate":that.user.creditDate,"payDate":that.user.payDate,
             "pager":{"page":that.page,"pageSize":that.pageSize}
         };
-        console.log(paramJson);
         axios.get('/search/users', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
@@ -399,10 +398,11 @@
                     that.total = result.data.total;
                 }
             }
+            layer.close(idx);
         }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+            layer.close(idx);
         });
-        layer.close(idx);
     }
 
     jQuery(function($) {
@@ -423,5 +423,4 @@
             window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
         }
     });
-
 </script>

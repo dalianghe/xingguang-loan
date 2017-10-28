@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="/assets/css/bootstrap-datepicker3.min.css" />
+<link rel="stylesheet" href="/assets/css/colorbox.min.css" />
+<link rel="stylesheet" href="/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
     <div class="main-content-inner">
         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
             <ul class="breadcrumb">
@@ -183,7 +185,25 @@
                                 </div>
                             </div>
                             <div id="userfilm" class="tab-pane fade">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                                <div>
+                                    <ul class="ace-thumbnails clearfix">
+                                        <li>
+                                            <a :href="user.realImg1Url" data-rel="colorbox">
+                                                <img width="150" height="150" alt="150x150" :src="user.realImg1Url" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a :href="user.realImg2Url" data-rel="colorbox">
+                                                <img width="150" height="150" alt="150x150" :src="user.realImg2Url" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a :href="user.realImg3Url" data-rel="colorbox">
+                                                <img width="150" height="150" alt="150x150" :src="user.realImg3Url" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
                                 <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
@@ -208,13 +228,23 @@
                                             <div class="profile-user-info profile-user-info-striped">
                                                 <div class="profile-info-row">
                                                     <div class="profile-info-name"> 审核结果 </div>
-                                                    <div class="profile-info-value">
-                                                        {{apply.statusName}}
-                                                    </div>
+                                                    <div class="profile-info-value">{{apply.statusName}}</div>
                                                     <div class="profile-info-name" v-if="apply.status===2"> 授信金额 </div>
                                                     <div class="profile-info-value" v-if="apply.status===2">{{apply.amount}}（元）</div>
                                                     <div class="profile-info-name" v-if="apply.status===3"> 拒贷码 </div>
                                                     <div class="profile-info-value" v-if="apply.status===3">{{apply.refuseCode}}</div>
+                                                </div>
+                                                <div class="profile-info-row" v-if="apply.status===2">
+                                                    <div class="profile-info-name"> 批贷产品 </div>
+                                                    <div class="profile-info-value"> {{apply.productName}} </div>
+                                                    <div class="profile-info-name"> 期限 </div>
+                                                    <div class="profile-info-value"> {{apply.termName}} </div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 审核意见 </div>
+                                                    <div class="profile-info-value"> {{apply.creditRemark}} </div>
+                                                    <div class="profile-info-value"> </div>
+                                                    <div class="profile-info-value"> </div>
                                                 </div>
                                             </div>
                                         </form>
@@ -234,8 +264,8 @@
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
-    <#--<input type="hidden" id="id" name="id" value="${id}"/>-->
     <script src="/js/lib/vue/axios.min.js"></script>
+    <script src="/assets/js/jquery.colorbox.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
             //var userId = $("#id").val().split("&")[0];
@@ -322,5 +352,34 @@
                 window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
             }
         });
-
+        jQuery(function($) {
+            var $overflow = '';
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
+            $(document).one('ajaxloadstart.page', function(e) {
+                $('#colorbox, #cboxOverlay').remove();
+            });
+        })
     </script>

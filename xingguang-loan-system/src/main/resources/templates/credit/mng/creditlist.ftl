@@ -64,7 +64,7 @@
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     申请时间
                                 </th>
-                                <th class="hidden-480">授信状态</th>
+                                <th class="hidden-480">审核状态</th>
                                 <th>
                                     <i class="ace-icon fa fa-cny bigger-110 hidden-480"></i>
                                     授信额度
@@ -73,6 +73,7 @@
                                     <i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>
                                     授信时间
                                 </th>
+                                <th class="hidden-480">授信状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -90,15 +91,22 @@
                                 </td>
                                 <td>{{user.amount | numberFormatFilter}}</td>
                                 <td class="hidden-480">{{user.creditTime}}</td>
+                                <td class="hidden-480">
+                                    <span class="label label-sm label-success" v-if="user.creditStatus===1">{{user.creditStatusName}}</span>
+                                    <span class="label label-sm label-danger  arrowed-in arrowed-in-right" v-if="user.creditStatus===2">{{user.creditStatusName}}</span>
+                                </td>
                                 <td>
                                     <div class="hidden-sm hidden-xs btn-group">
-                                        <button class="btn btn-xs btn-success" title="查看授信历史" data-toggle="modal" data-target="#my-modal" @click="creditHistory(user.id , user.name)">
+                                        <button class="btn btn-xs btn-info" title="查看授信历史" data-toggle="modal" data-target="#my-modal" @click="creditHistory(user.id , user.name)">
                                             <i class="ace-icon fa fa-history bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-sm hidden-xs btn-group" v-if="user.status===2">
-                                        <button class="btn btn-xs btn-danger" @click="lockCredit(user.id)" title="锁定授信额度">
+                                        <button class="btn btn-xs btn-danger" v-if="user.creditStatus===1" @click="lockCredit(user.id)" title="锁定授信额度">
                                             <i class="ace-icon fa fa-lock bigger-120"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-success" v-if="user.creditStatus===2" @click="unLockCredit(user.id)" title="解锁授信额度">
+                                            <i class="ace-icon fa fa-unlock bigger-120"></i>
                                         </button>
                                     </div>
                                     <div class="hidden-md hidden-lg">
@@ -115,9 +123,14 @@
                                                     </a>
                                                 </li>
                                                 <li v-if="user.status===2">
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="lockCredit(user.id)">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" v-if="user.creditStatus===1" @click="lockCredit(user.id)">
                                                     <span class="blue">
                                                         <i class="ace-icon fa fa-lock bigger-120"></i>
+                                                    </span>
+                                                    </a>
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" v-if="user.creditStatus===2" @click="unLockCredit(user.id)">
+                                                    <span class="blue">
+                                                        <i class="ace-icon fa fa-unlock bigger-120"></i>
                                                     </span>
                                                     </a>
                                                 </li>
@@ -154,7 +167,7 @@
                                             <thead class="thin-border-bottom">
                                             <tr>
                                                 <th class="hidden-480"><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>申请时间</th>
-                                                <th>授信状态</th>
+                                                <th>审核状态</th>
                                                 <th>授信额度</th>
                                                 <th><i class="ace-icon fa fa-check-circle-o bigger-110 hidden-480"></i>授信时间</th>
                                                 <th class="hidden-480">操作人</th>
@@ -245,6 +258,25 @@
                 var that = this;
                 layer.confirm('锁定授信客户将无法提现，确认执行该操作？', {icon: 3, title:'系统提示'}, function(index){
                     axios.post('/credit/lock/'+userId).then(function (response) {
+                        var result = response.data;
+                        if(result.sysCode==0){
+                            if(result.bizCode==0){
+                                layer.msg('操作成功！');
+                                query(that);
+                            }else{
+                                layer.alert(result.msg, {icon:2,title:"系统提示"});
+                            }
+                        }
+                    }).catch(function (error) {
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                    });
+                    layer.close(index);
+                });
+            },
+            unLockCredit : function(userId){
+                var that = this;
+                layer.confirm('确认解锁该客户的授信状态？', {icon: 3, title:'系统提示'}, function(index){
+                    axios.post('/credit/unlock/'+userId).then(function (response) {
                         var result = response.data;
                         if(result.sysCode==0){
                             if(result.bizCode==0){

@@ -13,4 +13,6 @@ public interface CreditMapper {
 
     void lockCreditByCusId(Long cusUserId) throws Exception;
 
+    void unLockCreditByCusId(Long cusUserId) throws Exception;
+
 }

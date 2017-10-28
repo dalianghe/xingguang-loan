@@ -24,50 +24,53 @@
 
     <resultMap id="BaseResultMapCustom" type="com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston" extends="BaseResultMap">
         <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+        <result column="credit_status" property="creditStatus" jdbcType="VARCHAR" />
+        <result column="credit_status_name" property="creditStatusName" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, cus_user_id, cus_user_name, bank_card_id, reserve_phone, amount, create_time, status,
-        auditor_id, auditor_name, auditor_time, operator_id, operator_name,
-        issue_time, product_id, term_id, service_charge, acc_mgmt_charge,
-         if(status='10','待审核',if(status='20','审核不通过',if(status=30,'待放款',if(status=40,'已放款',if(status=50,'终止放款','结清'))))) status_name
+        t1.id, t1.cus_user_id, t1.cus_user_name, t1.bank_card_id, t1.reserve_phone, t1.amount, t1.create_time, t1.status,
+        t1.auditor_id, t1.auditor_name, t1.auditor_time, t1.operator_id, t1.operator_name,
+        t1.issue_time, t1.product_id, t1.term_id, t1.service_charge, t1.acc_mgmt_charge,
+         if(t1.status='10','待审核',if(t1.status='20','审核不通过',if(t1.status=30,'待放款',if(t1.status=40,'已放款',if(t1.status=50,'终止放款','结清'))))) status_name
     </sql>
 
     <select id="findAuditApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM wdrl_apply
-        WHERE status = 10
+        FROM wdrl_apply t1
+        WHERE t1.status = 10
         <if test="cusUserName != null" >
-            AND cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
+            AND t1.cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
         </if>
-        ORDER BY create_time
+        ORDER BY t1.create_time desc
     </select>
 
     <select id="findPayApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
         SELECT
-        <include refid="Base_Column_List" />
-        FROM wdrl_apply
-        WHERE status = 30
+        <include refid="Base_Column_List" />,t2.status credit_status,if(t2.status=1,'正常','锁定') credit_status_name
+        FROM wdrl_apply t1
+        INNER JOIN credit_info t2 on t1.cus_user_id = t2.cus_user_id
+        WHERE t1.status = 30
         <if test="cusUserName != null" >
-            AND cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
+            AND t1.cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
         </if>
-        ORDER BY create_time
+        ORDER BY t1.create_time desc
     </select>
 
     <select id="findWdrlApplyById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
         SELECT
         <include refid="Base_Column_List" />
-        FROM wdrl_apply
-        WHERE id = #{id,jdbcType=BIGINT}
+        FROM wdrl_apply t1
+        WHERE t1.id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="findWdrlApplyByCusId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
         SELECT
         <include refid="Base_Column_List" />
-        FROM wdrl_apply
-        WHERE cus_user_id = #{cusUserId,jdbcType=BIGINT}
-        order by create_time desc
+        FROM wdrl_apply t1
+        WHERE t1.cus_user_id = #{cusUserId,jdbcType=BIGINT}
+        order by t1.create_time desc
     </select>
 
     <update id="updateWdrlApply" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity">

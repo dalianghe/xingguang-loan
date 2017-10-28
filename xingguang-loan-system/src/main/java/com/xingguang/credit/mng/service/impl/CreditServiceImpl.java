@@ -39,4 +39,9 @@ public class CreditServiceImpl implements ICreditService {
     public void lockCreditByCusId(Long cusUserId) throws Exception {
         creditMapper.lockCreditByCusId(cusUserId);
     }
+
+    @Override
+    public void unLockCreditByCusId(Long cusUserId) throws Exception {
+        creditMapper.unLockCreditByCusId(cusUserId);
+    }
 }

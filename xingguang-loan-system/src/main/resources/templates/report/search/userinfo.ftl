@@ -1,6 +1,5 @@
 <link rel="stylesheet" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="/assets/css/bootstrap-datepicker3.min.css" />
-
     <div id="userDiv" class="page-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -119,19 +118,19 @@
                         <div>
                             <ul class="ace-thumbnails clearfix">
                                 <li>
-                                    <a :href="user.realImg1Url" data-rel="colorbox">
-                                        <img width="150" height="150" alt="150x150" :src="user.realImg1Url" />
-                                    </a>
+                                    <#--<a :href="user.realImg1Url" data-rel="colorbox">-->
+                                        <img width="255" height="200" alt="150x150" :src="user.realImg1Url" />
+                                    <#--</a>-->
                                 </li>
                                 <li>
-                                    <a :href="user.realImg2Url" data-rel="colorbox">
-                                        <img width="150" height="150" alt="150x150" :src="user.realImg2Url" />
-                                    </a>
+                                    <#--<a :href="user.realImg2Url" data-rel="colorbox">-->
+                                        <img width="255" height="200" alt="150x150" :src="user.realImg2Url" />
+                                    <#--</a>-->
                                 </li>
                                 <li>
-                                    <a :href="user.realImg3Url" data-rel="colorbox">
-                                        <img width="150" height="150" alt="150x150" :src="user.realImg3Url" />
-                                    </a>
+                                    <#--<a :href="user.realImg3Url" data-rel="colorbox">-->
+                                        <img width="255" height="200" alt="150x150" :src="user.realImg3Url" />
+                                    <#--</a>-->
                                 </li>
                             </ul>
                         </div>

@@ -13,4 +13,6 @@ public interface ICreditService {
 
     public void lockCreditByCusId(Long cusUserId) throws Exception;
 
+    public void unLockCreditByCusId(Long cusUserId) throws Exception;
+
 }

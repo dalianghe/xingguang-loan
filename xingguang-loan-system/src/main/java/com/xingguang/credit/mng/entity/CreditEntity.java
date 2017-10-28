@@ -22,6 +22,8 @@ public class CreditEntity implements Serializable {
     private BigDecimal amount;
     @JSONField(format="yyyy-MM-dd")
     private Date creditTime;
+    private Integer creditStatus;
+    private String creditStatusName;
 
     public Long getId() {
         return id;
@@ -93,5 +95,21 @@ public class CreditEntity implements Serializable {
 
     public void setCreditTime(Date creditTime) {
         this.creditTime = creditTime;
+    }
+
+    public Integer getCreditStatus() {
+        return creditStatus;
+    }
+
+    public void setCreditStatus(Integer creditStatus) {
+        this.creditStatus = creditStatus;
+    }
+
+    public String getCreditStatusName() {
+        return creditStatusName;
+    }
+
+    public void setCreditStatusName(String creditStatusName) {
+        this.creditStatusName = creditStatusName;
     }
 }

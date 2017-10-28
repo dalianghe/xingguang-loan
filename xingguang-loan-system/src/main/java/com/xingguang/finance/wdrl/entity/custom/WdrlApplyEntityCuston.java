@@ -10,6 +10,8 @@ import java.io.Serializable;
 public class WdrlApplyEntityCuston extends WdrlApplyEntity implements Serializable {
 
     private String statusName;
+    private Integer creditStatus;
+    private String creditStatusName;
 
     public String getStatusName() {
         return statusName;
@@ -17,5 +19,21 @@ public class WdrlApplyEntityCuston extends WdrlApplyEntity implements Serializab
 
     public void setStatusName(String statusName) {
         this.statusName = statusName;
+    }
+
+    public Integer getCreditStatus() {
+        return creditStatus;
+    }
+
+    public void setCreditStatus(Integer creditStatus) {
+        this.creditStatus = creditStatus;
+    }
+
+    public String getCreditStatusName() {
+        return creditStatusName;
+    }
+
+    public void setCreditStatusName(String creditStatusName) {
+        this.creditStatusName = creditStatusName;
     }
 }
