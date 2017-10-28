@@ -160,7 +160,7 @@
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
                     <compilerArguments>
-                        <extdirs>${project.basedir}/lib/gboss_client_1.0.jar</extdirs>
+                        <extdirs>${project.basedir}/lib</extdirs>
                     </compilerArguments>
                 </configuration>
             </plugin>
@@ -189,7 +189,7 @@
                 <targetPath>lib</targetPath>
                 <directory>lib</directory>
                 <includes>
-                    <include>**/*.jar</include>
+                    <include>*.jar</include>
                 </includes>
             </resource>
         </resources>
