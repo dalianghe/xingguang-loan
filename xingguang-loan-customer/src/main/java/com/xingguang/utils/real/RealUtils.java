@@ -2,12 +2,22 @@ package com.xingguang.utils.real;
 
 import cn.id5.gboss.GbossClient;
 import cn.id5.gboss.GbossConfig;
+import cn.id5.gboss.http.HttpResponseData;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
 
 @Service
 public class RealUtils {
@@ -25,6 +35,9 @@ public class RealUtils {
 
     @Value("${REAL.PASSWORD}")
     private String password;
+
+    @Value("${REAL.PRODUCT_TYPE}")
+    String productType;
 
     private GbossClient client;
 
@@ -49,6 +62,28 @@ public class RealUtils {
 
     public GbossClient getClient(){
         return this.client;
+    }
+
+    public String realByNameAndIdNo(String name, String idNo) throws Exception {
+        HttpResponseData httpdata = this.client.invokeSingle(this.productType, name + "," + idNo);
+        logger.info("实名认证状态------------------>" + httpdata.getStatus());
+        logger.info("实名认证耗时------------------>" + httpdata.getTime());
+        logger.info("实名认证内容------------------>" + httpdata.getData());
+        if (httpdata.getStatus() == HttpStatus.SC_OK) {
+            return  this.parseRealXML(httpdata.getData());
+        }
+        return null;
+    }
+
+    public String parseRealXML(String xml) throws IOException, DocumentException {
+//        Document document = DocumentHelper.parseText(xml);
+        Document document = new SAXReader().read(new StringReader(xml));
+        List list = document.selectNodes("//data/policeCheckInfos/policeCheckInfo/compStatus");
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        Element element = (Element)list.get(0);
+        return element.getText();
     }
 
 }

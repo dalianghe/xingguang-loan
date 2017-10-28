@@ -1,6 +1,5 @@
 package com.xingguang.customer.auth.controller;
 
-import cn.id5.gboss.http.HttpResponseData;
 import com.alibaba.fastjson.JSON;
 import com.xingguang.beans.JWTToken;
 import com.xingguang.beans.ResultBean;
@@ -14,7 +13,7 @@ import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import com.xingguang.utils.oss.OssUtils;
 import com.xingguang.utils.real.RealUtils;
-import org.apache.http.HttpStatus;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,6 @@ public class AuthController {
 
     @Value("${OSS.CUS.REAL}")
     private String realImgPath;
-
-    @Value("${REAL.PRODUCT_TYPE}")
-    String productType;
 
 
     @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
@@ -111,13 +107,9 @@ public class AuthController {
                               @RequestParam("img2") MultipartFile realImg2,
                               @RequestParam("img3") MultipartFile realImg3) throws Exception {
 
-        String param = cusUserInfo.getName() + "," + cusUserInfo.getIdNo();
-        HttpResponseData httpdata = realUtils.getClient().invokeSingle(this.productType, param);
-        logger.info("实名认证状态------------------>" + httpdata.getStatus());
-        logger.info("实名认证耗时------------------>" + httpdata.getTime());
-        logger.info("实名认证内容------------------>" + httpdata.getData());
+        String realStatus = this.realUtils.realByNameAndIdNo(cusUserInfo.getName(), cusUserInfo.getIdNo());
         boolean realFlag = false;
-        if (httpdata.getStatus() == HttpStatus.SC_OK) {
+        if(!StringUtils.isBlank(realStatus) && "3".equals(realStatus.trim())){
             realFlag = true;
         }
         List<MultipartFile> files = new ArrayList(3);
