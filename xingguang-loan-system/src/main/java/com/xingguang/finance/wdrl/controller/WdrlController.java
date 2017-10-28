@@ -3,6 +3,7 @@ package com.xingguang.finance.wdrl.controller;
 import com.alibaba.fastjson.JSON;
 import com.xingguang.common.beans.ResultBean;
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
+import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
 import com.xingguang.finance.wdrl.service.IWdrlApplyService;
 import com.xingguang.system.login.domain.AuthUserDomain;
 import org.apache.shiro.SecurityUtils;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,6 +30,14 @@ public class WdrlController {
         WdrlDomain domain = JSON.parseObject(paramJson,WdrlDomain.class);
         Map<String , Object> applies = wdrlApplyService.findAuditApplyList(domain);
         resultBean = new ResultBean<>(applies);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/finance/wdrl/user/{userId}" , method = RequestMethod.GET)
+    public ResultBean<?> findWdrlApplyByCusId(@PathVariable Long userId) throws Exception{
+        ResultBean<?> resultBean = null;
+        List<WdrlApplyEntityCuston> list = wdrlApplyService.findWdrlApplyByCusId(userId);
+        resultBean = new ResultBean<>(list);
         return resultBean;
     }
 

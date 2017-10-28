@@ -4,6 +4,7 @@ import com.xingguang.finance.wdrl.domain.WdrlDomain;
 import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
 import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,6 +17,8 @@ public interface IWdrlApplyService {
     public Map<String, Object> findPayApplyList(WdrlDomain domain) throws Exception;
 
     public WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
+
+    public List<WdrlApplyEntityCuston> findWdrlApplyByCusId(Long cusUserId) throws Exception;
 
     public void updateWdrlApply(WdrlDomain domain) throws Exception;
 

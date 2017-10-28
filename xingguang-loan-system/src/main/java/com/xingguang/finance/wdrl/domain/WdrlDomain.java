@@ -11,6 +11,7 @@ import java.util.Date;
 public class WdrlDomain extends BaseDomain implements Serializable {
 
     private Long id;
+    private Long cusUserId;
     private Long[] ids;
     private String cusUserName;
     private Integer status;
@@ -23,6 +24,14 @@ public class WdrlDomain extends BaseDomain implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getCusUserId() {
+        return cusUserId;
+    }
+
+    public void setCusUserId(Long cusUserId) {
+        this.cusUserId = cusUserId;
     }
 
     public void setId(Long id) {

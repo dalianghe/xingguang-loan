@@ -23,7 +23,7 @@
     <select id="findUsers" parameterType="com.xingguang.report.search.entity.SearchEntity" resultMap="BaseResultMap">
         select t1.id ,t1.name,t1.phone,t1.id_no,t2.create_time apply_time,t2.status,if(t2.status='1','待授信',if(t2.status='2','授信通过','授信不通过')) status_name,t3.final_amount amount,t2.credit_time,
         t2.product_id,(select name from product_info where id=t2.product_id) product_name,
-        t2.term_id,(select name from product_term_info where id=t2.term_id) term_name,
+        t2.term_id,(select term_name from product_term_info where id=t2.term_id) term_name,
         t3.status credit_status,
         if(t3.status=1,'正常','冻结') credit_status_name
         from cus_user_info t1
@@ -42,18 +42,35 @@
                             </if>
                               GROUP BY cus_user_id) b ON a.id = b.id) t2 on t1.id = t2.cus_user_id
         left join credit_info t3 on t1.id = t3.cus_user_id
+        <if test="wdrlStatus != null" >
+        inner join
+        (select a.id,a.cus_user_id
+        from wdrl_apply a
+        inner join (select max(id) id from wdrl_apply where status=#{wdrlStatus}
+                        group by cus_user_id) b on a.id = b.id) t4 on t1.id = t4.cus_user_id
+        </if>
         where t1.status=20
         <if test="name != null" >
           and t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
         </if>
-        <if test="phone != null" >
+        <if test="phone != null and phone!=''"  >
             and t1.phone = #{phone}
         </if>
-        <if test="idNo != null" >
+        <if test="idNo != null and idNo!=''" >
             and t1.id_no = #{idNo}
         </if>
+        <if test="minAmount == null and maxAmount!=null" >
+            and t3.final_amount &lt;= #{maxAmount}
+        </if>
+        <if test="minAmount != null and maxAmount!=null" >
+            and t3.final_amount &gt;= #{minAmount}
+            and t3.final_amount &lt;= #{maxAmount}
+        </if>
+        <if test="minAmount != null and maxAmount==null" >
+            and t3.final_amount &gt;= #{minAmount}
+        </if>
         <if test="creditStatus != null" >
-            and t3.status = #{creditStatus}
+            and (t3.status = #{creditStatus} or t3.status=null)
         </if>
         order by t2.id desc
     </select>

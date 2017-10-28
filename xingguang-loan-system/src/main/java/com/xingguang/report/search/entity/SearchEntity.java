@@ -23,6 +23,8 @@ public class SearchEntity implements Serializable {
     private Integer status;
     private String statusName;
     private BigDecimal amount;
+    private BigDecimal minAmount;
+    private BigDecimal maxAmount;
     @JSONField(format="yyyy-MM-dd")
     private Date creditTime;
     private Long productId;
@@ -95,6 +97,22 @@ public class SearchEntity implements Serializable {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public BigDecimal getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(BigDecimal minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public BigDecimal getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(BigDecimal maxAmount) {
+        this.maxAmount = maxAmount;
     }
 
     public Date getCreditTime() {

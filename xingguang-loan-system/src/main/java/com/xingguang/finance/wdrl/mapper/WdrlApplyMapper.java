@@ -16,6 +16,8 @@ public interface WdrlApplyMapper {
 
     WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
 
+    List<WdrlApplyEntityCuston> findWdrlApplyByCusId(Long cusUserId) throws Exception;
+
     void updateWdrlApply(WdrlApplyEntity entity) throws Exception;
 
 }

@@ -67,6 +67,11 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     }
 
     @Override
+    public List<WdrlApplyEntityCuston> findWdrlApplyByCusId(Long cusUserId) throws Exception {
+        return wdrlApplyMapper.findWdrlApplyByCusId(cusUserId);
+    }
+
+    @Override
     @Transactional
     public void paypal(WdrlDomain domain) throws Exception {
 
