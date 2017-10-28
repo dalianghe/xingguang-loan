@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.product.term.mapper.ProductTermInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.product.term.entity.ProductTermInfoEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="product_id" property="productId" jdbcType="BIGINT" />
+        <result column="rate" property="rate" jdbcType="DECIMAL" />
+        <result column="term_number" property="termNumber" jdbcType="INTEGER" />
+        <result column="term_name" property="termName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, product_id, rate, term_number, term_name
+    </sql>
+
+    <select id="findTermByProductId" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM product_term_info
+        WHERE product_id = #{productId,jdbcType=BIGINT}
+        ORDER BY term_number ASC
+    </select>
+
+</mapper>

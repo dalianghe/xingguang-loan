@@ -15,6 +15,10 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="work_user_id" property="workUserId" jdbcType="BIGINT" />
         <result column="work_user_name" property="workUserName" jdbcType="VARCHAR" />
+        <result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR" />
+        <result column="real_img1_url" property="realImg1Url" jdbcType="VARCHAR" />
+        <result column="real_img2_url" property="realImg2Url" jdbcType="VARCHAR" />
+        <result column="real_img3_url" property="realImg3Url" jdbcType="VARCHAR" />
     </resultMap>
 
     <resultMap id="BaseResultMapCustom" type="com.xingguang.cus.baseinfo.entity.custom.CusUserInfoEntityCustom" extends="BaseResultMap">
@@ -32,7 +36,8 @@
     <sql id="Base_Column_List" >
         id, phone, name, id_no, real_status, sex, income, education, occupation, create_time,
         work_user_id, work_user_name, t3.label sex_name,if(real_status='1','已实名','未实名') real_status_name,
-        if(status=10,'未提交',if(status=20,'已提交','未知状态')) status_name
+        if(status=10,'未提交',if(status=20,'已提交','未知状态')) status_name,
+        head_img_url,real_img1_url,real_img2_url,real_img3_url
     </sql>
 
     <select id="findCusUserById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >

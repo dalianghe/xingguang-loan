@@ -171,10 +171,10 @@
                     that.total = result.data.total;
                 }
             }
-            layer.close(idx);
         }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
+        layer.close(idx);
     }
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {

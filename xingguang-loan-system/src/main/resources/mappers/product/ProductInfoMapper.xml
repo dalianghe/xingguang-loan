@@ -24,6 +24,12 @@
         create_time, up_time, down_time, if(status='1','待上架',if(status='2','上架','下架')) status_name
     </sql>
 
+    <select id="findProductInfoList" resultMap="BaseResultMapCustom">
+        SELECT <include refid="Base_Column_List" />
+        FROM product_info
+        WHERE status=2
+    </select>
+
     <select id="findProductInfoById" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
         SELECT
         <include refid="Base_Column_List" />

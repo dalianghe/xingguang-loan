@@ -1,5 +1,7 @@
+<link rel="stylesheet" href="/assets/css/colorbox.min.css" />
 <link rel="stylesheet" href="/assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 <link rel="stylesheet" href="/assets/css/bootstrap-datepicker3.min.css" />
+<link rel="stylesheet" href="/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
     <div class="main-content-inner">
         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
             <ul class="breadcrumb">
@@ -183,7 +185,25 @@
                                 </div>
                             </div>
                             <div id="userfilm" class="tab-pane fade">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                                <div>
+                                    <ul class="ace-thumbnails clearfix">
+                                        <li>
+                                            <a :href="user.realImg1Url" data-rel="colorbox">
+                                                <img width="150" height="150" alt="150x150" :src="user.realImg1Url" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a :href="user.realImg2Url" data-rel="colorbox">
+                                                <img width="150" height="150" alt="150x150" :src="user.realImg2Url" />
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a :href="user.realImg3Url" data-rel="colorbox">
+                                                <img width="150" height="150" alt="150x150" :src="user.realImg3Url" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
                                 <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
@@ -207,36 +227,64 @@
                                         <form id="auditForm">
                                             <div class="profile-user-info profile-user-info-striped">
                                                 <div class="profile-info-row">
-                                                <div class="profile-info-name"> 审核结果 </div>
-                                                <div class="profile-info-value">
-                                                    <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
-                                                        <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="2" @click="chooseResult"/>
-                                                            <span class="lbl"> 通过</span>
-                                                        </label>
-                                                        &nbsp;&nbsp;
-                                                        <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="3" @click="chooseResult"/>
-                                                            <span class="lbl"> 不通过</span>
-                                                        </label>
+                                                    <div class="profile-info-name"> 审核结果 </div>
+                                                    <div class="profile-info-value">
+                                                        <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
+                                                            <label>
+                                                                <input name="status" type="radio" class="ace" v-model="audit.status"  value="2" @click="chooseResult"/>
+                                                                <span class="lbl"> 通过</span>
+                                                            </label>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label>
+                                                                <input name="status" type="radio" class="ace" v-model="audit.status" value="3" @click="chooseResult"/>
+                                                                <span class="lbl"> 不通过</span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="profile-info-row" id="amountDiv" style="display: none">
-                                                <div class="profile-info-name"> 授信金额 </div>
-                                                <div class="profile-info-value">
-                                                    <input type="text" id="amount" name="amount" v-model="audit.amount" placeholder="请输入授信金额"/>（元）
+                                                <div class="profile-info-row" id="productDiv" style="display: none">
+                                                    <div class="profile-info-name"> 授信产品 </div>
+                                                    <div class="profile-info-value">
+                                                        <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
+                                                            <label v-for="(product,index) in products">
+                                                                <input name="productId" type="radio" class="ace" v-model="audit.productId" :value="product.id" @click="chooseTerm(product.id)"/>
+                                                                <span class="lbl"> {{product.name}} </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="profile-info-row" id="refuseCodeDiv" style="display: none">
-                                                <div class="profile-info-name"> 拒代码 </div>
-                                                <div class="profile-info-value">
-                                                    <select class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
-                                                        <option disabled value=null>请选择</option>
-                                                        <option v-for="refuse in refuses" :value="refuse.refuseCode">{{refuse.refuseName}}</option>
-                                                    </select>
+                                                <div class="profile-info-row" id="termDiv" style="display: none">
+                                                    <div class="profile-info-name"> 期限 </div>
+                                                    <div class="profile-info-value">
+                                                        <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
+                                                            <label v-for="term in terms">
+                                                                <input name="termId" type="radio" class="ace" v-model="audit.termId"  :value="term.id"/>
+                                                                <span class="lbl"> {{term.termName}} </span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="profile-info-row" id="amountDiv" style="display: none">
+                                                    <div class="profile-info-name"> 授信金额 </div>
+                                                    <div class="profile-info-value">
+                                                        <input type="text" id="amount" name="amount" v-model="audit.amount" placeholder="请输入授信金额"/>（元）
+                                                    </div>
+                                                </div>
+                                                <div class="profile-info-row" id="refuseCodeDiv" style="display: none">
+                                                    <div class="profile-info-name"> 拒贷码 </div>
+                                                    <div class="profile-info-value">
+                                                        <select class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
+                                                            <option disabled value=null>请选择</option>
+                                                            <option v-for="refuse in refuses" :value="refuse.refuseCode">{{refuse.refuseName}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-info-row">
+                                                    <div class="profile-info-name"> 审核意见 </div>
+                                                    <div class="profile-info-value">
+                                                        <textarea class="form-control" id="form-field-4" placeholder="请录入审核意见" v-model="audit.creditRemark"></textarea>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -259,27 +307,26 @@
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
-    <#--<input type="hidden" id="id" name="id" value="${id}"/>-->
     <script src="/js/lib/vue/axios.min.js"></script>
+    <script src="/assets/js/jquery.colorbox.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
-            //var userId = $("#id").val().split("&")[0];
             return axios.get("/cus/user/${userId}");
         }
         function getCusUserLink() {
-            //var userId = $("#id").val().split("&")[0];
             return axios.get('/cus/link/${userId}');
         }
         function getWorkUserInfo() {
-            //var userId = $("#id").val().split("&")[0];
             return axios.get("/work/cus/${userId}");
         }
         function getCreditApplyInfo() {
-            //var applyId = $("#id").val().split("&")[1];
             return axios.get("/credit/apply/${applyId}");
         }
         function getCodeResuse() {
             return axios.get("/code/refuse",{params:{"id":0}});
+        }
+        function getProductList() {
+            return axios.get("/product/list");
         }
 
         var app = new Vue({
@@ -290,18 +337,24 @@
                 worker : {},
                 apply : {},
                 refuses : {},
+                products : {},
+                terms : {},
                 audit : {
                     id : "",
                     cusUserId : "",
                     status : "",
                     amount : "",
-                    refuseCode : null
+                    refuseCode : null,
+                    productId : null,
+                    termId : null,
+                    creditRemark : ""
                 }
             },
             created : function(){
                 var that=this;
-                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo(), getCodeResuse()])
-                        .then(axios.spread(function (cusUser, cusLink, worker, apply, refuses) {
+                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(),
+                              getCreditApplyInfo(), getCodeResuse(), getProductList()])
+                        .then(axios.spread(function (cusUser, cusLink, worker, apply, refuses, products) {
                     var user = cusUser.data;
                     if(user.sysCode==0){
                         if(user.bizCode==0){
@@ -332,6 +385,12 @@
                             that.refuses = refuses.data;
                         }
                     }
+                    var products = products.data;
+                    if(products.sysCode==0){
+                        if(products.bizCode==0){
+                            that.products = products.data;
+                        }
+                    }
                 }));
             },
             methods : {
@@ -340,12 +399,35 @@
                     if(result==3){
                         $("#refuseCodeDiv").show();
                         $("#amountDiv").hide();
+                        $("#productDiv").hide();
+                        $("#termDiv").hide();
                         this.audit.amount = null;
+                        this.audit.productId = null;
+                        this.audit.termId = null;
+                        $('input:radio[name="productId"]').attr("checked",false);
+                        $('input:radio[name="termId"]').attr("checked",false);
                     }else{
                         $("#refuseCodeDiv").hide();
                         $("#amountDiv").show();
+                        $("#productDiv").show();
                         this.audit.refuseCode = null;
                     }
+                },
+                chooseTerm : function(productId){
+                    var that = this;
+                    var idx = layer.load(2);
+                    axios.get('/product/terms/'+productId).then(function (response) {
+                        var result = response.data;
+                        if(result.sysCode==0){
+                            if(result.bizCode==0){
+                                that.terms = result.data;
+                                $("#termDiv").show();
+                            }
+                        }
+                    }).catch(function (error) {
+                        layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+                    });
+                    layer.close(idx);
                 },
                 auditCredit : function(){
                     this.audit.cusUserId = "${userId}";
@@ -373,5 +455,35 @@
             var formData = app.audit;
             return axios.post('/credit/audit' , formData);
         }
-
+        jQuery(function($) {
+            var $overflow = '';
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
+                },
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
+                },
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
+            $(document).one('ajaxloadstart.page', function(e) {
+                $('#colorbox, #cboxOverlay').remove();
+            });
+        })
     </script>
+

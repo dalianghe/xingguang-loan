@@ -24,6 +24,10 @@ public class CusUserInfoEntity implements Serializable {
     private Date createTime;
     private Long workUserId;
     private String workUserName;
+    private String headImgUrl;
+    private String realImg1Url;
+    private String realImg2Url;
+    private String realImg3Url;
 
     public Long getId() {
         return id;
@@ -127,5 +131,37 @@ public class CusUserInfoEntity implements Serializable {
 
     public void setWorkUserName(String workUserName) {
         this.workUserName = workUserName;
+    }
+
+    public String getHeadImgUrl() {
+        return headImgUrl;
+    }
+
+    public void setHeadImgUrl(String headImgUrl) {
+        this.headImgUrl = headImgUrl;
+    }
+
+    public String getRealImg1Url() {
+        return realImg1Url;
+    }
+
+    public void setRealImg1Url(String realImg1Url) {
+        this.realImg1Url = realImg1Url;
+    }
+
+    public String getRealImg2Url() {
+        return realImg2Url;
+    }
+
+    public void setRealImg2Url(String realImg2Url) {
+        this.realImg2Url = realImg2Url;
+    }
+
+    public String getRealImg3Url() {
+        return realImg3Url;
+    }
+
+    public void setRealImg3Url(String realImg3Url) {
+        this.realImg3Url = realImg3Url;
     }
 }
