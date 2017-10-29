@@ -2,6 +2,7 @@ package com.xingguang.finance.wdrl.service;
 
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
 import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
+import com.xingguang.finance.wdrl.entity.custom.ApplyAndPlanEntityCustom;
 import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
 
 import java.util.List;
@@ -25,5 +26,7 @@ public interface IWdrlApplyService {
     public void paypal(WdrlDomain domain) throws Exception;
 
     public void stopPaypal(WdrlDomain domain) throws Exception;
+
+    public ApplyAndPlanEntityCustom viewPlanAndCharge(Long id) throws Exception;
 
 }

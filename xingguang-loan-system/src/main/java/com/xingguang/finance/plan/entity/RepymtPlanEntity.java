@@ -1,5 +1,7 @@
 package com.xingguang.finance.plan.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,9 +14,12 @@ public class RepymtPlanEntity implements Serializable {
     private Long id;
     private Long wdrlId; // 提款ID
     private Long cusUserId; // 客户ID
+    private Integer term; // 期数
     private BigDecimal principal; // 本金
     private BigDecimal interest; // 利息
+    @JSONField(format="yyyy-MM-dd")
     private Date planDate; // 计划还款日期
+    @JSONField(format="yyyy-MM-dd")
     private Date actualDate; // 实际还款日期
     private BigDecimal penalty; // 罚息
     private Integer overdueDays; // 逾期天数
@@ -43,6 +48,14 @@ public class RepymtPlanEntity implements Serializable {
 
     public void setCusUserId(Long cusUserId) {
         this.cusUserId = cusUserId;
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
     }
 
     public BigDecimal getPrincipal() {

@@ -110,7 +110,7 @@
                                     </td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-success" v-if="user.creditStatus===1" @click="paypal(user.id)" title="点击放款">
+                                            <button class="btn btn-xs btn-success" v-if="user.creditStatus===1" @click="viewPaypal(user.id)" title="点击放款" data-toggle="modal" data-target="#plan-modal">
                                                 <i class="ace-icon fa fa-paypal bigger-120"></i>
                                             </button>
                                             <button class="btn btn-xs btn-warning" @click="stopPaypal(user.id)" title="终止放款">
@@ -149,6 +149,13 @@
 
             </div><!-- /.col -->
         </div><!-- /.row -->
+        <!-- view repayment plan -->
+        <div id="plan-modal" class="modal fade " tabindex="1" role="dialog">
+            <div class="modal-dialog">
+                <div id="plan-content" class="modal-content">
+                </div>
+            </div>
+        </div>
 
         <div class="wrap pages pa-cen clearfix" id="wrap">
             <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
@@ -159,6 +166,7 @@
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
+<script src="/js/utils/numeral.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {
@@ -214,6 +222,13 @@
                     return;
                 }
                 pay(that,'确认执行批量放款操作？');
+            },
+            viewPaypal : function(applyId){
+                var that = this;
+                that.checkedIds.push(applyId);
+                var paramJson = {"applyId":applyId};
+                var param = {"paramJson":JSON.stringify(paramJson)};
+                $("#plan-content").load("/router/finance/pay/viewplan" , param );
             },
             paypal : function(applyId){
                 var that = this;

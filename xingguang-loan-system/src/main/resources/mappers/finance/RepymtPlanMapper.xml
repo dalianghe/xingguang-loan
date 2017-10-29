@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.finance.plan.mapper.RepymtPlanMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.finance.plan.entity.RepymtPlanEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="wdrl_id" property="wdrlId" jdbcType="BIGINT" />
+        <result column="cus_user_id" property="cusUserId" jdbcType="BIGINT" />
+        <result column="term" property="term" jdbcType="INTEGER" />
+        <result column="principal" property="principal" jdbcType="DECIMAL" />
+        <result column="interest" property="interest" jdbcType="DECIMAL" />
+        <result column="plan_date" property="planDate" jdbcType="DATE" />
+        <result column="actual_date" property="actualDate" jdbcType="DATE" />
+        <result column="penalty" property="penalty" jdbcType="DECIMAL" />
+        <result column="overdue_days" property="overdueDays" jdbcType="INTEGER" />
+        <result column="stauts" property="stauts" jdbcType="INTEGER" />
+        <result column="repymt_apply_id" property="repymtApplyId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.finance.plan.entity.custom.RepymtPlanEntityCustom" extends="BaseResultMap">
+        <result column="status_name" property="statusName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        t1.id, t1.wdrl_id, t1.cus_user_id, term, t1.principal, t1.interest, t1.plan_date, t1.actual_date, t1.penalty,
+        t1.overdue_days, t1.stauts, t1.repymt_apply_id,
+         if(t1.status='10','未还款',if(t1.status='20','已逾期',if(t1.status=30,'已还款',if(t1.status=40,'逾期还款','未知状态')))) status_name
+    </sql>
+
+    <delete id="deleteRepymtPlanByWdrlId" parameterType="java.lang.Long">
+        DELETE FROM repymt_plan WHERE wdrl_id = #{wdrlId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertRepymtPlan" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO repymt_plan
+        (wdrl_id, cus_user_id, term, principal, interest, plan_date, stauts)
+        VALUES
+        <foreach collection="list" index="index" item="plan" separator=",">
+            (
+            #{plan.wdrlId}, #{plan.cusUserId}, #{plan.term}, #{plan.principal}, #{plan.interest}, #{plan.planDate}, #{plan.stauts}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

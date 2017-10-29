@@ -4,6 +4,8 @@
     <resultMap id="BaseResultMap" type="com.xingguang.credit.info.entity.CreditInfoEntity" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="cus_user_id" property="cusUserId" jdbcType="BIGINT" />
+        <result column="product_id" property="productId" jdbcType="BIGINT" />
+        <result column="term_id" property="termId" jdbcType="BIGINT" />
         <result column="final_amount" property="finalAmount" jdbcType="DECIMAL" />
         <result column="unused_amount" property="unusedAmount" jdbcType="DECIMAL" />
         <result column="used_amount" property="usedAmount" jdbcType="DECIMAL" />
@@ -16,8 +18,8 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, cus_user_id, final_amount, unused_amount, used_amount, credit_time, status,
-        if(status='1','正常','锁定') sex_name
+        id, cus_user_id, product_id, term_id, final_amount, unused_amount, used_amount, credit_time, status,
+        if(status='1','正常','锁定') status_name
     </sql>
 
     <select id="findCreditInfoByCusId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
@@ -29,17 +31,23 @@
 
     <insert id="insertCreditInfo" parameterType="com.xingguang.credit.info.entity.CreditInfoEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO credit_info (
-        cus_user_id, final_amount, unused_amount, used_amount, credit_time
+        cus_user_id, product_id, term_id, final_amount, unused_amount, used_amount, credit_time
         )
         VALUES (
-        #{cusUserId,jdbcType=BIGINT}, #{finalAmount,jdbcType=DECIMAL}, #{unusedAmount,jdbcType=DECIMAL},
-        #{usedAmount,jdbcType=DECIMAL},  #{creditTime,jdbcType=TIMESTAMP}
+        #{cusUserId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{termId,jdbcType=BIGINT}, #{finalAmount,jdbcType=DECIMAL},
+        #{unusedAmount,jdbcType=DECIMAL}, #{usedAmount,jdbcType=DECIMAL},  #{creditTime,jdbcType=TIMESTAMP}
         )
     </insert>
 
     <update id="updateCusCreditInfo" parameterType="com.xingguang.credit.info.entity.CreditInfoEntity" >
         UPDATE credit_info
          <set>
+             <if test="productId != null" >
+                 product_id = #{productId,jdbcType=DECIMAL},
+             </if>
+             <if test="termId != null" >
+                 term_id = #{termId,jdbcType=DECIMAL},
+             </if>
              <if test="finalAmount != null" >
                  final_amount = #{finalAmount,jdbcType=DECIMAL},
              </if>

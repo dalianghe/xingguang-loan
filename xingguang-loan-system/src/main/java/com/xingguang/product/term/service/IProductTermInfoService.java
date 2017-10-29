@@ -11,4 +11,5 @@ public interface IProductTermInfoService {
 
     public List<ProductTermInfoEntity> findTermByProductId(Long productId) throws Exception;
 
+    public ProductTermInfoEntity findTermById(Long id) throws Exception;
 }

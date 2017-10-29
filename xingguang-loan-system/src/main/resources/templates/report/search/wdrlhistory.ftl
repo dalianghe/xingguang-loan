@@ -1,7 +1,7 @@
 <div id="wdrlDiv">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 class="smaller lighter blue no-margin">授信记录</h3>
+        <h3 class="smaller lighter blue no-margin">提现记录</h3>
     </div>
     <div class="modal-body">
             <div class="widget-box widget-color-blue" id="widget-box-2">
@@ -62,7 +62,7 @@
                     return numeral(value).format('0,0.00');
                 }
             },
-            created : function(){
+            mounted : function(){
                 var that = this;
                 that.historyName = "${name}";
                 axios.get('/finance/wdrl/user/${userId}').then(function (response) {

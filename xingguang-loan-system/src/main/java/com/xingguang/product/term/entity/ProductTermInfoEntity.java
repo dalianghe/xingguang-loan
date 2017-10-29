@@ -12,6 +12,7 @@ public class ProductTermInfoEntity implements Serializable {
     private Long productId;
     private BigDecimal rate;
     private Integer termNumber;
+    private Integer termDays;
     private String termName;
 
     public Long getId() {
@@ -44,6 +45,14 @@ public class ProductTermInfoEntity implements Serializable {
 
     public void setTermNumber(Integer termNumber) {
         this.termNumber = termNumber;
+    }
+
+    public Integer getTermDays() {
+        return termDays;
+    }
+
+    public void setTermDays(Integer termDays) {
+        this.termDays = termDays;
     }
 
     public String getTermName() {

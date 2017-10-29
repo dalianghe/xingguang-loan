@@ -58,7 +58,7 @@
                     return numeral(value).format('0,0.00');
                 }
             },
-            created : function(){
+            mounted : function(){
                 var that = this;
                 that.historyName = "${name}";
                 axios.get('/credit/apply/cus/${userId}').then(function (response) {

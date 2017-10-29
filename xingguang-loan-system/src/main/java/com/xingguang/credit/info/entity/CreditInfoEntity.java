@@ -13,7 +13,9 @@ import java.util.Date;
 public class CreditInfoEntity implements Serializable {
 
     private Long id;
-    private Long cusUserId;
+    private Long cusUserId; // 客户ID
+    private Long productId; // 产品ID
+    private Long termId; // 期限ID
     private BigDecimal finalAmount; // 授信金额
     private BigDecimal unusedAmount; // 可用额度
     private BigDecimal usedAmount; // 已用额度
@@ -34,6 +36,22 @@ public class CreditInfoEntity implements Serializable {
 
     public void setCusUserId(Long cusUserId) {
         this.cusUserId = cusUserId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
     }
 
     public BigDecimal getFinalAmount() {

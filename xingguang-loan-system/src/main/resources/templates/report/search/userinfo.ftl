@@ -160,7 +160,7 @@
             user: "",
             link:""
         },
-        created : function(){
+        mounted : function(){
             var that=this;
             axios.all([getCusUserInfo(), getCusUserLink()]).then(axios.spread(function (cusUser, cusLink) {
                 var user = cusUser.data;

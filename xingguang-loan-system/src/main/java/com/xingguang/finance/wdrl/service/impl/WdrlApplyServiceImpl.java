@@ -2,22 +2,27 @@ package com.xingguang.finance.wdrl.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xingguang.finance.plan.entity.RepymtPlanEntity;
+import com.xingguang.finance.plan.service.IRepymtPlanService;
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
 import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
+import com.xingguang.finance.wdrl.entity.custom.ApplyAndPlanEntityCustom;
 import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
 import com.xingguang.finance.wdrl.mapper.WdrlApplyMapper;
 import com.xingguang.finance.wdrl.service.IWdrlApplyService;
 import com.xingguang.product.info.entity.custom.ProductInfoEntityCustom;
 import com.xingguang.product.info.mapper.ProductInfoMapper;
+import com.xingguang.product.info.service.IProductInfoService;
+import com.xingguang.product.term.entity.ProductTermInfoEntity;
+import com.xingguang.product.term.service.IProductTermInfoService;
+import com.xingguang.utils.FinanceUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by admin on 2017/10/15.
@@ -28,7 +33,11 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     @Autowired
     private WdrlApplyMapper wdrlApplyMapper;
     @Autowired
-    private ProductInfoMapper productInfoMapper;
+    private IProductInfoService productInfoService;
+    @Autowired
+    private IProductTermInfoService productTermInfoService;
+    @Autowired
+    private IRepymtPlanService repymtPlanService;
 
     @Override
     public Map<String, Object> findAuditApplyList(WdrlDomain domain) throws Exception {
@@ -82,21 +91,57 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
                 throw new Exception("无付款记录！");
             }
             // step 1: 计算服务费和账户管理费
-            ProductInfoEntityCustom product = productInfoMapper.findProductInfoById(applyEntity.getProductId());
-            // 计算服务费
-            BigDecimal serviceCharge = applyEntity.getAmount().multiply(product.getServiceRate());
-            // 计算账户管理费
-            BigDecimal accMgmtCharge = applyEntity.getAmount().multiply(product.getAccMgmtRate());
+            ProductInfoEntityCustom product = productInfoService.findProductInfoById(applyEntity.getProductId());
+            BigDecimal serviceCharge = FinanceUtils.getServiceCharge(applyEntity.getAmount() , product.getServiceRate());
+            BigDecimal accMgmtCharge = FinanceUtils.getAccMgmtCharge(applyEntity.getAmount() , product.getAccMgmtRate());
             // step 2: 生成还款计划
-
+            List<RepymtPlanEntity> list = new ArrayList<>();
+            ProductTermInfoEntity termInfoEntity = productTermInfoService.findTermById(applyEntity.getTermId());
+            for(int i=0 ; i<termInfoEntity.getTermNumber() ; i++){
+                RepymtPlanEntity planEntity = new RepymtPlanEntity();
+                planEntity.setWdrlId(applyEntity.getId());
+                planEntity.setCusUserId(applyEntity.getCusUserId());
+                planEntity.setTerm(i+1);
+                planEntity.setPrincipal(FinanceUtils.getPrincipalAmount(applyEntity.getAmount() , termInfoEntity.getTermNumber()));
+                planEntity.setInterest(FinanceUtils.getInterestAmount(applyEntity.getAmount() , termInfoEntity.getRate() , termInfoEntity.getTermDays()));
+                planEntity.setPlanDate(FinanceUtils.getPlanRepymtDate(domain.getIssueTime() , termInfoEntity.getTermDays()));
+                list.add(planEntity);
+            }
+            repymtPlanService.addRepymtPlan(applyEntity.getId() , list);
             // step 3: 更新提现记录表
             WdrlApplyEntity entity = new WdrlApplyEntity();
             BeanUtils.copyProperties(domain,entity);
-            entity.setServiceCharge(serviceCharge.setScale(2 , BigDecimal.ROUND_HALF_UP));
-            entity.setAccMgmtCharge(accMgmtCharge.setScale(2 , BigDecimal.ROUND_HALF_UP));
+            entity.setServiceCharge(serviceCharge);
+            entity.setAccMgmtCharge(accMgmtCharge);
             wdrlApplyMapper.updateWdrlApply(entity);
         }
 
+    }
+
+    @Override
+    public ApplyAndPlanEntityCustom viewPlanAndCharge(Long id) throws Exception {
+        ApplyAndPlanEntityCustom entity = new ApplyAndPlanEntityCustom();
+        WdrlApplyEntityCuston applyEntity = this.findWdrlApplyById(id);
+        if(null == applyEntity){
+            throw new Exception("无付款记录！");
+        }
+        ProductInfoEntityCustom product = productInfoService.findProductInfoById(applyEntity.getProductId());
+        BigDecimal serviceCharge = FinanceUtils.getServiceCharge(applyEntity.getAmount() , product.getServiceRate());
+        List<RepymtPlanEntity> list = new ArrayList<>();
+        ProductTermInfoEntity termInfoEntity = productTermInfoService.findTermById(applyEntity.getTermId());
+        for(int i=0 ; i<termInfoEntity.getTermNumber() ; i++){
+            RepymtPlanEntity planEntity = new RepymtPlanEntity();
+            planEntity.setWdrlId(applyEntity.getId());
+            planEntity.setCusUserId(applyEntity.getCusUserId());
+            planEntity.setTerm(i+1);
+            planEntity.setPrincipal(FinanceUtils.getPrincipalAmount(applyEntity.getAmount() , termInfoEntity.getTermNumber()));
+            planEntity.setInterest(FinanceUtils.getInterestAmount(applyEntity.getAmount() , termInfoEntity.getRate() , termInfoEntity.getTermDays()));
+            planEntity.setPlanDate(FinanceUtils.getPlanRepymtDate(new Date(), termInfoEntity.getTermDays()));
+            list.add(planEntity);
+        }
+        entity.setServiceCharge(serviceCharge);
+        entity.setPlans(list);
+        return entity;
     }
 
     @Override

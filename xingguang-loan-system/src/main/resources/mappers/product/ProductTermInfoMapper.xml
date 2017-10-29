@@ -6,12 +6,20 @@
         <result column="product_id" property="productId" jdbcType="BIGINT" />
         <result column="rate" property="rate" jdbcType="DECIMAL" />
         <result column="term_number" property="termNumber" jdbcType="INTEGER" />
+        <result column="term_days" property="termDays" jdbcType="INTEGER" />
         <result column="term_name" property="termName" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, product_id, rate, term_number, term_name
+        id, product_id, rate, term_number, term_days, term_name
     </sql>
+
+    <select id="findTermById" parameterType="java.lang.Long" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM product_term_info
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
 
     <select id="findTermByProductId" parameterType="java.lang.Long" resultMap="BaseResultMap" >
         SELECT

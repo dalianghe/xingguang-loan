@@ -11,4 +11,5 @@ public interface ProductTermInfoMapper {
 
     List<ProductTermInfoEntity> findTermByProductId(Long productId) throws Exception;
 
+    ProductTermInfoEntity findTermById(Long id) throws Exception;
 }

@@ -21,4 +21,9 @@ public class ProductTermInfoServiceImpl implements IProductTermInfoService {
     public List<ProductTermInfoEntity> findTermByProductId(Long productId) throws Exception {
         return productTermInfoMapper.findTermByProductId(productId);
     }
+
+    @Override
+    public ProductTermInfoEntity findTermById(Long id) throws Exception {
+        return productTermInfoMapper.findTermById(id);
+    }
 }

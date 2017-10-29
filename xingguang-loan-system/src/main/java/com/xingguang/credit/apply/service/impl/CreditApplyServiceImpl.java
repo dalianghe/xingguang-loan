@@ -53,12 +53,16 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
             if(entity == null){
                 entity = new CreditInfoEntityCustom();
                 entity.setCusUserId(domain.getCusUserId());
+                entity.setProductId(domain.getProductId());
+                entity.setTermId(domain.getTermId());
                 entity.setFinalAmount(domain.getAmount());
                 entity.setUnusedAmount(domain.getAmount());
                 entity.setCreditTime(new Date());
                 creditInfoService.insertCreditInfo(entity);
             }else{
                 entity.setCusUserId(domain.getCusUserId());
+                entity.setProductId(domain.getProductId());
+                entity.setTermId(domain.getTermId());
                 entity.setFinalAmount(domain.getAmount());
                 BigDecimal finalAmount = domain.getAmount()==null ? BigDecimal.ZERO : domain.getAmount();
                 BigDecimal usedAmount = entity.getUsedAmount()==null ? BigDecimal.ZERO : entity.getUsedAmount();

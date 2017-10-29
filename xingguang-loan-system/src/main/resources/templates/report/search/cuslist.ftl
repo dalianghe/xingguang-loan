@@ -233,7 +233,7 @@
                                                     </a>
                                                 </li>
                                                 <li v-if="user.status===2">
-                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="">
+                                                    <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="wdrlHistory(user.id , user.name)">
                                                     <span class="blue">
                                                         <i class="ace-icon fa fa-lock bigger-120"></i>
                                                     </span>
