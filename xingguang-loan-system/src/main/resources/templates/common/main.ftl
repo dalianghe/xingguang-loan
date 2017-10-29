@@ -4,15 +4,15 @@
             <ul class="breadcrumb">
                 <li>
                     <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="#">Home</a>
+                    <a href="#">控制台</a>
                 </li>
-                <li class="active">Dashboard</li>
+                <li class="active">仪表盘</li>
             </ul><!-- /.breadcrumb -->
 
             <div class="nav-search" id="nav-search">
                 <form class="form-search">
                                     <span class="input-icon">
-                                        <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                                        <input type="text" placeholder="百度搜索 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
                                         <i class="ace-icon fa fa-search nav-search-icon"></i>
                                     </span>
                 </form>
@@ -22,10 +22,9 @@
         <div class="page-content">
             <div class="page-header">
                 <h1>
-                    Dashboard
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
-                        overview &amp; stats
+                        仪表盘
                     </small>
                 </h1>
             </div><!-- /.page-header -->
@@ -39,13 +38,13 @@
                         </button>
 
                         <i class="ace-icon fa fa-check green"></i>
-
-                        Welcome to
+                        欢迎您！
                         <strong class="green">
-                            Ace
-                            <small>(v1.4)</small>
+                            <@shiro.user>
+                                <@shiro.principal property="userName"/>
+                            </@shiro.user>
                         </strong>,
-                        лёгкий, многофункциональный и простой в использовании шаблон для админки на bootstrap 3.3.6. Загрузить исходники с <a href="https://github.com/bopoda/ace">github</a> (with minified ace js/css files).
+                        您已登录星光钱包运营管理平台，在此您可以一站式完成您的工作！
                     </div>
 
                     <div class="row">
@@ -622,6 +621,11 @@
     $(this).addClass('dropup');
     else $(this).removeClass('dropup');
     });
-
     })
+    $('#nav-search-input').bind('keypress', function(event) {
+        if (event.keyCode == "13") {
+            event.preventDefault();
+            window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
+        }
+    });
 </script>

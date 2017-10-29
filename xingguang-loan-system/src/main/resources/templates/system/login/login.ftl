@@ -334,7 +334,15 @@
                 $("#loginButton").on("click",function(e){
                     login();
                 });
+                $('#loginButton').bind('keypress', function(event) {
+                    if (event.keyCode == "13") {
+                        event.preventDefault();
+                        login();
+                    }
+                });
             });
+
+
 
             jQuery(function($) {
                 $(document).on('click', '.toolbar a[data-target]', function(e) {
@@ -368,6 +376,7 @@
                     e.preventDefault();
                 });
             });
+
         </script>
     </body>
 </html>

@@ -18,7 +18,7 @@
             <div class="nav-search" id="nav-search">
                 <form class="form-search">
 				<span class="input-icon">
-					<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+					<input type="text" placeholder="百度搜索 ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
 					<i class="ace-icon fa fa-search nav-search-icon"></i>
 				</span>
                 </form>
@@ -485,5 +485,11 @@
                 $('#colorbox, #cboxOverlay').remove();
             });
         })
+        $('#nav-search-input').bind('keypress', function(event) {
+            if (event.keyCode == "13") {
+                event.preventDefault();
+                window.open("http://www.baidu.com/s?wd="+$('#nav-search-input').val());
+            }
+        });
     </script>
 
