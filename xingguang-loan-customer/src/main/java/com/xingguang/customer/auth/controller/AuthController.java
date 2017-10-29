@@ -109,7 +109,7 @@ public class AuthController {
 
         String realStatus = this.realUtils.realByNameAndIdNo(cusUserInfo.getName(), cusUserInfo.getIdNo());
         boolean realFlag = false;
-        if(!StringUtils.isBlank(realStatus) && "3".equals(realStatus.trim())){
+        if (!StringUtils.isBlank(realStatus) && "3".equals(realStatus.trim())) {
             realFlag = true;
         }
         List<MultipartFile> files = new ArrayList(3);
