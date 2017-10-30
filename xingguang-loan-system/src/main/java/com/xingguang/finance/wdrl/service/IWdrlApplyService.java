@@ -1,9 +1,8 @@
 package com.xingguang.finance.wdrl.service;
 
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
-import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
 import com.xingguang.finance.wdrl.entity.custom.ApplyAndPlanEntityCustom;
-import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
+import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCustom;
 
 import java.util.List;
 import java.util.Map;
@@ -17,9 +16,11 @@ public interface IWdrlApplyService {
 
     public Map<String, Object> findPayApplyList(WdrlDomain domain) throws Exception;
 
-    public WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
+    public Map<String, Object> findPayDoneList(WdrlDomain domain) throws Exception;
 
-    public List<WdrlApplyEntityCuston> findWdrlApplyByCusId(Long cusUserId) throws Exception;
+    public WdrlApplyEntityCustom findWdrlApplyById(Long id) throws Exception;
+
+    public List<WdrlApplyEntityCustom> findWdrlApplyByCusId(Long cusUserId) throws Exception;
 
     public void updateWdrlApply(WdrlDomain domain) throws Exception;
 

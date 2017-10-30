@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.xingguang.common.beans.ResultBean;
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
 import com.xingguang.finance.wdrl.entity.custom.ApplyAndPlanEntityCustom;
-import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
+import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCustom;
 import com.xingguang.finance.wdrl.service.IWdrlApplyService;
 import com.xingguang.system.login.domain.AuthUserDomain;
 import org.apache.shiro.SecurityUtils;
@@ -37,7 +37,7 @@ public class WdrlController {
     @RequestMapping(value = "/finance/wdrl/user/{userId}" , method = RequestMethod.GET)
     public ResultBean<?> findWdrlApplyByCusId(@PathVariable Long userId) throws Exception{
         ResultBean<?> resultBean = null;
-        List<WdrlApplyEntityCuston> list = wdrlApplyService.findWdrlApplyByCusId(userId);
+        List<WdrlApplyEntityCustom> list = wdrlApplyService.findWdrlApplyByCusId(userId);
         resultBean = new ResultBean<>(list);
         return resultBean;
     }
@@ -60,6 +60,15 @@ public class WdrlController {
         ResultBean<?> resultBean = null;
         WdrlDomain domain = JSON.parseObject(paramJson,WdrlDomain.class);
         Map<String , Object> applies = wdrlApplyService.findPayApplyList(domain);
+        resultBean = new ResultBean<>(applies);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/finance/done/applies" , method = RequestMethod.GET)
+    public ResultBean<?> findPayDoneList(String paramJson) throws Exception{
+        ResultBean<?> resultBean = null;
+        WdrlDomain domain = JSON.parseObject(paramJson,WdrlDomain.class);
+        Map<String , Object> applies = wdrlApplyService.findPayDoneList(domain);
         resultBean = new ResultBean<>(applies);
         return resultBean;
     }

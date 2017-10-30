@@ -97,8 +97,8 @@
                                         </label>
                                     </td>
                                     <td v-text="user.cusUserName"></td>
-                                    <td class="hidden-480" v-text="user.productId"></td>
-                                    <td class="hidden-480" v-text="user.termId"></td>
+                                    <td class="hidden-480" v-text="user.productName"></td>
+                                    <td class="hidden-480" v-text="user.termName"></td>
                                     <td v-text="user.amount"></td>
                                     <td v-text="user.bankCardId"></td>
                                     <td v-text="user.reservePhone"></td>

@@ -7,11 +7,10 @@ import com.xingguang.finance.plan.service.IRepymtPlanService;
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
 import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
 import com.xingguang.finance.wdrl.entity.custom.ApplyAndPlanEntityCustom;
-import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
+import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCustom;
 import com.xingguang.finance.wdrl.mapper.WdrlApplyMapper;
 import com.xingguang.finance.wdrl.service.IWdrlApplyService;
 import com.xingguang.product.info.entity.custom.ProductInfoEntityCustom;
-import com.xingguang.product.info.mapper.ProductInfoMapper;
 import com.xingguang.product.info.service.IProductInfoService;
 import com.xingguang.product.term.entity.ProductTermInfoEntity;
 import com.xingguang.product.term.service.IProductTermInfoService;
@@ -44,7 +43,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
         WdrlApplyEntity entity = new WdrlApplyEntity();
         entity.setCusUserName(domain.getCusUserName());
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
-        List<WdrlApplyEntityCuston> applies = wdrlApplyMapper.findAuditApplyList(entity);
+        List<WdrlApplyEntityCustom> applies = wdrlApplyMapper.findAuditApplyList(entity);
         Map<String,Object> map = new HashMap<>();
         map.put("applies" , applies);
         map.put("total" , ((Page) applies).getTotal());
@@ -63,7 +62,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
         WdrlApplyEntity entity = new WdrlApplyEntity();
         entity.setCusUserName(domain.getCusUserName());
         PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
-        List<WdrlApplyEntityCuston> applies = wdrlApplyMapper.findPayApplyList(entity);
+        List<WdrlApplyEntityCustom> applies = wdrlApplyMapper.findPayApplyList(entity);
         Map<String,Object> map = new HashMap<>();
         map.put("applies" , applies);
         map.put("total" , ((Page) applies).getTotal());
@@ -71,12 +70,24 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     }
 
     @Override
-    public WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception {
+    public Map<String, Object> findPayDoneList(WdrlDomain domain) throws Exception {
+        WdrlApplyEntity entity = new WdrlApplyEntity();
+        entity.setCusUserName(domain.getCusUserName());
+        PageHelper.startPage(domain.getPager().get("page"), domain.getPager().get("pageSize"));
+        List<WdrlApplyEntityCustom> applies = wdrlApplyMapper.findPayDoneList(entity);
+        Map<String,Object> map = new HashMap<>();
+        map.put("applies" , applies);
+        map.put("total" , ((Page) applies).getTotal());
+        return map;
+    }
+
+    @Override
+    public WdrlApplyEntityCustom findWdrlApplyById(Long id) throws Exception {
         return wdrlApplyMapper.findWdrlApplyById(id);
     }
 
     @Override
-    public List<WdrlApplyEntityCuston> findWdrlApplyByCusId(Long cusUserId) throws Exception {
+    public List<WdrlApplyEntityCustom> findWdrlApplyByCusId(Long cusUserId) throws Exception {
         return wdrlApplyMapper.findWdrlApplyByCusId(cusUserId);
     }
 
@@ -86,7 +97,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
 
         for(Long id : domain.getIds()){
             domain.setId(id);
-            WdrlApplyEntityCuston applyEntity = this.findWdrlApplyById(domain.getId());
+            WdrlApplyEntityCustom applyEntity = this.findWdrlApplyById(domain.getId());
             if(null == applyEntity){
                 throw new Exception("无付款记录！");
             }
@@ -121,7 +132,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     @Override
     public ApplyAndPlanEntityCustom viewPlanAndCharge(Long id) throws Exception {
         ApplyAndPlanEntityCustom entity = new ApplyAndPlanEntityCustom();
-        WdrlApplyEntityCuston applyEntity = this.findWdrlApplyById(id);
+        WdrlApplyEntityCustom applyEntity = this.findWdrlApplyById(id);
         if(null == applyEntity){
             throw new Exception("无付款记录！");
         }

@@ -1,7 +1,7 @@
 package com.xingguang.finance.wdrl.mapper;
 
 import com.xingguang.finance.wdrl.entity.WdrlApplyEntity;
-import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCuston;
+import com.xingguang.finance.wdrl.entity.custom.WdrlApplyEntityCustom;
 
 import java.util.List;
 
@@ -10,13 +10,15 @@ import java.util.List;
  */
 public interface WdrlApplyMapper {
 
-    List<WdrlApplyEntityCuston> findAuditApplyList(WdrlApplyEntity entity) throws Exception;
+    List<WdrlApplyEntityCustom> findAuditApplyList(WdrlApplyEntity entity) throws Exception;
 
-    List<WdrlApplyEntityCuston> findPayApplyList(WdrlApplyEntity entity) throws Exception;
+    List<WdrlApplyEntityCustom> findPayApplyList(WdrlApplyEntity entity) throws Exception;
 
-    WdrlApplyEntityCuston findWdrlApplyById(Long id) throws Exception;
+    List<WdrlApplyEntityCustom> findPayDoneList(WdrlApplyEntity entity) throws Exception;
 
-    List<WdrlApplyEntityCuston> findWdrlApplyByCusId(Long cusUserId) throws Exception;
+    WdrlApplyEntityCustom findWdrlApplyById(Long id) throws Exception;
+
+    List<WdrlApplyEntityCustom> findWdrlApplyByCusId(Long cusUserId) throws Exception;
 
     void updateWdrlApply(WdrlApplyEntity entity) throws Exception;
 

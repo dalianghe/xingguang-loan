@@ -10,7 +10,7 @@
             <li>
                 <a href="#">财务管理</a>
             </li>
-            <li class="active">放款管理</li>
+            <li class="active">已放款用户</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -28,7 +28,7 @@
             <h1>
                 <small>
                     <i class="ace-icon fa fa-angle-double-right"></i>
-                    放款列表
+                    用户列表
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -56,31 +56,41 @@
                         <table id="simple-table" class="table  table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th class="center">序号</th>
+                                    <th class="hidden-480" class="center">序号</th>
                                     <th>姓名</th>
                                     <th class="hidden-480">产品名称</th>
                                     <th class="hidden-480">期限</th>
                                     <th>提款金额（元）</th>
+                                    <th>手续费（元）</th>
+                                    <th>放款金额（元）</th>
+                                    <th class="hidden-480">银行卡号</th>
+                                    <th class="hidden-480">预留手机</th>
                                     <th class="hidden-480">
                                         <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                        申请时间
+                                        放款时间
                                     </th>
+                                    <th class="hidden-480">放款人</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
 
                             <tbody>
                                 <tr v-for="(user,index) in applies">
-                                    <td class="center">{{index+1}}</td>
+                                    <td class="hidden-480" class="center">{{index+1}}</td>
                                     <td v-text="user.cusUserName"></td>
                                     <td class="hidden-480" v-text="user.productName"></td>
                                     <td class="hidden-480" v-text="user.termName"></td>
-                                    <td v-text="user.amount"></td>
-                                    <td class="hidden-480" v-text="user.createTime"></td>
+                                    <td>{{user.amount | numberFormatFilter}}</td>
+                                    <td>{{user.serviceCharge | numberFormatFilter}}</td>
+                                    <td>{{user.payAmount | numberFormatFilter}}</td>
+                                    <td class="hidden-480" v-text="user.bankCardId"></td>
+                                    <td class="hidden-480" v-text="user.reservePhone"></td>
+                                    <td class="hidden-480" v-text="user.issueTime"></td>
+                                    <td class="hidden-480">{{user.operatorName}}</td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-success" @click="audit(user.cusUserId , user.id)" title="点击放款">
-                                                <i class="ace-icon fa fa-check bigger-120"></i>
+                                            <button class="btn btn-xs btn-success" @click="viewPaypal(user.id)" title="查看还款计划" data-toggle="modal" data-target="#plan-modal">
+                                                <i class="ace-icon fa fa-tasks bigger-120"></i>
                                             </button>
                                         </div>
                                         <div class="hidden-md hidden-lg">
@@ -90,9 +100,9 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                     <li>
-                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="audit(user.cusUserId , user.id)">
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="viewPaypal(user.id)" data-toggle="modal" data-target="#plan-modal">
                                                             <span class="blue">
-                                                                <i class="ace-icon fa fa-paypal bigger-120"></i>
+                                                                <i class="ace-icon fa fa-tasks bigger-120"></i>
                                                             </span>
                                                         </a>
                                                     </li>
@@ -108,26 +118,40 @@
 
             </div><!-- /.col -->
         </div><!-- /.row -->
+        <!-- view repayment plan -->
+        <div id="plan-modal" class="modal fade " tabindex="1" role="dialog">
+            <div class="modal-dialog">
+                <div id="plan-content" class="modal-content">
+                </div>
+            </div>
+        </div>
 
         <div class="wrap pages pa-cen clearfix" id="wrap">
             <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
         </div>
     </div><!-- /.page-content -->
 </div>
+<script src="/assets/js/jquery-2.1.4.min.js"></script>
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
+<script src="/js/utils/numeral.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-
     var app = new Vue({
         el: '#dataDiv',
         data: {
             applies: {},
+            checkedIds : [],
             userName:null,
             page: 1,
             pageSize: 10,
             total: ''
+        },
+        filters : {
+            numberFormatFilter : function(value){
+                return numeral(value).format('0,0.00');
+            }
         },
         mounted : function(){
             query(this);
@@ -136,12 +160,12 @@
             queryUser : function(){
                 query(this);
             },
-            audit : function(cusUserId , applyId){
-                var paramJson = {"userId":cusUserId , "applyId":applyId};
+            viewPaypal : function(applyId){
+                var that = this;
+                that.checkedIds.push(applyId);
+                var paramJson = {"applyId":applyId};
                 var param = {"paramJson":JSON.stringify(paramJson)};
-                var url = "/router/finance/audit/wdrlaudit";
-                $("#main").load(url, param, function(response,status,xhr){
-                });
+                $("#plan-content").load("/router/finance/done/viewplan" , param );
             },
             pageHandler: function (page) {
                 this.page=page;
@@ -153,7 +177,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"cusUserName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/finance/audit/applies', {
+        axios.get('/finance/done/applies', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
@@ -166,9 +190,28 @@
             layer.close(idx);
         }).catch(function (error) {
             layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+            layer.close(idx);
         });
     }
-
+    function pay(obj , msg){
+        layer.confirm(msg, {icon: 3, title:'系统提示'}, function(index) {
+            var json = {"ids":obj.checkedIds , "status":"40"};
+            axios.post('/finance/pay/pay' , json).then(function (response) {
+                var result = response.data;
+                if(result.sysCode==0){
+                    if(result.bizCode==0){
+                        layer.msg('操作成功！');
+                        query(obj);
+                    }else{
+                        layer.alert(result.msg, {icon:2,title:"系统提示"});
+                    }
+                }
+            }).catch(function (error) {
+                console.log(error);
+                layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
+            });
+        });
+    }
     $('#nav-search-input').bind('keypress', function(event) {
         if (event.keyCode == "13") {
             event.preventDefault();

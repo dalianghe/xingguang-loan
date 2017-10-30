@@ -34,8 +34,8 @@
                                     <span class="label label-purple  arrowed-in arrowed-in-right" v-if="record.status===50"  v-text="record.statusName"></span>
                                     <span class="label label-success" v-if="record.status===60" v-text="record.statusName"></span>
                                 </td>
-                                <td v-text="record.creditTime"></td>
-                                <td class="hidden-480" v-text="record.creditUserName"></td>
+                                <td v-text="record.issueTime"></td>
+                                <td class="hidden-480" v-text="record.operatorName"></td>
                             </tr>
                             </tbody>
                         </table>
