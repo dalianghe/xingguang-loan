@@ -23,4 +23,10 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
         return this.workUserInfoMapper.selectByPrimaryKey(workUserId);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public WorkUserInfo getWorkUserByCusUserId(Long cusUserId) {
+        return this.workUserInfoMapper.getWorkUserByCusUserId(cusUserId);
+    }
+
 }

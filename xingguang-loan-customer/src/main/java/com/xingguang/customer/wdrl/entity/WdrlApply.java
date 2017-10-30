@@ -20,6 +20,12 @@ public class WdrlApply {
 
     private Integer status;
 
+    private Long auditorId;
+
+    private String auditorName;
+
+    private Date auditorTime;
+
     private Long operatorId;
 
     private String operatorName;
@@ -96,6 +102,30 @@ public class WdrlApply {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getAuditorId() {
+        return auditorId;
+    }
+
+    public void setAuditorId(Long auditorId) {
+        this.auditorId = auditorId;
+    }
+
+    public String getAuditorName() {
+        return auditorName;
+    }
+
+    public void setAuditorName(String auditorName) {
+        this.auditorName = auditorName == null ? null : auditorName.trim();
+    }
+
+    public Date getAuditorTime() {
+        return auditorTime;
+    }
+
+    public void setAuditorTime(Date auditorTime) {
+        this.auditorTime = auditorTime;
     }
 
     public Long getOperatorId() {

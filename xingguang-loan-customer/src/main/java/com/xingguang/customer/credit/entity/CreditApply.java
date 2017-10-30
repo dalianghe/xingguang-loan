@@ -6,6 +6,8 @@ import java.util.Date;
 public class CreditApply {
     private Long id;
 
+    private String applyNo;
+
     private Long cusUserId;
 
     private Integer status;
@@ -14,6 +16,10 @@ public class CreditApply {
 
     private BigDecimal amount;
 
+    private Long productId;
+
+    private Long termId;
+
     private Date creditTime;
 
     private Long creditUserId;
@@ -21,6 +27,8 @@ public class CreditApply {
     private String creditUserName;
 
     private String refuseCode;
+
+    private String creditRemark;
 
     private String cusLng;
 
@@ -64,6 +72,14 @@ public class CreditApply {
         this.id = id;
     }
 
+    public String getApplyNo() {
+        return applyNo;
+    }
+
+    public void setApplyNo(String applyNo) {
+        this.applyNo = applyNo == null ? null : applyNo.trim();
+    }
+
     public Long getCusUserId() {
         return cusUserId;
     }
@@ -96,6 +112,22 @@ public class CreditApply {
         this.amount = amount;
     }
 
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
+    }
+
     public Date getCreditTime() {
         return creditTime;
     }
@@ -126,6 +158,14 @@ public class CreditApply {
 
     public void setRefuseCode(String refuseCode) {
         this.refuseCode = refuseCode == null ? null : refuseCode.trim();
+    }
+
+    public String getCreditRemark() {
+        return creditRemark;
+    }
+
+    public void setCreditRemark(String creditRemark) {
+        this.creditRemark = creditRemark == null ? null : creditRemark.trim();
     }
 
     public String getCusLng() {

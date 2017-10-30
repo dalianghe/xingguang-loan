@@ -186,6 +186,76 @@ public class CreditApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andApplyNoIsNull() {
+            addCriterion("apply_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoIsNotNull() {
+            addCriterion("apply_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoEqualTo(String value) {
+            addCriterion("apply_no =", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoNotEqualTo(String value) {
+            addCriterion("apply_no <>", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoGreaterThan(String value) {
+            addCriterion("apply_no >", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoGreaterThanOrEqualTo(String value) {
+            addCriterion("apply_no >=", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoLessThan(String value) {
+            addCriterion("apply_no <", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoLessThanOrEqualTo(String value) {
+            addCriterion("apply_no <=", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoLike(String value) {
+            addCriterion("apply_no like", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoNotLike(String value) {
+            addCriterion("apply_no not like", value, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoIn(List<String> values) {
+            addCriterion("apply_no in", values, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoNotIn(List<String> values) {
+            addCriterion("apply_no not in", values, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoBetween(String value1, String value2) {
+            addCriterion("apply_no between", value1, value2, "applyNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplyNoNotBetween(String value1, String value2) {
+            addCriterion("apply_no not between", value1, value2, "applyNo");
+            return (Criteria) this;
+        }
+
         public Criteria andCusUserIdIsNull() {
             addCriterion("cus_user_id is null");
             return (Criteria) this;
@@ -423,6 +493,126 @@ public class CreditApplyExample {
 
         public Criteria andAmountNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("amount not between", value1, value2, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdIsNull() {
+            addCriterion("product_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdIsNotNull() {
+            addCriterion("product_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdEqualTo(Long value) {
+            addCriterion("product_id =", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdNotEqualTo(Long value) {
+            addCriterion("product_id <>", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdGreaterThan(Long value) {
+            addCriterion("product_id >", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("product_id >=", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdLessThan(Long value) {
+            addCriterion("product_id <", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdLessThanOrEqualTo(Long value) {
+            addCriterion("product_id <=", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdIn(List<Long> values) {
+            addCriterion("product_id in", values, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdNotIn(List<Long> values) {
+            addCriterion("product_id not in", values, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdBetween(Long value1, Long value2) {
+            addCriterion("product_id between", value1, value2, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdNotBetween(Long value1, Long value2) {
+            addCriterion("product_id not between", value1, value2, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdIsNull() {
+            addCriterion("term_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdIsNotNull() {
+            addCriterion("term_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdEqualTo(Long value) {
+            addCriterion("term_id =", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdNotEqualTo(Long value) {
+            addCriterion("term_id <>", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdGreaterThan(Long value) {
+            addCriterion("term_id >", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("term_id >=", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdLessThan(Long value) {
+            addCriterion("term_id <", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdLessThanOrEqualTo(Long value) {
+            addCriterion("term_id <=", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdIn(List<Long> values) {
+            addCriterion("term_id in", values, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdNotIn(List<Long> values) {
+            addCriterion("term_id not in", values, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdBetween(Long value1, Long value2) {
+            addCriterion("term_id between", value1, value2, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdNotBetween(Long value1, Long value2) {
+            addCriterion("term_id not between", value1, value2, "termId");
             return (Criteria) this;
         }
 
@@ -683,6 +873,76 @@ public class CreditApplyExample {
 
         public Criteria andRefuseCodeNotBetween(String value1, String value2) {
             addCriterion("refuse_code not between", value1, value2, "refuseCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkIsNull() {
+            addCriterion("credit_remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkIsNotNull() {
+            addCriterion("credit_remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkEqualTo(String value) {
+            addCriterion("credit_remark =", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkNotEqualTo(String value) {
+            addCriterion("credit_remark <>", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkGreaterThan(String value) {
+            addCriterion("credit_remark >", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("credit_remark >=", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkLessThan(String value) {
+            addCriterion("credit_remark <", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkLessThanOrEqualTo(String value) {
+            addCriterion("credit_remark <=", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkLike(String value) {
+            addCriterion("credit_remark like", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkNotLike(String value) {
+            addCriterion("credit_remark not like", value, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkIn(List<String> values) {
+            addCriterion("credit_remark in", values, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkNotIn(List<String> values) {
+            addCriterion("credit_remark not in", values, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkBetween(String value1, String value2) {
+            addCriterion("credit_remark between", value1, value2, "creditRemark");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditRemarkNotBetween(String value1, String value2) {
+            addCriterion("credit_remark not between", value1, value2, "creditRemark");
             return (Criteria) this;
         }
 

@@ -626,6 +626,196 @@ public class WdrlApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andAuditorIdIsNull() {
+            addCriterion("auditor_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdIsNotNull() {
+            addCriterion("auditor_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdEqualTo(Long value) {
+            addCriterion("auditor_id =", value, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdNotEqualTo(Long value) {
+            addCriterion("auditor_id <>", value, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdGreaterThan(Long value) {
+            addCriterion("auditor_id >", value, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("auditor_id >=", value, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdLessThan(Long value) {
+            addCriterion("auditor_id <", value, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdLessThanOrEqualTo(Long value) {
+            addCriterion("auditor_id <=", value, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdIn(List<Long> values) {
+            addCriterion("auditor_id in", values, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdNotIn(List<Long> values) {
+            addCriterion("auditor_id not in", values, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdBetween(Long value1, Long value2) {
+            addCriterion("auditor_id between", value1, value2, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorIdNotBetween(Long value1, Long value2) {
+            addCriterion("auditor_id not between", value1, value2, "auditorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameIsNull() {
+            addCriterion("auditor_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameIsNotNull() {
+            addCriterion("auditor_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameEqualTo(String value) {
+            addCriterion("auditor_name =", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameNotEqualTo(String value) {
+            addCriterion("auditor_name <>", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameGreaterThan(String value) {
+            addCriterion("auditor_name >", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameGreaterThanOrEqualTo(String value) {
+            addCriterion("auditor_name >=", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameLessThan(String value) {
+            addCriterion("auditor_name <", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameLessThanOrEqualTo(String value) {
+            addCriterion("auditor_name <=", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameLike(String value) {
+            addCriterion("auditor_name like", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameNotLike(String value) {
+            addCriterion("auditor_name not like", value, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameIn(List<String> values) {
+            addCriterion("auditor_name in", values, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameNotIn(List<String> values) {
+            addCriterion("auditor_name not in", values, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameBetween(String value1, String value2) {
+            addCriterion("auditor_name between", value1, value2, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorNameNotBetween(String value1, String value2) {
+            addCriterion("auditor_name not between", value1, value2, "auditorName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeIsNull() {
+            addCriterion("auditor_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeIsNotNull() {
+            addCriterion("auditor_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeEqualTo(Date value) {
+            addCriterion("auditor_time =", value, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeNotEqualTo(Date value) {
+            addCriterion("auditor_time <>", value, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeGreaterThan(Date value) {
+            addCriterion("auditor_time >", value, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("auditor_time >=", value, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeLessThan(Date value) {
+            addCriterion("auditor_time <", value, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeLessThanOrEqualTo(Date value) {
+            addCriterion("auditor_time <=", value, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeIn(List<Date> values) {
+            addCriterion("auditor_time in", values, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeNotIn(List<Date> values) {
+            addCriterion("auditor_time not in", values, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeBetween(Date value1, Date value2) {
+            addCriterion("auditor_time between", value1, value2, "auditorTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAuditorTimeNotBetween(Date value1, Date value2) {
+            addCriterion("auditor_time not between", value1, value2, "auditorTime");
+            return (Criteria) this;
+        }
+
         public Criteria andOperatorIdIsNull() {
             addCriterion("operator_id is null");
             return (Criteria) this;

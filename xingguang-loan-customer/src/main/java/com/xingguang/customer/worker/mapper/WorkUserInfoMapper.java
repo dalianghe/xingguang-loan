@@ -28,4 +28,9 @@ public interface WorkUserInfoMapper {
     int updateByPrimaryKeySelective(WorkUserInfo record);
 
     int updateByPrimaryKey(WorkUserInfo record);
+
+    //自定义
+
+    WorkUserInfo getWorkUserByCusUserId(Long id);
+
 }

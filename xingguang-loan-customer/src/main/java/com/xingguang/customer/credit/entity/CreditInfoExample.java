@@ -246,6 +246,126 @@ public class CreditInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andProductIdIsNull() {
+            addCriterion("product_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdIsNotNull() {
+            addCriterion("product_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdEqualTo(Long value) {
+            addCriterion("product_id =", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdNotEqualTo(Long value) {
+            addCriterion("product_id <>", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdGreaterThan(Long value) {
+            addCriterion("product_id >", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("product_id >=", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdLessThan(Long value) {
+            addCriterion("product_id <", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdLessThanOrEqualTo(Long value) {
+            addCriterion("product_id <=", value, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdIn(List<Long> values) {
+            addCriterion("product_id in", values, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdNotIn(List<Long> values) {
+            addCriterion("product_id not in", values, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdBetween(Long value1, Long value2) {
+            addCriterion("product_id between", value1, value2, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdNotBetween(Long value1, Long value2) {
+            addCriterion("product_id not between", value1, value2, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdIsNull() {
+            addCriterion("term_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdIsNotNull() {
+            addCriterion("term_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdEqualTo(Long value) {
+            addCriterion("term_id =", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdNotEqualTo(Long value) {
+            addCriterion("term_id <>", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdGreaterThan(Long value) {
+            addCriterion("term_id >", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("term_id >=", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdLessThan(Long value) {
+            addCriterion("term_id <", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdLessThanOrEqualTo(Long value) {
+            addCriterion("term_id <=", value, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdIn(List<Long> values) {
+            addCriterion("term_id in", values, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdNotIn(List<Long> values) {
+            addCriterion("term_id not in", values, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdBetween(Long value1, Long value2) {
+            addCriterion("term_id between", value1, value2, "termId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTermIdNotBetween(Long value1, Long value2) {
+            addCriterion("term_id not between", value1, value2, "termId");
+            return (Criteria) this;
+        }
+
         public Criteria andFinalAmountIsNull() {
             addCriterion("final_amount is null");
             return (Criteria) this;

@@ -28,4 +28,9 @@ public interface CreditApplyMapper {
     int updateByPrimaryKeySelective(CreditApply record);
 
     int updateByPrimaryKey(CreditApply record);
+
+    //自定义
+
+    int insertSelectiveApplyNo(CreditApply record);
+
 }

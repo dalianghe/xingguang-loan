@@ -8,6 +8,10 @@ public class CreditInfo {
 
     private Long cusUserId;
 
+    private Long productId;
+
+    private Long termId;
+
     private BigDecimal finalAmount;
 
     private BigDecimal unusedAmount;
@@ -32,6 +36,22 @@ public class CreditInfo {
 
     public void setCusUserId(Long cusUserId) {
         this.cusUserId = cusUserId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getTermId() {
+        return termId;
+    }
+
+    public void setTermId(Long termId) {
+        this.termId = termId;
     }
 
     public BigDecimal getFinalAmount() {

@@ -9,4 +9,6 @@ public interface IWorkUserInfoService {
 
     WorkUserInfo getWorkUserInfoById(Long workUserId);
 
+    WorkUserInfo getWorkUserByCusUserId(Long workUserId);
+
 }

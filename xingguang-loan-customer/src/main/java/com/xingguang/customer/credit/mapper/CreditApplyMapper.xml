@@ -3,14 +3,18 @@
 <mapper namespace="com.xingguang.customer.credit.mapper.CreditApplyMapper">
   <resultMap id="BaseResultMap" type="com.xingguang.customer.credit.entity.CreditApply">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="apply_no" jdbcType="VARCHAR" property="applyNo" />
     <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="term_id" jdbcType="BIGINT" property="termId" />
     <result column="credit_time" jdbcType="TIMESTAMP" property="creditTime" />
     <result column="credit_user_id" jdbcType="BIGINT" property="creditUserId" />
     <result column="credit_user_name" jdbcType="VARCHAR" property="creditUserName" />
     <result column="refuse_code" jdbcType="VARCHAR" property="refuseCode" />
+    <result column="credit_remark" jdbcType="VARCHAR" property="creditRemark" />
     <result column="cus_lng" jdbcType="VARCHAR" property="cusLng" />
     <result column="cus_lat" jdbcType="VARCHAR" property="cusLat" />
     <result column="cus_province_id" jdbcType="BIGINT" property="cusProvinceId" />
@@ -88,10 +92,11 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, cus_user_id, status, create_time, amount, credit_time, credit_user_id, credit_user_name, 
-    refuse_code, cus_lng, cus_lat, cus_province_id, cus_province_name, cus_city_id, cus_city_name, 
-    cus_addr, work_user_id, work_user_name, work_lng, work_lat, work_province_id, work_province_name, 
-    work_city_id, work_city_name, work_addr, cus_work_distance
+    id, apply_no, cus_user_id, status, create_time, amount, product_id, term_id, credit_time, 
+    credit_user_id, credit_user_name, refuse_code, credit_remark, cus_lng, cus_lat, cus_province_id, 
+    cus_province_name, cus_city_id, cus_city_name, cus_addr, work_user_id, work_user_name, 
+    work_lng, work_lat, work_province_id, work_province_name, work_city_id, work_city_name, 
+    work_addr, cus_work_distance
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.credit.entity.CreditApplyExample" resultMap="BaseResultMap">
     select
@@ -132,28 +137,33 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditApply" useGeneratedKeys="true">
-    insert into credit_apply (cus_user_id, status, create_time, 
-      amount, credit_time, credit_user_id, 
-      credit_user_name, refuse_code, cus_lng, 
-      cus_lat, cus_province_id, cus_province_name, 
-      cus_city_id, cus_city_name, cus_addr, 
-      work_user_id, work_user_name, work_lng, 
-      work_lat, work_province_id, work_province_name, 
-      work_city_id, work_city_name, work_addr, 
-      cus_work_distance)
-    values (#{cusUserId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{amount,jdbcType=DECIMAL}, #{creditTime,jdbcType=TIMESTAMP}, #{creditUserId,jdbcType=BIGINT}, 
-      #{creditUserName,jdbcType=VARCHAR}, #{refuseCode,jdbcType=VARCHAR}, #{cusLng,jdbcType=VARCHAR}, 
-      #{cusLat,jdbcType=VARCHAR}, #{cusProvinceId,jdbcType=BIGINT}, #{cusProvinceName,jdbcType=VARCHAR}, 
-      #{cusCityId,jdbcType=BIGINT}, #{cusCityName,jdbcType=VARCHAR}, #{cusAddr,jdbcType=VARCHAR}, 
-      #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR}, #{workLng,jdbcType=VARCHAR}, 
-      #{workLat,jdbcType=VARCHAR}, #{workProvinceId,jdbcType=BIGINT}, #{workProvinceName,jdbcType=VARCHAR}, 
-      #{workCityId,jdbcType=BIGINT}, #{workCityName,jdbcType=VARCHAR}, #{workAddr,jdbcType=VARCHAR}, 
-      #{cusWorkDistance,jdbcType=VARCHAR})
+    insert into credit_apply (apply_no, cus_user_id, status, 
+      create_time, amount, product_id, 
+      term_id, credit_time, credit_user_id, 
+      credit_user_name, refuse_code, credit_remark, 
+      cus_lng, cus_lat, cus_province_id, 
+      cus_province_name, cus_city_id, cus_city_name, 
+      cus_addr, work_user_id, work_user_name, 
+      work_lng, work_lat, work_province_id, 
+      work_province_name, work_city_id, work_city_name, 
+      work_addr, cus_work_distance)
+    values (#{applyNo,jdbcType=VARCHAR}, #{cusUserId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{amount,jdbcType=DECIMAL}, #{productId,jdbcType=BIGINT}, 
+      #{termId,jdbcType=BIGINT}, #{creditTime,jdbcType=TIMESTAMP}, #{creditUserId,jdbcType=BIGINT}, 
+      #{creditUserName,jdbcType=VARCHAR}, #{refuseCode,jdbcType=VARCHAR}, #{creditRemark,jdbcType=VARCHAR}, 
+      #{cusLng,jdbcType=VARCHAR}, #{cusLat,jdbcType=VARCHAR}, #{cusProvinceId,jdbcType=BIGINT}, 
+      #{cusProvinceName,jdbcType=VARCHAR}, #{cusCityId,jdbcType=BIGINT}, #{cusCityName,jdbcType=VARCHAR}, 
+      #{cusAddr,jdbcType=VARCHAR}, #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR}, 
+      #{workLng,jdbcType=VARCHAR}, #{workLat,jdbcType=VARCHAR}, #{workProvinceId,jdbcType=BIGINT}, 
+      #{workProvinceName,jdbcType=VARCHAR}, #{workCityId,jdbcType=BIGINT}, #{workCityName,jdbcType=VARCHAR}, 
+      #{workAddr,jdbcType=VARCHAR}, #{cusWorkDistance,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditApply" useGeneratedKeys="true">
     insert into credit_apply
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="applyNo != null">
+        apply_no,
+      </if>
       <if test="cusUserId != null">
         cus_user_id,
       </if>
@@ -166,6 +176,12 @@
       <if test="amount != null">
         amount,
       </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="termId != null">
+        term_id,
+      </if>
       <if test="creditTime != null">
         credit_time,
       </if>
@@ -177,6 +193,9 @@
       </if>
       <if test="refuseCode != null">
         refuse_code,
+      </if>
+      <if test="creditRemark != null">
+        credit_remark,
       </if>
       <if test="cusLng != null">
         cus_lng,
@@ -231,6 +250,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="applyNo != null">
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
       <if test="cusUserId != null">
         #{cusUserId,jdbcType=BIGINT},
       </if>
@@ -243,6 +265,12 @@
       <if test="amount != null">
         #{amount,jdbcType=DECIMAL},
       </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="termId != null">
+        #{termId,jdbcType=BIGINT},
+      </if>
       <if test="creditTime != null">
         #{creditTime,jdbcType=TIMESTAMP},
       </if>
@@ -254,6 +282,9 @@
       </if>
       <if test="refuseCode != null">
         #{refuseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creditRemark != null">
+        #{creditRemark,jdbcType=VARCHAR},
       </if>
       <if test="cusLng != null">
         #{cusLng,jdbcType=VARCHAR},
@@ -320,6 +351,9 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.applyNo != null">
+        apply_no = #{record.applyNo,jdbcType=VARCHAR},
+      </if>
       <if test="record.cusUserId != null">
         cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
       </if>
@@ -332,6 +366,12 @@
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=DECIMAL},
       </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=BIGINT},
+      </if>
+      <if test="record.termId != null">
+        term_id = #{record.termId,jdbcType=BIGINT},
+      </if>
       <if test="record.creditTime != null">
         credit_time = #{record.creditTime,jdbcType=TIMESTAMP},
       </if>
@@ -343,6 +383,9 @@
       </if>
       <if test="record.refuseCode != null">
         refuse_code = #{record.refuseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditRemark != null">
+        credit_remark = #{record.creditRemark,jdbcType=VARCHAR},
       </if>
       <if test="record.cusLng != null">
         cus_lng = #{record.cusLng,jdbcType=VARCHAR},
@@ -403,14 +446,18 @@
   <update id="updateByExample" parameterType="map">
     update credit_apply
     set id = #{record.id,jdbcType=BIGINT},
+      apply_no = #{record.applyNo,jdbcType=VARCHAR},
       cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       amount = #{record.amount,jdbcType=DECIMAL},
+      product_id = #{record.productId,jdbcType=BIGINT},
+      term_id = #{record.termId,jdbcType=BIGINT},
       credit_time = #{record.creditTime,jdbcType=TIMESTAMP},
       credit_user_id = #{record.creditUserId,jdbcType=BIGINT},
       credit_user_name = #{record.creditUserName,jdbcType=VARCHAR},
       refuse_code = #{record.refuseCode,jdbcType=VARCHAR},
+      credit_remark = #{record.creditRemark,jdbcType=VARCHAR},
       cus_lng = #{record.cusLng,jdbcType=VARCHAR},
       cus_lat = #{record.cusLat,jdbcType=VARCHAR},
       cus_province_id = #{record.cusProvinceId,jdbcType=BIGINT},
@@ -435,6 +482,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.credit.entity.CreditApply">
     update credit_apply
     <set>
+      <if test="applyNo != null">
+        apply_no = #{applyNo,jdbcType=VARCHAR},
+      </if>
       <if test="cusUserId != null">
         cus_user_id = #{cusUserId,jdbcType=BIGINT},
       </if>
@@ -447,6 +497,12 @@
       <if test="amount != null">
         amount = #{amount,jdbcType=DECIMAL},
       </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="termId != null">
+        term_id = #{termId,jdbcType=BIGINT},
+      </if>
       <if test="creditTime != null">
         credit_time = #{creditTime,jdbcType=TIMESTAMP},
       </if>
@@ -458,6 +514,9 @@
       </if>
       <if test="refuseCode != null">
         refuse_code = #{refuseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creditRemark != null">
+        credit_remark = #{creditRemark,jdbcType=VARCHAR},
       </if>
       <if test="cusLng != null">
         cus_lng = #{cusLng,jdbcType=VARCHAR},
@@ -515,14 +574,18 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.credit.entity.CreditApply">
     update credit_apply
-    set cus_user_id = #{cusUserId,jdbcType=BIGINT},
+    set apply_no = #{applyNo,jdbcType=VARCHAR},
+      cus_user_id = #{cusUserId,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       amount = #{amount,jdbcType=DECIMAL},
+      product_id = #{productId,jdbcType=BIGINT},
+      term_id = #{termId,jdbcType=BIGINT},
       credit_time = #{creditTime,jdbcType=TIMESTAMP},
       credit_user_id = #{creditUserId,jdbcType=BIGINT},
       credit_user_name = #{creditUserName,jdbcType=VARCHAR},
       refuse_code = #{refuseCode,jdbcType=VARCHAR},
+      credit_remark = #{creditRemark,jdbcType=VARCHAR},
       cus_lng = #{cusLng,jdbcType=VARCHAR},
       cus_lat = #{cusLat,jdbcType=VARCHAR},
       cus_province_id = #{cusProvinceId,jdbcType=BIGINT},
@@ -542,4 +605,188 @@
       cus_work_distance = #{cusWorkDistance,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <!-- 自定义 -->
+  <insert id="insertSelectiveApplyNo" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.credit.entity.CreditApply" useGeneratedKeys="true">
+    insert into credit_apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="applyNo != null">
+        apply_no,
+      </if>
+      <if test="cusUserId != null">
+        cus_user_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="termId != null">
+        term_id,
+      </if>
+      <if test="creditTime != null">
+        credit_time,
+      </if>
+      <if test="creditUserId != null">
+        credit_user_id,
+      </if>
+      <if test="creditUserName != null">
+        credit_user_name,
+      </if>
+      <if test="refuseCode != null">
+        refuse_code,
+      </if>
+      <if test="creditRemark != null">
+        credit_remark,
+      </if>
+      <if test="cusLng != null">
+        cus_lng,
+      </if>
+      <if test="cusLat != null">
+        cus_lat,
+      </if>
+      <if test="cusProvinceId != null">
+        cus_province_id,
+      </if>
+      <if test="cusProvinceName != null">
+        cus_province_name,
+      </if>
+      <if test="cusCityId != null">
+        cus_city_id,
+      </if>
+      <if test="cusCityName != null">
+        cus_city_name,
+      </if>
+      <if test="cusAddr != null">
+        cus_addr,
+      </if>
+      <if test="workUserId != null">
+        work_user_id,
+      </if>
+      <if test="workUserName != null">
+        work_user_name,
+      </if>
+      <if test="workLng != null">
+        work_lng,
+      </if>
+      <if test="workLat != null">
+        work_lat,
+      </if>
+      <if test="workProvinceId != null">
+        work_province_id,
+      </if>
+      <if test="workProvinceName != null">
+        work_province_name,
+      </if>
+      <if test="workCityId != null">
+        work_city_id,
+      </if>
+      <if test="workCityName != null">
+        work_city_name,
+      </if>
+      <if test="workAddr != null">
+        work_addr,
+      </if>
+      <if test="cusWorkDistance != null">
+        cus_work_distance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="applyNo != null">
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cusUserId != null">
+        #{cusUserId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="termId != null">
+        #{termId,jdbcType=BIGINT},
+      </if>
+      <if test="creditTime != null">
+        #{creditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creditUserId != null">
+        #{creditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="creditUserName != null">
+        #{creditUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="refuseCode != null">
+        #{refuseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creditRemark != null">
+        #{creditRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="cusLng != null">
+        #{cusLng,jdbcType=VARCHAR},
+      </if>
+      <if test="cusLat != null">
+        #{cusLat,jdbcType=VARCHAR},
+      </if>
+      <if test="cusProvinceId != null">
+        #{cusProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cusProvinceName != null">
+        #{cusProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="cusCityId != null">
+        #{cusCityId,jdbcType=BIGINT},
+      </if>
+      <if test="cusCityName != null">
+        #{cusCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAddr != null">
+        #{cusAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="workUserId != null">
+        #{workUserId,jdbcType=BIGINT},
+      </if>
+      <if test="workUserName != null">
+        #{workUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="workLng != null">
+        #{workLng,jdbcType=VARCHAR},
+      </if>
+      <if test="workLat != null">
+        #{workLat,jdbcType=VARCHAR},
+      </if>
+      <if test="workProvinceId != null">
+        #{workProvinceId,jdbcType=BIGINT},
+      </if>
+      <if test="workProvinceName != null">
+        #{workProvinceName,jdbcType=VARCHAR},
+      </if>
+      <if test="workCityId != null">
+        #{workCityId,jdbcType=BIGINT},
+      </if>
+      <if test="workCityName != null">
+        #{workCityName,jdbcType=VARCHAR},
+      </if>
+      <if test="workAddr != null">
+        #{workAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="cusWorkDistance != null">
+        #{cusWorkDistance,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
 </mapper>

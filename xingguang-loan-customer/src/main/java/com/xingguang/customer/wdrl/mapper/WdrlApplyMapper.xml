@@ -10,6 +10,9 @@
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="auditor_id" jdbcType="BIGINT" property="auditorId" />
+    <result column="auditor_name" jdbcType="VARCHAR" property="auditorName" />
+    <result column="auditor_time" jdbcType="TIMESTAMP" property="auditorTime" />
     <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
     <result column="operator_name" jdbcType="VARCHAR" property="operatorName" />
     <result column="issue_time" jdbcType="TIMESTAMP" property="issueTime" />
@@ -78,8 +81,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, cus_user_id, cus_user_name, bank_card_id, reserve_phone, amount, create_time, 
-    status, operator_id, operator_name, issue_time, product_id, term_id, service_charge, 
-    acc_mgmt_charge
+    status, auditor_id, auditor_name, auditor_time, operator_id, operator_name, issue_time, 
+    product_id, term_id, service_charge, acc_mgmt_charge
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.wdrl.entity.WdrlApplyExample" resultMap="BaseResultMap">
     select
@@ -122,12 +125,14 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.wdrl.entity.WdrlApply" useGeneratedKeys="true">
     insert into wdrl_apply (cus_user_id, cus_user_name, bank_card_id, 
       reserve_phone, amount, create_time, 
-      status, operator_id, operator_name, 
+      status, auditor_id, auditor_name, 
+      auditor_time, operator_id, operator_name, 
       issue_time, product_id, term_id, 
       service_charge, acc_mgmt_charge)
     values (#{cusUserId,jdbcType=BIGINT}, #{cusUserName,jdbcType=VARCHAR}, #{bankCardId,jdbcType=BIGINT}, 
       #{reservePhone,jdbcType=VARCHAR}, #{amount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=INTEGER}, #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{auditorId,jdbcType=BIGINT}, #{auditorName,jdbcType=VARCHAR}, 
+      #{auditorTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}, 
       #{issueTime,jdbcType=TIMESTAMP}, #{productId,jdbcType=BIGINT}, #{termId,jdbcType=BIGINT}, 
       #{serviceCharge,jdbcType=DECIMAL}, #{accMgmtCharge,jdbcType=DECIMAL})
   </insert>
@@ -154,6 +159,15 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="auditorId != null">
+        auditor_id,
+      </if>
+      <if test="auditorName != null">
+        auditor_name,
+      </if>
+      <if test="auditorTime != null">
+        auditor_time,
       </if>
       <if test="operatorId != null">
         operator_id,
@@ -198,6 +212,15 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="auditorId != null">
+        #{auditorId,jdbcType=BIGINT},
+      </if>
+      <if test="auditorName != null">
+        #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorTime != null">
+        #{auditorTime,jdbcType=TIMESTAMP},
       </if>
       <if test="operatorId != null">
         #{operatorId,jdbcType=BIGINT},
@@ -255,6 +278,15 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.auditorId != null">
+        auditor_id = #{record.auditorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.auditorName != null">
+        auditor_name = #{record.auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditorTime != null">
+        auditor_time = #{record.auditorTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.operatorId != null">
         operator_id = #{record.operatorId,jdbcType=BIGINT},
       </if>
@@ -291,6 +323,9 @@
       amount = #{record.amount,jdbcType=DECIMAL},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
+      auditor_id = #{record.auditorId,jdbcType=BIGINT},
+      auditor_name = #{record.auditorName,jdbcType=VARCHAR},
+      auditor_time = #{record.auditorTime,jdbcType=TIMESTAMP},
       operator_id = #{record.operatorId,jdbcType=BIGINT},
       operator_name = #{record.operatorName,jdbcType=VARCHAR},
       issue_time = #{record.issueTime,jdbcType=TIMESTAMP},
@@ -326,6 +361,15 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="auditorId != null">
+        auditor_id = #{auditorId,jdbcType=BIGINT},
+      </if>
+      <if test="auditorName != null">
+        auditor_name = #{auditorName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditorTime != null">
+        auditor_time = #{auditorTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="operatorId != null">
         operator_id = #{operatorId,jdbcType=BIGINT},
       </if>
@@ -359,6 +403,9 @@
       amount = #{amount,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
+      auditor_id = #{auditorId,jdbcType=BIGINT},
+      auditor_name = #{auditorName,jdbcType=VARCHAR},
+      auditor_time = #{auditorTime,jdbcType=TIMESTAMP},
       operator_id = #{operatorId,jdbcType=BIGINT},
       operator_name = #{operatorName,jdbcType=VARCHAR},
       issue_time = #{issueTime,jdbcType=TIMESTAMP},
