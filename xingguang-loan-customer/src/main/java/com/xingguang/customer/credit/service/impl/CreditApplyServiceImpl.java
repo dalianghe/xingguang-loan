@@ -15,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.acl.LastOwnerException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Created by admin on 2017/10/1.
  */
@@ -31,6 +35,7 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     @Autowired
     private IWorkUserInfoService workUserInfoService;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
 
     @Override
     public void create(CreditApplyParam creditApplyParam) {
@@ -39,7 +44,8 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
 
         CreditApply creditApply = creditApplyParam.getCreditApply();
         WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(cusUserInfo.getId());
-        creditApply.setApplyNo(workUserInfo.getCityId().toString());
+        String nowDate = LocalDate.now().format(this.formatter);
+        creditApply.setApplyNo(nowDate + workUserInfo.getCityId());
         this.creditApplyMapper.insertSelectiveApplyNo(creditApply);
 
         /**
@@ -55,4 +61,5 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
         this.cusUserLinkService.create(cusUserLink);
 
     }
+
 }

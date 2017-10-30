@@ -700,7 +700,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="applyNo != null">
-        #{applyNo,jdbcType=VARCHAR},
+        select ifnull((select concat(#{applyNo,jdbcType=VARCHAR}, right(apply_no, 6) + 1)
+        from credit_apply
+        where apply_no like concat(#{applyNo,jdbcType=VARCHAR}, '%')
+        limit 1), concat(#{applyNo,jdbcType=VARCHAR}, '168009')),
       </if>
       <if test="cusUserId != null">
         #{cusUserId,jdbcType=BIGINT},
