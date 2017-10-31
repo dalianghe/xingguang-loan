@@ -31,7 +31,7 @@ public class TaskManageController {
 	 */
 	@RequestMapping(value={"", "/", "index"})
 	public String info(){
-		return "index";
+		return "common/index";
 	}
 	
 	/**
