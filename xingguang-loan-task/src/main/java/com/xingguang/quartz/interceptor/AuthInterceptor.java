@@ -17,6 +17,7 @@ public class AuthInterceptor implements HandlerInterceptor{
         TaskUser user = (TaskUser)session.getAttribute("user");
         if(null == user){
             httpServletResponse.sendRedirect("/login");
+            return false;
         }
         return true;
     }
