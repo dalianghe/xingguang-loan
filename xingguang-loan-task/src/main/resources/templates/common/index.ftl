@@ -99,7 +99,7 @@
     </div>
 </div>
 
-<div data-options="region:'south',border:false" style="overflow: hidden; height: 30px; line-height: 30px;text-align:center">
+<div data-options="region:'south',border:false" style="overflow: hidden; height: 30px; line-height: 30px;text-align:center;">
     睿银伟业 星光钱包 &copy; 2017-2018
 </div>
 <script type="text/javascript">
