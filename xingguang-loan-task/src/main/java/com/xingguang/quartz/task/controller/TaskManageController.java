@@ -1,10 +1,10 @@
-package com.xingguang.quartz.web;
+package com.xingguang.quartz.task.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.xingguang.quartz.common.exception.ServiceException;
 import com.xingguang.quartz.common.json.ResultInfo;
-import com.xingguang.quartz.domain.TaskInfo;
-import com.xingguang.quartz.service.TaskServiceImpl;
+import com.xingguang.quartz.task.domain.TaskInfo;
+import com.xingguang.quartz.task.service.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

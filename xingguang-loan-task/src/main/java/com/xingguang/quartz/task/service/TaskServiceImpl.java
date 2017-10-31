@@ -1,7 +1,7 @@
-package com.xingguang.quartz.service;
+package com.xingguang.quartz.task.service;
 
 import com.xingguang.quartz.common.exception.ServiceException;
-import com.xingguang.quartz.domain.TaskInfo;
+import com.xingguang.quartz.task.domain.TaskInfo;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

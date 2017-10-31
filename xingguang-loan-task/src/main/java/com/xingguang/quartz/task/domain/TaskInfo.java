@@ -1,4 +1,4 @@
-package com.xingguang.quartz.domain;
+package com.xingguang.quartz.task.domain;
 
 import java.io.Serializable;
 

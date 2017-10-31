@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>星光钱包-任务调度系统</title>
     <link rel="stylesheet" type="text/css" href="/plugin/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="/plugin/themes/icon.css">
     <script type="text/javascript" src="/plugin/jquery.min.js"></script>
@@ -12,46 +12,55 @@
 </head>
 <body>
 <div align="center">
+
+    <div style="margin:130px 0;"></div>
     <h2>星光钱包-任务调度系统</h2>
-    <div style="margin:20px 0;"></div>
-    <div class="easyui-panel" title="New Topic" style="width:400px">
+    <div class="easyui-panel" title="用户登陆" style="width:400px">
         <div style="padding:10px 60px 20px 60px">
             <form id="ff" method="post">
                 <table cellpadding="5">
                     <tr>
-                        <td>Name:</td>
-                        <td><input class="easyui-textbox" type="text" name="name" data-options="required:true"></input></td>
+                        <td>用户名：</td>
+                        <td><input class="easyui-textbox" type="text" name="account" data-options="required:true"></input></td>
                     </tr>
                     <tr>
-                        <td>Email:</td>
-                        <td><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"></input></td>
-                    </tr>
-                    <tr>
-                        <td>Subject:</td>
-                        <td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
-                    </tr>
-                    <tr>
-                        <td>Message:</td>
-                        <td><input class="easyui-textbox" name="message" data-options="multiline:true" style="height:60px"></input></td>
-                    </tr>
-                    <tr>
-                        <td>Language:</td>
-                        <td>
-                            <select class="easyui-combobox" name="language"><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="en" selected="selected">English</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option><option value="mww">Hmong Daw</option><option value="hu">Hungarian</option><option value="id">Indonesian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="no">Norwegian</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="sv">Swedish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="vi">Vietnamese</option></select>
-                        </td>
+                        <td>密码：</td>
+                        <td><input class="easyui-textbox" type="text" name="password" data-options="required:true"></input></td>
                     </tr>
                 </table>
             </form>
+            <div id="message" style="color: red"></div>
             <div style="text-align:center;padding:5px">
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
-                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">登陆</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清空</a>
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript" color="0,22,255" opacity='0.7' zIndex="-2" count="300" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 <script>
     function submitForm(){
-        $('#ff').form('submit');
+        //var res = $('#ff').form('submit');
+        $.ajax({
+            url: "/login",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            data : $("#ff").serialize(),
+            dataType: "json",
+            timeout: 10000,
+            success: function (data) {
+                if(data.sysCode==0){ // 系统正常返回
+                    if(data.bizCode==0){ // 业务处理通过
+                        window.location.href = "/index";
+                    }else{
+                        $("#message").html("用户名密码错误！").show(300).delay(3000).hide(300);
+                    }
+                }
+            },
+            fail: function (err) {
+                console.log(err)
+            }
+        })
     }
     function clearForm(){
         $('#ff').form('clear');
