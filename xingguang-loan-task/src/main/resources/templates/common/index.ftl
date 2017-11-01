@@ -17,7 +17,7 @@
         <span style="float:right; padding-right:20px;" class="head">
         	<#--<a href="#" id="editpass">Password</a> |-->
                 欢迎您！<#if user??>${user.name}</#if>&nbsp;&nbsp;&nbsp;
-        	<a href="/logon" id="loginOut">退出</a>
+        	<a href="/logout" id="loginOut">退出</a>
         </span>
     <span style="padding-left:10px; font-size: 16px;">星光钱包-任务调度系统</span>
 </div>

@@ -46,6 +46,10 @@ public class QuartzConfig {
 		prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
         prop.put("org.quartz.threadPool.threadCount", "5");
 
+		prop.put("org.quartz.plugin.triggHistory.class", "org.quartz.plugins.history.LoggingTriggerHistoryPlugin");
+		prop.put("org.quartz.plugin.triggHistory.triggerFiredMessage", "Trigger {1}.{0} fired job {6}.{5} at: {4, date, HH:mm:ss MM/dd/yyyy}");
+		//prop.put("org.quartz.plugin.triggHistory.triggerCompleteMessage ", "Trigger \\{1\\}.\\{0\\} completed firing job \\{6\\}.\\{5\\} at \\{4, date, HH:mm:ss MM/dd/yyyy\\}");
+
 		prop.put("org.quartz.dataSource.quartzDataSource.driver", "com.mysql.jdbc.Driver");
 		prop.put("org.quartz.dataSource.quartzDataSource.URL", "jdbc:mysql://rm-2zeaemj4xby65zum8o.mysql.rds.aliyuncs.com:3306/xingguang?useUnicode=true&characterEncoding=utf-8&useSSL=false");
 		prop.put("org.quartz.dataSource.quartzDataSource.user", "xingguang");

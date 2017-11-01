@@ -58,13 +58,14 @@ public class LoginController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/logon" , method = RequestMethod.GET)
+    @RequestMapping(value = "/logout" , method = RequestMethod.GET)
     public void logon(HttpServletRequest request , HttpServletResponse response) throws Exception{
         Enumeration em = request.getSession().getAttributeNames();
         while(em.hasMoreElements()){
             request.getSession().removeAttribute(em.nextElement().toString());
         }
-        request.getRequestDispatcher("/login").forward(request,response);
+        //request.getRequestDispatcher("/login").forward(request,response);
+        response.sendRedirect("/login");
     }
 
 }
