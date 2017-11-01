@@ -7,9 +7,11 @@ import com.xingguang.customer.repymt.entity.RepymtPlan;
 import com.xingguang.customer.repymt.entity.RepymtPlanExample;
 import com.xingguang.customer.repymt.service.IRepymtApplyService;
 import com.xingguang.customer.repymt.service.IRepymtPlanService;
+import com.xingguang.exception.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,9 @@ public class RepymtController {
         example.createCriteria().andIdIn(repymtPlanList).andCusUserIdEqualTo(userId);
         List<RepymtPlan> list = this.repymtPlanService.getRepymtPlanList(example);
         List<Long> listSelf  = list.stream().map(repymtPlan -> repymtPlan.getId()).collect(Collectors.toList());
+        if(!list.containsAll(listSelf) || !listSelf.containsAll(list)){
+            throw new CustomException("选择的还款计划不匹配");
+        }
         this.repymtApplyService.create(repymtApply, listSelf);
         return  new ResultBean();
     }
