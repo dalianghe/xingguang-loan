@@ -19,6 +19,7 @@ public class RepymtApplyEntityCustom{
     private BigDecimal principal;
     private BigDecimal interest;
     private BigDecimal amount;
+    private String planDate;
 
     public Long getCusUserId() {
         return cusUserId;
@@ -90,5 +91,13 @@ public class RepymtApplyEntityCustom{
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getPlanDate() {
+        return planDate;
+    }
+
+    public void setPlanDate(String planDate) {
+        this.planDate = planDate;
     }
 }

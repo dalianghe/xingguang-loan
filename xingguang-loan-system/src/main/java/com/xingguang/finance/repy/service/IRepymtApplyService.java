@@ -14,4 +14,6 @@ public interface IRepymtApplyService {
 
     public Map<String, Object> findNormalRepymtList(RepyDomain repyDemain) throws Exception;
 
+    public void repaymentNormal(RepyDomain repyDemain) throws Exception;
+
 }

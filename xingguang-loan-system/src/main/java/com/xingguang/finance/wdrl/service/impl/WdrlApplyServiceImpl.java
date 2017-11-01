@@ -116,6 +116,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
                 planEntity.setPrincipal(FinanceUtils.getPrincipalAmount(applyEntity.getAmount() , termInfoEntity.getTermNumber()));
                 planEntity.setInterest(FinanceUtils.getInterestAmount(applyEntity.getAmount() , termInfoEntity.getRate() , termInfoEntity.getTermDays()));
                 planEntity.setPlanDate(FinanceUtils.getPlanRepymtDate(domain.getIssueTime() , termInfoEntity.getTermDays()));
+                planEntity.setStauts(10);
                 list.add(planEntity);
             }
             repymtPlanService.addRepymtPlan(applyEntity.getId() , list);

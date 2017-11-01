@@ -13,8 +13,10 @@ import java.util.Date;
 public class RepymtApplyEntity implements Serializable {
 
     private Long id;
+    private Long cusUserId;
     private BigDecimal amount;
     private Integer status;
+    private Integer repymtType;
     private Date createTime;
     private Date operatorTime;
     private Long operatorId;
@@ -26,6 +28,14 @@ public class RepymtApplyEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCusUserId() {
+        return cusUserId;
+    }
+
+    public void setCusUserId(Long cusUserId) {
+        this.cusUserId = cusUserId;
     }
 
     public BigDecimal getAmount() {
@@ -74,5 +84,13 @@ public class RepymtApplyEntity implements Serializable {
 
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
+    }
+
+    public Integer getRepymtType() {
+        return repymtType;
+    }
+
+    public void setRepymtType(Integer repymtType) {
+        this.repymtType = repymtType;
     }
 }

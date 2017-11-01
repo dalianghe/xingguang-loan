@@ -1,5 +1,7 @@
 package com.xingguang.finance.repy.mapper;
 
+import com.xingguang.finance.plan.entity.custom.RepymtPlanEntityCustom;
+import com.xingguang.finance.repy.entity.RepymtApplyEntity;
 import com.xingguang.finance.repy.entity.custom.RepymtApplyEntityCustom;
 
 import java.util.List;
@@ -12,6 +14,10 @@ import java.util.List;
  */
 public interface RepymtApplyMapper {
 
-    List<RepymtApplyEntityCustom> findNormalRepymtList(String planDate) throws Exception;
+    List<RepymtApplyEntityCustom> findNormalRepymtList(RepymtApplyEntityCustom entity) throws Exception;
+
+    RepymtApplyEntityCustom findNormalRepymtByUserId(Long cusUserId) throws Exception;
+
+    void insertRepymtApply(List<RepymtApplyEntity> list) throws Exception;
 
 }
