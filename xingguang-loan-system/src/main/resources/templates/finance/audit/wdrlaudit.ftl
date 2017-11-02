@@ -210,12 +210,12 @@
                                                 <div class="profile-info-value">
                                                     <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                         <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="30"/>
+                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="20"/>
                                                             <span class="lbl"> 通过</span>
                                                         </label>
                                                         &nbsp;&nbsp;
                                                         <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="20"/>
+                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="25"/>
                                                             <span class="lbl"> 不通过</span>
                                                         </label>
                                                     </div>

@@ -101,10 +101,12 @@
                                         <select class="form-control" id="wdrlStatus" name="wdrlStatus" v-model="user.wdrlStatus">
                                             <option value=null>请选择</option>
                                             <option value="10">待审核</option>
-                                            <option value="20">提现不通过</option>
-                                            <option value="30">待放款</option>
-                                            <option value="40">已放款</option>
-                                            <option value="50">终止放款</option>
+                                            <option value="20">审核通过</option>
+                                            <option value="25">审核不通过</option>
+                                            <option value="30">已放款</option>
+                                            <option value="35">终止放款</option>
+                                            <option value="40">已结清</option>
+                                            <option value="45">已逾期</option>
                                         </select>
                                     </div>
                                     <div class="profile-info-name"> 授信状态 </div>
