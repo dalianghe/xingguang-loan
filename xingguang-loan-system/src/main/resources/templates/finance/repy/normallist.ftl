@@ -46,6 +46,13 @@
                     </button>
                 </span>
             </div>
+            &nbsp;&nbsp;
+            <div style="float:right;">
+                <button class="btn btn-white btn-info btn-bold" @click="batchRepay">
+                    <i class="ace-icon fa fa-paypal bigger-120 blue"></i>
+                    批量放款
+                </button>
+            </div>
         </div>
 
         <div class="row">
@@ -56,7 +63,12 @@
                         <table id="simple-table" class="table  table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th class="hidden-480" class="center">序号</th>
+                                    <th class="hidden-480" class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" @click="selectAll"/>
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
                                     <th>姓名</th>
                                     <th class="hidden-480">身份证号</th>
                                     <th class="hidden-480">银行卡号</th>
@@ -71,7 +83,12 @@
 
                             <tbody>
                                 <tr v-for="(user,index) in applies">
-                                    <td class="hidden-480" class="center">{{index+1}}</td>
+                                    <td class="hidden-480" class="center">
+                                        <label class="pos-rel">
+                                            <input type="checkbox" class="ace" :value="user.id" v-model="checkedIds"/>
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </td>
                                     <td v-text="user.name"></td>
                                     <td class="hidden-480" class="hidden-480" v-text="user.idNo"></td>
                                     <td class="hidden-480" class="hidden-480" v-text="user.cardNo"></td>
@@ -82,8 +99,8 @@
                                     <td>{{user.amount | numberFormatFilter}}</td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-success" @click="viewPaypal(user.id)" title="查看还款计划" data-toggle="modal" data-target="#plan-modal">
-                                                <i class="ace-icon fa fa-tasks bigger-120"></i>
+                                            <button class="btn btn-xs btn-info" @click="" title="查看还款计划" data-toggle="modal" data-target="#plan-modal">
+                                                <i class="ace-icon fa fa-gg bigger-120"></i>
                                             </button>
                                         </div>
                                         <div class="hidden-md hidden-lg">
@@ -111,26 +128,76 @@
 
             </div><!-- /.col -->
         </div><!-- /.row -->
+        <div class="wrap pages pa-cen clearfix" id="wrap">
+            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
+        </div>
         <!-- view repayment plan -->
         <div id="plan-modal" class="modal fade " tabindex="1" role="dialog">
             <div class="modal-dialog">
                 <div id="plan-content" class="modal-content">
-                </div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="smaller lighter blue no-margin">还款方式</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="profile-user-info profile-user-info-striped">
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 还款方式 </div>
+                                <div class="profile-info-value">
+                                    <select class="form-control" id="status" name="status">
+                                        <option value=null>请选择</option>
+                                        <option value="1">线下打款</option>
+                                        <option value="2">微信支付</option>
+                                        <option value="3">支付宝支付</option>
+                                        <option value="4">第三方代扣</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space visible-xs"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-success pull-right" data-dismiss="modal" @click="">
+                            <i class="ace-icon fa fa-check"></i>
+                            确定
+                        </button>
+                        <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                            <i class="ace-icon fa fa-times"></i>
+                            关闭
+                        </button>
+                    </div>
             </div>
         </div>
 
-        <div class="wrap pages pa-cen clearfix" id="wrap">
-            <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total" v-on:pagehandler="pageHandler"><zpagenav>
-        </div>
+
     </div><!-- /.page-content -->
 </div>
 <script src="/assets/js/jquery-2.1.4.min.js"></script>
+<#--<script src="/assets/js/bootstrap.min.js"></script>-->
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/axios.min.js"></script>
 <script src="/js/lib/vue/page/zpageNav.js"></script>
 <script src="/js/utils/numeral.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+    jQuery(function($) {
+        var active_class = 'active';
+        $('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
+            var th_checked = this.checked;//checkbox inside "TH" table header
+            $(this).closest('table').find('tbody > tr').each(function(){
+                var row = this;
+                if(th_checked) $(row).addClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', true);
+                else $(row).removeClass(active_class).find('input[type=checkbox]').eq(0).prop('checked', false);
+            });
+        });
+        $('#simple-table').on('click', 'td input[type=checkbox]' , function(){
+            var $row = $(this).closest('tr');
+            if($row.is('.detail-row ')) return;
+            if(this.checked) $row.addClass(active_class);
+            else $row.removeClass(active_class);
+        });
+    });
+
     var app = new Vue({
         el: '#dataDiv',
         data: {
@@ -152,6 +219,26 @@
         methods : {
             queryUser : function(){
                 query(this);
+            },
+            selectAll : function(event) {
+                var that = this;
+                if(!event.currentTarget.checked) { // 全部取消
+                    this.checkedIds = [];
+                }else{ // 全部选中
+                    that.checkedIds = [];
+                    that.applies.forEach(function(item) {
+                        that.checkedIds.push(item.id);
+                    });
+                }
+            },
+            batchRepay : function(){
+                var that = this;
+                if(that.checkedIds.length==0){
+                    layer.msg('请选择放款客户！');
+                    return;
+                }
+                $('#plan-modal').modal('toggle');
+                //pay(that,'确认执行批量放款操作？');
             },
             viewPaypal : function(applyId){
                 var that = this;

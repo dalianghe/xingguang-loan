@@ -13,4 +13,6 @@ public interface RepymtPlanMapper {
 
     void insertRepymtPlan(List<RepymtPlanEntity> list) throws Exception;
 
+    void updateNormalRepymtPlan(RepymtPlanEntity entity) throws Exception;
+
 }
