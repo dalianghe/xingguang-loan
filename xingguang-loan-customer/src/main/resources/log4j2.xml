@@ -14,5 +14,9 @@
             <appender-ref ref="RollingFile"/>
             <appender-ref ref="Console"/>
         </root>
+        <logger name="com.xingguang.customer">
+            <level value="DEBUG" />
+            <AppenderRef ref="STDOUT" />
+        </logger>
     </loggers>
 </configuration>
