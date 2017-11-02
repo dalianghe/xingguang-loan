@@ -9,6 +9,10 @@ import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.customer.product.entity.ProductInfo;
 import com.xingguang.customer.product.service.IProductService;
 import com.xingguang.customer.product.service.IProductTermService;
+import com.xingguang.customer.repymt.entity.RepymtPlan;
+import com.xingguang.customer.repymt.entity.RepymtPlanExample;
+import com.xingguang.customer.repymt.service.IRepymtApplyService;
+import com.xingguang.customer.repymt.service.IRepymtPlanService;
 import com.xingguang.customer.wdrl.entity.WdrlApply;
 import com.xingguang.customer.wdrl.entity.WdrlApplyExample;
 import com.xingguang.customer.wdrl.service.IWdrlApplyService;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by 宗旭 on 2017/10/01.
@@ -34,11 +39,11 @@ public class WdrlApplyController {
     @Autowired
     private IProductService productService;
     @Autowired
-    private IProductTermService productTermService;
-    @Autowired
     private ICreditInfoService creditInfoService;
     @Autowired
     private ICusUserInfoService userInfoService;
+    @Autowired
+    private IRepymtPlanService repymtPlanService;
 
     @RequestMapping(value = "/wdrl/apply",method = RequestMethod.POST)
     public ResultBean<?> apply(@RequestBody WdrlApply wdrlApply, @JWTParam(key = "userId", required = true) Long userId){
