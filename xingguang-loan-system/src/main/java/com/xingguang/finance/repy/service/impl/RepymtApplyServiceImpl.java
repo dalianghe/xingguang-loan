@@ -48,12 +48,16 @@ public class RepymtApplyServiceImpl implements IRepymtApplyService {
     @Transactional
     public void repaymentNormal(RepyDomain domain) throws Exception {
         List<RepymtApplyEntity> applies = new ArrayList<>();
+        RepymtApplyEntityCustom entityCustom = new RepymtApplyEntityCustom();
+        int status = domain.getRepymtType()==4 ? 20 : 30;
         for(Long id : domain.getIds()){
-            RepymtApplyEntityCustom entity = repymtApplyMapper.findNormalRepymtByUserId(id);
+            entityCustom.setCusUserId(id);
+            entityCustom.setPlanDate(DateUtils.getCurrentDate());
+            RepymtApplyEntityCustom entity = repymtApplyMapper.findNormalRepymtByUserId(entityCustom);
             RepymtApplyEntity apply = new RepymtApplyEntity();
             apply.setCusUserId(id);
             apply.setAmount(entity.getAmount());
-            apply.setStatus(20);
+            apply.setStatus(status);
             apply.setRepymtType(domain.getRepymtType());
             apply.setCreateTime(new Date());
             apply.setOperatorTime(new Date());
@@ -66,6 +70,7 @@ public class RepymtApplyServiceImpl implements IRepymtApplyService {
             RepymtPlanEntity plan = new RepymtPlanEntity();
             plan.setCusUserId(entity.getCusUserId());
             plan.setRepymtApplyId(entity.getId());
+            plan.setStauts(status);
             repymtPlanService.updateNormalRepymtPlan(plan);
         }
     }

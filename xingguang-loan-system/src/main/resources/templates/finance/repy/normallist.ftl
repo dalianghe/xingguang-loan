@@ -48,9 +48,9 @@
             </div>
             &nbsp;&nbsp;
             <div style="float:right;">
-                <button class="btn btn-white btn-info btn-bold" @click="batchRepay">
+                <button id="pay" class="btn btn-white btn-info btn-bold" @click="batchRepay">
                     <i class="ace-icon fa fa-paypal bigger-120 blue"></i>
-                    批量放款
+                    批量还款
                 </button>
             </div>
         </div>
@@ -85,7 +85,7 @@
                                 <tr v-for="(user,index) in applies">
                                     <td class="hidden-480" class="center">
                                         <label class="pos-rel">
-                                            <input type="checkbox" class="ace" :value="user.id" v-model="checkedIds"/>
+                                            <input type="checkbox" class="ace" :value="user.cusUserId" v-model="checkedIds"/>
                                             <span class="lbl"></span>
                                         </label>
                                     </td>
@@ -99,7 +99,7 @@
                                     <td>{{user.amount | numberFormatFilter}}</td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-info" @click="" title="查看还款计划" data-toggle="modal" data-target="#plan-modal">
+                                            <button class="btn btn-xs btn-info" @click="repyNormal(user.cusUserId)" data-toggle="modal" data-target="#plan-modal" title="还款操作">
                                                 <i class="ace-icon fa fa-gg bigger-120"></i>
                                             </button>
                                         </div>
@@ -144,7 +144,7 @@
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> 还款方式 </div>
                                 <div class="profile-info-value">
-                                    <select class="form-control" id="status" name="status">
+                                    <select class="form-control" id="status" name="status" v-model="repymtType">
                                         <option value=null>请选择</option>
                                         <option value="1">线下打款</option>
                                         <option value="2">微信支付</option>
@@ -157,7 +157,7 @@
                     </div>
                     <div class="space visible-xs"></div>
                     <div class="modal-footer">
-                        <button class="btn btn-sm btn-success pull-right" data-dismiss="modal" @click="">
+                        <button class="btn btn-sm btn-success pull-right" data-dismiss="modal" @click="confrim">
                             <i class="ace-icon fa fa-check"></i>
                             确定
                         </button>
@@ -168,8 +168,6 @@
                     </div>
             </div>
         </div>
-
-
     </div><!-- /.page-content -->
 </div>
 <script src="/assets/js/jquery-2.1.4.min.js"></script>
@@ -204,6 +202,7 @@
             applies: {},
             checkedIds : [],
             userName:null,
+            repymtType:null,
             page: 1,
             pageSize: 10,
             total: ''
@@ -227,7 +226,7 @@
                 }else{ // 全部选中
                     that.checkedIds = [];
                     that.applies.forEach(function(item) {
-                        that.checkedIds.push(item.id);
+                        that.checkedIds.push(item.cusUserId);
                     });
                 }
             },
@@ -237,8 +236,15 @@
                     layer.msg('请选择放款客户！');
                     return;
                 }
-                $('#plan-modal').modal('toggle');
-                //pay(that,'确认执行批量放款操作？');
+                $("#pay").attr("data-target","#plan-modal");
+                $("#pay").attr("data-toggle","modal");
+            },
+            repyNormal : function(userId){
+                var that = this;
+                that.checkedIds.push(userId);
+            },
+            confrim : function(){
+                repy(this);
             },
             viewPaypal : function(applyId){
                 var that = this;
@@ -257,7 +263,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"cusUserName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/finance/repy/normal', {
+        axios.get('/finance/repay/normal', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
@@ -273,23 +279,21 @@
             layer.close(idx);
         });
     }
-    function pay(obj , msg){
-        layer.confirm(msg, {icon: 3, title:'系统提示'}, function(index) {
-            var json = {"ids":obj.checkedIds , "status":"40"};
-            axios.post('/finance/pay/pay' , json).then(function (response) {
-                var result = response.data;
-                if(result.sysCode==0){
-                    if(result.bizCode==0){
-                        layer.msg('操作成功！');
-                        query(obj);
-                    }else{
-                        layer.alert(result.msg, {icon:2,title:"系统提示"});
-                    }
+    function repy(obj){
+        var json = {"ids":obj.checkedIds,"repymtType":obj.repymtType};
+        axios.post('/finance/repay/normal' , json).then(function (response) {
+            var result = response.data;
+            if(result.sysCode==0){
+                if(result.bizCode==0){
+                    layer.msg('操作成功！');
+                    query(obj);
+                }else{
+                    layer.alert(result.msg, {icon:2,title:"系统提示"});
                 }
-            }).catch(function (error) {
-                console.log(error);
-                layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
-            });
+            }
+        }).catch(function (error) {
+            console.log(error);
+            layer.alert('系统错误，请稍后重试！', {icon:2,title:"系统提示"});
         });
     }
     $('#nav-search-input').bind('keypress', function(event) {

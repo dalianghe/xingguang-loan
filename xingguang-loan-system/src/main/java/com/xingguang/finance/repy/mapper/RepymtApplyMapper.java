@@ -16,7 +16,7 @@ public interface RepymtApplyMapper {
 
     List<RepymtApplyEntityCustom> findNormalRepymtList(RepymtApplyEntityCustom entity) throws Exception;
 
-    RepymtApplyEntityCustom findNormalRepymtByUserId(Long cusUserId) throws Exception;
+    RepymtApplyEntityCustom findNormalRepymtByUserId(RepymtApplyEntityCustom entity) throws Exception;
 
     void insertRepymtApply(List<RepymtApplyEntity> list) throws Exception;
 

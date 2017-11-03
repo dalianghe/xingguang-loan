@@ -3,6 +3,7 @@ package com.xingguang.finance.repy.domain;
 import com.xingguang.common.domain.BaseDomain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description 用一句话描述该文件做什么
@@ -21,6 +22,8 @@ public class RepyDomain extends BaseDomain implements Serializable {
     private Long operatorId;
 
     private String operatorName;
+
+    private Date createTime;
 
     public Long[] getIds() {
         return ids;
@@ -60,5 +63,13 @@ public class RepyDomain extends BaseDomain implements Serializable {
 
     public void setOperatorName(String operatorName) {
         this.operatorName = operatorName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
