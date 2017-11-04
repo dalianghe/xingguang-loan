@@ -40,19 +40,13 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     @Override
     public void create(CreditApplyParam creditApplyParam) {
         CusUserInfo cusUserInfo = creditApplyParam.getCusUserInfo();
-        this.cusUserInfoService.update(cusUserInfo);
+        //this.cusUserInfoService.update(cusUserInfo);
 
         CreditApply creditApply = creditApplyParam.getCreditApply();
         WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(cusUserInfo.getId());
         String nowDate = LocalDate.now().format(this.formatter);
         creditApply.setApplyNo(nowDate + workUserInfo.getCityId());
         this.creditApplyMapper.insertSelectiveApplyNo(creditApply);
-
-        /**
-         select concat('171030130200', right('171030130200168001', 6) + 1) from credit_apply
-         where apply_no like '171030130200%'
-         limit 1
-         */
 
         CusUserLink cusUserLink = creditApplyParam.getCusUserLink();
         CusUserLinkExample example = new CusUserLinkExample();
