@@ -43,7 +43,8 @@
 
     <update id="updateNormalRepymtPlan" parameterType="com.xingguang.finance.plan.entity.RepymtPlanEntity">
         UPDATE repymt_plan SET
-        stauts=20, repymt_apply_id=#{repymtApplyId}
+        stauts=#{stauts},
+        repymt_apply_id=#{repymtApplyId}
         WHERE cus_user_id=#{cusUserId}
         AND stauts=10
     </update>

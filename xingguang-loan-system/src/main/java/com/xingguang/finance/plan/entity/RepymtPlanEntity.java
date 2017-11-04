@@ -23,7 +23,7 @@ public class RepymtPlanEntity implements Serializable {
     private Date actualDate; // 实际还款日期
     private BigDecimal penalty; // 罚息
     private Integer overdueDays; // 逾期天数
-    private Integer stauts; // 状态(1:未还款, 2:已逾期, 3:已还款, 4:逾期还款)
+    private Integer stauts; // 状态(10:未还款, 20:还款中, 30:已还款, 40:已逾期,50:逾期还款
     private Long repymtApplyId; // 还款申请表ID
 
     public Long getId() {
