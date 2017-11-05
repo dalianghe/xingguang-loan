@@ -65,4 +65,32 @@ public class HttpClientTest {
         System.out.println(result);
     }
 
+    @Test
+    public void testGetAccessRreportToken() throws Exception{
+        String url = "https://www.juxinli.com/api/v2/access_report_token";
+        Map<String,Object> userMap = new HashMap<>();
+        userMap.put("org_name","xingguangqianbao");
+        userMap.put("client_secret","1b9617b05de443749cd147a308d3c58b");
+        userMap.put("hours","per");
+
+        String result = httpClientHelper.doGet(url,userMap);
+
+        System.out.println(result);
+    }
+
+    @Test
+    public void testAccessReportData() throws Exception{
+        String url = "https://www.juxinli.com/api/access_report_data";
+        Map<String,Object> userMap = new HashMap<>();
+        userMap.put("client_secret","1b9617b05de443749cd147a308d3c58b");
+        userMap.put("access_token","c9782ea405d04d93b2e31fbd0ba3e0ad");
+        userMap.put("name","张红");
+        userMap.put("idcard","342623199206032728");
+        userMap.put("phone","15210371071");
+
+        String result = httpClientHelper.doGet(url,userMap);
+
+        System.out.println(result);
+    }
+
 }
