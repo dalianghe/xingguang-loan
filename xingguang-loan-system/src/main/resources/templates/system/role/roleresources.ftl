@@ -76,7 +76,7 @@
                                     </td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#my-modal" @click="queryResourceByRoleId(role.id)" title="分配资源">
+                                            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#my-modal"  @click="queryResourceByRoleId(role.id)" title="分配资源">
                                                 <i class="glyphicon glyphicon-share-alt"></i>
                                             </button>
                                         </div>
@@ -144,12 +144,6 @@
 <script src="/js/lib/jquery/jquery.serializejson.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    jQuery(function($){
-        $('#my-modal').on('hide.bs.modal', function () {
-            // 执行一些动作...
-            alert(1);
-        })
-    });
     var app = new Vue({
         el: '#dataDiv',
         data: {
@@ -158,7 +152,7 @@
             "selected" : "",
             "roleId" : ""
         },
-        created : function(){
+        mounted : function(){
             var idx = layer.load(2);
             var that=this;
             that.$http.get("/system/roles/resources").then(function(response){
@@ -193,6 +187,7 @@
                 });
             },
             queryResourceByRoleId : function(roleId){
+
                 this.roleId=roleId;
                 var param = {"roleId":roleId};
                 this.$http.get("/system/roles/resources/"+roleId+"?op=get",{params:param},{emulateJSON: true}).then(function(response){
@@ -232,10 +227,9 @@
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             //$(".modal-backdrop").removeClass("modal-backdrop");
-                            $('#my-modal').modal('hide');
+                            //$('#my-modal').modal('hide');
                             layer.msg('分配成功！');
                             app.$options.methods.queryRole();
-                            //callBack("/router/system/user/userroles");
                         }
                     }
                 }, function(response){

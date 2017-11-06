@@ -150,18 +150,11 @@
 </div>
 
 <script src="/assets/js/jquery.bootstrap-duallistbox.min.js"></script>
-
 <script src="/js/lib/vue/vue.min.js"></script>
 <script src="/js/lib/vue/vue-resource.min.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    jQuery(function($){
-        $("#my-modal").on("hidden.bs.modal", function() {
-            alert(1);
-            $('#my-modal').removeData("bs.modal");
-            $("#my-modal").find(".modal-content").children().remove();
-        });
-    });
+
     var app = new Vue({
         el: '#dataDiv',
         data: {
@@ -171,7 +164,7 @@
             roles: [],
             userId:""
         },
-        created : function(){
+        mounted : function(){
             var idx = layer.load(2);
             this.$http.get("/system/users/roles").then(function(response){
                 // 响应成功回调
@@ -188,14 +181,16 @@
         },
         methods : {
             queryUser : function(){
+                var that =this;
                 var idx = layer.load(2);
                 var param = {"userName":app.userName};
                 app.$http.get("/system/users/roles?op=get",{params:param},{emulateJSON: true}).then(function(response){
                     // 响应成功回调
                     var result = response.data;
+                    console.log(result);
                     if(result.sysCode==0){
                         if(result.bizCode==0){
-                            app.users = result.data;
+                            that.users = result.data;
                         }
                     }
                     layer.close(idx);
@@ -245,10 +240,9 @@
                     if(result.sysCode==0){
                         if(result.bizCode==0){
                             //$(".modal-backdrop").removeClass("modal-backdrop");
-                            $('#my-modal').modal('hide');
+                            //$('#my-modal').modal('hide');
                             layer.msg('分配成功！');
                             app.$options.methods.queryUser();
-                            //callBack("/router/system/user/userroles");
                         }
                     }
                 }, function(response){
