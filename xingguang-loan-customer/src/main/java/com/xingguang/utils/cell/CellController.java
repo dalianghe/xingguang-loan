@@ -1,7 +1,5 @@
 package com.xingguang.utils.cell;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.utils.cell.entity.AuthResponse;
 import com.xingguang.utils.cell.entity.CollectResponse;
@@ -37,6 +35,7 @@ public class CellController {
             resultBean.setMsg("必填参数不能为空！");
             return resultBean;
         }
+
         AuthResponse response = cellUtils.sendToAuth(domain);
         if(65557!=response.getCode() || !response.getSuccess()){
             resultBean = new ResultBean<>();
@@ -44,7 +43,20 @@ public class CellController {
             resultBean.setMsg("运营商授权失败！");
             return resultBean;
         }
-        resultBean = new ResultBean<>(response);
+
+        CollectResponse collectResponse = cellUtils.sendSms(response , domain.getCellPhoneNum() , domain.getPassword());
+        if(!collectResponse.getSuccess()){
+            logger.info("调用动态验证接口错误！");
+            resultBean = new ResultBean<>();
+            resultBean.setSysCode(ResultBean.FALL);
+            resultBean.setMsg("调用动态验证接口错误！");
+            return resultBean;
+        }
+        collectResponse.setToken(response.getData().getToken());
+        collectResponse.setWebsite(response.getData().getDatasource().getWebsite());
+        collectResponse.setPassword(domain.getCellPhoneNum());
+        collectResponse.setPassword(domain.getPassword());
+        resultBean = new ResultBean<>(collectResponse);
         resultBean.setSysCode(ResultBean.SUCCESS);
         return resultBean;
     }
@@ -53,6 +65,13 @@ public class CellController {
     public ResultBean<?> cellCollect(@RequestBody UserSmsInfoDomain domain) throws Exception{
         ResultBean<?> resultBean = null;
         CollectResponse response = cellUtils.collect(domain);
+        if(!response.getSuccess()){
+            logger.info("调用收集信息接口错误！");
+            resultBean = new ResultBean<>();
+            resultBean.setSysCode(ResultBean.FALL);
+            resultBean.setMsg("调用收集信息接口错误！");
+            return resultBean;
+        }
         resultBean = new ResultBean<>(response);
         resultBean.setSysCode(ResultBean.SUCCESS);
         return resultBean;

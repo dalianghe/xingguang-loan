@@ -8,6 +8,10 @@ import java.io.Serializable;
 public class CollectResponse implements Serializable {
 
     private Boolean success;
+    private String token;
+    private String phone;
+    private String password;
+    private String website;
     private Data data;
     class Data{
         private String process_code;
@@ -56,5 +60,37 @@ public class CollectResponse implements Serializable {
 
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

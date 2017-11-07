@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +49,18 @@ public class CellUtils {
         return response;
     }
 
+    public CollectResponse sendSms(AuthResponse response , String phone , String password){
+        JSONObject jsonParam = new JSONObject();
+        jsonParam.put("token",response.getData().getToken());
+        jsonParam.put("account", phone);
+        jsonParam.put("password", password);
+        jsonParam.put("website", response.getData().getDatasource().getWebsite());
+        String result = httpClientHelper.doPost(collectUrl , jsonParam);
+        CollectResponse collectResponse = JSONObject.parseObject(result , new TypeReference<CollectResponse>() {});
+        logger.info("聚信立短信接口返回：code="+collectResponse.getSuccess());
+        return collectResponse;
+    }
+
     public CollectResponse collect(UserSmsInfoDomain domain){
         JSONObject jsonParam = new JSONObject();
         jsonParam.put("token",domain.getToken());
@@ -61,7 +72,7 @@ public class CellUtils {
         jsonParam.put("queryPwd", domain.getQueryPwd());
         String result = httpClientHelper.doPost(collectUrl , jsonParam);
         CollectResponse response = JSONObject.parseObject(result , new TypeReference<CollectResponse>() {});
-        logger.info("聚信立授权返回：code="+response.getSuccess());
+        logger.info("聚信立运营商收集信息接口返回：code="+response.getSuccess());
         return response;
     }
 

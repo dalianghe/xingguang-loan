@@ -13,10 +13,10 @@ public class AuthResponse implements Serializable {
     private Data data;
 
 
-    class Data{
+    public class Data{
         private String token;
         private DataSource datasource;
-        class DataSource{
+        public class DataSource{
             private String website;
             public String getWebsite() {
                 return website;
