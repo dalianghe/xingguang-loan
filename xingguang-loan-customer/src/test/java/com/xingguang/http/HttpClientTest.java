@@ -1,12 +1,16 @@
 package com.xingguang.http;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.xingguang.utils.cell.entity.AuthResponse;
 import com.xingguang.utils.http.HttpClientHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +26,8 @@ public class HttpClientTest {
 
     @Autowired
     private HttpClientHelper httpClientHelper;
+    @Autowired
+    RestTemplate restTemplate;
 
     @Test
     public void doGetTest() throws Exception{
@@ -45,6 +51,7 @@ public class HttpClientTest {
         jsonParam.put("skip_mobile", false);
         jsonParam.put("basic_info", userMap);
         String result = httpClientHelper.doPost(url , jsonParam);
+        AuthResponse response = JSON.parseObject(result , new TypeReference<AuthResponse>() {});
         System.out.println(result);
     }
 
@@ -52,17 +59,17 @@ public class HttpClientTest {
     public void doPostTest1() throws Exception {
         String url = "https://www.juxinli.com/orgApi/rest/v2/messages/collect/req";
         JSONObject jsonParam = new JSONObject();
-        jsonParam.put("token","98d7c68ddf794a23b78da93eb07acbd8");
+        jsonParam.put("token","6dba6e19b48448a18f11a7ae3fe869ab");
         //jsonParam.put("account", "15210371071");
         //jsonParam.put("password", "102806zh");
         jsonParam.put("account", "13611201362");
-        jsonParam.put("password", "58743113");
+        jsonParam.put("password", "85743113");
         jsonParam.put("website", "chinamobilebj");
-        jsonParam.put("captcha", "333215");
-        jsonParam.put("type", "SUBMIT_CAPTCHA");
+        //jsonParam.put("captcha", "333215");
+        //jsonParam.put("type", "SUBMIT_CAPTCHA");
         //jsonParam.put("queryPwd", "19920603");
-        jsonParam.put("queryPwd", "85743113");
-       jsonParam.put("type", "SUBMIT_QUERY_PWD");
+        //jsonParam.put("queryPwd", "85743113");
+        //jsonParam.put("type", "SUBMIT_QUERY_PWD");
         String result = httpClientHelper.doPost(url , jsonParam);
         System.out.println(result);
     }
@@ -82,7 +89,7 @@ public class HttpClientTest {
 
     @Test
     public void testAccessReportData() throws Exception{
-        String url = "https://www.juxinli.com/api/access_report_data";
+        String url = "https://www.juxinli.com/api/access_raw_data";
         Map<String,Object> userMap = new HashMap<>();
         userMap.put("client_secret","1b9617b05de443749cd147a308d3c58b");
         userMap.put("access_token","c9782ea405d04d93b2e31fbd0ba3e0ad");
