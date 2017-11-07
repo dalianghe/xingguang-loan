@@ -52,15 +52,17 @@ public class HttpClientTest {
     public void doPostTest1() throws Exception {
         String url = "https://www.juxinli.com/orgApi/rest/v2/messages/collect/req";
         JSONObject jsonParam = new JSONObject();
-        jsonParam.put("token","faa1baa1f65b4b22a3f569e31b1987f6");
+        jsonParam.put("token","98d7c68ddf794a23b78da93eb07acbd8");
         //jsonParam.put("account", "15210371071");
         //jsonParam.put("password", "102806zh");
         jsonParam.put("account", "13611201362");
         jsonParam.put("password", "58743113");
         jsonParam.put("website", "chinamobilebj");
-        //jsonParam.put("captcha", "254263");
+        jsonParam.put("captcha", "333215");
+        jsonParam.put("type", "SUBMIT_CAPTCHA");
         //jsonParam.put("queryPwd", "19920603");
-       // jsonParam.put("type", "SUBMIT_QUERY_PWD");
+        jsonParam.put("queryPwd", "85743113");
+       jsonParam.put("type", "SUBMIT_QUERY_PWD");
         String result = httpClientHelper.doPost(url , jsonParam);
         System.out.println(result);
     }
@@ -84,9 +86,12 @@ public class HttpClientTest {
         Map<String,Object> userMap = new HashMap<>();
         userMap.put("client_secret","1b9617b05de443749cd147a308d3c58b");
         userMap.put("access_token","c9782ea405d04d93b2e31fbd0ba3e0ad");
-        userMap.put("name","张红");
+        /*userMap.put("name","张红");
         userMap.put("idcard","342623199206032728");
-        userMap.put("phone","15210371071");
+        userMap.put("phone","15210371071");*/
+        userMap.put("name","何大亮");
+        userMap.put("idcard","130130198206061255");
+        userMap.put("phone","13611201362");
 
         String result = httpClientHelper.doGet(url,userMap);
 

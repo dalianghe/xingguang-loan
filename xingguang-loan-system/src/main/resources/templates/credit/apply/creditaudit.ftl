@@ -227,7 +227,7 @@
                                         <form id="auditForm">
                                             <div class="profile-user-info profile-user-info-striped">
                                                 <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 审核结果 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 审核结果 </div>
                                                     <div class="profile-info-value">
                                                         <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                             <label>
@@ -235,7 +235,7 @@
                                                                 <span class="lbl"> 通过</span>
                                                             </label>
                                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                                            <label>
+                                                            <label id="statusDiv">
                                                                 <input name="status" type="radio" class="ace" v-model="audit.status" value="3" @click="chooseResult"/>
                                                                 <span class="lbl"> 不通过</span>
                                                             </label>
@@ -243,20 +243,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="profile-info-row" id="productDiv" style="display: none">
-                                                    <div class="profile-info-name"> 授信产品 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 授信产品 </div>
                                                     <div class="profile-info-value">
-                                                        <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
+                                                        <div id="tipsProductDiv" class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                             <label v-for="(product,index) in products">
-                                                                <input name="productId" type="radio" class="ace" v-model="audit.productId" :value="product.id" @click="chooseTerm(product.id)"/>
+                                                                <input id="product" name="productId" type="radio" class="ace" v-model="audit.productId" :value="product.id" @click="chooseTerm(product.id)"/>
                                                                 <span class="lbl"> {{product.name}} </span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="profile-info-row" id="termDiv" style="display: none">
-                                                    <div class="profile-info-name"> 期限 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 期限 </div>
                                                     <div class="profile-info-value">
-                                                        <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
+                                                        <div id="tipsTermDiv" class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                             <label v-for="term in terms">
                                                                 <input name="termId" type="radio" class="ace" v-model="audit.termId"  :value="term.id"/>
                                                                 <span class="lbl"> {{term.termName}} </span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -265,15 +265,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="profile-info-row" id="amountDiv" style="display: none">
-                                                    <div class="profile-info-name"> 授信金额 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 授信金额 </div>
                                                     <div class="profile-info-value">
                                                         <input type="text" id="amount" name="amount" v-model="audit.amount" placeholder="请输入授信金额"/>（元）
                                                     </div>
                                                 </div>
                                                 <div class="profile-info-row" id="refuseCodeDiv" style="display: none">
-                                                    <div class="profile-info-name"> 拒贷码 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 拒贷码 </div>
                                                     <div class="profile-info-value">
-                                                        <select class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
+                                                        <select id="refuseCodeId" class="form-control"  v-model="audit.refuseCode" style="width: 20%;">
                                                             <option disabled value=null>请选择</option>
                                                             <option v-for="refuse in refuses" :value="refuse.refuseCode">{{refuse.refuseName}}</option>
                                                         </select>
@@ -350,7 +350,7 @@
                     creditRemark : ""
                 }
             },
-            created : function(){
+            mounted : function(){
                 var that=this;
                 axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(),
                               getCreditApplyInfo(), getCodeResuse(), getProductList()])
@@ -430,6 +430,32 @@
                     layer.close(idx);
                 },
                 auditCredit : function(){
+
+                    var result = $('input:radio[name="status"]:checked').val();
+                    if(result==null){
+                        layer.tips('请选择审核结果！', $("#statusDiv") );
+                        return;
+                    }else if(result==3){
+                        if($("#refuseCodeId").val()==null){
+                            layer.tips('请选择拒贷码！', $("#refuseCodeId") );
+                            return;
+                        }
+                    }else{
+                        var product = $('input:radio[name="productId"]:checked').val();
+                        if(product==null){
+                            layer.tips('请选择授信产品！', $("#tipsProductDiv") ,{tips:1});
+                            return;
+                        }
+                        var termId = $('input:radio[name="termId"]:checked').val();
+                        if(termId==null){
+                            layer.tips('请选择授信期限！', $("#tipsTermDiv") ,{tips:1});
+                            return;
+                        }
+                        if($("#amount").val()==""){
+                            layer.tips('请输入授信金额！', $("#amount") ,{tips:1});
+                            return;
+                        }
+                    }
                     this.audit.cusUserId = "${userId}";
                     this.audit.id = "${applyId}";
                     layer.confirm('确认执行提交操作吗？', {icon: 3, title:'系统提示'}, function(index){
