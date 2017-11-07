@@ -18,6 +18,8 @@ public class VerifyCodeController {
 
     private final Logger logger = LogManager.getLogger(VerifyCodeController.class);
 
+    private final String imgCodeKey = "_IMG_CODE_KEY";
+
     @RequestMapping(value = "/verify/code", method = RequestMethod.GET)
     public void buildVerifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Pragma", "No-cache");
@@ -29,7 +31,7 @@ public class VerifyCodeController {
         String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
         //存入会话session
         HttpSession session = request.getSession();
-        session.setAttribute("rand", verifyCode.toLowerCase());
+        session.setAttribute(this.imgCodeKey, verifyCode.toLowerCase());
         //生成图片
         int w = 200, h = 80;
         VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
@@ -38,7 +40,7 @@ public class VerifyCodeController {
     @RequestMapping(value = "/verify/code/{verifyCode}", method = RequestMethod.GET)
     public ResultBean<?> validateVerifyCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String verifyCode) throws IOException {
         HttpSession session = request.getSession();
-        String sessionVerifyCode = (String)session.getAttribute("rand");
+        String sessionVerifyCode = (String)session.getAttribute(this.imgCodeKey);
         if(verifyCode.toLowerCase().equals(sessionVerifyCode)){
             return new ResultBean(1);
         }
