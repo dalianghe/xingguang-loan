@@ -5,6 +5,7 @@ import com.xingguang.utils.verifycode.VerifyCodeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,21 +21,28 @@ public class SmsController {
 
     private final Logger logger = LogManager.getLogger(SmsController.class);
 
+    public static final String SMS_CODE_KEY = "_SMS_CODE_KEY";
+
+    @Value("${SMS.VALIDATE_CODE_TEMPLATE}")
+    private String smsCodeTemplet;
+
     @Autowired
     private SmsUtils smsUtils;
 
-    @RequestMapping(value = "/sms/send", method = RequestMethod.GET)
-    public void buildVerifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-//        this.smsUtils.sendSms()
-//        //生成随机字串
-//        String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
-//        //存入会话session
-//        HttpSession session = request.getSession();
-//        session.setAttribute(this.imgCodeKey, verifyCode.toLowerCase());
-//        //生成图片
-//        int w = 200, h = 80;
-//        VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
+    @RequestMapping(value = "/sms/send/{mobile}", method = RequestMethod.GET)
+    public ResultBean<?> buildVerifyCode(@PathVariable String mobile, HttpServletRequest request) throws Exception {
+        String time = String.valueOf(System.currentTimeMillis());
+        String smsCode = time.substring(time.length() - 4, time.length());
+        new Thread(() -> {
+            try {
+                SmsController.this.smsUtils.sendSms(mobile, String.format(this.smsCodeTemplet, smsCode));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+        this.smsUtils.sendSms(mobile, smsCode);
+        request.getSession().setAttribute(SMS_CODE_KEY, smsCode);
+        return new ResultBean();
     }
 
 }
