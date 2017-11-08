@@ -59,11 +59,11 @@
                                         <form id="userForm">
                                             <div class="profile-user-info profile-user-info-striped">
                                                 <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 姓名 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 姓名 </div>
                                                     <div class="profile-info-value">
-                                                        <input type="text" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
+                                                        <input type="text" id="name" name="name" placeholder="请输入用户姓名" v-model="user.name"/>
                                                     </div>
-                                                    <div class="profile-info-name"> 性别 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 性别 </div>
                                                     <div class="profile-info-value">
                                                         <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                             <label>
@@ -80,20 +80,20 @@
                                                 </div>
 
                                                 <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 手机号 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 手机号 </div>
                                                     <div class="profile-info-value">
                                                         <div class="input-group">
-                                                            <input type="text" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
+                                                            <input type="text" id="phone" name="phone" placeholder="请输入用户手机号" v-model="user.phone"/>
                                                         </div>
                                                     </div>
-                                                    <div class="profile-info-name"> 身份证号 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 身份证号 </div>
                                                     <div class="profile-info-value">
-                                                        <input type="text" name="idNo" placeholder="请输入用户手机号" v-model="user.idNo"/>
+                                                        <input type="text" id="idNo" name="idNo" placeholder="请输入用户手机号" v-model="user.idNo"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="profile-info-row">
-                                                    <div class="profile-info-name"> 所在省 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 所在省 </div>
                                                     <div class="profile-info-value">
                                                         <select class="form-control" id="provinceId" name="provinceId" v-model="provinceSelected">
                                                             <option disabled value=null>请选择</option>
@@ -102,7 +102,7 @@
 
                                                         <input type="hidden" id="provinceName" name="provinceName"/>
                                                     </div>
-                                                    <div class="profile-info-name"> 所在市 </div>
+                                                    <div class="profile-info-name"><span style="color: red">*</span> 所在市 </div>
                                                     <div class="profile-info-value">
                                                         <select class="form-control" id="cityId" name="cityId" v-model="citySelected">
                                                             <option disabled value=null>请选择</option>
@@ -184,7 +184,7 @@
                 provinceSelected : {},
                 citySelected : ""
             },
-            created : function(){
+            mounted : function(){
                 var that=this;
                 axios.all([getWorkInfo()]).then(axios.spread(function (worker) {
                     var result = worker.data;
@@ -205,6 +205,18 @@
             },
             methods : {
                 saveUser : function(){
+                    if($("#name").val()==""){
+                        layer.tips('姓名不能为空！', $("#name"),{tips: 1});
+                        return;
+                    }
+                    if($("#phone").val()==""){
+                        layer.tips('手机号不能为空！', $("#phone"),{tips: 1});
+                        return;
+                    }
+                    if($("#idNo").val()==""){
+                        layer.tips('身份证不能为空！', $("#idNo"),{tips: 1});
+                        return;
+                    }
                     var provinceName=$("#provinceId option:selected").text();
                     var cityName=$("#cityId option:selected").text();
                     $("#provinceName").val(provinceName);

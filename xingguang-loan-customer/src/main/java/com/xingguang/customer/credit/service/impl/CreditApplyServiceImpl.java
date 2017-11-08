@@ -15,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.acl.LastOwnerException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Created by admin on 2017/10/1.
  */
@@ -31,28 +35,16 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     @Autowired
     private IWorkUserInfoService workUserInfoService;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
 
     @Override
-    public void create(CreditApplyParam creditApplyParam) {
-        CusUserInfo cusUserInfo = creditApplyParam.getCusUserInfo();
-        this.cusUserInfoService.update(cusUserInfo);
-
-        CreditApply creditApply = creditApplyParam.getCreditApply();
-        WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(cusUserInfo.getId());
-        creditApply.setApplyNo(workUserInfo.getCityId().toString());
+    public void create(CreditApply creditApply) {
+        WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(creditApply.getCusUserId());
+        String nowDate = LocalDate.now().format(this.formatter);
+        creditApply.setApplyNo(nowDate + workUserInfo.getCityId());
+        creditApply.setWorkUserId(workUserInfo.getId());
+        creditApply.setWorkUserName(workUserInfo.getName());
         this.creditApplyMapper.insertSelectiveApplyNo(creditApply);
-
-        /**
-         select concat('171030130200', right('171030130200168001', 6) + 1) from credit_apply
-         where apply_no like '171030130200%'
-         limit 1
-         */
-
-        CusUserLink cusUserLink = creditApplyParam.getCusUserLink();
-        CusUserLinkExample example = new CusUserLinkExample();
-        example.createCriteria().andCusUserIdEqualTo(cusUserLink.getCusUserId());
-        this.cusUserLinkService.delete(example);
-        this.cusUserLinkService.create(cusUserLink);
-
     }
+
 }

@@ -38,4 +38,10 @@ public class RepymtPlanServiceImpl implements IRepymtPlanService{
         // step 2:插入还款计划
         this.insertRepymtPlan(list);
     }
+
+    @Override
+    @Transactional
+    public void updateNormalRepymtPlan(RepymtPlanEntity entity) throws Exception {
+        repymtPlanMapper.updateNormalRepymtPlan(entity);
+    }
 }

@@ -238,7 +238,7 @@
             stopPaypal : function(applyId){
                 var that = this;
                 layer.confirm('确认终止该客户放款操作？', {icon: 3, title:'系统提示'}, function(index) {
-                    var json = {"id":applyId , "status":"50"};
+                    var json = {"id":applyId , "status":"35"};
                     axios.post('/finance/pay/stop' , json).then(function (response) {
                         var result = response.data;
                         if(result.sysCode==0){
@@ -283,7 +283,7 @@
     }
     function pay(obj , msg){
         layer.confirm(msg, {icon: 3, title:'系统提示'}, function(index) {
-            var json = {"ids":obj.checkedIds , "status":"40"};
+            var json = {"ids":obj.checkedIds , "status":"30"};
             axios.post('/finance/pay/pay' , json).then(function (response) {
                 var result = response.data;
                 if(result.sysCode==0){

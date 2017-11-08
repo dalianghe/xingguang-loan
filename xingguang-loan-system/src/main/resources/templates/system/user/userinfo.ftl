@@ -151,8 +151,6 @@
             </div>-->
         </div>
     </div>
-<input type="hidden" id="userId" name="userId" value="${id}"/>
-
 
     <!-- basic scripts -->
     <!--[if !IE]> -->
@@ -189,8 +187,8 @@
             data: {
                 user: ""
             },
-            created : function(){
-                var userId = $("#userId").val();
+            mounted : function(){
+                var userId = parent.$("#userId").val();
                 var that=this;
                 $.ajax({
                     url: "/system/user/"+userId,

@@ -13,6 +13,7 @@ import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import com.xingguang.utils.oss.OssUtils;
 import com.xingguang.utils.real.RealUtils;
+import com.xingguang.utils.sms.SmsController;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +55,10 @@ public class AuthController {
 
 
     @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
-    public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception {
+    public ResultBean<?> register(@RequestBody AuthBean authBean, HttpServletRequest request) throws Exception {
         // 验证短信验证码是否正确
         String clientSmsCode = authBean.getSmsCode();
-        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
+        String serverSmsCode = (String)request.getSession().getAttribute(SmsController.SMS_CODE_KEY); // 模拟，后期需从存储中获取 TODO
         if (!clientSmsCode.equals(serverSmsCode)) {
             throw new CustomException("验证码错误");
         }

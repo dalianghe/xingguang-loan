@@ -1,5 +1,6 @@
 package com.xingguang.customer.credit.service;
 
+import com.xingguang.customer.credit.entity.CreditApply;
 import com.xingguang.customer.credit.params.CreditApplyParam;
 
 /**
@@ -7,6 +8,6 @@ import com.xingguang.customer.credit.params.CreditApplyParam;
  */
 public interface ICreditApplyService {
 
-    void create(CreditApplyParam creditApplyParam);
+    void create(CreditApply creditApply);
 
 }

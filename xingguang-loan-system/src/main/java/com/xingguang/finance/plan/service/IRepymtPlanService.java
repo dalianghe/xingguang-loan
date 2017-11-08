@@ -15,4 +15,6 @@ public interface IRepymtPlanService {
 
     public void addRepymtPlan(Long id , List<RepymtPlanEntity> list) throws Exception;
 
+    public void updateNormalRepymtPlan(RepymtPlanEntity entity) throws Exception;
+
 }

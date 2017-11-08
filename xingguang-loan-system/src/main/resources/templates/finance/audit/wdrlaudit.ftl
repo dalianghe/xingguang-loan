@@ -206,16 +206,16 @@
                                         <form id="auditForm">
                                             <div class="profile-user-info profile-user-info-striped">
                                                 <div class="profile-info-row">
-                                                <div class="profile-info-name"> 审核结果 </div>
+                                                <div class="profile-info-name"><span style="color: red">*</span> 审核结果 </div>
                                                 <div class="profile-info-value">
                                                     <div class="col-xs-10 col-sm-12" style="margin-left: -12px;">
                                                         <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="30"/>
+                                                            <input name="status" type="radio" class="ace" v-model="audit.status"  value="20"/>
                                                             <span class="lbl"> 通过</span>
                                                         </label>
                                                         &nbsp;&nbsp;
-                                                        <label>
-                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="20"/>
+                                                        <label id="statusDiv">
+                                                            <input name="status" type="radio" class="ace" v-model="audit.status" value="25"/>
                                                             <span class="lbl"> 不通过</span>
                                                         </label>
                                                     </div>
@@ -294,7 +294,7 @@
             methods : {
                 auditCredit : function(){
                     if(this.audit.status==""){
-                        layer.msg('请选择审核结果！');
+                        layer.tips('请选择审核结果！', $("#statusDiv") );
                         return;
                     }
                     layer.confirm('确认执行提交操作吗？', {icon: 3, title:'系统提示'}, function(index){

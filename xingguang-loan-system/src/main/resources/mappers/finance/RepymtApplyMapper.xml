@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.finance.repy.mapper.RepymtApplyMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.finance.repy.entity.RepymtApplyEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="cus_user_id" property="cusUserId" jdbcType="DECIMAL" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="operator_time" property="operatorTime" jdbcType="TIMESTAMP" />
+        <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+        <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.finance.repy.entity.custom.RepymtApplyEntityCustom">
+        <result column="cus_user_id" property="cusUserId" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+        <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="principal" property="principal" jdbcType="BIGINT" />
+        <result column="interest" property="interest" jdbcType="BIGINT" />
+        <result column="amount" property="amount" jdbcType="BIGINT" />
+    </resultMap>
+
+    <select id="findNormalRepymtList" parameterType="com.xingguang.finance.repy.entity.custom.RepymtApplyEntityCustom" resultMap="BaseResultMapCustom">
+        select t1.id cus_user_id,t1.name,t1.id_no,t3.card_no,t3.phone,t3.bank_name,t2.principal,t2.interest,(t2.principal+t2.interest) amount
+        from cus_user_info t1
+        inner join
+        (select t1.cus_user_id,sum(t1.principal) principal,sum(t1.interest) interest from repymt_plan t1
+        where t1.stauts = 10
+        and t1.plan_date = #{planDate}
+        group by t1.cus_user_id) t2 on t1.id = t2.cus_user_id
+        inner join cus_bank_card t3 on t1.id = t3.cus_user_id and t3.is_default=1
+        <if test="name != null" >
+            AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+    </select>
+
+    <select id="findNormalRepymtByUserId" parameterType="com.xingguang.finance.repy.entity.custom.RepymtApplyEntityCustom" resultMap="BaseResultMapCustom">
+        SELECT t1.cus_user_id, sum(t1.principal) principal, sum(t1.interest) interest, (t1.principal+t1.interest) amount
+        FROM repymt_plan t1
+        WHERE t1.stauts = 10
+        AND t1.plan_date = #{planDate}
+        AND t1.cus_user_id = #{cusUserId}
+        GROUP BY t1.cus_user_id
+    </select>
+
+    <insert id="insertRepymtApply" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO repymt_apply(cus_user_id, amount, status, repymt_type, create_time, operator_time, operator_id, operator_name)
+        VALUES
+        <foreach collection="list" index="index" item="apply" separator=",">
+            (
+            #{apply.cusUserId},#{apply.amount}, #{apply.status}, #{apply.repymtType}, #{apply.createTime}, #{apply.operatorTime}, #{apply.operatorId}, #{apply.operatorName}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

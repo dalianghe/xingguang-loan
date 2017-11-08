@@ -35,7 +35,7 @@
         t1.id, t1.cus_user_id, t1.cus_user_name, t1.bank_card_id, t1.reserve_phone, t1.amount, t1.create_time, t1.status,
         t1.auditor_id, t1.auditor_name, t1.auditor_time, t1.operator_id, t1.operator_name,
         t1.issue_time, t1.product_id, t1.term_id, t1.service_charge, t1.acc_mgmt_charge,
-         if(t1.status='10','待审核',if(t1.status='20','审核不通过',if(t1.status=30,'待放款',if(t1.status=40,'已放款',if(t1.status=50,'终止放款','结清'))))) status_name,
+         if(t1.status='10','待审核',if(t1.status='20','审核通过',if(t1.status=25,'审核不通过',if(t1.status=30,'已放款',if(t1.status=35,'终止放款',if(t1.status=40,'已结清',if(t1.status=45,'已逾期','未知状态'))))))) status_name,
         (select name from product_info where id = t1.product_id) product_name,
         (select term_name from product_term_info where id = t1.term_id) term_name
     </sql>
@@ -57,7 +57,7 @@
         t2.status credit_status,if(t2.status=1,'正常','锁定') credit_status_name
         FROM wdrl_apply t1
         INNER JOIN credit_info t2 on t1.cus_user_id = t2.cus_user_id
-        WHERE t1.status = 30
+        WHERE t1.status = 20
         <if test="cusUserName != null" >
             AND t1.cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
         </if>
@@ -69,7 +69,7 @@
         <include refid="Base_Column_List" />,
         t1.amount-t1.service_charge pay_amount
         FROM wdrl_apply t1
-        WHERE t1.status = 40
+        WHERE t1.status = 30
         <if test="cusUserName != null" >
             AND t1.cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')
         </if>
