@@ -40,6 +40,7 @@ public class SmsController {
                 e.printStackTrace();
             }
         }).start();
+        this.logger.debug("sms code :==============: " + smsCode);
         this.smsUtils.sendSms(mobile, smsCode);
         request.getSession().setAttribute(SMS_CODE_KEY, smsCode);
         return new ResultBean();

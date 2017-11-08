@@ -38,22 +38,13 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
 
     @Override
-    public void create(CreditApplyParam creditApplyParam) {
-        CusUserInfo cusUserInfo = creditApplyParam.getCusUserInfo();
-        //this.cusUserInfoService.update(cusUserInfo);
-
-        CreditApply creditApply = creditApplyParam.getCreditApply();
-        WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(cusUserInfo.getId());
+    public void create(CreditApply creditApply) {
+        WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(creditApply.getCusUserId());
         String nowDate = LocalDate.now().format(this.formatter);
         creditApply.setApplyNo(nowDate + workUserInfo.getCityId());
+        creditApply.setWorkUserId(workUserInfo.getId());
+        creditApply.setWorkUserName(workUserInfo.getName());
         this.creditApplyMapper.insertSelectiveApplyNo(creditApply);
-
-        CusUserLink cusUserLink = creditApplyParam.getCusUserLink();
-        CusUserLinkExample example = new CusUserLinkExample();
-        example.createCriteria().andCusUserIdEqualTo(cusUserLink.getCusUserId());
-        this.cusUserLinkService.delete(example);
-        this.cusUserLinkService.create(cusUserLink);
-
     }
 
 }

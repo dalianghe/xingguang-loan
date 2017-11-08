@@ -2,6 +2,7 @@ package com.xingguang.customer.credit.controller;
 
 import com.xingguang.beans.ResultBean;
 import com.xingguang.config.JWTParam;
+import com.xingguang.customer.credit.entity.CreditApply;
 import com.xingguang.customer.credit.entity.CreditInfo;
 import com.xingguang.customer.credit.params.CreditApplyParam;
 import com.xingguang.customer.credit.service.ICreditApplyService;
@@ -23,20 +24,16 @@ public class CreditController {
     private ICreditInfoService creditInfoService;
 
     @RequestMapping(value = "/credit/apply",method = RequestMethod.POST)
-    public ResultBean<?> createCreditApply(@RequestBody CreditApplyParam creditApplyParam,
-                                           @JWTParam(key = "userId", required = true) Long userId){
+    public ResultBean<?> createCreditApply(@RequestBody String phonePwd,
+                                           @JWTParam(key = "userId", required = true) Long userId,
+                                           @JWTParam(key = "phone", required = true) String phone){
 
-        creditApplyParam.getCreditApply().setCusUserId(userId);
-        creditApplyParam.getCreditApply().setStatus(1);
-        final Date now = new Date();
-        creditApplyParam.getCreditApply().setCreateTime(now);
 
-        creditApplyParam.getCusUserInfo().setId(userId);
 
-        creditApplyParam.getCusUserLink().setCusUserId(userId);
-        creditApplyParam.getCusUserLink().setCreateTime(now);
-
-        this.creditApplyService.create(creditApplyParam);
+        CreditApply creditApply = new CreditApply();
+        creditApply.setCusUserId(userId);
+        creditApply.setCreateTime(new Date());
+        this.creditApplyService.create(creditApply);
         return new ResultBean();
     }
 
