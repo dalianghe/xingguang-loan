@@ -1,6 +1,8 @@
 package com.xingguang.utils.sms;
 
 import com.xingguang.beans.ResultBean;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
+import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import com.xingguang.utils.verifycode.VerifyCodeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 @RestController
 public class SmsController {
@@ -29,13 +32,26 @@ public class SmsController {
     @Autowired
     private SmsUtils smsUtils;
 
+    @Autowired
+    private ISysInterfaceLogService sysInterfaceLogService;
+
     @RequestMapping(value = "/sms/send/{mobile}", method = RequestMethod.GET)
     public ResultBean<?> buildVerifyCode(@PathVariable String mobile, HttpServletRequest request) throws Exception {
         String time = String.valueOf(System.currentTimeMillis());
         String smsCode = time.substring(time.length() - 4, time.length());
         new Thread(() -> {
             try {
-                SmsController.this.smsUtils.sendSms(mobile, String.format(this.smsCodeTemplet, smsCode));
+                String content = String.format(SmsController.this.smsCodeTemplet, smsCode);
+                SmsController.this.smsUtils.sendSms(mobile, content);
+                SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
+                sysInterfaceLogWithBLOBs.setType(1);
+                sysInterfaceLogWithBLOBs.setStatus(2);
+                sysInterfaceLogWithBLOBs.setCreateTime(new Date());
+                sysInterfaceLogWithBLOBs.setRoleType(2);
+                sysInterfaceLogWithBLOBs.setSendData(content);
+                sysInterfaceLogWithBLOBs.setUserId(0L);
+                sysInterfaceLogWithBLOBs.setPhone(mobile);
+                SmsController.this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
             } catch (Exception e) {
                 e.printStackTrace();
             }

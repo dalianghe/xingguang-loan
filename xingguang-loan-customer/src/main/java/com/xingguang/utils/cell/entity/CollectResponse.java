@@ -13,7 +13,7 @@ public class CollectResponse implements Serializable {
     private String password;
     private String website;
     private Data data;
-    class Data{
+    public class Data{
         private String process_code;
         private String content;
         private ReqMsgTpl req_msg_tpl;

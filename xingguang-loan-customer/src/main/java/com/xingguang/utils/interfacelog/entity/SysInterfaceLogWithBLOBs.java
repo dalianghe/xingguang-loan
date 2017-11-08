@@ -1,4 +1,4 @@
-package com.xingguang.customer.interfacelog.entity;
+package com.xingguang.utils.interfacelog.entity;
 
 public class SysInterfaceLogWithBLOBs extends SysInterfaceLog {
     private String sendData;

@@ -1,8 +1,8 @@
-package com.xingguang.customer.interfacelog.mapper;
+package com.xingguang.utils.interfacelog.mapper;
 
-import com.xingguang.customer.interfacelog.entity.SysInterfaceLog;
-import com.xingguang.customer.interfacelog.entity.SysInterfaceLogExample;
-import com.xingguang.customer.interfacelog.entity.SysInterfaceLogWithBLOBs;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLog;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLogExample;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

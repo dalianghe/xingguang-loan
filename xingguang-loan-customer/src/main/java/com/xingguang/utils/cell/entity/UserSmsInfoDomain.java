@@ -15,6 +15,9 @@ public class UserSmsInfoDomain implements Serializable {
     private String type;
     private String queryPwd; // 客服密码
 
+    private String name;
+    private String idNo;
+
     public String getToken() {
         return token;
     }
@@ -69,5 +72,21 @@ public class UserSmsInfoDomain implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 }

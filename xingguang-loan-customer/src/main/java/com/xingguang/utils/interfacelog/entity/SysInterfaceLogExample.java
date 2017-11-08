@@ -1,4 +1,4 @@
-package com.xingguang.customer.interfacelog.entity;
+package com.xingguang.utils.interfacelog.entity;
 
 import java.util.ArrayList;
 import java.util.Date;

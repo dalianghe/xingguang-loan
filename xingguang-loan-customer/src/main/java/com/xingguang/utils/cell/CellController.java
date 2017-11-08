@@ -1,10 +1,13 @@
 package com.xingguang.utils.cell;
 
 import com.xingguang.beans.ResultBean;
+import com.xingguang.config.JWTParam;
 import com.xingguang.utils.cell.entity.AuthResponse;
 import com.xingguang.utils.cell.entity.CollectResponse;
 import com.xingguang.utils.cell.entity.UserBasicInfoDomain;
 import com.xingguang.utils.cell.entity.UserSmsInfoDomain;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
+import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 
 /**
  * Created by admin on 2017/11/7.
@@ -25,6 +29,9 @@ public class CellController {
 
     @Autowired
     private CellUtils cellUtils;
+
+    @Autowired
+    private ISysInterfaceLogService sysInterfaceLogService;
 
     @RequestMapping(value = "/cell/auth" , method = RequestMethod.POST)
     public ResultBean<?> cellAuth(@RequestBody UserBasicInfoDomain domain) throws Exception{
@@ -62,7 +69,8 @@ public class CellController {
     }
 
     @RequestMapping(value = "/cell/collect" , method = RequestMethod.POST)
-    public ResultBean<?> cellCollect(@RequestBody UserSmsInfoDomain domain) throws Exception{
+    public ResultBean<?> cellCollect(@RequestBody UserSmsInfoDomain domain,
+            @JWTParam(key = "userId", required = true) Long userId) throws Exception{
         ResultBean<?> resultBean = null;
         CollectResponse response = cellUtils.collect(domain);
         if(!response.getSuccess()){
@@ -72,6 +80,19 @@ public class CellController {
             resultBean.setMsg("调用收集信息接口错误！");
             return resultBean;
         }
+        if("10008".equals(response.getData().getProcess_code())){
+            SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
+            sysInterfaceLogWithBLOBs.setType(3);
+            sysInterfaceLogWithBLOBs.setStatus(1);
+            sysInterfaceLogWithBLOBs.setCreateTime(new Date());
+            sysInterfaceLogWithBLOBs.setRoleType(2);
+            sysInterfaceLogWithBLOBs.setIdNo(domain.getIdNo());
+            sysInterfaceLogWithBLOBs.setName(domain.getName());
+            sysInterfaceLogWithBLOBs.setPhone(domain.getPhone());
+            sysInterfaceLogWithBLOBs.setUserId(userId);
+            this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
+        }
+
         resultBean = new ResultBean<>(response);
         resultBean.setSysCode(ResultBean.SUCCESS);
         return resultBean;

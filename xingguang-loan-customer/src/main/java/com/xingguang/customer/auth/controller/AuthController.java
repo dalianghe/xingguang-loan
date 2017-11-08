@@ -11,6 +11,8 @@ import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
+import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import com.xingguang.utils.oss.OssUtils;
 import com.xingguang.utils.real.RealUtils;
 import com.xingguang.utils.sms.SmsController;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,6 +53,9 @@ public class AuthController {
     @Autowired
     private RealUtils realUtils;
 
+    @Autowired
+    private ISysInterfaceLogService sysInterfaceLogService;
+
     @Value("${OSS.CUS.REAL}")
     private String realImgPath;
 
@@ -58,7 +64,7 @@ public class AuthController {
     public ResultBean<?> register(@RequestBody AuthBean authBean, HttpServletRequest request) throws Exception {
         // 验证短信验证码是否正确
         String clientSmsCode = authBean.getSmsCode();
-        String serverSmsCode = (String)request.getSession().getAttribute(SmsController.SMS_CODE_KEY); // 模拟，后期需从存储中获取 TODO
+        String serverSmsCode = (String) request.getSession().getAttribute(SmsController.SMS_CODE_KEY); // 模拟，后期需从存储中获取 TODO
         if (!clientSmsCode.equals(serverSmsCode)) {
             throw new CustomException("验证码错误");
         }
@@ -80,13 +86,6 @@ public class AuthController {
     @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
     public ResultBean<?> login(@RequestBody AuthBean authBean) throws Exception {
         ResultBean<?> resultBean = null;
-
-//        // 校验验证码
-//        String clientSmsCode = authBean.getSmsCode();
-//        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
-//        if(!clientSmsCode.equals(serverSmsCode)){
-//            throw new CustomException("验证码错误");
-//        }
 
         // 查询用户
         CusUserInfo cusUserInfo = cusUserInfoService.findByPhone(authBean.getPhone());
@@ -114,6 +113,16 @@ public class AuthController {
         if (!StringUtils.isBlank(realStatus) && "3".equals(realStatus.trim())) {
             realFlag = true;
         }
+        SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
+        sysInterfaceLogWithBLOBs.setType(2);
+        sysInterfaceLogWithBLOBs.setStatus(realFlag ? 2 : 3);
+        sysInterfaceLogWithBLOBs.setCreateTime(new Date());
+        sysInterfaceLogWithBLOBs.setRoleType(2);
+        sysInterfaceLogWithBLOBs.setIdNo(cusUserInfo.getIdNo());
+        sysInterfaceLogWithBLOBs.setName(cusUserInfo.getName());
+        sysInterfaceLogWithBLOBs.setUserId(userId);
+        this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
+
         List<MultipartFile> files = new ArrayList(3);
         files.add(realImg1);
         files.add(realImg2);
