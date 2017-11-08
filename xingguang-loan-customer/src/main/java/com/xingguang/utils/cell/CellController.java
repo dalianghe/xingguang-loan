@@ -31,7 +31,7 @@ public class CellController {
         ResultBean<?> resultBean = null;
         if(this.checkObjFieldIsNull(domain)){
             resultBean = new ResultBean<>();
-            resultBean.setSysCode(ResultBean.FALL);
+            resultBean.setBizCode(ResultBean.FALL);
             resultBean.setMsg("必填参数不能为空！");
             return resultBean;
         }
@@ -39,7 +39,7 @@ public class CellController {
         AuthResponse response = cellUtils.sendToAuth(domain);
         if(65557!=response.getCode() || !response.getSuccess()){
             resultBean = new ResultBean<>();
-            resultBean.setSysCode(ResultBean.FALL);
+            resultBean.setBizCode(ResultBean.FALL);
             resultBean.setMsg("运营商授权失败！");
             return resultBean;
         }
@@ -48,7 +48,7 @@ public class CellController {
         if(!collectResponse.getSuccess()){
             logger.info("调用动态验证接口错误！");
             resultBean = new ResultBean<>();
-            resultBean.setSysCode(ResultBean.FALL);
+            resultBean.setBizCode(ResultBean.FALL);
             resultBean.setMsg("调用动态验证接口错误！");
             return resultBean;
         }
@@ -57,7 +57,7 @@ public class CellController {
         collectResponse.setPassword(domain.getCellPhoneNum());
         collectResponse.setPassword(domain.getPassword());
         resultBean = new ResultBean<>(collectResponse);
-        resultBean.setSysCode(ResultBean.SUCCESS);
+        resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
 
