@@ -8,6 +8,7 @@ import com.xingguang.utils.cell.CellUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -33,11 +34,13 @@ public class CellServiceImpl implements ICellService {
     }
 
     @Override
+    @Transactional
     public void updateSysInterfaceLog(SysInterfaceLogWithBLOBs sysInterfaceLog) throws Exception {
         sysInterfaceLogMapper.updateSysInterfaceLog(sysInterfaceLog);
     }
 
     @Override
+    @Transactional
     public void pullReport(String accessToken) throws Exception {
 
         List<SysInterfaceLog> todoList = this.findTodoReportList();
