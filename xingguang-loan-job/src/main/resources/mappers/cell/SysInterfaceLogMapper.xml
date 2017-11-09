@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.job.cell.mapper.SysInterfaceLogMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.job.cell.entity.SysInterfaceLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="role_type" jdbcType="INTEGER" property="roleType" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xingguang.job.cell.entity.SysInterfaceLogWithBLOBs">
+    <result column="send_data" jdbcType="LONGVARCHAR" property="sendData" />
+    <result column="receive_data" jdbcType="LONGVARCHAR" property="receiveData" />
+  </resultMap>
+
+  <select id="findTodoReportList" resultMap="BaseResultMap">
+    select * from sys_interface_log
+    where type=3
+    and status=1
+    order by create_time asc
+  </select>
+
+  <update id="updateSysInterfaceLog" parameterType="com.xingguang.job.cell.entity.SysInterfaceLogWithBLOBs">
+    update sys_interface_log
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleType != null">
+        role_type = #{roleType,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null">
+        id_no = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="bizId != null">
+        biz_id = #{bizId,jdbcType=BIGINT},
+      </if>
+      <if test="sendData != null">
+        send_data = #{sendData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="receiveData != null">
+        receive_data = #{receiveData,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>
