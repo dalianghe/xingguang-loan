@@ -8,5 +8,6 @@ import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
 public interface ISysInterfaceLogService {
 
     void create(SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs);
-    
+
+    void update(SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs);
 }

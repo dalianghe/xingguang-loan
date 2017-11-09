@@ -91,6 +91,7 @@ public class CellController {
             sysInterfaceLogWithBLOBs.setPhone(domain.getPhone());
             sysInterfaceLogWithBLOBs.setUserId(userId);
             this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
+            response.setAppId(sysInterfaceLogWithBLOBs.getId());
         }
 
         resultBean = new ResultBean<>(response);

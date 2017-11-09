@@ -6,6 +6,7 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="role_type" jdbcType="INTEGER" property="roleType" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -76,7 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, type, status, create_time, role_type, user_id, name, id_no, phone, biz_id
+    id, type, status, create_time, update_time, role_type, user_id, name, id_no, phone, 
+    biz_id
   </sql>
   <sql id="Blob_Column_List">
     send_data, receive_data
@@ -139,13 +141,15 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs" useGeneratedKeys="true">
     insert into sys_interface_log (type, status, create_time, 
-      role_type, user_id, name, 
-      id_no, phone, biz_id, 
-      send_data, receive_data)
+      update_time, role_type, user_id, 
+      name, id_no, phone, 
+      biz_id, send_data, receive_data
+      )
     values (#{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{roleType,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{idNo,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{bizId,jdbcType=BIGINT}, 
-      #{sendData,jdbcType=LONGVARCHAR}, #{receiveData,jdbcType=LONGVARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{roleType,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{bizId,jdbcType=BIGINT}, #{sendData,jdbcType=LONGVARCHAR}, #{receiveData,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs" useGeneratedKeys="true">
     insert into sys_interface_log
@@ -158,6 +162,9 @@
       </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
       </if>
       <if test="roleType != null">
         role_type,
@@ -193,6 +200,9 @@
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="roleType != null">
         #{roleType,jdbcType=INTEGER},
@@ -241,6 +251,9 @@
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.roleType != null">
         role_type = #{record.roleType,jdbcType=INTEGER},
       </if>
@@ -276,6 +289,7 @@
       type = #{record.type,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       role_type = #{record.roleType,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
@@ -294,6 +308,7 @@
       type = #{record.type,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       role_type = #{record.roleType,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
@@ -315,6 +330,9 @@
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="roleType != null">
         role_type = #{roleType,jdbcType=INTEGER},
@@ -348,6 +366,7 @@
     set type = #{type,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       role_type = #{roleType,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
@@ -363,6 +382,7 @@
     set type = #{type,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       role_type = #{roleType,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},

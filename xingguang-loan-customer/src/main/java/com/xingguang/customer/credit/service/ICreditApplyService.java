@@ -8,6 +8,6 @@ import com.xingguang.customer.credit.params.CreditApplyParam;
  */
 public interface ICreditApplyService {
 
-    void create(CreditApply creditApply);
+    void create(CreditApply creditApply, Long appId);
 
 }
