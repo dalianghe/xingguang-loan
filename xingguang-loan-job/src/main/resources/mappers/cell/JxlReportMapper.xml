@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.utils.cell.mapper.JxlReportMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.utils.cell.entity.JxlReportEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="rpt_id" jdbcType="VARCHAR" property="rptId" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+
+  <delete id="deleteJxlReport" parameterType="java.lang.Long">
+    DELETE FROM jxl_report WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertJxlReport" parameterType="com.xingguang.utils.cell.entity.JxlReportEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_report (biz_id, rpt_id, token, version, update_time, create_time)
+    VALUES (#{bizId}, #{rptId}, #{token}, #{version}, #{updateTime}, #{createTime})
+  </insert>
+
+</mapper>

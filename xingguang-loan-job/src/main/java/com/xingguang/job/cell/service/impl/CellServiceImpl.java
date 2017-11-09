@@ -1,10 +1,13 @@
 package com.xingguang.job.cell.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.xingguang.job.cell.entity.SysInterfaceLog;
 import com.xingguang.job.cell.entity.SysInterfaceLogWithBLOBs;
 import com.xingguang.job.cell.mapper.SysInterfaceLogMapper;
 import com.xingguang.job.cell.service.ICellService;
 import com.xingguang.utils.cell.CellUtils;
+import com.xingguang.utils.cell.service.IJxlReportService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +27,10 @@ public class CellServiceImpl implements ICellService {
 
     @Autowired
     private SysInterfaceLogMapper sysInterfaceLogMapper;
-
     @Autowired
     private CellUtils cellUtils;
+    @Autowired
+    private IJxlReportService jxlReportService;
 
     @Override
     public List<SysInterfaceLog> findTodoReportList() throws Exception {
@@ -49,6 +53,13 @@ public class CellServiceImpl implements ICellService {
             if(data == null){
                 continue;
             }
+
+            // 解析报告入库
+            JSONObject jxlReport = JSON.parseObject(data);
+            JSONObject reportData = JSON.parseObject(jxlReport.getString("report_data"));
+            JSONObject report = JSON.parseObject(reportData.getString("report"));
+            jxlReportService.addJxlReport(1L , report);
+
             SysInterfaceLogWithBLOBs bean = new SysInterfaceLogWithBLOBs();
             bean.setId(log.getId());
             bean.setStatus(2);
