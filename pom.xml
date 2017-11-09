@@ -32,6 +32,7 @@
         <module>xingguang-loan-customer</module>
         <module>xingguang-loan-task</module>
         <module>xingguang-loan-work</module>
+        <module>xingguang-loan-job</module>
         <module>spring-boot-httpclient-starter</module>
     </modules>
 
