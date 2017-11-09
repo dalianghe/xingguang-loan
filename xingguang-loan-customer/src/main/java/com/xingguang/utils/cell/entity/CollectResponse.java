@@ -13,6 +13,7 @@ public class CollectResponse implements Serializable {
     private String password;
     private String website;
     private Data data;
+    private Long appId;
     public class Data{
         private String process_code;
         private String content;
@@ -92,5 +93,13 @@ public class CollectResponse implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
     }
 }

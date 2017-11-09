@@ -11,6 +11,8 @@ public class SysInterfaceLog {
 
     private Date createTime;
 
+    private Date updateTime;
+
     private Integer roleType;
 
     private Long userId;
@@ -53,6 +55,14 @@ public class SysInterfaceLog {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Integer getRoleType() {

@@ -24,16 +24,11 @@ public class CreditController {
     private ICreditInfoService creditInfoService;
 
     @RequestMapping(value = "/credit/apply",method = RequestMethod.POST)
-    public ResultBean<?> createCreditApply(@RequestBody String phonePwd,
-                                           @JWTParam(key = "userId", required = true) Long userId,
-                                           @JWTParam(key = "phone", required = true) String phone){
-
-
-
+    public ResultBean<?> createCreditApply(@RequestBody Long appId, @JWTParam(key = "userId", required = true) Long userId){
         CreditApply creditApply = new CreditApply();
         creditApply.setCusUserId(userId);
         creditApply.setCreateTime(new Date());
-        this.creditApplyService.create(creditApply);
+        this.creditApplyService.create(creditApply, appId);
         return new ResultBean();
     }
 

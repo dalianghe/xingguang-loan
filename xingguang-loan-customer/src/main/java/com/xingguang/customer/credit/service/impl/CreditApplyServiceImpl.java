@@ -1,5 +1,6 @@
 package com.xingguang.customer.credit.service.impl;
 
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 import com.xingguang.customer.credit.entity.CreditApply;
 import com.xingguang.customer.credit.mapper.CreditApplyMapper;
 import com.xingguang.customer.credit.params.CreditApplyParam;
@@ -11,6 +12,8 @@ import com.xingguang.customer.link.entity.CusUserLinkExample;
 import com.xingguang.customer.link.service.ICusUserLinkService;
 import com.xingguang.customer.worker.entity.WorkUserInfo;
 import com.xingguang.customer.worker.service.IWorkUserInfoService;
+import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
+import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,17 +37,23 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     private ICusUserLinkService cusUserLinkService;
     @Autowired
     private IWorkUserInfoService workUserInfoService;
+    @Autowired
+    private ISysInterfaceLogService sysInterfaceLogService;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
 
     @Override
-    public void create(CreditApply creditApply) {
+    public void create(CreditApply creditApply, Long appId) {
         WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(creditApply.getCusUserId());
         String nowDate = LocalDate.now().format(this.formatter);
         creditApply.setApplyNo(nowDate + workUserInfo.getCityId());
         creditApply.setWorkUserId(workUserInfo.getId());
         creditApply.setWorkUserName(workUserInfo.getName());
         this.creditApplyMapper.insertSelectiveApplyNo(creditApply);
+        SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
+        sysInterfaceLogWithBLOBs.setId(appId);
+        sysInterfaceLogWithBLOBs.setBizId(creditApply.getId());
+        this.sysInterfaceLogService.update(sysInterfaceLogWithBLOBs);
     }
 
 }

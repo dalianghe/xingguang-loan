@@ -21,4 +21,9 @@ public class SysInterfaceLogServiceImpl implements ISysInterfaceLogService {
     public void create(SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs) {
         this.sysInterfaceLogMapper.insertSelective(sysInterfaceLogWithBLOBs);
     }
+
+    @Override
+    public void update(SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs) {
+        this.sysInterfaceLogMapper.updateByPrimaryKeySelective(sysInterfaceLogWithBLOBs);
+    }
 }
