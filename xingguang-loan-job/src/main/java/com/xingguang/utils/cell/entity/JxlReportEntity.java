@@ -9,12 +9,12 @@ import java.util.Date;
 public class JxlReportEntity implements Serializable {
 
     private Long id;
-    private Long bizId;
-    private String rptId;
-    private String token;
-    private String version;
-    private String updateTime;
-    private Date createTime;
+    private Long bizId; // 业务ID
+    private String rptId; // 报告编号
+    private String token; // token
+    private String version; // 报告版本
+    private String updateTime; // 报告生成时间
+    private Date createTime; // 创建时间
 
     public Long getId() {
         return id;

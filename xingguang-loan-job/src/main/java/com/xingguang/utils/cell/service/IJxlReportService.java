@@ -8,6 +8,8 @@ import com.xingguang.utils.cell.entity.JxlReportEntity;
  */
 public interface IJxlReportService {
 
+    public JxlReportEntity selectJxlReportByBizId(Long bizId) throws Exception;
+
     public void deleteJxlReport(Long bizId) throws Exception;
 
     public JxlReportEntity insertJxlReport(JxlReportEntity reportEntity) throws Exception;

@@ -1,6 +1,5 @@
 package com.xingguang.utils.cell.service.imple;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.xingguang.utils.cell.entity.JxlReportEntity;
@@ -21,6 +20,11 @@ public class JxlReportServiceImpl implements IJxlReportService {
 
     @Autowired
     private JxlReportMapper reportMapper;
+
+    @Override
+    public JxlReportEntity selectJxlReportByBizId(Long bizId) throws Exception {
+        return reportMapper.selectJxlReportByBizId(bizId);
+    }
 
     @Override
     @Transactional

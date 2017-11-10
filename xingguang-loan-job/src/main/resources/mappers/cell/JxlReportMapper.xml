@@ -20,4 +20,8 @@
     VALUES (#{bizId}, #{rptId}, #{token}, #{version}, #{updateTime}, #{createTime})
   </insert>
 
+  <select id="selectJxlReportByBizId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT * FROM jxl_report WHERE biz_id=#{bizId}
+  </select>
+
 </mapper>

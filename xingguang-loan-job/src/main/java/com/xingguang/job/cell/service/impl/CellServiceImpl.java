@@ -7,6 +7,10 @@ import com.xingguang.job.cell.entity.SysInterfaceLogWithBLOBs;
 import com.xingguang.job.cell.mapper.SysInterfaceLogMapper;
 import com.xingguang.job.cell.service.ICellService;
 import com.xingguang.utils.cell.CellUtils;
+import com.xingguang.utils.cell.entity.JxlReportEntity;
+import com.xingguang.utils.cell.service.IJxlCellBehaviorService;
+import com.xingguang.utils.cell.service.IJxlContactListService;
+import com.xingguang.utils.cell.service.IJxlContactRegionService;
 import com.xingguang.utils.cell.service.IJxlReportService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +35,12 @@ public class CellServiceImpl implements ICellService {
     private CellUtils cellUtils;
     @Autowired
     private IJxlReportService jxlReportService;
+    @Autowired
+    private IJxlCellBehaviorService cellBehaviorService;
+    @Autowired
+    private IJxlContactRegionService contactRegionService;
+    @Autowired
+    private IJxlContactListService contactListService;
 
     @Override
     public List<SysInterfaceLog> findTodoReportList() throws Exception {
@@ -57,9 +67,11 @@ public class CellServiceImpl implements ICellService {
             // 解析报告入库
             JSONObject jxlReport = JSON.parseObject(data);
             JSONObject reportData = JSON.parseObject(jxlReport.getString("report_data"));
-            JSONObject report = JSON.parseObject(reportData.getString("report"));
-            jxlReportService.addJxlReport(1L , report);
-
+            JxlReportEntity oldEntity = jxlReportService.selectJxlReportByBizId(log.getBizId());
+            JxlReportEntity reportEntity = jxlReportService.addJxlReport(log.getBizId() , JSON.parseObject(reportData.getString("report")));
+            cellBehaviorService.addCellBehavior(oldEntity.getId() , reportEntity.getId() , reportData.getJSONArray("cell_behavior"));
+            contactRegionService.addContactRegion(oldEntity.getId() , reportEntity.getId() , reportData.getString("contact_region"));
+            contactListService.addContactList(oldEntity.getId() , reportEntity.getId() , reportData.getString("contact_list"));
             SysInterfaceLogWithBLOBs bean = new SysInterfaceLogWithBLOBs();
             bean.setId(log.getId());
             bean.setStatus(2);

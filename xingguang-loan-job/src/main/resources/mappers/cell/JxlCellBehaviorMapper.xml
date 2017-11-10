@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.utils.cell.mapper.JxlCellBehaviorMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.utils.cell.entity.JxlCellBehaviorEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="cell_operator" jdbcType="VARCHAR" property="cellOperator" />
+    <result column="cell_operator_zh" jdbcType="VARCHAR" property="cellOperatorZh" />
+    <result column="cell_phone_num" jdbcType="VARCHAR" property="cellPhoneNum" />
+    <result column="cell_loc" jdbcType="VARCHAR" property="cellLoc" />
+    <result column="cell_mth" jdbcType="VARCHAR" property="cellMth" />
+    <result column="call_cnt" jdbcType="INTEGER" property="callCnt" />
+    <result column="call_out_cnt" jdbcType="INTEGER" property="callOutCnt" />
+    <result column="call_out_time" jdbcType="DECIMAL" property="callOutTime" />
+    <result column="call_in_cnt" jdbcType="INTEGER" property="callInCnt" />
+    <result column="call_in_time" jdbcType="DECIMAL" property="callInTime" />
+    <result column="net_flow" jdbcType="DECIMAL" property="netFlow" />
+    <result column="sms_cnt" jdbcType="INTEGER" property="smsCnt" />
+    <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
+  </resultMap>
+
+  <delete id="deleteCellBehavior" parameterType="java.lang.Long">
+    DELETE FROM jxl_cell_behavior WHERE rpt_id=#{rptId}
+  </delete>
+
+  <insert id="insertCellBehavior" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_cell_behavior
+    (rpt_id, cell_operator, cell_operator_zh,cell_phone_num, cell_loc, cell_mth, call_cnt, call_out_cnt, call_out_time,
+    call_in_cnt, call_in_time, net_flow, sms_cnt, total_amount)
+    VALUES
+    <foreach collection="list" index="index" item="behavior" separator=",">
+      ( #{behavior.rptId}, #{behavior.cellOperator}, #{behavior.cellOperatorZh}, #{behavior.cellPhoneNum}, #{behavior.cellLoc}
+      , #{behavior.cellMth}, #{behavior.callCnt}, #{behavior.callOutCnt}, #{behavior.callOutTime}, #{behavior.callInCnt}
+      , #{behavior.callInTime}, #{behavior.netFlow}, #{behavior.smsCnt}, #{behavior.totalAmount})
+    </foreach>
+  </insert>
+
+</mapper>

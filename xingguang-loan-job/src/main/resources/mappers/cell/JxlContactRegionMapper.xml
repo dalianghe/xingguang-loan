@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.utils.cell.mapper.JxlContactRegionMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.utils.cell.entity.JxlContactRegionEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="region_loc" jdbcType="VARCHAR" property="regionLoc" />
+    <result column="region_uniq_num_cnt" jdbcType="VARCHAR" property="regionUniqNumCnt" />
+    <result column="region_call_in_cnt" jdbcType="VARCHAR" property="regionCallInCnt" />
+    <result column="region_call_out_cnt" jdbcType="VARCHAR" property="regionCallOutCnt" />
+    <result column="region_call_in_time" jdbcType="VARCHAR" property="regionCallInTime" />
+    <result column="region_call_out_time" jdbcType="INTEGER" property="regionCallOutTime" />
+    <result column="region_avg_call_in_time" jdbcType="INTEGER" property="regionAvgCallInTime" />
+    <result column="region_avg_call_out_time" jdbcType="DECIMAL" property="regionAvgCallOutTime" />
+    <result column="region_call_in_cnt_pct" jdbcType="INTEGER" property="regionCallInCntPct" />
+    <result column="region_call_out_cnt_pct" jdbcType="DECIMAL" property="regionCallOutCntPct" />
+    <result column="region_call_in_time_pct" jdbcType="DECIMAL" property="regionCallInTimePct" />
+    <result column="region_call_out_time_pct" jdbcType="INTEGER" property="regionCallOutTimePct" />
+  </resultMap>
+
+  <delete id="deleteContactRegionByRptId" parameterType="java.lang.Long">
+    DELETE FROM jxl_contact_region WHERE rpt_id=#{rptId}
+  </delete>
+
+  <insert id="insertContactRegion" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_contact_region
+    (rpt_id, region_loc, region_uniq_num_cnt,region_call_in_cnt, region_call_out_cnt, region_call_in_time,
+    region_call_out_time, region_avg_call_in_time, region_avg_call_out_time,
+    region_call_in_cnt_pct, region_call_out_cnt_pct, region_call_in_time_pct, region_call_out_time_pct)
+    VALUES
+    <foreach collection="list" index="index" item="region" separator=",">
+      ( #{region.rptId}, #{region.regionLoc}, #{region.regionUniqNumCnt}, #{region.regionCallInCnt}, #{region.regionCallOutCnt}
+      , #{region.regionCallInTime}, #{region.regionCallOutTime}, #{region.regionAvgCallInTime}, #{region.regionAvgCallOutTime}
+      ,#{region.regionCallInCntPct}, #{region.regionCallOutCntPct}, #{region.regionCallInTimePct}, #{region.regionCallOutTimePct})
+    </foreach>
+  </insert>
+
+</mapper>

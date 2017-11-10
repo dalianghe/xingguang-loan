@@ -7,6 +7,8 @@ import com.xingguang.utils.cell.entity.JxlReportEntity;
  */
 public interface JxlReportMapper {
 
+    JxlReportEntity selectJxlReportByBizId(Long bizId) throws Exception;
+
     void deleteJxlReport(Long bizId) throws Exception;
 
     void insertJxlReport(JxlReportEntity reportEntity) throws Exception;
