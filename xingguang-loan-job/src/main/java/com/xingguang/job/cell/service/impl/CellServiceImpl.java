@@ -56,14 +56,13 @@ public class CellServiceImpl implements ICellService {
     @Override
     @Transactional
     public void pullReport(String accessToken) throws Exception {
-
+        // 获取未处理列表
         List<SysInterfaceLog> todoList = this.findTodoReportList();
         for(SysInterfaceLog log : todoList){
             String data = cellUtils.getReportData(accessToken,log.getName(),log.getIdNo(),log.getPhone());
             if(data == null){
                 continue;
             }
-
             // 解析报告入库
             JSONObject jxlReport = JSON.parseObject(data);
             JSONObject reportData = JSON.parseObject(jxlReport.getString("report_data"));
@@ -72,6 +71,7 @@ public class CellServiceImpl implements ICellService {
             cellBehaviorService.addCellBehavior(oldEntity.getId() , reportEntity.getId() , reportData.getJSONArray("cell_behavior"));
             contactRegionService.addContactRegion(oldEntity.getId() , reportEntity.getId() , reportData.getString("contact_region"));
             contactListService.addContactList(oldEntity.getId() , reportEntity.getId() , reportData.getString("contact_list"));
+            // 更新状态
             SysInterfaceLogWithBLOBs bean = new SysInterfaceLogWithBLOBs();
             bean.setId(log.getId());
             bean.setStatus(2);
@@ -79,7 +79,6 @@ public class CellServiceImpl implements ICellService {
             bean.setUpdateTime(new Date());
             this.updateSysInterfaceLog(bean);
         }
-
     }
 
 }
