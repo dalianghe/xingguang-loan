@@ -206,37 +206,102 @@
                                 </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
-                                <h4 class="header smaller lighter blue">通话记录</h4>
-                                <div>
-                                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;margin-top: -20px;">
+                                    <h4 class="header smaller lighter blue">报告概况</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 编号 </div>
+                                                <div class="profile-info-value"></div>
+                                                <div class="profile-info-name"> 报告时间 </div>
+                                                <div class="profile-info-value"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <#--<h4 class="header smaller lighter blue">通话记录</h4>-->
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">运营商数据</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="cell_behavior" class="table table-striped table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>Index</th>
-                                            <th>Domain</th>
+                                            <th>运营商</th>
+                                            <th>号码</th>
                                             <th>Price</th>
-                                            <th class="hidden-480">Clicks</th>
-                                            <th>
-                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-                                                Update
-                                            </th>
-                                            <th class="hidden-480">Status</th>
-                                            <th></th>
+                                            <th class="hidden-480">归属地</th>
+                                            <th>月份</th>
+                                            <th class="hidden-480">呼叫次数</th>
+                                            <th>主叫次数</th>
+                                            <th>主叫时长（分）</th>
+                                            <th>被叫次数</th>
+                                            <th>被叫时长（分）</th>
+                                            <th>短信数量</th>
+                                            <th>话费消费</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="center">1</td>
-                                                <td>app.com</td>
-                                                <td>$45</td>
-                                                <td class="hidden-480">3,330</td>
-                                                <td>Feb 12</td>
-                                                <td class="hidden-480">
-                                                    <span class="label label-sm label-warning">Expiring</span>
-                                                </td>
-                                                <td>22</td>
-                                            </tr>
                                         </tbody>
                                     </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">联系人区域汇总</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="contact_region" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>地区</th>
+                                                    <th>号码次数</th>
+                                                    <th>呼入次数</th>
+                                                    <th class="hidden-480">呼出次数</th>
+                                                    <th>呼入时长（分）</th>
+                                                    <th class="hidden-480">呼出时长（分）</th>
+                                                    <th>呼入次数百分比</th>
+                                                    <th>呼出次数百分比</th>
+                                                    <th>呼入时间百分比</th>
+                                                    <th>呼出时间百分比</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">运营商数据分析</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="contact_list" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>号码</th>
+                                                    <th>互联网标识</th>
+                                                    <th>需求类型</th>
+                                                    <th class="hidden-480">归属地</th>
+                                                    <th>联系次数</th>
+                                                    <th class="hidden-480">联系时长（分）</th>
+                                                    <th>主叫次数</th>
+                                                    <th>被叫次数</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div id="auditresult" class="tab-pane fade">
@@ -532,7 +597,27 @@
             return axios.post('/credit/audit' , formData);
         }
         jQuery(function($) {
-            var myTable =$('#dynamic-table').DataTable({
+            var cellTable =$('#cell_behavior').DataTable({
+                bAutoWidth: false,
+                "paging": false, // 禁止分页
+                "ordering": false,
+                "searching": false,
+                language: {
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : ""
+                },
+                ajax:{
+                    url:"/product/list",
+                    dataSrc:function(result){
+                        console.log(result);
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'name'}
+                ]
+            });
+            var regionTable =$('#contact_region').DataTable({
                 bAutoWidth: false,
                 "ordering": false,
                 "lengthChange": true,
@@ -551,8 +636,42 @@
                 },
                 ajax:{
                     url:"/product/list",
-                    dataStr:"data"
-                }
+                    dataSrc:function(result){
+                        console.log(result);
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'name'}
+                ]
+            });
+            var listTable =$('#contact_list').DataTable({
+                bAutoWidth: false,
+                "ordering": false,
+                "lengthChange": true,
+                "searching": false,
+                language: {
+                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                    "sSearch" : "搜索:",
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "oPaginate" : {
+                        "sFirst":    "首页",
+                        "sPrevious": "上页",
+                        "sNext":     "下页",
+                        "sLast":     "末页"
+                    }
+                },
+                ajax:{
+                    url:"/product/list",
+                    dataSrc:function(result){
+                        console.log(result);
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'name'}
+                ]
             });
         });
         $('#nav-search-input').bind('keypress', function(event) {
