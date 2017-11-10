@@ -206,7 +206,38 @@
                                 </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                                <h4 class="header smaller lighter blue">通话记录</h4>
+                                <div>
+                                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Index</th>
+                                            <th>Domain</th>
+                                            <th>Price</th>
+                                            <th class="hidden-480">Clicks</th>
+                                            <th>
+                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                Update
+                                            </th>
+                                            <th class="hidden-480">Status</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="center">1</td>
+                                                <td>app.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div id="auditresult" class="tab-pane fade">
                                 <div class="col-xs-12 col-sm-2">
@@ -307,6 +338,9 @@
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <script src="/assets/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/js/jquery.dataTables.bootstrap.min.js"></script>
+    <script src="/assets/js/dataTables.buttons.min.js"></script>
     <script src="/js/lib/vue/axios.min.js"></script>
     <script src="/assets/js/jquery.colorbox.min.js"></script>
     <script type="text/javascript">
@@ -328,14 +362,56 @@
         function getProductList() {
             return axios.get("/product/list");
         }
-
-        var app = new Vue({
-            el: '#dataDiv',
-            data: {
+        var userApp = new Vue({
+            el: '#userinfo',
+            data:{
                 user : {},
                 link : {},
                 worker : {},
-                apply : {},
+                apply : {}
+            },
+            mounted : function(){
+                var that=this;
+                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo()])
+                        .then(axios.spread(function (cusUser, cusLink, worker, apply) {
+                            var user = cusUser.data;
+                            if(user.sysCode==0){
+                                if(user.bizCode==0){
+                                    that.user = user.data;
+                                    userfilmApp.user = user.data;
+                                }
+                            }
+                            var link = cusLink.data;
+                            if(link.sysCode==0){
+                                if(link.bizCode==0){
+                                    that.link = link.data;
+                                }
+                            }
+                            var worker = worker.data;
+                            if(worker.sysCode==0){
+                                if(worker.bizCode==0){
+                                    that.worker = worker.data;
+                                }
+                            }
+                            var apply = apply.data;
+                            if(apply.sysCode==0){
+                                if(apply.bizCode==0){
+                                    that.apply = apply.data;
+                                }
+                            }
+                        }
+                 ));
+            }
+        });
+        var userfilmApp = new Vue({
+            "el" : '#userfilm',
+            data:{
+                user : {},
+            }
+        });
+        var auditApp = new Vue({
+            el: '#auditresult',
+            data: {
                 refuses : {},
                 products : {},
                 terms : {},
@@ -352,33 +428,8 @@
             },
             mounted : function(){
                 var that=this;
-                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(),
-                              getCreditApplyInfo(), getCodeResuse(), getProductList()])
-                        .then(axios.spread(function (cusUser, cusLink, worker, apply, refuses, products) {
-                    var user = cusUser.data;
-                    if(user.sysCode==0){
-                        if(user.bizCode==0){
-                            that.user = user.data;
-                        }
-                    }
-                    var link = cusLink.data;
-                    if(link.sysCode==0){
-                        if(link.bizCode==0){
-                            that.link = link.data;
-                        }
-                    }
-                    var worker = worker.data;
-                    if(worker.sysCode==0){
-                        if(worker.bizCode==0){
-                            that.worker = worker.data;
-                        }
-                    }
-                    var apply = apply.data;
-                    if(apply.sysCode==0){
-                        if(apply.bizCode==0){
-                            that.apply = apply.data;
-                        }
-                    }
+                axios.all([getCodeResuse(), getProductList()])
+                        .then(axios.spread(function (refuses, products) {
                     var refuses = refuses.data;
                     if(refuses.sysCode==0){
                         if(refuses.bizCode==0){
@@ -430,7 +481,6 @@
                     layer.close(idx);
                 },
                 auditCredit : function(){
-
                     var result = $('input:radio[name="status"]:checked').val();
                     if(result==null){
                         layer.tips('请选择审核结果！', $("#statusDiv") );
@@ -482,35 +532,29 @@
             return axios.post('/credit/audit' , formData);
         }
         jQuery(function($) {
-            var $overflow = '';
-            var colorbox_params = {
-                rel: 'colorbox',
-                reposition:true,
-                scalePhotos:true,
-                scrolling:false,
-                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
-                next:'<i class="ace-icon fa fa-arrow-right"></i>',
-                close:'&times;',
-                current:'{current} of {total}',
-                maxWidth:'100%',
-                maxHeight:'100%',
-                onOpen:function(){
-                    $overflow = document.body.style.overflow;
-                    document.body.style.overflow = 'hidden';
+            var myTable =$('#dynamic-table').DataTable({
+                bAutoWidth: false,
+                "ordering": false,
+                "lengthChange": true,
+                "searching": false,
+                language: {
+                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                    "sSearch" : "搜索:",
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "oPaginate" : {
+                        "sFirst":    "首页",
+                        "sPrevious": "上页",
+                        "sNext":     "下页",
+                        "sLast":     "末页"
+                    }
                 },
-                onClosed:function(){
-                    document.body.style.overflow = $overflow;
-                },
-                onComplete:function(){
-                    $.colorbox.resize();
+                ajax:{
+                    url:"/product/list",
+                    dataStr:"data"
                 }
-            };
-            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
-            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
-            $(document).one('ajaxloadstart.page', function(e) {
-                $('#colorbox, #cboxOverlay').remove();
             });
-        })
+        });
         $('#nav-search-input').bind('keypress', function(event) {
             if (event.keyCode == "13") {
                 event.preventDefault();
