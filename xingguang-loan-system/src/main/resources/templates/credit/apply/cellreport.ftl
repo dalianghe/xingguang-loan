@@ -206,101 +206,201 @@
                                 </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
-                                <#--<div class="col-xs-12 col-sm-12" style="text-align: center;margin-top: -20px;">
-                                    <h4 class="header smaller lighter blue">报告概况</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <div class="profile-info-row">
-                                                <div class="profile-info-name"> 编号 </div>
-                                                <div class="profile-info-value"></div>
-                                                <div class="profile-info-name"> 报告时间 </div>
-                                                <div class="profile-info-value"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
-                                <#--<h4 class="header smaller lighter blue">通话记录</h4>-->
-                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
-                                    <h4 class="header smaller lighter blue">运营商数据</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <table id="cell_behavior" class="table table-striped table-bordered table-hover">
+                                <h4 class="header smaller lighter blue">通话记录</h4>
+                                <div>
+                                    <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                                         <thead>
                                         <tr>
-                                            <th>运营商</th>
-                                            <th>号码</th>
-                                            <th class="hidden-480">归属地</th>
-                                            <th>月份</th>
-                                            <th class="hidden-480">呼叫次数</th>
-                                            <th>主叫次数</th>
-                                            <th>主叫时长（分）</th>
-                                            <th>被叫次数</th>
-                                            <th>被叫时长（分）</th>
-                                            <th>短信数量</th>
-                                            <th>话费消费</th>
+                                            <th>Index</th>
+                                            <th>Domain</th>
+                                            <th>Price</th>
+                                            <th class="hidden-480">Clicks</th>
+                                            <th>
+                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                Update
+                                            </th>
+                                            <th class="hidden-480">Status</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                            <tr>
+                                                <td class="center">1</td>
+                                                <td>app.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="center">2</td>
+                                                <td>bbb.com</td>
+                                                <td>$45</td>
+                                                <td class="hidden-480">3,330</td>
+                                                <td>Feb 12</td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning">Expiring</span>
+                                                </td>
+                                                <td>22</td>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                        </div>
-                                    </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
-                                    <h4 class="header smaller lighter blue">联系人区域汇总</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <table id="contact_region" class="table table-striped table-bordered table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>地区</th>
-                                                    <th>号码次数</th>
-                                                    <th>呼入次数</th>
-                                                    <th class="hidden-480">呼出次数</th>
-                                                    <th>呼入时长（分）</th>
-                                                    <th class="hidden-480">呼出时长（分）</th>
-                                                    <th>呼入次数百分比</th>
-                                                    <th>呼出次数百分比</th>
-                                                    <th>呼入时间百分比</th>
-                                                    <th>呼出时间百分比</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
-                                    <h4 class="header smaller lighter blue">运营商数据分析</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <table id="contact_list" class="table table-striped table-bordered table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>号码</th>
-                                                    <th>互联网标识</th>
-                                                    <th>需求类型</th>
-                                                    <th class="hidden-480">归属地</th>
-                                                    <th>联系次数</th>
-                                                    <th class="hidden-480">联系时长（分）</th>
-                                                    <th>主叫次数</th>
-                                                    <th>被叫次数</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                <h4 class="header smaller lighter blue">通话记录</h4>
+                                <div>
+                                    <table id="dynamic-table1" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Index</th>
+                                            <th>Domain</th>
+                                            <th>Price</th>
+                                            <th class="hidden-480">Clicks</th>
+                                            <th>
+                                                <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                Update
+                                            </th>
+                                            <th class="hidden-480">Status</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="center">1</td>
+                                            <td>app.com</td>
+                                            <td>$45</td>
+                                            <td class="hidden-480">3,330</td>
+                                            <td>Feb 12</td>
+                                            <td class="hidden-480">
+                                                <span class="label label-sm label-warning">Expiring</span>
+                                            </td>
+                                            <td>22</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                             <div id="auditresult" class="tab-pane fade">
@@ -384,24 +484,22 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12" style="padding-top: 20px;text-align: right;">
-                                    <button class="btn btn-sm btn-info" @click="backward">
-                                        <i class="ace-icon fa fa-backward bigger-120"></i>
-                                        返回
-                                    </button>
-                                    <button class="btn btn-sm btn-success" @click="auditCredit">
-                                        提交
-                                        <i class="ace-icon fa fa-forward bigger-120"></i>
-                                    </button>
-                                </div>
-                                <div class="row"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <br/>
-
+            <div style="text-align:justify;text-align-last:justify;">
+                <button class="btn btn-sm btn-info" @click="backward">
+                    <i class="ace-icon fa fa-backward bigger-120"></i>
+                    返回
+                </button>
+                <button class="btn btn-sm btn-success" @click="auditCredit">
+                    提交
+                    <i class="ace-icon fa fa-forward bigger-120"></i>
+                </button>
+            </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
     <script src="/assets/js/jquery.dataTables.min.js"></script>
@@ -410,74 +508,52 @@
     <script src="/js/lib/vue/axios.min.js"></script>
     <script src="/assets/js/jquery.colorbox.min.js"></script>
     <script type="text/javascript">
-        function getCusUserInfo() {
-            return axios.get("/cus/user/${userId}");
-        }
-        function getCusUserLink() {
-            return axios.get('/cus/link/${userId}');
-        }
-        function getWorkUserInfo() {
-            return axios.get("/work/cus/${userId}");
-        }
-        function getCreditApplyInfo() {
-            return axios.get("/credit/apply/${applyId}");
-        }
+        jQuery(function($) {
+            var myTable =$('#dynamic-table').DataTable({
+                                bAutoWidth: false,
+                                "ordering": false,
+                                "lengthChange": true,
+                                "searching": false,
+                                language: {
+                                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                                    "sSearch" : "搜索:",
+                                    "sZeroRecords":  "没有匹配结果",
+                                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                                    "oPaginate" : {
+                                        "sFirst":    "首页",
+                                        "sPrevious": "上页",
+                                        "sNext":     "下页",
+                                        "sLast":     "末页"
+                                    }
+                                }
+                        });
+            var myTable1 =$('#dynamic-table1').DataTable({
+                bAutoWidth: false,
+                "aoColumns": [
+                    { "bSortable": false },
+                    null, null,null, null, null,
+                    { "bSortable": false }
+                ],
+                "aaSorting": [],
+                select: {
+                    style: 'multi'
+                }
+            });
+        });
         function getCodeResuse() {
             return axios.get("/code/refuse",{params:{"id":0}});
         }
         function getProductList() {
             return axios.get("/product/list");
         }
-        var userApp = new Vue({
-            el: '#userinfo',
-            data:{
+
+        var app = new Vue({
+            el: '#dataDiv1',
+            data: {
                 user : {},
                 link : {},
                 worker : {},
-                apply : {}
-            },
-            mounted : function(){
-                var that=this;
-                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo()])
-                        .then(axios.spread(function (cusUser, cusLink, worker, apply) {
-                            var user = cusUser.data;
-                            if(user.sysCode==0){
-                                if(user.bizCode==0){
-                                    that.user = user.data;
-                                    userfilmApp.user = user.data;
-                                }
-                            }
-                            var link = cusLink.data;
-                            if(link.sysCode==0){
-                                if(link.bizCode==0){
-                                    that.link = link.data;
-                                }
-                            }
-                            var worker = worker.data;
-                            if(worker.sysCode==0){
-                                if(worker.bizCode==0){
-                                    that.worker = worker.data;
-                                }
-                            }
-                            var apply = apply.data;
-                            if(apply.sysCode==0){
-                                if(apply.bizCode==0){
-                                    that.apply = apply.data;
-                                }
-                            }
-                        }
-                 ));
-            }
-        });
-        var userfilmApp = new Vue({
-            "el" : '#userfilm',
-            data:{
-                user : {},
-            }
-        });
-        var auditApp = new Vue({
-            el: '#auditresult',
-            data: {
+                apply : {},
                 refuses : {},
                 products : {},
                 terms : {},
@@ -493,22 +569,7 @@
                 }
             },
             mounted : function(){
-                var that=this;
-                axios.all([getCodeResuse(), getProductList()])
-                        .then(axios.spread(function (refuses, products) {
-                    var refuses = refuses.data;
-                    if(refuses.sysCode==0){
-                        if(refuses.bizCode==0){
-                            that.refuses = refuses.data;
-                        }
-                    }
-                    var products = products.data;
-                    if(products.sysCode==0){
-                        if(products.bizCode==0){
-                            that.products = products.data;
-                        }
-                    }
-                }));
+
             },
             methods : {
                 chooseResult : function(){
@@ -547,6 +608,7 @@
                     layer.close(idx);
                 },
                 auditCredit : function(){
+
                     var result = $('input:radio[name="status"]:checked').val();
                     if(result==null){
                         layer.tips('请选择审核结果！', $("#statusDiv") );
@@ -598,84 +660,35 @@
             return axios.post('/credit/audit' , formData);
         }
         jQuery(function($) {
-            var cellTable =$('#cell_behavior').DataTable({
-                bAutoWidth: false,
-                "paging": false, // 禁止分页
-                "ordering": false,
-                "searching": false,
-                language: {
-                    "sZeroRecords":  "没有匹配结果",
-                    "sInfo" : ""
+            var $overflow = '';
+            var colorbox_params = {
+                rel: 'colorbox',
+                reposition:true,
+                scalePhotos:true,
+                scrolling:false,
+                previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                close:'&times;',
+                current:'{current} of {total}',
+                maxWidth:'100%',
+                maxHeight:'100%',
+                onOpen:function(){
+                    $overflow = document.body.style.overflow;
+                    document.body.style.overflow = 'hidden';
                 },
-                ajax:{
-                    url:"/cell/report/behavior/${applyId}",
-                    dataSrc:function(result){
-                        return result.data;
-                    }
+                onClosed:function(){
+                    document.body.style.overflow = $overflow;
                 },
-                aoColumns:[
-                    {data:'cellOperatorZh'},{data:'cellPhoneNum'},{data:'cellLoc'},{data:'cellMth'},{data:'callCnt'},{data:'callOutCnt'},
-                    {data:'callOutTime'},{data:'callInCnt'},{data:'callInTime'},{data:'smsCnt'},{data:'totalAmount'}
-                ]
+                onComplete:function(){
+                    $.colorbox.resize();
+                }
+            };
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
+            $(document).one('ajaxloadstart.page', function(e) {
+                $('#colorbox, #cboxOverlay').remove();
             });
-            var regionTable =$('#contact_region').DataTable({
-                bAutoWidth: false,
-                "ordering": false,
-                "lengthChange": true,
-                "searching": false,
-                language: {
-                    "sLengthMenu":   "显示 _MENU_ 项结果",
-                    "sSearch" : "搜索:",
-                    "sZeroRecords":  "没有匹配结果",
-                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "oPaginate" : {
-                        "sFirst":    "首页",
-                        "sPrevious": "上页",
-                        "sNext":     "下页",
-                        "sLast":     "末页"
-                    }
-                },
-                ajax:{
-                    url:"/cell/report/region/${applyId}",
-                    dataSrc:function(result){
-                        return result.data;
-                    }
-                },
-                aoColumns:[
-                    {data:'regionLoc'},{data:'regionUniqNumCnt'},{data:'regionCallInCnt'},{data:'regionCallOutCnt'},
-                    {data:'regionCallInTime'},{data:'regionCallOutTime'},{data:'regionCallInCntPct'},{data:'regionCallOutCntPct'},
-                    {data:'regionCallInTimePct'},{data:'regionCallOutTimePct'}
-                ]
-            });
-            var listTable =$('#contact_list').DataTable({
-                bAutoWidth: false,
-                "ordering": false,
-                "lengthChange": true,
-                "searching": true,
-                language: {
-                    "sLengthMenu":   "显示 _MENU_ 项结果",
-                    "sSearch" : "搜索:",
-                    "sZeroRecords":  "没有匹配结果",
-                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                    "oPaginate" : {
-                        "sFirst":    "首页",
-                        "sPrevious": "上页",
-                        "sNext":     "下页",
-                        "sLast":     "末页"
-                    }
-                },
-                ajax:{
-                    url:"/cell/report/list/${applyId}",
-                    dataSrc:function(result){
-                        return result.data;
-                    }
-                },
-                aoColumns:[
-                    {data:'phoneNum'},{data:'contactName'},{data:'needsType'},{data:'phoneNumLoc'},{data:'callCnt'},
-                    {data:'callLen'},{data:'callOutCnt'},{data:'callInCnt'}
-                ]
-            });
-        });
+        })
         $('#nav-search-input').bind('keypress', function(event) {
             if (event.keyCode == "13") {
                 event.preventDefault();
