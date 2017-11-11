@@ -29,7 +29,7 @@
                 <h1>
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
-                        授信审核
+                        我的已办
                     </small>
                 </h1>
             </div><!-- /.page-header -->
@@ -206,7 +206,102 @@
                                 </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
-                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
+                            <#--<div class="col-xs-12 col-sm-12" style="text-align: center;margin-top: -20px;">
+                                <h4 class="header smaller lighter blue">报告概况</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12">
+                                    <div class="profile-user-info profile-user-info-striped">
+                                        <div class="profile-info-row">
+                                            <div class="profile-info-name"> 编号 </div>
+                                            <div class="profile-info-value"></div>
+                                            <div class="profile-info-name"> 报告时间 </div>
+                                            <div class="profile-info-value"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <#--<h4 class="header smaller lighter blue">通话记录</h4>-->
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">运营商数据</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="cell_behavior" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>运营商</th>
+                                                    <th>号码</th>
+                                                    <th class="hidden-480">归属地</th>
+                                                    <th>月份</th>
+                                                    <th class="hidden-480">呼叫次数</th>
+                                                    <th>主叫次数</th>
+                                                    <th>主叫时长（分）</th>
+                                                    <th>被叫次数</th>
+                                                    <th>被叫时长（分）</th>
+                                                    <th>短信数量</th>
+                                                    <th>话费消费</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">联系人区域汇总</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="contact_region" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>地区</th>
+                                                    <th>号码次数</th>
+                                                    <th>呼入次数</th>
+                                                    <th class="hidden-480">呼出次数</th>
+                                                    <th>呼入时长（分）</th>
+                                                    <th class="hidden-480">呼出时长（分）</th>
+                                                    <th>呼入次数百分比</th>
+                                                    <th>呼出次数百分比</th>
+                                                    <th>呼入时间百分比</th>
+                                                    <th>呼出时间百分比</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">运营商数据分析</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="contact_list" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>号码</th>
+                                                    <th>互联网标识</th>
+                                                    <th>需求类型</th>
+                                                    <th class="hidden-480">归属地</th>
+                                                    <th>联系次数</th>
+                                                    <th class="hidden-480">联系时长（分）</th>
+                                                    <th>主叫次数</th>
+                                                    <th>被叫次数</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="auditresult" class="tab-pane fade">
                                 <div class="col-xs-12 col-sm-2">
@@ -257,35 +352,37 @@
             </div>
             <br/>
             <div>
-                <button class="btn btn-sm btn-info" @click="backward">
+                <button class="btn btn-sm btn-info" onclick="backward()">
                     <i class="ace-icon fa fa-backward bigger-120"></i>
                     返回
                 </button>
             </div>
         </div><!-- /.col -->
     </div><!-- /.row -->
+    <script src="/assets/js/jquery.dataTables.min.js"></script>
+    <script src="/assets/js/jquery.dataTables.bootstrap.min.js"></script>
+    <script src="/assets/js/dataTables.buttons.min.js"></script>
     <script src="/js/lib/vue/axios.min.js"></script>
     <script src="/assets/js/jquery.colorbox.min.js"></script>
     <script type="text/javascript">
         function getCusUserInfo() {
-            //var userId = $("#id").val().split("&")[0];
             return axios.get("/cus/user/${userId}");
         }
         function getCusUserLink() {
-            //var userId = $("#id").val().split("&")[0];
             return axios.get('/cus/link/${userId}');
         }
         function getWorkUserInfo() {
-            //var userId = $("#id").val().split("&")[0];
             return axios.get("/work/cus/${userId}");
         }
         function getCreditApplyInfo() {
-            //var applyId = $("#id").val().split("&")[1];
             return axios.get("/credit/apply/${applyId}");
         }
+        function backward(){
+            $("#main").load("/router/credit/done/applydonelist");
+        }
 
-        var app = new Vue({
-            el: '#dataDiv',
+        var userApp = new Vue({
+            el: '#userinfo',
             data: {
                 user : {},
                 link : {},
@@ -296,24 +393,49 @@
                 var that=this;
                 axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo()])
                         .then(axios.spread(function (cusUser, cusLink, worker, apply) {
-                    var user = cusUser.data;
-                    if(user.sysCode==0){
-                        if(user.bizCode==0){
-                            that.user = user.data;
-                        }
-                    }
-                    var link = cusLink.data;
-                    if(link.sysCode==0){
-                        if(link.bizCode==0){
-                            that.link = link.data==null ? {} : link.data;
-                        }
-                    }
-                    var worker = worker.data;
-                    if(worker.sysCode==0){
-                        if(worker.bizCode==0){
-                            that.worker = worker.data;
-                        }
-                    }
+                            var user = cusUser.data;
+                            if(user.sysCode==0){
+                                if(user.bizCode==0){
+                                    that.user = user.data;
+                                    userfilmApp.user = user.data;
+                                }
+                            }
+                            var link = cusLink.data;
+                            if(link.sysCode==0){
+                                if(link.bizCode==0){
+                                    that.link = link.data==null ? {} : link.data;
+                                }
+                            }
+                            var worker = worker.data;
+                            if(worker.sysCode==0){
+                                if(worker.bizCode==0){
+                                    that.worker = worker.data;
+                                }
+                            }
+                            var apply = apply.data;
+                            if(apply.sysCode==0){
+                                if(apply.bizCode==0){
+                                    that.apply = apply.data;
+                                }
+                            }
+                        }));
+            }
+        });
+        var userfilmApp = new Vue({
+            "el" : '#userfilm',
+            data:{
+                user : {}
+            }
+        });
+        var applyApp = new Vue({
+            el: '#auditresult',
+            data: {
+                apply : {}
+            },
+            created : function(){
+                var that=this;
+                axios.all([getCreditApplyInfo()])
+                        .then(axios.spread(function (apply) {
                     var apply = apply.data;
                     if(apply.sysCode==0){
                         if(apply.bizCode==0){
@@ -321,23 +443,6 @@
                         }
                     }
                 }));
-            },
-            methods : {
-                chooseResult : function(){
-                    var result = $('input:radio[name="status"]:checked').val();
-                    if(result==3){
-                        $("#refuseCodeDiv").show();
-                        $("#amountDiv").hide();
-                        this.audit.amount = null;
-                    }else{
-                        $("#refuseCodeDiv").hide();
-                        $("#amountDiv").show();
-                        this.audit.refuseCode = null;
-                    }
-                },
-                backward : function(){
-                    $("#main").load("/router/credit/done/applydonelist");
-                }
             }
         });
 
@@ -380,6 +485,84 @@
             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
             $(document).one('ajaxloadstart.page', function(e) {
                 $('#colorbox, #cboxOverlay').remove();
+            });
+
+            var cellTable =$('#cell_behavior').DataTable({
+                bAutoWidth: false,
+                "paging": false, // 禁止分页
+                "ordering": false,
+                "searching": false,
+                language: {
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : ""
+                },
+                ajax:{
+                    url:"/cell/report/behavior/${applyId}",
+                    dataSrc:function(result){
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'cellOperatorZh'},{data:'cellPhoneNum'},{data:'cellLoc'},{data:'cellMth'},{data:'callCnt'},{data:'callOutCnt'},
+                    {data:'callOutTime'},{data:'callInCnt'},{data:'callInTime'},{data:'smsCnt'},{data:'totalAmount'}
+                ]
+            });
+            var regionTable =$('#contact_region').DataTable({
+                bAutoWidth: false,
+                "ordering": false,
+                "lengthChange": true,
+                "searching": false,
+                language: {
+                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                    "sSearch" : "搜索:",
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "oPaginate" : {
+                        "sFirst":    "首页",
+                        "sPrevious": "上页",
+                        "sNext":     "下页",
+                        "sLast":     "末页"
+                    }
+                },
+                ajax:{
+                    url:"/cell/report/region/${applyId}",
+                    dataSrc:function(result){
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'regionLoc'},{data:'regionUniqNumCnt'},{data:'regionCallInCnt'},{data:'regionCallOutCnt'},
+                    {data:'regionCallInTime'},{data:'regionCallOutTime'},{data:'regionCallInCntPct'},{data:'regionCallOutCntPct'},
+                    {data:'regionCallInTimePct'},{data:'regionCallOutTimePct'}
+                ]
+            });
+            var listTable =$('#contact_list').DataTable({
+                bAutoWidth: false,
+                "ordering": false,
+                "lengthChange": true,
+                "searching": true,
+                language: {
+                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                    "sSearch" : "搜索:",
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "oPaginate" : {
+                        "sFirst":    "首页",
+                        "sPrevious": "上页",
+                        "sNext":     "下页",
+                        "sLast":     "末页"
+                    }
+                },
+                ajax:{
+                    url:"/cell/report/list/${applyId}",
+                    dataSrc:function(result){
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'phoneNum'},{data:'contactName'},{data:'needsType'},{data:'phoneNumLoc'},{data:'callCnt'},
+                    {data:'callLen'},{data:'callOutCnt'},{data:'callInCnt'}
+                ]
             });
         })
     </script>
