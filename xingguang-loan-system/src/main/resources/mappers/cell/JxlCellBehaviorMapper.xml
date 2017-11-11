@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.cell.mapper.JxlCellBehaviorMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.cell.entity.JxlCellBehaviorEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="cell_operator" jdbcType="VARCHAR" property="cellOperator" />
+    <result column="cell_operator_zh" jdbcType="VARCHAR" property="cellOperatorZh" />
+    <result column="cell_phone_num" jdbcType="VARCHAR" property="cellPhoneNum" />
+    <result column="cell_loc" jdbcType="VARCHAR" property="cellLoc" />
+    <result column="cell_mth" jdbcType="VARCHAR" property="cellMth" />
+    <result column="call_cnt" jdbcType="INTEGER" property="callCnt" />
+    <result column="call_out_cnt" jdbcType="INTEGER" property="callOutCnt" />
+    <result column="call_out_time" jdbcType="DECIMAL" property="callOutTime" />
+    <result column="call_in_cnt" jdbcType="INTEGER" property="callInCnt" />
+    <result column="call_in_time" jdbcType="DECIMAL" property="callInTime" />
+    <result column="net_flow" jdbcType="DECIMAL" property="netFlow" />
+    <result column="sms_cnt" jdbcType="INTEGER" property="smsCnt" />
+    <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
+  </resultMap>
+
+  <select id="getCellBehaviorByBizId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select t2.*
+    from jxl_report t1 , jxl_cell_behavior t2
+    where t1.id = t2.rpt_id
+    and t1.biz_id = #{bizId}
+  </select>
+
+</mapper>

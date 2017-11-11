@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.cell.mapper.JxlContactListMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.cell.entity.JxlContactListEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="phone_num" jdbcType="VARCHAR" property="phoneNum" />
+    <result column="phone_num_loc" jdbcType="VARCHAR" property="phoneNumLoc" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="needs_type" jdbcType="VARCHAR" property="needsType" />
+    <result column="call_cnt" jdbcType="INTEGER" property="callCnt" />
+    <result column="call_len" jdbcType="DECIMAL" property="callLen" />
+    <result column="call_out_cnt" jdbcType="INTEGER" property="callOutCnt" />
+    <result column="call_out_len" jdbcType="DECIMAL" property="callOutLen" />
+    <result column="call_in_cnt" jdbcType="INTEGER" property="callInCnt" />
+    <result column="call_in_len" jdbcType="DECIMAL" property="callInLen" />
+    <result column="p_relation" jdbcType="VARCHAR" property="pRelation" />
+    <result column="contact_1w" jdbcType="INTEGER" property="contact_1w" />
+    <result column="contact_1m" jdbcType="INTEGER" property="contact_1m" />
+    <result column="contact_3m" jdbcType="INTEGER" property="contact_3m" />
+    <result column="contact_3m_plus" jdbcType="INTEGER" property="contact_3m_plus" />
+    <result column="contact_early_morning" jdbcType="INTEGER" property="contactEarlyMorning" />
+    <result column="contact_morning" jdbcType="INTEGER" property="contactMorning" />
+    <result column="contact_noon" jdbcType="INTEGER" property="contactNoon" />
+    <result column="contact_afternoon" jdbcType="INTEGER" property="contactAfternoon" />
+    <result column="contact_night" jdbcType="INTEGER" property="contactNight" />
+    <result column="contact_all_day" jdbcType="INTEGER" property="contactAllDay" />
+    <result column="contact_weekday" jdbcType="INTEGER" property="contactWeekday" />
+    <result column="contact_weekend" jdbcType="INTEGER" property="contactWeekend" />
+    <result column="contact_holiday" jdbcType="INTEGER" property="contactHoliday" />
+  </resultMap>
+
+  <select id="getContactListByBizId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select t2.*
+    from jxl_report t1 , jxl_contact_list t2
+    where t1.id = t2.rpt_id
+    and t1.biz_id = #{bizId}
+  </select>
+
+</mapper>
