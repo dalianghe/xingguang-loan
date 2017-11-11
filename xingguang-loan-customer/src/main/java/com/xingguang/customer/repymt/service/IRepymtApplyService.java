@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface IRepymtApplyService {
 
-    void create(RepymtApply repymtApply, List<Long> RepymtPlanIdList);
+    void create(RepymtApply repymtApply, List<Long> RepymtPlanIdList, Long wdrlId);
 
 }

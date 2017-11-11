@@ -6,9 +6,13 @@ import java.util.Date;
 public class RepymtApply {
     private Long id;
 
+    private Long cusUserId;
+
     private BigDecimal amount;
 
     private Integer status;
+
+    private Integer repymtType;
 
     private Date createTime;
 
@@ -26,6 +30,14 @@ public class RepymtApply {
         this.id = id;
     }
 
+    public Long getCusUserId() {
+        return cusUserId;
+    }
+
+    public void setCusUserId(Long cusUserId) {
+        this.cusUserId = cusUserId;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
@@ -40,6 +52,14 @@ public class RepymtApply {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getRepymtType() {
+        return repymtType;
+    }
+
+    public void setRepymtType(Integer repymtType) {
+        this.repymtType = repymtType;
     }
 
     public Date getCreateTime() {

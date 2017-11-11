@@ -3,7 +3,11 @@ package com.xingguang.customer.info.service.impl;
 import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.entity.CusUserInfoExample;
 import com.xingguang.customer.info.mapper.CusUserInfoMapper;
+import com.xingguang.customer.info.params.UserInfoParam;
 import com.xingguang.customer.info.service.ICusUserInfoService;
+import com.xingguang.customer.link.entity.CusUserLink;
+import com.xingguang.customer.link.entity.CusUserLinkExample;
+import com.xingguang.customer.link.service.ICusUserLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +26,9 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     @Autowired
     private CusUserInfoMapper cusUserInfoMapper;
 
+    @Autowired
+    private ICusUserLinkService cusUserLinkService;
+
     @Override
     public int create(CusUserInfo cusUserInfo) {
         cusUserInfo.setCreateTime(new Date());
@@ -31,6 +38,16 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
     @Override
     public int update(CusUserInfo cusUserInfo) {
         return this.cusUserInfoMapper.updateByPrimaryKeySelective(cusUserInfo);
+    }
+
+    @Override
+    public int update(UserInfoParam userInfoParam) {
+        CusUserLink cusUserLink = userInfoParam.getCusUserLink();
+        CusUserLinkExample example = new CusUserLinkExample();
+        example.createCriteria().andCusUserIdEqualTo(cusUserLink.getCusUserId());
+        this.cusUserLinkService.delete(example);
+        this.cusUserLinkService.create(cusUserLink);
+        return this.cusUserInfoMapper.updateByPrimaryKeySelective(userInfoParam.getCusUserInfo());
     }
 
     @Override

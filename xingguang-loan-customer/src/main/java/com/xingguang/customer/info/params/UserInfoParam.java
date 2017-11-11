@@ -1,14 +1,11 @@
-package com.xingguang.customer.credit.params;
+package com.xingguang.customer.info.params;
 
-import com.xingguang.customer.credit.entity.CreditApply;
 import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.link.entity.CusUserLink;
 
-public class CreditApplyOldParam {
+public class UserInfoParam {
 
     CusUserInfo cusUserInfo;
-
-    CreditApply creditApply;
 
     CusUserLink cusUserLink;
 
@@ -18,14 +15,6 @@ public class CreditApplyOldParam {
 
     public void setCusUserInfo(CusUserInfo cusUserInfo) {
         this.cusUserInfo = cusUserInfo;
-    }
-
-    public CreditApply getCreditApply() {
-        return creditApply;
-    }
-
-    public void setCreditApply(CreditApply creditApply) {
-        this.creditApply = creditApply;
     }
 
     public CusUserLink getCusUserLink() {

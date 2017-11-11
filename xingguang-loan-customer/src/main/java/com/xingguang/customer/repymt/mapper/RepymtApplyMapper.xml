@@ -3,8 +3,10 @@
 <mapper namespace="com.xingguang.customer.repymt.mapper.RepymtApplyMapper">
   <resultMap id="BaseResultMap" type="com.xingguang.customer.repymt.entity.RepymtApply">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="cus_user_id" jdbcType="BIGINT" property="cusUserId" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="repymt_type" jdbcType="INTEGER" property="repymtType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="operator_time" jdbcType="TIMESTAMP" property="operatorTime" />
     <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
@@ -69,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, amount, status, create_time, operator_time, operator_id, operator_name
+    id, cus_user_id, amount, status, repymt_type, create_time, operator_time, operator_id, 
+    operator_name
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.repymt.entity.RepymtApplyExample" resultMap="BaseResultMap">
     select
@@ -110,21 +113,27 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.repymt.entity.RepymtApply" useGeneratedKeys="true">
-    insert into repymt_apply (amount, status, create_time, 
-      operator_time, operator_id, operator_name
-      )
-    values (#{amount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{operatorTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR}
-      )
+    insert into repymt_apply (cus_user_id, amount, status, 
+      repymt_type, create_time, operator_time, 
+      operator_id, operator_name)
+    values (#{cusUserId,jdbcType=BIGINT}, #{amount,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{repymtType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{operatorTime,jdbcType=TIMESTAMP}, 
+      #{operatorId,jdbcType=BIGINT}, #{operatorName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.repymt.entity.RepymtApply" useGeneratedKeys="true">
     insert into repymt_apply
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cusUserId != null">
+        cus_user_id,
+      </if>
       <if test="amount != null">
         amount,
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="repymtType != null">
+        repymt_type,
       </if>
       <if test="createTime != null">
         create_time,
@@ -140,11 +149,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cusUserId != null">
+        #{cusUserId,jdbcType=BIGINT},
+      </if>
       <if test="amount != null">
         #{amount,jdbcType=DECIMAL},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="repymtType != null">
+        #{repymtType,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -172,11 +187,17 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.cusUserId != null">
+        cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
+      </if>
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=DECIMAL},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.repymtType != null">
+        repymt_type = #{record.repymtType,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -198,8 +219,10 @@
   <update id="updateByExample" parameterType="map">
     update repymt_apply
     set id = #{record.id,jdbcType=BIGINT},
+      cus_user_id = #{record.cusUserId,jdbcType=BIGINT},
       amount = #{record.amount,jdbcType=DECIMAL},
       status = #{record.status,jdbcType=INTEGER},
+      repymt_type = #{record.repymtType,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       operator_time = #{record.operatorTime,jdbcType=TIMESTAMP},
       operator_id = #{record.operatorId,jdbcType=BIGINT},
@@ -211,11 +234,17 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.xingguang.customer.repymt.entity.RepymtApply">
     update repymt_apply
     <set>
+      <if test="cusUserId != null">
+        cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      </if>
       <if test="amount != null">
         amount = #{amount,jdbcType=DECIMAL},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="repymtType != null">
+        repymt_type = #{repymtType,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -234,8 +263,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.xingguang.customer.repymt.entity.RepymtApply">
     update repymt_apply
-    set amount = #{amount,jdbcType=DECIMAL},
+    set cus_user_id = #{cusUserId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
+      repymt_type = #{repymtType,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       operator_time = #{operatorTime,jdbcType=TIMESTAMP},
       operator_id = #{operatorId,jdbcType=BIGINT},

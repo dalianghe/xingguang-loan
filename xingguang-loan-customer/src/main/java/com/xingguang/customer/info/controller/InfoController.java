@@ -5,18 +5,22 @@ import com.xingguang.config.JWTParam;
 import com.xingguang.customer.code.entity.CodeInfo;
 import com.xingguang.customer.code.entity.CodeInfoExample;
 import com.xingguang.customer.code.service.ICodeService;
+import com.xingguang.customer.credit.params.CreditApplyParam;
 import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.entity.CusUserInfoAll;
+import com.xingguang.customer.info.params.UserInfoParam;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.customer.link.entity.CusUserLink;
 import com.xingguang.customer.link.entity.CusUserLinkAll;
 import com.xingguang.customer.link.service.ICusUserLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -89,6 +93,16 @@ public class InfoController {
 
         return cusUserInfoAll;
 
+    }
+
+    @RequestMapping(value = "/cus/user", method = RequestMethod.PATCH)
+    public ResultBean<?> update(@RequestBody UserInfoParam userInfoParam,
+                                @JWTParam(key = "userId", required = true) Long userId) {
+        userInfoParam.getCusUserInfo().setId(userId);
+        userInfoParam.getCusUserLink().setCusUserId(userId);
+        userInfoParam.getCusUserLink().setCreateTime(new Date());
+        this.cusUserInfoService.update(userInfoParam);
+        return new ResultBean();
     }
 
 }

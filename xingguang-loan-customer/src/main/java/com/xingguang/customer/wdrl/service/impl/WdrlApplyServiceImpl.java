@@ -26,6 +26,11 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     }
 
     @Override
+    public int update(WdrlApply wdrlApply) {
+        return this.wdrlApplyMapper.updateByPrimaryKeySelective(wdrlApply);
+    }
+
+    @Override
     public List<WdrlApply> getWdrlApplyList(WdrlApplyExample example) {
         return this.wdrlApplyMapper.selectByExample(example);
     }

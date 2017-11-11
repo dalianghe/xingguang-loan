@@ -186,6 +186,66 @@ public class RepymtApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andCusUserIdIsNull() {
+            addCriterion("cus_user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdIsNotNull() {
+            addCriterion("cus_user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdEqualTo(Long value) {
+            addCriterion("cus_user_id =", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdNotEqualTo(Long value) {
+            addCriterion("cus_user_id <>", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdGreaterThan(Long value) {
+            addCriterion("cus_user_id >", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("cus_user_id >=", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdLessThan(Long value) {
+            addCriterion("cus_user_id <", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdLessThanOrEqualTo(Long value) {
+            addCriterion("cus_user_id <=", value, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdIn(List<Long> values) {
+            addCriterion("cus_user_id in", values, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdNotIn(List<Long> values) {
+            addCriterion("cus_user_id not in", values, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdBetween(Long value1, Long value2) {
+            addCriterion("cus_user_id between", value1, value2, "cusUserId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCusUserIdNotBetween(Long value1, Long value2) {
+            addCriterion("cus_user_id not between", value1, value2, "cusUserId");
+            return (Criteria) this;
+        }
+
         public Criteria andAmountIsNull() {
             addCriterion("amount is null");
             return (Criteria) this;
@@ -303,6 +363,66 @@ public class RepymtApplyExample {
 
         public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeIsNull() {
+            addCriterion("repymt_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeIsNotNull() {
+            addCriterion("repymt_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeEqualTo(Integer value) {
+            addCriterion("repymt_type =", value, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeNotEqualTo(Integer value) {
+            addCriterion("repymt_type <>", value, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeGreaterThan(Integer value) {
+            addCriterion("repymt_type >", value, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("repymt_type >=", value, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeLessThan(Integer value) {
+            addCriterion("repymt_type <", value, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("repymt_type <=", value, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeIn(List<Integer> values) {
+            addCriterion("repymt_type in", values, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeNotIn(List<Integer> values) {
+            addCriterion("repymt_type not in", values, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeBetween(Integer value1, Integer value2) {
+            addCriterion("repymt_type between", value1, value2, "repymtType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRepymtTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("repymt_type not between", value1, value2, "repymtType");
             return (Criteria) this;
         }
 

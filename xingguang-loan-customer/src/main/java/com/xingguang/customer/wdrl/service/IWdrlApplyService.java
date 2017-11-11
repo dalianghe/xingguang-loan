@@ -12,6 +12,8 @@ public interface IWdrlApplyService {
 
     int create(WdrlApply wdrlApply);
 
+    int update(WdrlApply wdrlApply);
+
     List<WdrlApply> getWdrlApplyList(WdrlApplyExample example);
 
 }
