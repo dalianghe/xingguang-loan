@@ -18,7 +18,6 @@ public class PullJxlReportJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        logger.info("拉取聚信立报告===>JobName: {}", context.getJobDetail().getKey().getName());
-        String url = "http://localhost:8081/cell/job";
+        logger.info("拉取聚信立报告定时任务===>JobName: {}", context.getJobDetail().getKey().getName());
     }
 }
