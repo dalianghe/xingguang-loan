@@ -592,7 +592,7 @@
         });
 
         function updateCreditApplyInfo(){
-            var formData = app.audit;
+            var formData = auditApp.audit;
             return axios.post('/credit/audit' , formData);
         }
         jQuery(function($) {

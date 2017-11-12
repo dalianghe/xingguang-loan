@@ -31,6 +31,8 @@
         <result column="apply_id" property="applyId" jdbcType="BIGINT" />
         <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
         <result column="credit_time" property="creditTime" jdbcType="TIMESTAMP" />
+        <result column="cell_status" property="cellStatus" jdbcType="VARCHAR" />
+        <result column="cell_status_name" property="cellStatusName" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
@@ -66,10 +68,11 @@
     <select id="findCreditTodoCusUserList" parameterType="com.xingguang.cus.baseinfo.entity.CusUserInfoEntity" resultMap="BaseResultMapCustom">
         SELECT
         t1.*,t3.name sex_name,if(t1.real_status='1','已实名','未实名') real_status_name,
-        t2.id apply_id, t2.create_time apply_time
+        t2.id apply_id, t2.create_time apply_time , t4.status cell_status,if(t4.status='2','已生成','未生成') cell_status_name
         FROM cus_user_info t1
         INNER JOIN credit_apply t2 on t2.cus_user_id = t1.id
         LEFT JOIN (select code,name from code_info where type_id=101) t3 on sex = t3.code
+        LEFT JOIN (select biz_id,status from sys_interface_log where type=3) t4 on t2.id = t4.biz_id
         WHERE t1.status=20 and t2.status = 1
         <if test="name != null" >
             AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')

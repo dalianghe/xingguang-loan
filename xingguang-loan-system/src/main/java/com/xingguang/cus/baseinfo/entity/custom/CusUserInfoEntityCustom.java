@@ -23,6 +23,8 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
     private Long creditUserId;
     @JSONField(format="yyyy-MM-dd")
     private Date creditTime;
+    private Integer cellStatus;
+    private String cellStatusName;
 
     public String getRealStatusName() {
         return realStatusName;
@@ -102,5 +104,21 @@ public class CusUserInfoEntityCustom extends CusUserInfoEntity implements Serial
 
     public void setCreditTime(Date creditTime) {
         this.creditTime = creditTime;
+    }
+
+    public Integer getCellStatus() {
+        return cellStatus;
+    }
+
+    public void setCellStatus(Integer cellStatus) {
+        this.cellStatus = cellStatus;
+    }
+
+    public String getCellStatusName() {
+        return cellStatusName;
+    }
+
+    public void setCellStatusName(String cellStatusName) {
+        this.cellStatusName = cellStatusName;
     }
 }
