@@ -104,7 +104,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
             // step 1: 计算服务费和账户管理费
             ProductInfoEntityCustom product = productInfoService.findProductInfoById(applyEntity.getProductId());
             BigDecimal serviceCharge = FinanceUtils.getServiceCharge(applyEntity.getAmount() , product.getServiceRate());
-            BigDecimal accMgmtCharge = FinanceUtils.getAccMgmtCharge(applyEntity.getAmount() , product.getAccMgmtRate());
+            //BigDecimal accMgmtCharge = FinanceUtils.getAccMgmtCharge(applyEntity.getAmount() , product.getAccMgmtRate());
             // step 2: 生成还款计划
             List<RepymtPlanEntity> list = new ArrayList<>();
             ProductTermInfoEntity termInfoEntity = productTermInfoService.findTermById(applyEntity.getTermId());
@@ -124,7 +124,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
             WdrlApplyEntity entity = new WdrlApplyEntity();
             BeanUtils.copyProperties(domain,entity);
             entity.setServiceCharge(serviceCharge);
-            entity.setAccMgmtCharge(accMgmtCharge);
+            //entity.setAccMgmtCharge(accMgmtCharge);
             wdrlApplyMapper.updateWdrlApply(entity);
         }
 
