@@ -3,9 +3,13 @@ package com.xingguang.job;
 import com.xingguang.job.cell.service.ICellService;
 import com.xingguang.utils.cell.CellInitRunner;
 import com.xingguang.utils.cell.CellUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
 
 /**
  * @Description 用一句话描述该文件做什么
@@ -16,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledTask {
 
-    private Integer count2 = 1;
+    Logger logger = LogManager.getLogger(getClass());
 
     @Autowired
     private CellUtils cellUtils;
@@ -25,11 +29,12 @@ public class ScheduledTask {
 
     @Scheduled(cron = "0 0/1 * * * ?")
     public void reportCurrentTimeCron() throws Exception {
-        System.out.println(String.format("+++第%s次执行", count2++));
+        logger.info("拉取聚信立报告，===>"+String.format("开始时间：%s", new Date()));
         String token = null== CellInitRunner.map.get("token") ? cellUtils.getAccessToken() : CellInitRunner.map.get("token");
         if(null != token){
             cellService.pullReport(token);
         }
+        logger.info("拉取聚信立报告，===>"+String.format("结束时间：%s", new Date()));
     }
 
 }
