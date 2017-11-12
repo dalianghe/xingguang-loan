@@ -67,10 +67,11 @@ public class CellServiceImpl implements ICellService {
             JSONObject jxlReport = JSON.parseObject(data);
             JSONObject reportData = JSON.parseObject(jxlReport.getString("report_data"));
             JxlReportEntity oldEntity = jxlReportService.selectJxlReportByBizId(log.getBizId());
+            Long oldId = oldEntity==null ? null : oldEntity.getId();
             JxlReportEntity reportEntity = jxlReportService.addJxlReport(log.getBizId() , JSON.parseObject(reportData.getString("report")));
-            cellBehaviorService.addCellBehavior(oldEntity.getId() , reportEntity.getId() , reportData.getJSONArray("cell_behavior"));
-            contactRegionService.addContactRegion(oldEntity.getId() , reportEntity.getId() , reportData.getString("contact_region"));
-            contactListService.addContactList(oldEntity.getId() , reportEntity.getId() , reportData.getString("contact_list"));
+            cellBehaviorService.addCellBehavior(oldId , reportEntity.getId() , reportData.getJSONArray("cell_behavior"));
+            contactRegionService.addContactRegion(oldId , reportEntity.getId() , reportData.getString("contact_region"));
+            contactListService.addContactList(oldId , reportEntity.getId() , reportData.getString("contact_list"));
             // 更新状态
             SysInterfaceLogWithBLOBs bean = new SysInterfaceLogWithBLOBs();
             bean.setId(log.getId());
