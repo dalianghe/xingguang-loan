@@ -31,6 +31,6 @@ public interface WorkUserInfoMapper {
 
     //自定义
 
-    WorkUserInfo getWorkUserByCusUserId(Long id);
+    WorkUserInfo getWorkUserByCusUserId(@Param("id") Long id);
 
 }

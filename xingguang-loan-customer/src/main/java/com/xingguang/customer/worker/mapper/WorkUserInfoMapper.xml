@@ -421,7 +421,7 @@
     select
       wu.*
     from work_user_info wu inner join cus_user_info cu on cu.work_user_id = wu.id
-    where cu.id = 2
+    where cu.id = #{id}
     limit 1
   </select>
 

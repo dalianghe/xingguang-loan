@@ -3,6 +3,7 @@ package com.xingguang.customer.credit.service.impl;
 import com.xingguang.customer.credit.entity.CreditApply;
 import com.xingguang.customer.credit.mapper.CreditApplyMapper;
 import com.xingguang.customer.credit.service.ICreditApplyService;
+import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.customer.link.service.ICusUserLinkService;
 import com.xingguang.customer.worker.entity.WorkUserInfo;
@@ -48,6 +49,10 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
         sysInterfaceLogWithBLOBs.setId(appId);
         sysInterfaceLogWithBLOBs.setBizId(creditApply.getId());
         this.sysInterfaceLogService.update(sysInterfaceLogWithBLOBs);
+        CusUserInfo cusUserInfo = new CusUserInfo();
+        cusUserInfo.setId(creditApply.getCusUserId());
+        cusUserInfo.setStatus(20);
+        cusUserInfoService.update(cusUserInfo);
     }
 
 }
