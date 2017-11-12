@@ -7,6 +7,13 @@ import com.xingguang.customer.credit.entity.CreditInfo;
 import com.xingguang.customer.credit.params.CreditApplyParam;
 import com.xingguang.customer.credit.service.ICreditApplyService;
 import com.xingguang.customer.credit.service.ICreditInfoService;
+import com.xingguang.customer.info.entity.CusUserInfo;
+import com.xingguang.customer.info.service.ICusUserInfoService;
+import com.xingguang.customer.qrcode.entity.WorkQrCode;
+import com.xingguang.customer.qrcode.service.ICusQrCodeService;
+import com.xingguang.customer.worker.entity.WorkUserInfo;
+import com.xingguang.customer.worker.service.IWorkUserInfoService;
+import com.xingguang.utils.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +29,25 @@ public class CreditController {
     private ICreditApplyService creditApplyService;
     @Autowired
     private ICreditInfoService creditInfoService;
+    @Autowired
+    private ICusUserInfoService cusUserInfoService;
+    @Autowired
+    private ICusQrCodeService cusQrCodeService;
 
     @RequestMapping(value = "/credit/apply",method = RequestMethod.POST)
-    public ResultBean<?> createCreditApply(@RequestBody CreditApplyParam creditApplyParam, @JWTParam(key = "userId", required = true) Long userId){
+    public ResultBean<?> createCreditApply(@RequestBody CreditApplyParam creditApplyParam,
+                                           @JWTParam(key = "userId", required = true) Long userId){
         CreditApply creditApply = new CreditApply();
         creditApply.setCusUserId(userId);
         creditApply.setCreateTime(new Date());
+        creditApply.setCusLat(creditApplyParam.getCusLat());
+        creditApply.setCusLng(creditApplyParam.getCusLng());
+        CusUserInfo cusUserInfo = this.cusUserInfoService.findById(userId);
+        WorkQrCode workQrCode = this.cusQrCodeService.findByWorkUserId(cusUserInfo.getWorkUserId());
+        creditApply.setWorkLat(workQrCode.getLat());
+        creditApply.setWorkLng(workQrCode.getLng());
+        Double distance = MapUtils.GetDistance(creditApplyParam.getCusLat(), creditApplyParam.getCusLng(), workQrCode.getLat(), workQrCode.getLng());
+        creditApply.setCusWorkDistance(distance.toString());
         this.creditApplyService.create(creditApply, creditApplyParam.getAppId());
         return new ResultBean();
     }

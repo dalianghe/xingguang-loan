@@ -66,7 +66,7 @@ public class WdrlApplyController {
         wdrlApply.setAccMgmtCharge(wdrlApply.getAmount().multiply(productInfo.getAccMgmtRate()));
         wdrlApply.setProductId(creditInfo.getProductId());
         wdrlApply.setTermId(creditInfo.getTermId());
-        wdrlApply.setStatus(1);
+        wdrlApply.setStatus(10);
         wdrlApply.setCreateTime(new Date());
         this.wdrlApplyService.create(wdrlApply);
         return resultBean;
