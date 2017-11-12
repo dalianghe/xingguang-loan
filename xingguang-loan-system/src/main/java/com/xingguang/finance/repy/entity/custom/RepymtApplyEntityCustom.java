@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 public class RepymtApplyEntityCustom{
 
     private Long cusUserId;
+    private Long repyId;
     private String name;
     private String idNo;
     private String cardNo;
@@ -20,6 +21,7 @@ public class RepymtApplyEntityCustom{
     private BigDecimal interest;
     private BigDecimal amount;
     private String planDate;
+    private BigDecimal penalty;
 
     public Long getCusUserId() {
         return cusUserId;
@@ -27,6 +29,14 @@ public class RepymtApplyEntityCustom{
 
     public void setCusUserId(Long cusUserId) {
         this.cusUserId = cusUserId;
+    }
+
+    public Long getRepyId() {
+        return repyId;
+    }
+
+    public void setRepyId(Long repyId) {
+        this.repyId = repyId;
     }
 
     public String getName() {
@@ -99,5 +109,13 @@ public class RepymtApplyEntityCustom{
 
     public void setPlanDate(String planDate) {
         this.planDate = planDate;
+    }
+
+    public BigDecimal getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(BigDecimal penalty) {
+        this.penalty = penalty;
     }
 }

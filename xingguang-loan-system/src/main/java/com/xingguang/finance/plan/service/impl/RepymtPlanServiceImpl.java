@@ -44,4 +44,10 @@ public class RepymtPlanServiceImpl implements IRepymtPlanService{
     public void updateNormalRepymtPlan(RepymtPlanEntity entity) throws Exception {
         repymtPlanMapper.updateNormalRepymtPlan(entity);
     }
+
+    @Override
+    @Transactional
+    public void updateOverdueRepymtPlan(RepymtPlanEntity entity) throws Exception {
+        repymtPlanMapper.updateOverdueRepymtPlan(entity);
+    }
 }

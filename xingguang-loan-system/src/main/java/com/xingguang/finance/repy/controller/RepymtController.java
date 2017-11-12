@@ -29,7 +29,7 @@ public class RepymtController {
     private IRepymtApplyService repymtApplyService;
 
     @RequestMapping(value = "/finance/repay/normal" , method = RequestMethod.GET)
-    public ResultBean<?> findAuditApplyList(String paramJson) throws Exception{
+    public ResultBean<?> findNormalPayList(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
         RepyDomain domain = JSON.parseObject(paramJson,RepyDomain.class);
         Map<String , Object> users = repymtApplyService.findNormalRepymtList(domain);
@@ -46,6 +46,28 @@ public class RepymtController {
         domain.setOperatorName(loginUser.getUserName());
         domain.setCreateTime(new Date());
         repymtApplyService.repaymentNormal(domain);
+        resultBean = new ResultBean<>();
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/finance/repay/overdue" , method = RequestMethod.GET)
+    public ResultBean<?> findOverduePayList(String paramJson) throws Exception{
+        ResultBean<?> resultBean = null;
+        RepyDomain domain = JSON.parseObject(paramJson,RepyDomain.class);
+        Map<String , Object> users = repymtApplyService.findOverdueRepymtList(domain);
+        resultBean = new ResultBean<>(users);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/finance/repay/overdue" , method = RequestMethod.POST)
+    public ResultBean<?> repyOverdue(@RequestBody RepyDomain domain) throws Exception{
+        ResultBean<?> resultBean = null;
+        Subject subject = SecurityUtils.getSubject();
+        AuthUserDomain loginUser = (AuthUserDomain)subject.getPrincipals().getPrimaryPrincipal();
+        domain.setOperatorId(loginUser.getId());
+        domain.setOperatorName(loginUser.getUserName());
+        domain.setCreateTime(new Date());
+        repymtApplyService.repaymentOverdue(domain);
         resultBean = new ResultBean<>();
         return resultBean;
     }

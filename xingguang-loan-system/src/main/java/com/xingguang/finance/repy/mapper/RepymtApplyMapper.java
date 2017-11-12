@@ -20,4 +20,8 @@ public interface RepymtApplyMapper {
 
     void insertRepymtApply(List<RepymtApplyEntity> list) throws Exception;
 
+    List<RepymtApplyEntityCustom> findOverdueRepymtList(RepymtApplyEntityCustom entity) throws Exception;
+
+    void updateRepymtApply(RepymtApplyEntity entity) throws Exception;
+
 }

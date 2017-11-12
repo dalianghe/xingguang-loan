@@ -44,9 +44,17 @@
     <update id="updateNormalRepymtPlan" parameterType="com.xingguang.finance.plan.entity.RepymtPlanEntity">
         UPDATE repymt_plan SET
         stauts=#{stauts},
+        actual_date = #{actualDate},
         repymt_apply_id=#{repymtApplyId}
         WHERE cus_user_id=#{cusUserId}
         AND stauts=10
+    </update>
+
+    <update id="updateOverdueRepymtPlan" parameterType="com.xingguang.finance.plan.entity.RepymtPlanEntity">
+        UPDATE repymt_plan SET
+        stauts=#{stauts},
+        actual_date = #{actualDate}
+        WHERE repymt_apply_id=#{repymtApplyId}
     </update>
 
 </mapper>

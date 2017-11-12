@@ -49,7 +49,7 @@ public class RepymtApplyServiceImpl implements IRepymtApplyService {
     public void repaymentNormal(RepyDomain domain) throws Exception {
         List<RepymtApplyEntity> applies = new ArrayList<>();
         RepymtApplyEntityCustom entityCustom = new RepymtApplyEntityCustom();
-        int status = domain.getRepymtType()==4 ? 20 : 30;
+        int status = domain.getRepymtType()==40 ? 20 : 30;
         for(Long id : domain.getIds()){
             entityCustom.setCusUserId(id);
             entityCustom.setPlanDate(DateUtils.getCurrentDate());
@@ -71,7 +71,44 @@ public class RepymtApplyServiceImpl implements IRepymtApplyService {
             plan.setCusUserId(entity.getCusUserId());
             plan.setRepymtApplyId(entity.getId());
             plan.setStauts(status);
+            plan.setActualDate(new Date());
             repymtPlanService.updateNormalRepymtPlan(plan);
         }
     }
+
+    @Override
+    public Map<String, Object> findOverdueRepymtList(RepyDomain repyDemain) throws Exception {
+        PageHelper.startPage(repyDemain.getPager().get("page"), repyDemain.getPager().get("pageSize"));
+        RepymtApplyEntityCustom entity = new RepymtApplyEntityCustom();
+        entity.setName(repyDemain.getCusUserName());
+        entity.setPlanDate(DateUtils.getCurrentDate());
+        List<RepymtApplyEntityCustom> list = repymtApplyMapper.findOverdueRepymtList(entity);
+        Map<String,Object> map = new HashMap<>();
+        map.put("applies" , list);
+        map.put("total" , ((Page) list).getTotal());
+        return map;
+    }
+
+    @Override
+    @Transactional
+    public void repaymentOverdue(RepyDomain domain) throws Exception {
+        List<RepymtApplyEntity> applies = new ArrayList<>();
+        for(Long id : domain.getApplyIds()){
+            RepymtApplyEntity apply = new RepymtApplyEntity();
+            apply.setId(id);
+            apply.setStatus(domain.getRepymtType()==40 ? 20 : 30);
+            apply.setRepymtType(domain.getRepymtType());
+            apply.setOperatorTime(new Date());
+            apply.setOperatorId(domain.getOperatorId());
+            apply.setOperatorName(domain.getOperatorName());
+            repymtApplyMapper.updateRepymtApply(apply);
+
+            RepymtPlanEntity plan = new RepymtPlanEntity();
+            plan.setRepymtApplyId(id);
+            plan.setStauts(domain.getRepymtType()==40 ? 20 : 50);
+            plan.setActualDate(new Date());
+            repymtPlanService.updateOverdueRepymtPlan(plan);
+        }
+    }
+
 }

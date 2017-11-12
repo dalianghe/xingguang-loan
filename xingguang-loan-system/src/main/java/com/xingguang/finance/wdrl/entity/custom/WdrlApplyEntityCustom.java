@@ -16,6 +16,8 @@ public class WdrlApplyEntityCustom extends WdrlApplyEntity implements Serializab
     private String productName;
     private String termName;
     private BigDecimal payAmount;
+    private String cardNo;
+    private String phone;
 
     public String getStatusName() {
         return statusName;
@@ -63,5 +65,21 @@ public class WdrlApplyEntityCustom extends WdrlApplyEntity implements Serializab
 
     public void setPayAmount(BigDecimal payAmount) {
         this.payAmount = payAmount;
+    }
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

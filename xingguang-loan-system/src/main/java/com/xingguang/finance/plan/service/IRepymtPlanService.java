@@ -17,4 +17,6 @@ public interface IRepymtPlanService {
 
     public void updateNormalRepymtPlan(RepymtPlanEntity entity) throws Exception;
 
+    public void updateOverdueRepymtPlan(RepymtPlanEntity entity) throws Exception;
+
 }

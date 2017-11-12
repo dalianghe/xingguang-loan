@@ -119,7 +119,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <div class="col-xs-12 col-sm-2">
+                                <#--<div class="col-xs-12 col-sm-2">
                                     <div class="text-left">
                                         <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
                                             <div class="inline position-relative">
@@ -130,8 +130,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
+                                </div>-->
+                                <#--<div class="row">
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="space visible-xs"></div>
                                         <div class="profile-user-info profile-user-info-striped">
@@ -145,7 +145,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="col-xs-12 col-sm-2">
                                     <div class="text-left">
                                         <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-left">
@@ -391,8 +391,8 @@
             },
             created : function(){
                 var that=this;
-                axios.all([getCusUserInfo(), getCusUserLink(), getWorkUserInfo(), getCreditApplyInfo()])
-                        .then(axios.spread(function (cusUser, cusLink, worker, apply) {
+                axios.all([getCusUserInfo(), getWorkUserInfo(), getCreditApplyInfo()])
+                        .then(axios.spread(function (cusUser, worker, apply) {
                             var user = cusUser.data;
                             if(user.sysCode==0){
                                 if(user.bizCode==0){
@@ -400,12 +400,12 @@
                                     userfilmApp.user = user.data;
                                 }
                             }
-                            var link = cusLink.data;
+                            /*var link = cusLink.data;
                             if(link.sysCode==0){
                                 if(link.bizCode==0){
                                     that.link = link.data==null ? {} : link.data;
                                 }
-                            }
+                            }*/
                             var worker = worker.data;
                             if(worker.sysCode==0){
                                 if(worker.bizCode==0){

@@ -10,7 +10,7 @@
             <li>
                 <a href="#">财务管理</a>
             </li>
-            <li class="active">正常还款</li>
+            <li class="active">逾期还款</li>
         </ul><!-- /.breadcrumb -->
 
         <div class="nav-search" id="nav-search">
@@ -76,6 +76,7 @@
                                     <th>开户行</th>
                                     <th>本金</th>
                                     <th class="hidden-480">利息</th>
+                                    <th>罚息</th>
                                     <th class="hidden-480">还款总额</th>
                                     <th>操作</th>
                                 </tr>
@@ -85,7 +86,7 @@
                                 <tr v-for="(user,index) in applies">
                                     <td class="hidden-480" class="center">
                                         <label class="pos-rel">
-                                            <input type="checkbox" class="ace" :value="user.cusUserId" v-model="checkedIds"/>
+                                            <input type="checkbox" class="ace" :value="user.repyId" v-model="checkedIds"/>
                                             <span class="lbl"></span>
                                         </label>
                                     </td>
@@ -96,10 +97,11 @@
                                     <td class="hidden-480">{{user.bankName}}</td>
                                     <td>{{user.principal | numberFormatFilter}}</td>
                                     <td>{{user.interest | numberFormatFilter}}</td>
-                                    <td>{{user.amount | numberFormatFilter}}</td>
+                                    <td>{{user.penalty | numberFormatFilter}}</td>
+                                    <td class="hidden-480">{{user.amount | numberFormatFilter}}</td>
                                     <td>
                                         <div class="hidden-sm hidden-xs btn-group">
-                                            <button class="btn btn-xs btn-info" @click="repyNormal(user.cusUserId)" data-toggle="modal" data-target="#plan-modal" title="还款操作">
+                                            <button class="btn btn-xs btn-info" @click="repyOverdue(user.repyId)" data-toggle="modal" data-target="#plan-modal" title="还款操作">
                                                 <i class="ace-icon fa fa-gg bigger-120"></i>
                                             </button>
                                         </div>
@@ -110,7 +112,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                                     <li>
-                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="viewPaypal(user.id)" data-toggle="modal" data-target="#plan-modal">
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="repyOverdue(user.repyId)" data-toggle="modal" data-target="#plan-modal">
                                                             <span class="blue">
                                                                 <i class="ace-icon fa fa-tasks bigger-120"></i>
                                                             </span>
@@ -225,7 +227,7 @@
                 }else{ // 全部选中
                     that.checkedIds = [];
                     that.applies.forEach(function(item) {
-                        that.checkedIds.push(item.cusUserId);
+                        that.checkedIds.push(item.repyId);
                     });
                 }
             },
@@ -238,19 +240,12 @@
                 $("#pay").attr("data-target","#plan-modal");
                 $("#pay").attr("data-toggle","modal");
             },
-            repyNormal : function(userId){
+            repyOverdue : function(userId){
                 var that = this;
                 that.checkedIds.push(userId);
             },
             confrim : function(){
                 repy(this);
-            },
-            viewPaypal : function(applyId){
-                var that = this;
-                that.checkedIds.push(applyId);
-                var paramJson = {"applyId":applyId};
-                var param = {"paramJson":JSON.stringify(paramJson)};
-                $("#plan-content").load("/router/finance/done/viewplan" , param );
             },
             pageHandler: function (page) {
                 this.page=page;
@@ -262,7 +257,7 @@
         var that = obj;
         var idx = layer.load(2);
         var paramJson = {"cusUserName":that.userName,"pager":{"page":that.page,"pageSize":that.pageSize}};
-        axios.get('/finance/repay/normal', {
+        axios.get('/finance/repay/overdue', {
             params: {paramJson: JSON.stringify(paramJson)}
         }).then(function (response) {
             var result = response.data;
@@ -279,8 +274,8 @@
         });
     }
     function repy(obj){
-        var json = {"ids":obj.checkedIds,"repymtType":obj.repymtType};
-        axios.post('/finance/repay/normal' , json).then(function (response) {
+        var json = {"applyIds":obj.checkedIds,"repymtType":obj.repymtType};
+        axios.post('/finance/repay/overdue' , json).then(function (response) {
             var result = response.data;
             if(result.sysCode==0){
                 if(result.bizCode==0){

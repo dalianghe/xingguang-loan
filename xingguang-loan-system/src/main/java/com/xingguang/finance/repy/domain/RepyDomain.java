@@ -15,6 +15,8 @@ public class RepyDomain extends BaseDomain implements Serializable {
 
     private Long[] ids;
 
+    private Long[] applyIds;
+
     private String cusUserName;
 
     private Integer repymtType;
@@ -31,6 +33,14 @@ public class RepyDomain extends BaseDomain implements Serializable {
 
     public void setIds(Long[] ids) {
         this.ids = ids;
+    }
+
+    public Long[] getApplyIds() {
+        return applyIds;
+    }
+
+    public void setApplyIds(Long[] applyIds) {
+        this.applyIds = applyIds;
     }
 
     public String getCusUserName() {

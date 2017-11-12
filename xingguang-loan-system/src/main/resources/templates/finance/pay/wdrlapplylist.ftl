@@ -100,8 +100,8 @@
                                     <td class="hidden-480" v-text="user.productName"></td>
                                     <td class="hidden-480" v-text="user.termName"></td>
                                     <td v-text="user.amount"></td>
-                                    <td v-text="user.bankCardId"></td>
-                                    <td v-text="user.reservePhone"></td>
+                                    <td v-text="user.cardNo"></td>
+                                    <td v-text="user.phone"></td>
                                     <td class="hidden-480" v-text="user.createTime"></td>
                                     <td class="hidden-480" v-text="user.auditorTime"></td>
                                     <td>

@@ -14,6 +14,7 @@
 
     <resultMap id="BaseResultMapCustom" type="com.xingguang.finance.repy.entity.custom.RepymtApplyEntityCustom">
         <result column="cus_user_id" property="cusUserId" jdbcType="BIGINT" />
+        <result column="repy_id" property="repyId" jdbcType="BIGINT" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="id_no" property="idNo" jdbcType="VARCHAR" />
         <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
@@ -31,6 +32,22 @@
         (select t1.cus_user_id,sum(t1.principal) principal,sum(t1.interest) interest from repymt_plan t1
         where t1.stauts = 10
         and t1.plan_date = #{planDate}
+        group by t1.cus_user_id) t2 on t1.id = t2.cus_user_id
+        inner join cus_bank_card t3 on t1.id = t3.cus_user_id and t3.is_default=1
+        <if test="name != null" >
+            AND t1.name LIKE CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+    </select>
+
+    <select id="findOverdueRepymtList" parameterType="com.xingguang.finance.repy.entity.custom.RepymtApplyEntityCustom" resultMap="BaseResultMapCustom">
+        select t2.repy_id,t1.name,t1.id_no,t3.card_no,t3.phone,t3.bank_name,t2.principal,t2.interest,t2.penalty,(t2.principal+t2.interest+t2.penalty) amount
+        from cus_user_info t1
+        inner join
+        (select t1.cus_user_id,t2.id repy_id,sum(t1.principal) principal,sum(t1.interest) interest,ifnull(sum(t1.penalty),0) penalty
+        from repymt_plan t1 , repymt_apply t2
+        where t1.repymt_apply_id = t2.id
+        and t1.stauts = 40
+        and t2.status=10
         group by t1.cus_user_id) t2 on t1.id = t2.cus_user_id
         inner join cus_bank_card t3 on t1.id = t3.cus_user_id and t3.is_default=1
         <if test="name != null" >
@@ -56,5 +73,12 @@
             )
         </foreach>
     </insert>
+
+    <update id="updateRepymtApply" parameterType="com.xingguang.finance.repy.entity.RepymtApplyEntity">
+        UPDATE repymt_apply SET
+        status=#{status},repymt_type=#{repymtType},operator_time=#{operatorTime},
+        operator_id=#{operatorId},operator_name=#{operatorName}
+        WHERE id=#{id}
+    </update>
 
 </mapper>

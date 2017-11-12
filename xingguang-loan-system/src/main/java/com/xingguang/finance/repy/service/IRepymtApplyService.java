@@ -16,4 +16,8 @@ public interface IRepymtApplyService {
 
     public void repaymentNormal(RepyDomain repyDemain) throws Exception;
 
+    public Map<String, Object> findOverdueRepymtList(RepyDomain repyDemain) throws Exception;
+
+    public void repaymentOverdue(RepyDomain domain) throws Exception;
+
 }

@@ -29,6 +29,8 @@
         <result column="product_name" property="productName" jdbcType="VARCHAR" />
         <result column="term_name" property="termName" jdbcType="VARCHAR" />
         <result column="pay_amount" property="payAmount" jdbcType="VARCHAR" />
+        <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
@@ -54,9 +56,11 @@
     <select id="findPayApplyList" parameterType="com.xingguang.finance.wdrl.entity.WdrlApplyEntity" resultMap="BaseResultMapCustom" >
         SELECT
         <include refid="Base_Column_List" />,
-        t2.status credit_status,if(t2.status=1,'正常','锁定') credit_status_name
+        t2.status credit_status,if(t2.status=1,'正常','锁定') credit_status_name,
+        t3.card_no,t3.phone
         FROM wdrl_apply t1
         INNER JOIN credit_info t2 on t1.cus_user_id = t2.cus_user_id
+        INNER JOIN cus_bank_card t3 on t1.bank_card_id = t3.id
         WHERE t1.status = 20
         <if test="cusUserName != null" >
             AND t1.cus_user_name LIKE CONCAT(CONCAT('%', #{cusUserName}), '%')

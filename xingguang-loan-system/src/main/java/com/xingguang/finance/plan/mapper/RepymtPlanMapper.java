@@ -15,4 +15,6 @@ public interface RepymtPlanMapper {
 
     void updateNormalRepymtPlan(RepymtPlanEntity entity) throws Exception;
 
+    void updateOverdueRepymtPlan(RepymtPlanEntity entity) throws Exception;
+
 }
