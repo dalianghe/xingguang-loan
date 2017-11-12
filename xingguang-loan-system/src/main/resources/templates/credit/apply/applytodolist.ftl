@@ -62,6 +62,7 @@
                                 <th>手机号</th>
                                 <th class="hidden-480">身份证号</th>
                                 <th class="hidden-480">认证状态</th>
+                                <th class="hidden-480">运营商报告</th>
                                 <th>
                                     <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
                                     申请时间
@@ -80,6 +81,10 @@
                                 <td>
                                     <span class="label label-sm label-info" v-if="user.realStatus===1">{{user.realStatusName}}</span>
                                     <span class="label label-sm label-success" v-if="user.realStatus===2">{{user.realStatusName}}</span>
+                                </td>
+                                <td>
+                                    <span class="label label-sm label-success" v-if="user.cellStatus===2">{{user.cellStatusName}}</span>
+                                    <span class="label label-sm label-warning" v-if="user.cellStatus!==2">{{user.cellStatusName}}</span>
                                 </td>
                                 <td>{{user.applyTime}}</td>
                                 <td>
