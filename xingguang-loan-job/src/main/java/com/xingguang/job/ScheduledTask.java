@@ -27,7 +27,7 @@ public class ScheduledTask {
     @Autowired
     private ICellService cellService;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void reportCurrentTimeCron() throws Exception {
         logger.info("拉取聚信立报告，===>"+String.format("开始时间：%s", new Date()));
         String token = null== CellInitRunner.map.get("token") ? cellUtils.getAccessToken() : CellInitRunner.map.get("token");
