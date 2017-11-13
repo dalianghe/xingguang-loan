@@ -26,4 +26,6 @@ public interface ISysUserService {
     public List<SysUserEntityCustom> findSysUserRoles(String userName) throws Exception;
 
     public List<SysRoleEntityCustom> findSysUserHaveRoles(Long userId) throws Exception;
+
+    public void resetPassword(Long id, String loginId, String password) throws Exception;
 }
