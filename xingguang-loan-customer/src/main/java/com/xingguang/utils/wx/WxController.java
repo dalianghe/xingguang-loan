@@ -54,9 +54,11 @@ public class WxController {
         return new ResultBean(wxConfig);
     }
 
-    @RequestMapping(value = "/wx", method = RequestMethod.POST)
+    @RequestMapping(value = "/wx")
     public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
         logger.info("===========有人关注==========");
+        String echostr = request.getParameter("echostr");
+        response.getWriter().append(echostr).flush();
     }
 
 
