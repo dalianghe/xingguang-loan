@@ -753,6 +753,66 @@ public class RepymtPlanExample {
             return (Criteria) this;
         }
 
+        public Criteria andLateFeeIsNull() {
+            addCriterion("late_fee is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeIsNotNull() {
+            addCriterion("late_fee is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeEqualTo(BigDecimal value) {
+            addCriterion("late_fee =", value, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeNotEqualTo(BigDecimal value) {
+            addCriterion("late_fee <>", value, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeGreaterThan(BigDecimal value) {
+            addCriterion("late_fee >", value, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("late_fee >=", value, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeLessThan(BigDecimal value) {
+            addCriterion("late_fee <", value, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("late_fee <=", value, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeIn(List<BigDecimal> values) {
+            addCriterion("late_fee in", values, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeNotIn(List<BigDecimal> values) {
+            addCriterion("late_fee not in", values, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("late_fee between", value1, value2, "lateFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andLateFeeNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("late_fee not between", value1, value2, "lateFee");
+            return (Criteria) this;
+        }
+
         public Criteria andStautsIsNull() {
             addCriterion("stauts is null");
             return (Criteria) this;

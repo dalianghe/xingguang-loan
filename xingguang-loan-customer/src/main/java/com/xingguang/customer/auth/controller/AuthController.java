@@ -135,6 +135,7 @@ public class AuthController {
         cusUserInfoDB.setId(userId);
         cusUserInfoDB.setName(cusUserInfo.getName());
         cusUserInfoDB.setIdNo(cusUserInfo.getIdNo());
+        cusUserInfoDB.setSex(cusUserInfo.getSex());
         cusUserInfoDB.setRealStatus(realFlag ? 1 : 2);
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);

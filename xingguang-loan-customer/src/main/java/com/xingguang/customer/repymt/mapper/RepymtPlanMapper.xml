@@ -12,6 +12,7 @@
     <result column="actual_date" jdbcType="DATE" property="actualDate" />
     <result column="penalty" jdbcType="DECIMAL" property="penalty" />
     <result column="overdue_days" jdbcType="INTEGER" property="overdueDays" />
+    <result column="late_fee" jdbcType="DECIMAL" property="lateFee" />
     <result column="stauts" jdbcType="INTEGER" property="stauts" />
     <result column="repymt_apply_id" jdbcType="BIGINT" property="repymtApplyId" />
   </resultMap>
@@ -75,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, wdrl_id, cus_user_id, term, principal, interest, plan_date, actual_date, penalty, 
-    overdue_days, stauts, repymt_apply_id
+    overdue_days, late_fee, stauts, repymt_apply_id
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.repymt.entity.RepymtPlanExample" resultMap="BaseResultMap">
     select
@@ -119,11 +120,13 @@
     insert into repymt_plan (wdrl_id, cus_user_id, term, 
       principal, interest, plan_date, 
       actual_date, penalty, overdue_days, 
-      stauts, repymt_apply_id)
+      late_fee, stauts, repymt_apply_id
+      )
     values (#{wdrlId,jdbcType=BIGINT}, #{cusUserId,jdbcType=BIGINT}, #{term,jdbcType=INTEGER}, 
       #{principal,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL}, #{planDate,jdbcType=DATE}, 
       #{actualDate,jdbcType=DATE}, #{penalty,jdbcType=DECIMAL}, #{overdueDays,jdbcType=INTEGER}, 
-      #{stauts,jdbcType=INTEGER}, #{repymtApplyId,jdbcType=BIGINT})
+      #{lateFee,jdbcType=DECIMAL}, #{stauts,jdbcType=INTEGER}, #{repymtApplyId,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.repymt.entity.RepymtPlan" useGeneratedKeys="true">
     insert into repymt_plan
@@ -154,6 +157,9 @@
       </if>
       <if test="overdueDays != null">
         overdue_days,
+      </if>
+      <if test="lateFee != null">
+        late_fee,
       </if>
       <if test="stauts != null">
         stauts,
@@ -189,6 +195,9 @@
       </if>
       <if test="overdueDays != null">
         #{overdueDays,jdbcType=INTEGER},
+      </if>
+      <if test="lateFee != null">
+        #{lateFee,jdbcType=DECIMAL},
       </if>
       <if test="stauts != null">
         #{stauts,jdbcType=INTEGER},
@@ -237,6 +246,9 @@
       <if test="record.overdueDays != null">
         overdue_days = #{record.overdueDays,jdbcType=INTEGER},
       </if>
+      <if test="record.lateFee != null">
+        late_fee = #{record.lateFee,jdbcType=DECIMAL},
+      </if>
       <if test="record.stauts != null">
         stauts = #{record.stauts,jdbcType=INTEGER},
       </if>
@@ -260,6 +272,7 @@
       actual_date = #{record.actualDate,jdbcType=DATE},
       penalty = #{record.penalty,jdbcType=DECIMAL},
       overdue_days = #{record.overdueDays,jdbcType=INTEGER},
+      late_fee = #{record.lateFee,jdbcType=DECIMAL},
       stauts = #{record.stauts,jdbcType=INTEGER},
       repymt_apply_id = #{record.repymtApplyId,jdbcType=BIGINT}
     <if test="_parameter != null">
@@ -296,6 +309,9 @@
       <if test="overdueDays != null">
         overdue_days = #{overdueDays,jdbcType=INTEGER},
       </if>
+      <if test="lateFee != null">
+        late_fee = #{lateFee,jdbcType=DECIMAL},
+      </if>
       <if test="stauts != null">
         stauts = #{stauts,jdbcType=INTEGER},
       </if>
@@ -316,6 +332,7 @@
       actual_date = #{actualDate,jdbcType=DATE},
       penalty = #{penalty,jdbcType=DECIMAL},
       overdue_days = #{overdueDays,jdbcType=INTEGER},
+      late_fee = #{lateFee,jdbcType=DECIMAL},
       stauts = #{stauts,jdbcType=INTEGER},
       repymt_apply_id = #{repymtApplyId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}

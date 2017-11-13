@@ -24,6 +24,8 @@ public class RepymtPlan {
 
     private Integer overdueDays;
 
+    private BigDecimal lateFee;
+
     private Integer stauts;
 
     private Long repymtApplyId;
@@ -106,6 +108,14 @@ public class RepymtPlan {
 
     public void setOverdueDays(Integer overdueDays) {
         this.overdueDays = overdueDays;
+    }
+
+    public BigDecimal getLateFee() {
+        return lateFee;
+    }
+
+    public void setLateFee(BigDecimal lateFee) {
+        this.lateFee = lateFee;
     }
 
     public Integer getStauts() {

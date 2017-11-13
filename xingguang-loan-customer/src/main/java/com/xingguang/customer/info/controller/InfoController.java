@@ -13,15 +13,14 @@ import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.customer.link.entity.CusUserLink;
 import com.xingguang.customer.link.entity.CusUserLinkAll;
 import com.xingguang.customer.link.service.ICusUserLinkService;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 宗旭 on 2017/10/01.
@@ -40,15 +39,29 @@ public class InfoController {
     public ResultBean<?> info(@JWTParam(key = "userId", required = true) Long userId) {
         CusUserInfo cusUserInfo = this.cusUserInfoService.findById(userId);
         CusUserLink cusUserLink = this.cusUserLinkService.findByCusUserId(userId);
-        CodeInfoExample example = new CodeInfoExample();
-        example.createCriteria().andCodeIn(new ArrayList() {{
-            add(cusUserInfo.getSex());
-            add(cusUserInfo.getEducation());
-            add(cusUserInfo.getOccupation());
-            add(cusUserInfo.getIncome());
-            add(cusUserLink.getRelationId());
-        }});
-        Map<Integer, CodeInfo> codeMap = this.codeService.getCodeMap(example);
+        cusUserLink = cusUserLink == null ? new CusUserLink() : cusUserLink;
+        List codeList = new ArrayList();
+        if(cusUserInfo.getSex() != null){
+            codeList.add(cusUserInfo.getSex());
+        }
+        if(cusUserInfo.getEducation() != null){
+            codeList.add(cusUserInfo.getEducation());
+        }
+        if(cusUserInfo.getOccupation() != null) {
+            codeList.add(cusUserInfo.getOccupation());
+        }
+        if(cusUserInfo.getIncome() != null){
+            codeList.add(cusUserInfo.getIncome());
+        }
+        if(cusUserLink.getRelationId() != null){
+            codeList.add(cusUserLink.getRelationId());
+        }
+        Map<Integer, CodeInfo> codeMap = new HashMap();
+        if(!CollectionUtils.isEmpty(codeList)){
+            CodeInfoExample example = new CodeInfoExample();
+            example.createCriteria().andCodeIn(codeList);
+            codeMap = this.codeService.getCodeMap(example);
+        }
         CusUserInfoAll cusUserInfoAll = this.buildCusUserInfoAll(cusUserInfo, cusUserLink, codeMap);
         return new ResultBean(cusUserInfoAll);
     }

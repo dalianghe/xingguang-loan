@@ -56,8 +56,7 @@ public class WxController {
 
     @RequestMapping(value = "/wx", method = RequestMethod.GET)
     public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String echostr = request.getParameter("echostr");
-        response.getWriter().append(echostr).flush();
+
     }
 
 
