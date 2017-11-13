@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <meta charset="utf-8" />
-        <title>Login Page - Ace Admin</title>
+        <title>星光钱包-运营管理平台</title>
 
         <meta name="description" content="User login page" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -99,13 +99,13 @@
                                                 <input id="rememberMe" name="rememberMe" type="hidden" class="ace" value="0" />
                                             </form>
 
-                                            <div class="social-or-login center">
+                                            <#--<div class="social-or-login center">
                                                 <span class="bigger-110">Or Login Using</span>
-                                            </div>
+                                            </div>-->
 
                                             <div class="space-6"></div>
 
-                                            <div class="social-login center">
+                                            <#--<div class="social-login center">
                                                 <a class="btn btn-primary">
                                                     <i class="ace-icon fa fa-facebook"></i>
                                                 </a>
@@ -117,10 +117,10 @@
                                                 <a class="btn btn-danger">
                                                     <i class="ace-icon fa fa-google-plus"></i>
                                                 </a>
-                                            </div>
+                                            </div>-->
                                         </div><!-- /.widget-main -->
 
-                                        <div class="toolbar clearfix">
+                                        <#--<div class="toolbar clearfix">
                                             <div>
                                                 <a href="#" data-target="#forgot-box" class="forgot-password-link">
                                                     <i class="ace-icon fa fa-arrow-left"></i>
@@ -134,7 +134,7 @@
                                                     <i class="ace-icon fa fa-arrow-right"></i>
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div><!-- /.widget-body -->
                                 </div><!-- /.login-box -->
 
