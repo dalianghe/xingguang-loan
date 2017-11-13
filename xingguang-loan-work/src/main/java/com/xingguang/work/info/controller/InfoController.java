@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by admin on 2017/10/2.
  */
 @RestController
-@RequestMapping("/info")
 public class InfoController {
 
     @Autowired
     private IWorkUserInfoService workUserInfoService;
 
-    @RequestMapping(value = "/user" , method = RequestMethod.POST)
+    @RequestMapping(value = "/info/user" , method = RequestMethod.POST)
     public ResultBean<?> update(@RequestBody InfoBean infoBean) throws Exception{
         ResultBean<?> resultBean = null;
         WorkUserInfoEntity entity = workUserInfoService.updateWorkUserInfo(infoBean);

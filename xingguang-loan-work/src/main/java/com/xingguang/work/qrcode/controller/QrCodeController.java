@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by admin on 2017/10/2.
  */
 @RestController
-@RequestMapping("/qrcode")
 public class QrCodeController {
 
     @Autowired
     private IWorkQrCodeService workQrCodeService;
 
-    @RequestMapping(value = "/code" , method = RequestMethod.POST)
+    @RequestMapping(value = "/qrcode/code" , method = RequestMethod.POST)
     public ResultBean<?> code(@RequestBody QrCodeBean qrCodeBean) throws Exception{
         ResultBean<?> resultBean = null;
         WorkQrCodeEntityCustom entityCustom = workQrCodeService.createWorkQrCode(qrCodeBean);

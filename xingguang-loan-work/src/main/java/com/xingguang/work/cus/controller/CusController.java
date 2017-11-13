@@ -14,13 +14,12 @@ import java.util.List;
  * Created by admin on 2017/10/2.
  */
 @RestController
-@RequestMapping("/cus")
 public class CusController {
 
     @Autowired
     private ICusUserInfoService cusUserInfoService;
 
-    @RequestMapping(value = "/customers" , method = RequestMethod.POST)
+    @RequestMapping(value = "/cus/customers" , method = RequestMethod.POST)
     public ResultBean<?> customers(String paramJson) throws Exception{
         ResultBean<?> resultBean = null;
         Long workUserId = 8L;
