@@ -56,7 +56,7 @@ public class WxController {
 
     @RequestMapping(value = "/wx", method = RequestMethod.GET)
     public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+        logger.info("===========有人关注==========");
     }
 
 
