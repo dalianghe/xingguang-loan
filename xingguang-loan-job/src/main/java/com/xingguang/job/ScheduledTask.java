@@ -47,7 +47,7 @@ public class ScheduledTask {
             cellService.pullReport(token);
             logger.info("拉取报告结束，===>"+String.format("end：%s", new Date()));
         }else{
-            logger.info("未链接聚信立，5分钟后尝试重新链接。。。");
+            logger.info("连接聚信立失败，5分钟后尝试重新连接。。。");
         }
         logger.info("拉取聚信立报告，===>"+String.format("结束时间：%s", new Date()));
     }
