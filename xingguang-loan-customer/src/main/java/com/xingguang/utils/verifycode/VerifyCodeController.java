@@ -41,6 +41,8 @@ public class VerifyCodeController {
     public ResultBean<?> validateVerifyCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String verifyCode) throws IOException {
         HttpSession session = request.getSession();
         String sessionVerifyCode = (String)session.getAttribute(this.imgCodeKey);
+        logger.info("verifyCode==========="+verifyCode);
+        logger.info("sessionVerifyCode==========="+sessionVerifyCode);
         if(verifyCode.toLowerCase().equals(sessionVerifyCode)){
             return new ResultBean(1);
         }
