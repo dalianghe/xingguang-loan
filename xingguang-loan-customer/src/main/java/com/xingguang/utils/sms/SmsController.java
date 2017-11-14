@@ -62,4 +62,31 @@ public class SmsController {
         return new ResultBean();
     }
 
+    @RequestMapping(value = "/sms/send/{mobile}/{smsCode}", method = RequestMethod.GET)
+    public ResultBean<?> buildVerifyCode(@PathVariable String mobile, @PathVariable String smsCode, HttpServletRequest request) throws Exception {
+        String time = String.valueOf(System.currentTimeMillis());
+//        String smsCode = time.substring(time.length() - 4, time.length());
+        new Thread(() -> {
+            try {
+                String content = String.format(SmsController.this.smsCodeTemplet, smsCode);
+                SmsController.this.smsUtils.sendSms(mobile, content);
+                SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
+                sysInterfaceLogWithBLOBs.setType(1);
+                sysInterfaceLogWithBLOBs.setStatus(2);
+                sysInterfaceLogWithBLOBs.setCreateTime(new Date());
+                sysInterfaceLogWithBLOBs.setRoleType(2);
+                sysInterfaceLogWithBLOBs.setSendData(content);
+                sysInterfaceLogWithBLOBs.setUserId(0L);
+                sysInterfaceLogWithBLOBs.setPhone(mobile);
+                SmsController.this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+        this.logger.debug("sms code :==============: " + smsCode);
+        this.smsUtils.sendSms(mobile, smsCode);
+        request.getSession().setAttribute(SMS_CODE_KEY, smsCode);
+        return new ResultBean();
+    }
+
 }
