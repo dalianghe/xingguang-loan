@@ -27,9 +27,9 @@ public class CellInitRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        logger.info(">>>>>>>>>>>>>>>服务启动执行初始化 start <<<<<<<<<<<<<");
+        logger.info(">>>>>>>>>>>>>>>server start init<<<<<<<<<<<<<");
         String token = cellUtils.getAccessToken();
         map.put("token" , token);
-        logger.info(">>>>>>>>>>>>>>>服务启动执行初始化 end <<<<<<<<<<<<<");
+        logger.info(">>>>>>>>>>>>>>>server start init end <<<<<<<<<<<<<");
     }
 }
