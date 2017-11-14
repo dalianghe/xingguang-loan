@@ -43,15 +43,16 @@ public class CusUserAuthServiceImpl implements ICusUserAuthService {
     @Override
     @Transactional
     public CusUserInfo registerCusUser(AuthBean authBean) throws Exception {
-        CusUserAuthEntity entity = this.addCusUserAuth(authBean);
-        CusUserInfo cusUserInfo = new CusUserInfo();
-        cusUserInfo.setPhone(authBean.getPhone());
-        cusUserInfo.setWorkUserId(authBean.getWorkUserId());
+        this.addCusUserAuth(authBean);
         WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserInfoById(authBean.getWorkUserId());
         if(workUserInfo == null){
             throw new CustomException("业务员不存在");
         }
+        CusUserInfo cusUserInfo = new CusUserInfo();
+        cusUserInfo.setPhone(authBean.getPhone());
+        cusUserInfo.setWorkUserId(authBean.getWorkUserId());
         cusUserInfo.setWorkUserName(workUserInfo.getName());
+        cusUserInfo.setOpenId(authBean.getOpenId());
         this.cusUserInfoService.create(cusUserInfo);
         return cusUserInfo;
     }

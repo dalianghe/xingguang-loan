@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by 宗旭 on 2017/10/01.
@@ -74,14 +76,20 @@ public class WxController {
     @RequestMapping(value = "/wx/auth/{code}", method = RequestMethod.GET)
     public ResultBean<?>  wx(HttpServletRequest request, HttpServletResponse response, @PathVariable String code) throws Exception {
         logger.info("===========进入获取openId==========");
+        Map<String, String> map = new HashMap<>();
         WxAuth wxAuth = this.wxUtils.getAuthToken(code);
         logger.info("wxAuth:=============:" + wxAuth);
-        CusUserInfo cusUserInfo = this.cusUserInfoService.findByOpenId(wxAuth.getOpenid());
-        if(cusUserInfo == null){
+        if(wxAuth == null){
             return new ResultBean();
         }
+        map.put("openId", wxAuth.getOpenid());
+        CusUserInfo cusUserInfo = this.cusUserInfoService.findByOpenId(wxAuth.getOpenid());
+        if(cusUserInfo == null){
+            return new ResultBean(map);
+        }
         String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())), AuthController.EXPIR_TIME);
-        return new ResultBean(jwtToken);
+        map.put("token", jwtToken);
+        return new ResultBean(map);
     }
 
 

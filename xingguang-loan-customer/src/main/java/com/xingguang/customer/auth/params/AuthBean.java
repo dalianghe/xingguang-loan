@@ -7,6 +7,7 @@ public class AuthBean {
     private String phone;
     private String smsCode;
     private Long workUserId;
+    private String openId;
 
     public String getPhone() {
         return phone;
@@ -30,5 +31,13 @@ public class AuthBean {
 
     public void setWorkUserId(Long workUserId) {
         this.workUserId = workUserId;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }

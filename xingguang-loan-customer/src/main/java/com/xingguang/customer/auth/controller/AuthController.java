@@ -71,7 +71,6 @@ public class AuthController {
         // 检查手机号是否注册
         CusUserAuthEntity oldEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
         if (oldEntity != null) {
-            oldEntity = null;
             throw new CustomException("用户已注册");
         }
         //  调用注册服务
