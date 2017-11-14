@@ -33,9 +33,21 @@ public class ScheduledTask {
     @Scheduled(cron = "0 0/5 * * * ?")
     public void pullJxlReportJob() throws Exception {
         logger.info("拉取聚信立报告，===>"+String.format("开始时间：%s", new Date()));
-        String token = null== CellInitRunner.map.get("token") ? cellUtils.getAccessToken() : CellInitRunner.map.get("token");
+        String token = CellInitRunner.map.get("token");
+        if(token==null){
+            token = cellUtils.getAccessToken();
+            logger.info("获取聚信立访问token，===>"+String.format("token：%s", token));
+            CellInitRunner.map.put("token",token);
+        }else{
+            token = CellInitRunner.map.get("token");
+            logger.info("从存储中获取token，===>"+String.format("token：%s", token));
+        }
         if(null != token){
+            logger.info("拉取报告开始，===>"+String.format("start：%s", new Date()));
             cellService.pullReport(token);
+            logger.info("拉取报告结束，===>"+String.format("end：%s", new Date()));
+        }else{
+            logger.info("未链接聚信立，5分钟后尝试重新链接。。。");
         }
         logger.info("拉取聚信立报告，===>"+String.format("结束时间：%s", new Date()));
     }
