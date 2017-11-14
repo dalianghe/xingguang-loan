@@ -52,7 +52,7 @@ public class ScheduledTask {
         logger.info("拉取聚信立报告，===>"+String.format("结束时间：%s", new Date()));
     }
 
-    @Scheduled(cron = "0 0 0 * * ? *")
+    @Scheduled(cron = "0 0 0 1/1 * ? ")
     public void overdueJob() throws Exception {
         logger.info("逾期跑批任务，===>"+String.format("开始时间：%s", new Date()));
         overdueService.updateOverdueInfo();
