@@ -1,5 +1,6 @@
 package com.xingguang.utils.wx;
 
+import com.alibaba.fastjson.JSONObject;
 import com.xingguang.utils.wx.entity.WxAccessToken;
 import com.xingguang.utils.wx.entity.WxAuth;
 import com.xingguang.utils.wx.entity.WxConfig;
@@ -92,9 +93,10 @@ public class WxUtils {
     public WxAuth getAuthToken(String code) {
         //https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
         logger.info("getAuthToken:=============:" + String.format(this.authTokenUrl, code));
-        String  wocao = this.restTemplate.getForObject(String.format(this.authTokenUrl, code), String.class);
-        logger.info("wocao----------------" + wocao);
-        return null;
+        String result = this.restTemplate.getForObject(String.format(this.authTokenUrl, code), String.class);
+        logger.info("result----------------" + result);
+        WxAuth wxAuth = JSONObject.parseObject(result , WxAuth.class);
+        return wxAuth;
     }
 
 }
