@@ -5,6 +5,9 @@ import com.xingguang.beans.JWTToken;
 import com.xingguang.beans.ResultBean;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
+import com.xingguang.utils.wx.WxController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,8 +19,12 @@ import java.util.Map;
  * Created by admin on 2017/9/30.
  */
 public class AuthInterceptor implements HandlerInterceptor{
+
+    protected static final Logger logger = LogManager.getLogger(AuthInterceptor.class);
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        logger.info("AuthInterceptor--url:=======:" + httpServletRequest.getRequestURL());
         String token = httpServletRequest.getHeader("Authorization");
         if (token == null) {
             token = httpServletRequest.getParameter("Authorization");
