@@ -18,4 +18,6 @@ public interface ICusUserInfoService {
 
     CusUserInfo findByPhone(String phone);
 
+    CusUserInfo findByOpenId(String openId);
+
 }

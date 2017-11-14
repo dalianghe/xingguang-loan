@@ -1,16 +1,21 @@
 package com.xingguang.utils.wx;
 
+import com.alibaba.fastjson.JSON;
+import com.xingguang.beans.JWTToken;
 import com.xingguang.beans.ResultBean;
+import com.xingguang.customer.auth.controller.AuthController;
+import com.xingguang.customer.auth.service.ICusUserAuthService;
+import com.xingguang.customer.info.entity.CusUserInfo;
+import com.xingguang.customer.info.service.ICusUserInfoService;
+import com.xingguang.utils.JwtUtils;
 import com.xingguang.utils.wx.entity.WxAccessToken;
+import com.xingguang.utils.wx.entity.WxAuth;
 import com.xingguang.utils.wx.entity.WxConfig;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,14 +31,19 @@ public class WxController {
     @Autowired
     private WxUtils wxUtils;
 
+    @Autowired
+    private ICusUserInfoService cusUserInfoService;
+
     @RequestMapping(value = "/wx/getAccessToken",method = RequestMethod.GET)
     public ResultBean<?> getAccessToken(){
+        logger.info("===========进入获取AccessToken==========");
         WxAccessToken wxAccessToken = this.wxUtils.getAccessToken();
         return new ResultBean(wxAccessToken);
     }
 
     @RequestMapping(value = "/wx/getWxConfig",method = RequestMethod.GET)
     public ResultBean<?> getWxConfig(@RequestParam(value = "url", required = false) final String url, HttpServletRequest request){
+        logger.info("===========进入获取WxConfig==========");
         String requestUrl = url;
         if(StringUtils.isBlank(requestUrl)){
 //            requestUrl = request.getRequestURL().toString();
@@ -54,11 +64,23 @@ public class WxController {
         return new ResultBean(wxConfig);
     }
 
-    @RequestMapping(value = "/wx")
+    @RequestMapping(value = "/wx/")
     public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        logger.info("===========有人关注==========");
+        logger.info("===========进入监听接口==========");
         String echostr = request.getParameter("echostr");
         response.getWriter().append(echostr).flush();
+    }
+
+    @RequestMapping(value = "/wx/auth/{code}", method = RequestMethod.GET)
+    public ResultBean<?>  wx(HttpServletRequest request, HttpServletResponse response, @PathVariable String code) throws Exception {
+        logger.info("===========进入获取openId==========");
+        WxAuth wxAuth = this.wxUtils.getAuthToken(code);
+        CusUserInfo cusUserInfo = this.cusUserInfoService.findByOpenId(wxAuth.getOpenid());
+        if(cusUserInfo == null){
+            return new ResultBean();
+        }
+        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(cusUserInfo.getId(), cusUserInfo.getPhone())), AuthController.EXPIR_TIME);
+        return new ResultBean(jwtToken);
     }
 
 

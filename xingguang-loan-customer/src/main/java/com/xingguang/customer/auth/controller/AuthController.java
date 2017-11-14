@@ -39,7 +39,7 @@ public class AuthController {
 
     private final Logger logger = LogManager.getLogger(AuthController.class);
 
-    private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
+    public static final Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 365;
 
     @Autowired
     private ICusUserAuthService cusUserAuthService;

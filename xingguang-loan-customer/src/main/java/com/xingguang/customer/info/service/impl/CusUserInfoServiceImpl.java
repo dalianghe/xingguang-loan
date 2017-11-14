@@ -68,4 +68,9 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
         }
         return list.get(0);
     }
+
+    @Override
+    public CusUserInfo findByOpenId(String openId) {
+        return null;
+    }
 }

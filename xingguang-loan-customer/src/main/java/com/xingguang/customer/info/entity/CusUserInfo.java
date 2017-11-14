@@ -37,6 +37,8 @@ public class CusUserInfo {
 
     private String realImg3Url;
 
+    private String openId;
+
     public Long getId() {
         return id;
     }
@@ -171,5 +173,13 @@ public class CusUserInfo {
 
     public void setRealImg3Url(String realImg3Url) {
         this.realImg3Url = realImg3Url == null ? null : realImg3Url.trim();
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 }
