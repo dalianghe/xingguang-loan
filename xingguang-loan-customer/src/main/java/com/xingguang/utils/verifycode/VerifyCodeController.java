@@ -37,7 +37,7 @@ public class VerifyCodeController {
         VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
     }
 
-    @RequestMapping(value = "/verify/code/{verifyCode}", method = RequestMethod.GET)
+    @RequestMapping(value = "/verify/code/{verifyCode}", method = RequestMethod.POST)
     public ResultBean<?> validateVerifyCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String verifyCode) throws IOException {
         HttpSession session = request.getSession();
         String sessionVerifyCode = (String)session.getAttribute(this.imgCodeKey);
