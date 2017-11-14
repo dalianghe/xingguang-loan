@@ -50,4 +50,15 @@ public class WxAuth {
     public void setScope(String scope) {
         this.scope = scope;
     }
+
+    @Override
+    public String toString() {
+        return "WxAuth{" +
+                "access_token='" + access_token + '\'' +
+                ", expires_in='" + expires_in + '\'' +
+                ", refresh_token='" + refresh_token + '\'' +
+                ", openid='" + openid + '\'' +
+                ", scope='" + scope + '\'' +
+                '}';
+    }
 }
