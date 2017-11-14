@@ -32,31 +32,31 @@ public class ScheduledTask {
 
     @Scheduled(cron = "0 0/5 * * * ?")
     public void pullJxlReportJob() throws Exception {
-        logger.info("拉取聚信立报告，===>"+String.format("开始时间：%s", new Date()));
+        logger.info("pull jxl report job,===>"+String.format("start time:%s", new Date()));
         String token = CellInitRunner.map.get("token");
         if(token==null){
             token = cellUtils.getAccessToken();
-            logger.info("获取聚信立访问token，===>"+String.format("token：%s", token));
+            logger.info("get jxl access token,===>"+String.format("token:%s", token));
             CellInitRunner.map.put("token",token);
         }else{
             token = CellInitRunner.map.get("token");
-            logger.info("从存储中获取token，===>"+String.format("token：%s", token));
+            logger.info("get access token from memory,===>"+String.format("token:%s", token));
         }
         if(null != token){
-            logger.info("拉取报告开始，===>"+String.format("start：%s", new Date()));
+            logger.info("pull report start,===>"+String.format("start time:%s", new Date()));
             cellService.pullReport(token);
-            logger.info("拉取报告结束，===>"+String.format("end：%s", new Date()));
+            logger.info("pull report end,===>"+String.format("end:%s", new Date()));
         }else{
-            logger.info("连接聚信立失败，5分钟后尝试重新连接。。。");
+            logger.info("connect jxl fail，try again 5 minutes later... ...");
         }
-        logger.info("拉取聚信立报告，===>"+String.format("结束时间：%s", new Date()));
+        logger.info("pull jxl report job,===>"+String.format("end time:%s", new Date()));
     }
 
     @Scheduled(cron = "0 0 0 1/1 * ? ")
     public void overdueJob() throws Exception {
-        logger.info("逾期跑批任务，===>"+String.format("开始时间：%s", new Date()));
+        logger.info("orverdue job,===>"+String.format("start time:%s", new Date()));
         overdueService.updateOverdueInfo();
-        logger.info("逾期跑批任务，===>"+String.format("结束时间：%s", new Date()));
+        logger.info("orverdue job，===>"+String.format("end time:%s", new Date()));
     }
 
 }
