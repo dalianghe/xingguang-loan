@@ -94,4 +94,12 @@ public class SysUserServiceImpl implements ISysUserService {
     public List<SysRoleEntityCustom> findSysUserHaveRoles(Long userId) throws Exception {
         return sysUserMapper.findSysUserHaveRoles(userId);
     }
+
+    @Override
+    public void resetPassword(Long id, String loginId, String password) throws Exception {
+        SysUserEntity entity = new SysUserEntity();
+        entity.setId(id);
+        entity.setPassword(MD5Utils.getMd5ofStr(password,loginId));
+        sysUserMapper.updateSysUserById(entity);
+    }
 }

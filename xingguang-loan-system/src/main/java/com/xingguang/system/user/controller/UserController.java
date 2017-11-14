@@ -75,4 +75,13 @@ public class UserController extends BaseController{
         return resultBean;
     }
 
+    @RequestMapping(value = "/users/resetpassword" , method = RequestMethod.POST)
+    public ResultBean<?> resetPassword(Long id , String loginId , String password) throws Exception{
+        ResultBean<?> resultBean = null;
+        sysUserService.resetPassword(id,loginId,password);
+        resultBean = new ResultBean<>();
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
 }

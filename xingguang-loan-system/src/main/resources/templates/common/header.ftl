@@ -16,7 +16,7 @@
 
 <div class="navbar-buttons navbar-header pull-right" role="navigation">
     <ul class="nav ace-nav">
-        <li class="grey dropdown-modal">
+        <#--<li class="grey dropdown-modal">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="ace-icon fa fa-tasks"></i>
                 <span class="badge badge-grey">4</span>
@@ -91,9 +91,9 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>-->
 
-        <li class="purple dropdown-modal">
+        <#--<li class="purple dropdown-modal">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="ace-icon fa fa-bell icon-animated-bell"></i>
                 <span class="badge badge-important">8</span>
@@ -159,9 +159,9 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>-->
 
-        <li class="green dropdown-modal">
+        <#--<li class="green dropdown-modal">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
                 <span class="badge badge-success">5</span>
@@ -269,7 +269,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>-->
 
         <li class="light-blue dropdown-modal">
             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
@@ -286,33 +286,106 @@
 
             <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                 <li>
-                    <a href="#">
+                    <a href="#" data-toggle="modal" data-target="#plan-modal">
                         <i class="ace-icon fa fa-cog"></i>
-                        Settings
+                        修改密码
                     </a>
                 </li>
 
-                <li>
-                    <a href="profile.html">
-                        <i class="ace-icon fa fa-user"></i>
-                        Profile
-                    </a>
-                </li>
+            <#--<li>
+                <a href="profile.html">
+                    <i class="ace-icon fa fa-user"></i>
+                    Profile
+                </a>
+            </li>-->
 
                 <li class="divider"></li>
 
                 <li>
                     <a id="logoutButton" href="#">
                         <i class="ace-icon fa fa-power-off"></i>
-                        Logout
+                        退出
                     </a>
                 </li>
             </ul>
         </li>
     </ul>
+    <div id="plan-modal" class="modal fade " tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div id="plan-content" class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="smaller lighter blue no-margin">修改密码</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="profile-user-info profile-user-info-striped">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"><span style="color:red;">*</span> 新密码 </div>
+                            <div class="profile-info-value">
+                                <input id="password" type="password" name="password" placeholder="请输入新密码"/>
+                                &nbsp;&nbsp;<span id="passwordMsg" style="color: red;"></span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"><span style="color:red;">*</span> 确认新密码 </div>
+                            <div class="profile-info-value">
+                                <input id="againPassword" type="password" name="againPassword" placeholder="请再次输入新密码"/>
+                                &nbsp;&nbsp;<span id="againPasswordMsg" style="color: red;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space visible-xs"></div>
+                <div class="modal-footer">
+                    <button id="confrimButton" class="btn btn-sm btn-success pull-right" onclick="confrim()">
+                        <i class="ace-icon fa fa-check"></i>
+                        确定
+                    </button>
+                    <button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
+                        <i class="ace-icon fa fa-times"></i>
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
-
+    function confrim(){
+        if($("#password").val()==""){
+            $("#passwordMsg").html("新密码不能为空！").show(300).delay(3000).hide(300);
+            return;
+        }
+        if($("#againPassword").val()==""){
+            $("#againPasswordMsg").html("确认新密码不能为空！").show(300).delay(3000).hide(300);
+            return;
+        }
+        if($("#password").val()!=$("#againPassword").val()){
+            $("#againPasswordMsg").html("两次输入密码不一致！").show(300).delay(3000).hide(300);
+            return;
+        }
+        var id = '<@shiro.principal property="id"/>';
+        var loginId = '<@shiro.principal property="loginId"/>';
+        var password = $("#password").val();
+        $.ajax({
+            url: "/system/users/resetpassword",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded",
+            data : {"id":id , "loginId":loginId , "password":password},
+            dataType: "json",
+            timeout: 10000,
+            success: function (data) {
+                if(data.sysCode==0){
+                    if(data.bizCode==0){
+                        $('#plan-modal').modal('hide')
+                    }
+                }
+            },
+            fail: function (err) {
+                console.log(err)
+            }
+        });
+    }
     jQuery(function($) {
             $("#logoutButton").on("click",function(e){
                 $.ajax({
