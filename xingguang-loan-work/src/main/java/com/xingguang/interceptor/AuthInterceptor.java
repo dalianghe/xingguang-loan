@@ -35,7 +35,7 @@ public class AuthInterceptor implements HandlerInterceptor{
         }
         Map<String, Object> tokenParam = JwtUtils.parseJWT(token);
         String tokenJson = (String) tokenParam.get("sub");
-        httpServletRequest.setAttribute("cus_token", JSON.parseObject(tokenJson, JWTToken.class));
+        httpServletRequest.setAttribute("work_token", JSON.parseObject(tokenJson, JWTToken.class));
         return true;
     }
 
