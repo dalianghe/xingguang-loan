@@ -16,6 +16,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -89,10 +91,10 @@ public class WxUtils {
         return result;
     }
 
-    public WxAuth getAuthToken(String code) {
+    public Map<String, String> getAuthToken(String code) {
         //https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
         logger.info("getAuthToken:=============:" + String.format(this.authTokenUrl, code));
-        return this.restTemplate.getForObject(String.format(this.authTokenUrl, code), WxAuth.class);
+        return this.restTemplate.getForObject(String.format(this.authTokenUrl, code), HashMap.class);
     }
 
 }

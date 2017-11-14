@@ -84,13 +84,13 @@ public class WxController {
     public ResultBean<?>  wx(HttpServletRequest request, HttpServletResponse response, @PathVariable String code) throws Exception {
         logger.info("===========进入获取openId==========");
         Map<String, String> map = new HashMap<>();
-        WxAuth wxAuth = this.wxUtils.getAuthToken(code);
+        Map<String, String> wxAuth = this.wxUtils.getAuthToken(code);
         logger.info("wxAuth:=============:" + wxAuth);
         if(wxAuth == null){
             return new ResultBean();
         }
-        map.put("openId", wxAuth.getOpenid());
-        CusUserInfo cusUserInfo = this.cusUserInfoService.findByOpenId(wxAuth.getOpenid());
+        map.put("openId", wxAuth.get("openid"));
+        CusUserInfo cusUserInfo = this.cusUserInfoService.findByOpenId(wxAuth.get("openid"));
         if(cusUserInfo == null){
             return new ResultBean(map);
         }
