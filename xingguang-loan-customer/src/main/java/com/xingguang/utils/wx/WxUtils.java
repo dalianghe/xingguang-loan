@@ -92,7 +92,9 @@ public class WxUtils {
     public WxAuth getAuthToken(String code) {
         //https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
         logger.info("getAuthToken:=============:" + String.format(this.authTokenUrl, code));
-        return this.restTemplate.getForObject(String.format(this.authTokenUrl, code), WxAuth.class);
+        String  wocao = this.restTemplate.getForObject(String.format(this.authTokenUrl, code), String.class);
+        logger.info("wocao----------------" + wocao);
+        return null;
     }
 
 }
