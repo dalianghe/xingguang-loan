@@ -65,9 +65,9 @@ public class AuthController {
         // 验证短信验证码是否正确
         String clientSmsCode = authBean.getSmsCode();
         String serverSmsCode = (String) request.getSession().getAttribute(SmsController.SMS_CODE_KEY); // 模拟，后期需从存储中获取 TODO
-        if (!clientSmsCode.equals(serverSmsCode)) {
-            throw new CustomException("验证码错误");
-        }
+//        if (!clientSmsCode.equals(serverSmsCode)) {
+//            throw new CustomException("验证码错误");
+//        }
         // 检查手机号是否注册
         CusUserAuthEntity oldEntity = cusUserAuthService.findUserByPhone(authBean.getPhone());
         if (oldEntity != null) {
