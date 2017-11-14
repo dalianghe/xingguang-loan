@@ -37,7 +37,7 @@ public class WxUtils {
     @PostConstruct
     public void init() {
         this.tokenUrl = this.baseUrl + "cgi-bin/token?grant_type=client_credential&appid=" + this.appId + "&secret=" + appSecret;
-        this.authTokenUrl = this.baseUrl + "sns/oauth2/access_token?appid=" + this.appId + "&secret=SECRET&code=%s&grant_type=authorization_code";
+        this.authTokenUrl = this.baseUrl + "sns/oauth2/access_token?appid=" + this.appId + "&secret="+this.appSecret+"&code=%s&grant_type=authorization_code";
     }
 
     @Autowired
