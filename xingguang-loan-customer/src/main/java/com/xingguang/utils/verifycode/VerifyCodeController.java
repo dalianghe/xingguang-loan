@@ -20,15 +20,17 @@ public class VerifyCodeController {
 
     private final String imgCodeKey = "_IMG_CODE_KEY";
 
-    @RequestMapping(value = "/verify/code", method = RequestMethod.GET)
-    public void buildVerifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/verify/code/{verifyCode}", method = RequestMethod.GET)
+    public void buildVerifyCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String verifyCode) throws IOException {
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
 
+
         //生成随机字串
-        String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
+        //String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
+        //response.setHeader("verifyCode", verifyCode);
         //存入会话session
         HttpSession session = request.getSession();
         session.setAttribute(this.imgCodeKey, verifyCode.toLowerCase());
