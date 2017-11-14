@@ -19,6 +19,7 @@
     <result column="real_img1_url" jdbcType="VARCHAR" property="realImg1Url" />
     <result column="real_img2_url" jdbcType="VARCHAR" property="realImg2Url" />
     <result column="real_img3_url" jdbcType="VARCHAR" property="realImg3Url" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,7 +82,7 @@
   <sql id="Base_Column_List">
     id, phone, name, id_no, real_status, sex, income, education, occupation, status, 
     create_time, work_user_id, work_user_name, head_img_url, real_img1_url, real_img2_url, 
-    real_img3_url
+    real_img3_url, open_id
   </sql>
   <select id="selectByExample" parameterType="com.xingguang.customer.info.entity.CusUserInfoExample" resultMap="BaseResultMap">
     select
@@ -127,13 +128,13 @@
       education, occupation, status, 
       create_time, work_user_id, work_user_name, 
       head_img_url, real_img1_url, real_img2_url, 
-      real_img3_url)
+      real_img3_url, open_id)
     values (#{phone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
       #{realStatus,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{income,jdbcType=INTEGER}, 
       #{education,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{workUserId,jdbcType=BIGINT}, #{workUserName,jdbcType=VARCHAR}, 
       #{headImgUrl,jdbcType=VARCHAR}, #{realImg1Url,jdbcType=VARCHAR}, #{realImg2Url,jdbcType=VARCHAR}, 
-      #{realImg3Url,jdbcType=VARCHAR})
+      #{realImg3Url,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.xingguang.customer.info.entity.CusUserInfo" useGeneratedKeys="true">
     insert into cus_user_info
@@ -186,6 +187,9 @@
       <if test="realImg3Url != null">
         real_img3_url,
       </if>
+      <if test="openId != null">
+        open_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="phone != null">
@@ -235,6 +239,9 @@
       </if>
       <if test="realImg3Url != null">
         #{realImg3Url,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -298,6 +305,9 @@
       <if test="record.realImg3Url != null">
         real_img3_url = #{record.realImg3Url,jdbcType=VARCHAR},
       </if>
+      <if test="record.openId != null">
+        open_id = #{record.openId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -321,7 +331,8 @@
       head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
       real_img1_url = #{record.realImg1Url,jdbcType=VARCHAR},
       real_img2_url = #{record.realImg2Url,jdbcType=VARCHAR},
-      real_img3_url = #{record.realImg3Url,jdbcType=VARCHAR}
+      real_img3_url = #{record.realImg3Url,jdbcType=VARCHAR},
+      open_id = #{record.openId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -377,6 +388,9 @@
       <if test="realImg3Url != null">
         real_img3_url = #{realImg3Url,jdbcType=VARCHAR},
       </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -397,8 +411,8 @@
       head_img_url = #{headImgUrl,jdbcType=VARCHAR},
       real_img1_url = #{realImg1Url,jdbcType=VARCHAR},
       real_img2_url = #{realImg2Url,jdbcType=VARCHAR},
-      real_img3_url = #{realImg3Url,jdbcType=VARCHAR}
+      real_img3_url = #{realImg3Url,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
 </mapper>

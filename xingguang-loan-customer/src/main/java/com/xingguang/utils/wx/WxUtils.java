@@ -1,6 +1,7 @@
 package com.xingguang.utils.wx;
 
 import com.xingguang.utils.wx.entity.WxAccessToken;
+import com.xingguang.utils.wx.entity.WxAuth;
 import com.xingguang.utils.wx.entity.WxConfig;
 import com.xingguang.utils.wx.entity.WxTicket;
 import org.apache.logging.log4j.LogManager;
@@ -26,13 +27,15 @@ public class WxUtils {
     private String appId;
     @Value("${WX.APP_SECRET}")
     private String appSecret;
-    private final String baseUrl = "https://api.weixin.qq.com/cgi-bin/";
+    private final String baseUrl = "https://api.weixin.qq.com/";
     private String tokenUrl;
-    private final String ticketUrl = this.baseUrl + "ticket/getticket";
+    private final String ticketUrl = this.baseUrl + "cgi-bin/ticket/getticket";
+    private String authTokenUrl;
 
     @PostConstruct
     public void init() {
-        this.tokenUrl = baseUrl + "token?grant_type=client_credential&appid=" + this.appId + "&secret=" + appSecret;
+        this.tokenUrl = this.baseUrl + "cgi-bin/token?grant_type=client_credential&appid=" + this.appId + "&secret=" + appSecret;
+        this.authTokenUrl = this.baseUrl + "sns/oauth2/access_token?appid=" + this.appId + "&secret=SECRET&code=%s&grant_type=authorization_code";
     }
 
     @Autowired
@@ -86,27 +89,9 @@ public class WxUtils {
         return result;
     }
 
-    private static String SHA1(String str) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-1"); //如果是SHA加密只需要将"SHA-1"改成"SHA"即可
-            digest.update(str.getBytes());
-            byte messageDigest[] = digest.digest();
-            // Create Hex String
-            StringBuffer hexStr = new StringBuffer();
-            // 字节数组转换为 十六进制 数
-            for (int i = 0; i < messageDigest.length; i++) {
-                String shaHex = Integer.toHexString(messageDigest[i] & 0xFF);
-                if (shaHex.length() < 2) {
-                    hexStr.append(0);
-                }
-                hexStr.append(shaHex);
-            }
-            return hexStr.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public WxAuth getAuthToken(String code) {
+        //https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+        return this.restTemplate.getForObject(String.format(this.authTokenUrl, code), WxAuth.class);
     }
 
 }
