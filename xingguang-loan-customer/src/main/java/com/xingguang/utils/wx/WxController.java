@@ -75,6 +75,7 @@ public class WxController {
     public ResultBean<?>  wx(HttpServletRequest request, HttpServletResponse response, @PathVariable String code) throws Exception {
         logger.info("===========进入获取openId==========");
         WxAuth wxAuth = this.wxUtils.getAuthToken(code);
+        logger.info("wxAuth:=============:" + wxAuth);
         CusUserInfo cusUserInfo = this.cusUserInfoService.findByOpenId(wxAuth.getOpenid());
         if(cusUserInfo == null){
             return new ResultBean();
