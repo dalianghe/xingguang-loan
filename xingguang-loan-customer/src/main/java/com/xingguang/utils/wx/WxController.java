@@ -66,9 +66,16 @@ public class WxController {
         return new ResultBean(wxConfig);
     }
 
-    @RequestMapping(value = "/wx/")
-    public void wx(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        logger.info("===========进入监听接口==========");
+    @RequestMapping(value = "/wx/", method = RequestMethod.GET)
+    public void wxGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        logger.info("===========进入监听接口GET==========");
+        String echostr = request.getParameter("echostr");
+        response.getWriter().append(echostr).flush();
+    }
+
+    @RequestMapping(value = "/wx/", method = RequestMethod.POST)
+    public void wxPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        logger.info("===========进入监听接口POST==========");
         String echostr = request.getParameter("echostr");
         response.getWriter().append(echostr).flush();
     }
