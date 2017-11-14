@@ -71,6 +71,13 @@ public class CusUserInfoServiceImpl implements ICusUserInfoService {
 
     @Override
     public CusUserInfo findByOpenId(String openId) {
-        return null;
+        CusUserInfoExample example = new CusUserInfoExample();
+        example.createCriteria().andOpenIdEqualTo(openId);
+        example.setLimit(1);
+        List<CusUserInfo> list = this.cusUserInfoMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
     }
 }
