@@ -1,6 +1,7 @@
 package com.xingguang.work.info.params;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by admin on 2017/10/1.
@@ -15,6 +16,8 @@ public class InfoBean implements Serializable {
     private String provinceName; // 所在省名称
     private Long cityId; // 所在市ID
     private String cityName; // 所在市名称
+    private Date createTime;
+    private String openId;// 微信openid
 
     public Long getId() {
         return id;
@@ -86,6 +89,22 @@ public class InfoBean implements Serializable {
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override

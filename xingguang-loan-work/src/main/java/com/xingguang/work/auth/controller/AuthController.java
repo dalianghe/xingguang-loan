@@ -9,6 +9,7 @@ import com.xingguang.work.auth.entity.WorkUserAuthEntity;
 import com.xingguang.work.auth.params.AuthBean;
 import com.xingguang.work.auth.service.IWorkUserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
+
+    private static String ISSUER = "work.xingguanqb.com";
 
     @Autowired
     private IWorkUserAuthService workUserAuthService;
@@ -41,35 +44,32 @@ public class AuthController {
         if(!clientSmsCode.equals(serverSmsCode)){
             throw new CustomException("验证码错误");
         }
-
-        String jwtToken = JwtUtils.createJWT("work.xingguanqb.com",authBean.getPhone(),10000);
-
+        // 返回token串
+        String jwtToken = JwtUtils.createJWT(ISSUER, JSON.toJSONString(new JWTToken(workUserAuthEntity.getId(), workUserAuthEntity.getPhone())), EXPIR_TIME);
+        // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
-
+        resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
 
     @RequestMapping(value = "/auth/register" , method = RequestMethod.POST)
     public ResultBean<?> register(@RequestBody AuthBean authBean) throws Exception{
         ResultBean<?> resultBean = null;
-        // 验证短信验证码是否正确
-        String clientSmsCode = authBean.getSmsCode();
-        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
-        if(!clientSmsCode.equals(serverSmsCode)){
-            throw new CustomException("验证码错误");
+        if(StringUtils.isEmpty(authBean.getOpenId())){
+            throw new CustomException("绑定微信失败！");
         }
         // 检查手机号是否注册
         WorkUserAuthEntity oldEntity = workUserAuthService.findUserByPhone(authBean.getPhone());
         if(oldEntity!=null){
-            oldEntity = null;
             throw new CustomException("用户已注册");
         }
         //  调用注册服务
         WorkUserAuthEntity newEntity = workUserAuthService.registerWorkUser(authBean);
         // 返回token串
-        String jwtToken = JwtUtils.createJWT("work.xingguanqb.com", JSON.toJSONString(new JWTToken(newEntity.getId(), newEntity.getPhone())), EXPIR_TIME);
+        String jwtToken = JwtUtils.createJWT(ISSUER, JSON.toJSONString(new JWTToken(newEntity.getId(), newEntity.getPhone())), EXPIR_TIME);
         // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
+        resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
 }

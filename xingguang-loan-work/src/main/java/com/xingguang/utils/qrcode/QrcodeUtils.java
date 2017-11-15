@@ -63,7 +63,7 @@ public class QrcodeUtils {
 
     public static byte[] createQrcode(MatrixToBgImageConfig config) {
         try {
-            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(config.getBgFile());
+            /*InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(config.getBgFile());
             File bgFile = Files.createTempFile("bg_", ".jpg").toFile();
             FileUtils.copyInputStreamToFile(inputStream, bgFile);
             if (bgFile != null && !bgFile.exists()) {
@@ -102,18 +102,18 @@ public class QrcodeUtils {
             }
             if (headimgFile != null && !headimgFile.exists()) {
                 throw new IllegalArgumentException("请提供正确的头像文件！");
-            }
+            }*/
             BitMatrix qrCodeMatrix = createQrcodeMatrix(config.getQrcode_url(), config.getQrcode_height());
             if (qrCodeMatrix == null) {
                 throw new IllegalArgumentException("请提供正确的二维码图片地址");
             }
             File file = Files.createTempFile("qrcode_" + UUID.randomUUID(), "." + FORMAT).toFile();
             MatrixToImageWriter.writeToFile(qrCodeMatrix, FORMAT, file);
-            if (bgFile != null) {
+            /*if (bgFile != null) {
                 // 添加背景图片, 此处一定需要重新进行读取，而不能直接使用二维码的BufferedImage 对象
                 BufferedImage img = ImageIO.read(file);
                 increasingImage(img, FORMAT, file.getAbsolutePath(), bgFile, config, headimgFile);
-            }
+            }*/
             return toByteArray(file);
         }catch (Exception e){
             return null;

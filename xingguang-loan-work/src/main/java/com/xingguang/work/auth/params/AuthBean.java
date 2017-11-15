@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class AuthBean implements Serializable{
     private String phone;
     private String smsCode;
+    private String openId;
 
     public String getPhone() {
         return phone;
@@ -23,5 +24,13 @@ public class AuthBean implements Serializable{
 
     public void setSmsCode(String smsCode) {
         this.smsCode = smsCode;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 }

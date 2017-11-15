@@ -26,6 +26,7 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
     public WorkUserInfoEntity addWorkUserInfo(InfoBean infoBean) throws Exception {
         WorkUserInfoEntity  entity = new WorkUserInfoEntity();
         entity.setPhone(infoBean.getPhone());
+        entity.setOpenId(infoBean.getOpenId());
         entity.setCreateTime(new Date());
         workUserInfoMapper.insertWorkUserInfo(entity);
         return entity;

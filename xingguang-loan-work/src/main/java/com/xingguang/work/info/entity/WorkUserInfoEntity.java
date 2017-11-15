@@ -26,6 +26,7 @@ public class WorkUserInfoEntity implements Serializable {
     private String auditorName; // 审核人姓名
     @JSONField(serialize = false)
     private Date auditorTime; // 审核时间
+    private String openId;
 
     public Long getId() {
         return id;
@@ -137,6 +138,14 @@ public class WorkUserInfoEntity implements Serializable {
 
     public void setAuditorTime(Date auditorTime) {
         this.auditorTime = auditorTime;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     @Override

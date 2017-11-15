@@ -44,6 +44,7 @@ public class WorkUserAuthServiceImpl implements IWorkUserAuthService {
         WorkUserAuthEntity entity = this.addWorkUserAuth(authBean);
         InfoBean infoBean = new InfoBean();
         infoBean.setPhone(authBean.getPhone());
+        infoBean.setOpenId(authBean.getOpenId());
         workUserInfoService.addWorkUserInfo(infoBean);
         return entity;
     }
