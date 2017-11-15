@@ -33,4 +33,14 @@ public class InfoController {
         resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
+
+    @RequestMapping(value = "/info/workuser/{openId}" , method = RequestMethod.GET)
+    public ResultBean<?> getUserByOpenId(@PathVariable String openId) throws Exception{
+        ResultBean<?> resultBean = null;
+        WorkUserInfoEntity entity = workUserInfoService.selectWorkInfoByOpenId(openId);
+        resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
 }

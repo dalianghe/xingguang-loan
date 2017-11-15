@@ -14,4 +14,6 @@ public interface IWorkUserInfoService {
 
     public WorkUserInfoEntity selectWorkInfoById(Long id) throws Exception;
 
+    public WorkUserInfoEntity selectWorkInfoByOpenId(String openId) throws Exception;;
+
 }

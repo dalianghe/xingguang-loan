@@ -28,6 +28,12 @@
         WHERE id=#{id}
     </select>
 
+    <select id="selectWorkInfoByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM work_user_info
+        WHERE open_id=#{openId}
+    </select>
+
     <!-- 业务员插入信息 -->
     <insert id="insertWorkUserInfo" parameterType="com.xingguang.work.info.entity.WorkUserInfoEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO work_user_info (phone, open_id, create_time)

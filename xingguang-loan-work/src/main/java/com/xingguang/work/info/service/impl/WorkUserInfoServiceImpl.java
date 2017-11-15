@@ -44,4 +44,9 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
     public WorkUserInfoEntity selectWorkInfoById(Long id) throws Exception {
         return workUserInfoMapper.selectWorkInfoById(id);
     }
+
+    @Override
+    public WorkUserInfoEntity selectWorkInfoByOpenId(String openId) throws Exception {
+        return workUserInfoMapper.selectWorkInfoByOpenId(openId);
+    }
 }

@@ -13,4 +13,6 @@ public interface WorkUserInfoMapper {
 
     WorkUserInfoEntity selectWorkInfoById(Long id) throws Exception;
 
+    WorkUserInfoEntity selectWorkInfoByOpenId(String openId) throws Exception;
+
 }
