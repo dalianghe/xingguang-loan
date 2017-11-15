@@ -15,13 +15,25 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
+    <resultMap id="BaseResultMapCustom" type="com.xingguang.work.cus.entity.custom.CusUserInfoEntityCustom" extends="BaseResultMap">
+        <result column="sex_name" property="sexName" jdbcType="VARCHAR" />
+        <result column="income_name" property="incomeName" jdbcType="VARCHAR" />
+        <result column="education_name" property="educationName" jdbcType="VARCHAR" />
+        <result column="occupation_name" property="occupationName" jdbcType="VARCHAR" />
+    </resultMap>
+
     <sql id="Base_Column_List" >
         id, phone, name, sex, income, education, occupation, cus_addr, status, status_name, create_time
     </sql>
 
     <!-- 查询所属业务员的客户 -->
-    <select id="findCusListByWorkUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT a.id, a.phone, a.name, a.sex, a.income, a.education, a.occupation, b.cus_addr,
+    <select id="findCusListByWorkUserId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom">
+        SELECT a.id, a.phone, a.name, a.sex,
+        (select t1.name from code_info t1 where t1.type_id=101 and t1.code=a.sex) sex_name,
+        a.income, a.education, a.occupation,
+        (select t1.name from code_info t1 where t1.type_id=103 and t1.code=a.income) income_name,
+        (select t1.name from code_info t1 where t1.type_id=104 and t1.code=a.education) education_name,
+        (select t1.name from code_info t1 where t1.type_id=105 and t1.code=a.occupation) occupation_name,
         b.status, if(b.status='1','待授信',if(b.status='2','授信通过','授信不通过')) status_name, b.create_time
         FROM cus_user_info a
         INNER JOIN credit_apply b on a.id = b.cus_user_id
