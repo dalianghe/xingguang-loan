@@ -15,9 +15,13 @@ import com.xingguang.customer.worker.entity.WorkUserInfo;
 import com.xingguang.customer.worker.service.IWorkUserInfoService;
 import com.xingguang.utils.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 宗旭 on 2017/10/01.
@@ -55,7 +59,16 @@ public class CreditController {
     @RequestMapping(value = "/credit/info",method = RequestMethod.GET)
     public ResultBean<?> findCredit(@JWTParam(key = "userId", required = true) Long cusUserId){
         CreditInfo creditInfo = this.creditInfoService.findByCusUserId(cusUserId);
-        return new ResultBean(creditInfo);
+        Map map = new HashMap();
+        if(creditInfo == null){
+            CreditApply creditApply = this.creditApplyService.getByUserId(cusUserId);
+            if(creditApply != null){
+                map.put("creditApply", creditApply);
+            }
+        }else{
+            map.put("creditInfo", creditInfo);
+        }
+        return new ResultBean(map);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.xingguang.customer.credit.service.impl;
 
 import com.xingguang.customer.credit.entity.CreditApply;
+import com.xingguang.customer.credit.entity.CreditApplyExample;
 import com.xingguang.customer.credit.mapper.CreditApplyMapper;
 import com.xingguang.customer.credit.service.ICreditApplyService;
 import com.xingguang.customer.info.entity.CusUserInfo;
@@ -13,9 +14,11 @@ import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Created by admin on 2017/10/1.
@@ -55,4 +58,17 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
         cusUserInfoService.update(cusUserInfo);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public CreditApply getByUserId(Long userId) {
+        CreditApplyExample example = new CreditApplyExample();
+        example.createCriteria().andCusUserIdEqualTo(userId);
+        example.setLimit(1);
+        example.setOrderByClause("create_time desc");
+        List<CreditApply> list = this.creditApplyMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
+    }
 }
