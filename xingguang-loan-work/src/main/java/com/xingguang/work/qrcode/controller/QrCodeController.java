@@ -24,6 +24,7 @@ public class QrCodeController {
         ResultBean<?> resultBean = null;
         WorkQrCodeEntityCustom entityCustom = workQrCodeService.createWorkQrCode(qrCodeBean);
         resultBean = new ResultBean<>(entityCustom);
+        resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
 }
