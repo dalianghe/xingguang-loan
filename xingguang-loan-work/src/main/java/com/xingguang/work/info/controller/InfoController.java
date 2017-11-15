@@ -24,6 +24,7 @@ public class InfoController {
         ResultBean<?> resultBean = null;
         WorkUserInfoEntity entity = workUserInfoService.updateWorkUserInfo(infoBean);
         resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
 }
