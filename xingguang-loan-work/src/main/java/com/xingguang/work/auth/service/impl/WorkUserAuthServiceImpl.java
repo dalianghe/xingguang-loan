@@ -4,6 +4,7 @@ import com.xingguang.work.auth.entity.WorkUserAuthEntity;
 import com.xingguang.work.auth.mapper.WorkUserAuthMapper;
 import com.xingguang.work.auth.params.AuthBean;
 import com.xingguang.work.auth.service.IWorkUserAuthService;
+import com.xingguang.work.info.entity.WorkUserInfoEntity;
 import com.xingguang.work.info.params.InfoBean;
 import com.xingguang.work.info.service.IWorkUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,12 @@ public class WorkUserAuthServiceImpl implements IWorkUserAuthService {
 
     @Override
     @Transactional
-    public WorkUserAuthEntity registerWorkUser(AuthBean authBean) throws Exception {
+    public WorkUserInfoEntity registerWorkUser(AuthBean authBean) throws Exception {
         WorkUserAuthEntity entity = this.addWorkUserAuth(authBean);
         InfoBean infoBean = new InfoBean();
         infoBean.setPhone(authBean.getPhone());
         infoBean.setOpenId(authBean.getOpenId());
-        workUserInfoService.addWorkUserInfo(infoBean);
-        return entity;
+        WorkUserInfoEntity info =workUserInfoService.addWorkUserInfo(infoBean);
+        return info;
     }
 }
