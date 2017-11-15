@@ -70,6 +70,7 @@ public class AuthController {
         // 返回实体对象
         resultBean = new ResultBean<>(jwtToken);
         resultBean.setBizCode(ResultBean.SUCCESS);
+        resultBean.setMsg(newEntity.getId()+"");
         return resultBean;
     }
 }
