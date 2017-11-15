@@ -48,22 +48,15 @@ public class WorkQrCodeServiceImpl implements IWorkQrCodeService {
         WorkQrCodeEntityCustom entity = null ;
         // 生成二维码
         MatrixToBgImageConfig config = new MatrixToBgImageConfig();
-        config.setQrcode_url("http://baidu.com");
-        config.setRealname("何大亮");
+        config.setQrcode_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56e3a34a9f127f04&redirect_uri=http://www.xingguangqb.com/web/cus/index.html%23/register/1&response_type=code&scope=snsapi_base&state="+qrCodeBean.getWorkUserId()+"#wechat_redirect");
+        //config.setRealname("何大亮");
         byte[] bytes = QrcodeUtils.createQrcode(config);
 
-        // step 1: 检查业务员是否已存在二维码（包括已用和未用）
-        // step 2: 判断二维码状态
-        //            1）状态为已用，更新二维码表中的经纬度并把状态设置为未使用
-        //            2）状态为未使用，只更新二维码表中的经纬度，不做状态更新
         if(bytes!=null) { // 二维码生成成功，做数据库保存操作
             entity = this.findQrCodeByWorkUserId(qrCodeBean.getWorkUserId());
             if (entity == null) { // 不存在业务员二维码 ,做插入
                 entity = this.insertWorkQrCode(qrCodeBean);
-            } else { // 不存在业务员二维码，做更新
-                if (entity.getStatus() == 2) {
-                    entity.setStatus(1);
-                }
+            } else { // 存在业务员二维码，做更新
                 entity.setLng(qrCodeBean.getLng());
                 entity.setLat(qrCodeBean.getLat());
                 entity.setUpdateTime(new Date());

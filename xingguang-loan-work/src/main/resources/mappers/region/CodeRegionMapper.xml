@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.work.region.mapper.CodeRegionMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.work.region.entity.CodeRegionEntity" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+        <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+        <result column="region_level" property="regionLevel" jdbcType="INTEGER" />
+        <result column="region_order" property="regionOrder" jdbcType="INTEGER" />
+        <result column="region_name_en" property="regionNameEn" jdbcType="VARCHAR" />
+        <result column="region_shortname_en" property="regionShortnameEn" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, region_code, region_name, parent_id, region_level, region_order, region_name_en, region_shortname_en
+    </sql>
+
+    <select id="findRegionList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM code_region
+        WHERE parent_id = #{id}
+        ORDER BY id
+    </select>
+
+</mapper>
