@@ -8,6 +8,7 @@ import com.xingguang.utils.JwtUtils;
 import com.xingguang.work.auth.entity.WorkUserAuthEntity;
 import com.xingguang.work.auth.params.AuthBean;
 import com.xingguang.work.auth.service.IWorkUserAuthService;
+import com.xingguang.work.info.entity.WorkUserInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,7 +65,7 @@ public class AuthController {
             throw new CustomException("用户已注册");
         }
         //  调用注册服务
-        WorkUserAuthEntity newEntity = workUserAuthService.registerWorkUser(authBean);
+        WorkUserInfoEntity newEntity = workUserAuthService.registerWorkUser(authBean);
         // 返回token串
         String jwtToken = JwtUtils.createJWT(ISSUER, JSON.toJSONString(new JWTToken(newEntity.getId(), newEntity.getPhone())), EXPIR_TIME);
         // 返回实体对象
