@@ -11,4 +11,6 @@ public interface WorkUserInfoMapper {
 
     void updateWorkUserInfo(WorkUserInfoEntity workUserInfoEntity) throws Exception;
 
+    WorkUserInfoEntity selectWorkInfoById(Long id) throws Exception;
+
 }

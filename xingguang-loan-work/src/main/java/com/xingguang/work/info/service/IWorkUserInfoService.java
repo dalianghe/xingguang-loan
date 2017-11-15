@@ -12,4 +12,6 @@ public interface IWorkUserInfoService {
 
     public WorkUserInfoEntity updateWorkUserInfo(InfoBean infoBean) throws Exception;
 
+    public WorkUserInfoEntity selectWorkInfoById(Long id) throws Exception;
+
 }

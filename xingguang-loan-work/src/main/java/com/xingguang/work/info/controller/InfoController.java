@@ -5,10 +5,7 @@ import com.xingguang.work.info.entity.WorkUserInfoEntity;
 import com.xingguang.work.info.params.InfoBean;
 import com.xingguang.work.info.service.IWorkUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by admin on 2017/10/2.
@@ -23,6 +20,15 @@ public class InfoController {
     public ResultBean<?> update(@RequestBody InfoBean infoBean) throws Exception{
         ResultBean<?> resultBean = null;
         WorkUserInfoEntity entity = workUserInfoService.updateWorkUserInfo(infoBean);
+        resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/info/user/{id}" , method = RequestMethod.GET)
+    public ResultBean<?> getUserById(@PathVariable Long id) throws Exception{
+        ResultBean<?> resultBean = null;
+        WorkUserInfoEntity entity = workUserInfoService.selectWorkInfoById(id);
         resultBean = new ResultBean<>(entity);
         resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
