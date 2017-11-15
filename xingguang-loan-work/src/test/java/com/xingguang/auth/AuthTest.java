@@ -44,7 +44,7 @@ public class AuthTest {
     public void testRegisterWorkUserService() throws Exception{
         AuthBean authBean = new AuthBean();
         authBean.setPhone("13611201362");
-        WorkUserAuthEntity entity = workUserAuthService.registerWorkUser(authBean);
+        WorkUserInfoEntity entity = workUserAuthService.registerWorkUser(authBean);
         System.out.println(entity.toString());
     }
 
