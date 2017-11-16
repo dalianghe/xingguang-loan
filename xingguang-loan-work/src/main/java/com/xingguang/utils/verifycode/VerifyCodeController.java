@@ -1,0 +1,54 @@
+package com.xingguang.utils.verifycode;
+
+import com.xingguang.beans.ResultBean;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
+@RestController
+public class VerifyCodeController {
+
+    private final Logger logger = LogManager.getLogger(VerifyCodeController.class);
+
+    private final String imgCodeKey = "_IMG_CODE_KEY";
+
+    @RequestMapping(value = "/verify/code/{verifyCode}", method = RequestMethod.GET)
+    public void buildVerifyCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String verifyCode) throws IOException {
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setContentType("image/jpeg");
+
+
+        //生成随机字串
+        //String verifyCode = VerifyCodeUtils.generateVerifyCode(4);
+        //response.setHeader("verifyCode", verifyCode);
+        //存入会话session
+        HttpSession session = request.getSession();
+        session.setAttribute(this.imgCodeKey, verifyCode.toLowerCase());
+        //生成图片
+        int w = 200, h = 80;
+        VerifyCodeUtils.outputImage(w, h, response.getOutputStream(), verifyCode);
+    }
+
+    @RequestMapping(value = "/verify/code/{verifyCode}", method = RequestMethod.POST)
+    public ResultBean<?> validateVerifyCode(HttpServletRequest request, HttpServletResponse response, @PathVariable String verifyCode) throws IOException {
+        HttpSession session = request.getSession();
+        String sessionVerifyCode = (String)session.getAttribute(this.imgCodeKey);
+        logger.info("verifyCode==========="+verifyCode);
+        logger.info("sessionVerifyCode==========="+sessionVerifyCode);
+        if(verifyCode.toLowerCase().equals(sessionVerifyCode)){
+            return new ResultBean(1);
+        }
+        return new ResultBean(0);
+    }
+
+}

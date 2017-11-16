@@ -5,10 +5,9 @@ import com.xingguang.work.qrcode.entity.custom.WorkQrCodeEntityCustom;
 import com.xingguang.work.qrcode.params.QrCodeBean;
 import com.xingguang.work.qrcode.service.IWorkQrCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by admin on 2017/10/2.
@@ -19,12 +18,17 @@ public class QrCodeController {
     @Autowired
     private IWorkQrCodeService workQrCodeService;
 
-    @RequestMapping(value = "/qrcode/code" , method = RequestMethod.POST)
-    public ResultBean<?> code(@RequestBody QrCodeBean qrCodeBean) throws Exception{
-        ResultBean<?> resultBean = null;
+    @RequestMapping(value = "/qrcode/code/{workUserId}/{lng}/{lat}" , method = RequestMethod.GET)
+    public void code(HttpServletResponse response, @PathVariable Long workUserId,
+                     @PathVariable String lng, @PathVariable String lat) throws Exception{
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setContentType("image/jpeg");
+        QrCodeBean qrCodeBean = new QrCodeBean(workUserId, lng, lat);
         WorkQrCodeEntityCustom entityCustom = workQrCodeService.createWorkQrCode(qrCodeBean);
-        resultBean = new ResultBean<>(entityCustom);
-        resultBean.setBizCode(ResultBean.SUCCESS);
-        return resultBean;
+//        resultBean = new ResultBean<>(entityCustom);
+//        resultBean.setBizCode(ResultBean.SUCCESS);
+        response.getOutputStream().write(entityCustom.getQrCode());
     }
 }
