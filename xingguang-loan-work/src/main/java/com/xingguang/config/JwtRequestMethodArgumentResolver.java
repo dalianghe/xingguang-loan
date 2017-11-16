@@ -21,7 +21,7 @@ public class JwtRequestMethodArgumentResolver implements HandlerMethodArgumentRe
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        JWTToken jwtToken = (JWTToken) webRequest.getAttribute("cus_token", RequestAttributes.SCOPE_REQUEST);
+        JWTToken jwtToken = (JWTToken) webRequest.getAttribute("work_token", RequestAttributes.SCOPE_REQUEST);
         JWTParam jwtParam = parameter.getParameterAnnotation(JWTParam.class);
         String key = jwtParam.key();
         if (parameter.getParameterType() == JWTToken.class || key.equals("")) {
