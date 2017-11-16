@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private static Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 10;
+    public static final Long EXPIR_TIME = 1000L * 60 * 60 * 24 * 365;
 
-    private static String ISSUER = "work.xingguanqb.com";
+    public static final String ISSUER = "work.xingguanqb.com";
 
     @Autowired
     private IWorkUserAuthService workUserAuthService;

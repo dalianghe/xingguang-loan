@@ -28,10 +28,7 @@ public class QrCodeTest {
 
     @Test
     public void testCreateWorkQrCode() throws Exception{
-        QrCodeBean bean = new QrCodeBean();
-        bean.setWorkUserId(8L);
-        bean.setLng("3000");
-        bean.setLat("3000");
+        QrCodeBean bean = new QrCodeBean(8L, "3000", "3000");
         WorkQrCodeEntity entity = workQrCodeService.createWorkQrCode(bean);
         System.out.println(entity.toString());
     }

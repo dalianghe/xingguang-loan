@@ -11,6 +11,12 @@ public class QrCodeBean implements Serializable{
     private String lng; // 经度
     private String lat; // 纬度
 
+    public QrCodeBean(Long workUserId, String lng, String lat) {
+        this.workUserId = workUserId;
+        this.lng = lng;
+        this.lat = lat;
+    }
+
     public Long getWorkUserId() {
         return workUserId;
     }
