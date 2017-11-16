@@ -94,7 +94,7 @@ public class WxController {
         if(workUserInfoEntity == null){
             return new ResultBean(map);
         }
-        String jwtToken = JwtUtils.createJWT("cus.xingguanqb.com", JSON.toJSONString(new JWTToken(workUserInfoEntity.getId(), workUserInfoEntity.getPhone())), AuthController.EXPIR_TIME);
+        String jwtToken = JwtUtils.createJWT("work.xingguanqb.com", JSON.toJSONString(new JWTToken(workUserInfoEntity.getId(), workUserInfoEntity.getPhone())), AuthController.EXPIR_TIME);
         map.put("token", jwtToken);
         return new ResultBean(map);
     }
