@@ -19,7 +19,7 @@ public class AuthConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/verify/code/*")
                 .excludePathPatterns("/sms/send/**")
                 .excludePathPatterns("/wx")
-                .excludePathPatterns("/wx/**")
+                .excludePathPatterns("/wx/**/*")
                 .excludePathPatterns("/qrcode/code/**");
         super.addInterceptors(registry);
     }
