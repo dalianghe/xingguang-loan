@@ -83,7 +83,7 @@ public class WxController {
     @RequestMapping(value = "/wx/auth/{code}", method = RequestMethod.GET)
     public ResultBean<?>  wx(HttpServletRequest request, HttpServletResponse response, @PathVariable String code) throws Exception {
         logger.info("===========进入获取openId==========");
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         WxAuth wxAuth = this.wxUtils.getAuthToken(code);
         logger.info("wxAuth:=============:" + wxAuth);
         if(wxAuth == null){
@@ -96,6 +96,7 @@ public class WxController {
         }
         String jwtToken = JwtUtils.createJWT("work.xingguanqb.com", JSON.toJSONString(new JWTToken(workUserInfoEntity.getId(), workUserInfoEntity.getPhone())), AuthController.EXPIR_TIME);
         map.put("token", jwtToken);
+        map.put("workUserId", workUserInfoEntity.getId());
         return new ResultBean(map);
     }
 
