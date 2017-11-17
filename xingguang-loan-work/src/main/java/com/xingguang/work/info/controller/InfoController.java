@@ -7,6 +7,8 @@ import com.xingguang.work.info.service.IWorkUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by admin on 2017/10/2.
  */
@@ -39,6 +41,15 @@ public class InfoController {
         ResultBean<?> resultBean = null;
         WorkUserInfoEntity entity = workUserInfoService.selectWorkInfoByOpenId(openId);
         resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/info/workuser/{ownerId}" , method = RequestMethod.GET)
+    public ResultBean<?> getUserByOwnerId(@PathVariable Long ownerId) throws Exception{
+        ResultBean<?> resultBean = null;
+        List<WorkUserInfoEntity> list = workUserInfoService.selectWorkInfoByOwnerId(ownerId);
+        resultBean = new ResultBean<>(list);
         resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }

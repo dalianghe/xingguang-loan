@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2017/10/1.
@@ -49,5 +50,10 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
     @Override
     public WorkUserInfoEntity selectWorkInfoByOpenId(String openId) throws Exception {
         return workUserInfoMapper.selectWorkInfoByOpenId(openId);
+    }
+
+    @Override
+    public List<WorkUserInfoEntity> selectWorkInfoByOwnerId(Long ownerId) throws Exception {
+        return workUserInfoMapper.selectWorkInfoByOwnerId(ownerId);
     }
 }
