@@ -45,7 +45,7 @@ public class InfoController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/info/workuser/{ownerId}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/info/myowner/{ownerId}" , method = RequestMethod.GET)
     public ResultBean<?> getUserByOwnerId(@PathVariable Long ownerId) throws Exception{
         ResultBean<?> resultBean = null;
         List<WorkUserInfoEntity> list = workUserInfoService.selectWorkInfoByOwnerId(ownerId);
