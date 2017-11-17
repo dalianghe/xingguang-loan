@@ -2,6 +2,9 @@ package com.xingguang.finance.wdrl.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.xingguang.credit.info.entity.CreditInfoEntity;
+import com.xingguang.credit.info.entity.custom.CreditInfoEntityCustom;
+import com.xingguang.credit.info.service.ICreditInfoService;
 import com.xingguang.finance.plan.entity.RepymtPlanEntity;
 import com.xingguang.finance.plan.service.IRepymtPlanService;
 import com.xingguang.finance.wdrl.domain.WdrlDomain;
@@ -37,6 +40,8 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     private IProductTermInfoService productTermInfoService;
     @Autowired
     private IRepymtPlanService repymtPlanService;
+    @Autowired
+    private ICreditInfoService creditInfoService;
 
     @Override
     public Map<String, Object> findAuditApplyList(WdrlDomain domain) throws Exception {
@@ -157,7 +162,16 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     }
 
     @Override
+    @Transactional
     public void stopPaypal(WdrlDomain domain) throws Exception {
+
+        WdrlApplyEntityCustom wdrlApplyEntityCustom = wdrlApplyMapper.findWdrlApplyById(domain.getId());
+        CreditInfoEntityCustom creditInfoEntityCustom = creditInfoService.findCreditInfoByCusId(domain.getCusUserId());
+        CreditInfoEntity creditInfoEntity = new CreditInfoEntity();
+        creditInfoEntity.setCusUserId(domain.getCusUserId());
+        BigDecimal usedAmount = creditInfoEntityCustom.getUsedAmount().subtract(wdrlApplyEntityCustom.getAmount());
+        creditInfoEntity.setUsedAmount(usedAmount);
+        creditInfoService.updateCusCreditInfo(creditInfoEntity);
         WdrlApplyEntity entity = new WdrlApplyEntity();
         BeanUtils.copyProperties(domain,entity);
         wdrlApplyMapper.updateWdrlApply(entity);

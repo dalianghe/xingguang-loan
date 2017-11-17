@@ -113,7 +113,7 @@
                                             <button class="btn btn-xs btn-success" v-if="user.creditStatus===1" @click="viewPaypal(user.id)" title="点击放款" data-toggle="modal" data-target="#plan-modal">
                                                 <i class="ace-icon fa fa-paypal bigger-120"></i>
                                             </button>
-                                            <button class="btn btn-xs btn-warning" @click="stopPaypal(user.id)" title="终止放款">
+                                            <button class="btn btn-xs btn-warning" @click="stopPaypal(user.id , user.cusUserId)" title="终止放款">
                                                 <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
                                             </button>
                                         </div>
@@ -131,7 +131,7 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="stopPaypal(user.id)">
+                                                        <a href="#" class="tooltip-info" data-rel="tooltip" title="View" @click="stopPaypal(user.id , user.cusUserId)">
                                                             <span class="blue">
                                                                 <i class="ace-icon fa fa-hand-stop-o bigger-120"></i>
                                                             </span>
@@ -235,10 +235,10 @@
                 that.checkedIds.push(applyId);
                 pay(that,'确认执行放款操作？');
             },
-            stopPaypal : function(applyId){
+            stopPaypal : function(applyId,userId){
                 var that = this;
                 layer.confirm('确认终止该客户放款操作？', {icon: 3, title:'系统提示'}, function(index) {
-                    var json = {"id":applyId , "status":"35"};
+                    var json = {"id":applyId ,"cusUserId":userId, "status":"35"};
                     axios.post('/finance/pay/stop' , json).then(function (response) {
                         var result = response.data;
                         if(result.sysCode==0){
