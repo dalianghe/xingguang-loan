@@ -169,7 +169,9 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
         CreditInfoEntityCustom creditInfoEntityCustom = creditInfoService.findCreditInfoByCusId(domain.getCusUserId());
         CreditInfoEntity creditInfoEntity = new CreditInfoEntity();
         creditInfoEntity.setCusUserId(domain.getCusUserId());
+        BigDecimal unusedAmout = creditInfoEntityCustom.getUnusedAmount().add(wdrlApplyEntityCustom.getAmount());
         BigDecimal usedAmount = creditInfoEntityCustom.getUsedAmount().subtract(wdrlApplyEntityCustom.getAmount());
+        creditInfoEntity.setUnusedAmount(unusedAmout);
         creditInfoEntity.setUsedAmount(usedAmount);
         creditInfoService.updateCusCreditInfo(creditInfoEntity);
         WdrlApplyEntity entity = new WdrlApplyEntity();
