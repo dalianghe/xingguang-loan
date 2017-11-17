@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 @Transactional
 public class CreditInfoServiceImpl implements ICreditInfoService {
+
     @Autowired
     private CreditInfoMapper creditInfoMapper;
-
 
     @Override
     @Transactional(readOnly = true)
@@ -28,5 +28,10 @@ public class CreditInfoServiceImpl implements ICreditInfoService {
         example.createCriteria().andCusUserIdEqualTo(cusUserId);
         List<CreditInfo> creditInfoList = this.creditInfoMapper.selectByExample(example);
         return CollectionUtils.isEmpty(creditInfoList) ? null : creditInfoList.get(0);
+    }
+
+    @Override
+    public void update(CreditInfo creditInfo) {
+        this.creditInfoMapper.updateByPrimaryKeySelective(creditInfo);
     }
 }

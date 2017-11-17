@@ -8,5 +8,7 @@ import com.xingguang.customer.credit.entity.CreditInfo;
 public interface ICreditInfoService {
 
     CreditInfo findByCusUserId(Long cusUserId);
+
+    void update(CreditInfo creditInfo);
     
 }
