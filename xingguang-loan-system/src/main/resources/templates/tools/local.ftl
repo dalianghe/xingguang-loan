@@ -32,7 +32,7 @@
                 </small>
             </h1>
         </div><!-- /.page-header -->
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 15px;">
             经度：<input type="text" id="lng"/>&nbsp;&nbsp;&nbsp;&nbsp;纬度：<input type="text" id="lat"/>&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="Button" value="转换" id='convert' onclick="convert()"/>
         </div>
