@@ -43,7 +43,7 @@
     <!-- 业务员插入信息 -->
     <insert id="insertWorkUserInfo" parameterType="com.xingguang.work.info.entity.WorkUserInfoEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO work_user_info (phone, open_id, create_time, owner_id)
-        VALUES (#{phone,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},,#{ownerId,jdbcType=BIGINT})
+        VALUES (#{phone,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{ownerId,jdbcType=BIGINT})
     </insert>
 
     <!-- 业务员更新信息 -->
