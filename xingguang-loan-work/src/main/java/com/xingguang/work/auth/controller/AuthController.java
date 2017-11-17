@@ -39,12 +39,12 @@ public class AuthController {
             throw new CustomException("用户不存在");
         }
 
-        String clientSmsCode = authBean.getSmsCode();
-        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
-
-        if(!clientSmsCode.equals(serverSmsCode)){
-            throw new CustomException("验证码错误");
-        }
+//        String clientSmsCode = authBean.getSmsCode();
+//        String serverSmsCode = "111111"; // 模拟，后期需从存储中获取 TODO
+//
+//        if(!clientSmsCode.equals(serverSmsCode)){
+//            throw new CustomException("验证码错误");
+//        }
         // 返回token串
         String jwtToken = JwtUtils.createJWT(ISSUER, JSON.toJSONString(new JWTToken(workUserAuthEntity.getId(), workUserAuthEntity.getPhone())), EXPIR_TIME);
         // 返回实体对象

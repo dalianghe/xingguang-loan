@@ -18,7 +18,7 @@ public class QrCodeController {
     @Autowired
     private IWorkQrCodeService workQrCodeService;
 
-    @RequestMapping(value = "/qrcode/code/{workUserId}/{lng}/{lat}" , method = RequestMethod.GET)
+    @RequestMapping(value = "/qrcode/code/{workUserId}/{lng}/{lat}/" , method = RequestMethod.GET)
     public void code(HttpServletResponse response, @PathVariable Long workUserId,
                      @PathVariable String lng, @PathVariable String lat) throws Exception{
         response.setHeader("Pragma", "No-cache");
