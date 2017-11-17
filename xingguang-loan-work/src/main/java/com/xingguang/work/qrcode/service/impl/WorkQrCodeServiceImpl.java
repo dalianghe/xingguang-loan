@@ -48,7 +48,7 @@ public class WorkQrCodeServiceImpl implements IWorkQrCodeService {
         WorkQrCodeEntityCustom entity = null ;
         // 生成二维码
         MatrixToBgImageConfig config = new MatrixToBgImageConfig();
-        config.setQrcode_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56e3a34a9f127f04&redirect_uri=http://www.xingguangqb.com/web/cus/index.html%23/register/1&response_type=code&scope=snsapi_base&state="+qrCodeBean.getWorkUserId()+"#wechat_redirect");
+        config.setQrcode_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56e3a34a9f127f04&redirect_uri=http://www.xingguangqb.com/web/cus/index.html%23/register/" + qrCodeBean.getWorkUserId() + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
         //config.setRealname("何大亮");
         byte[] bytes = QrcodeUtils.createQrcode(config);
 
