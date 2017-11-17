@@ -103,7 +103,7 @@
             },
             methods : {
                 paypal : function(){
-                    var json = {"ids":["${applyId}"] , "status":"40"};
+                    var json = {"ids":["${applyId}"] , "status":"30"};
                     axios.post('/finance/pay/pay' , json).then(function (response) {
                         var result = response.data;
                         if(result.sysCode==0){

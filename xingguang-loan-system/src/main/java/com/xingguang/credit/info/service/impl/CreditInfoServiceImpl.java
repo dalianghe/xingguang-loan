@@ -32,6 +32,7 @@ public class CreditInfoServiceImpl implements ICreditInfoService {
     }
 
     @Override
+    @Transactional
     public void updateCusCreditInfo(CreditInfoEntity creditInfoEntity) throws Exception {
         creditInfoMapper.updateCusCreditInfo(creditInfoEntity);
     }
