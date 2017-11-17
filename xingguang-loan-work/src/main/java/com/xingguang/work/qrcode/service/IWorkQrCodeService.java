@@ -16,4 +16,6 @@ public interface IWorkQrCodeService {
     public void updateWorkQrCode(WorkQrCodeEntityCustom workQrCodeEntity) throws Exception;
 
     public WorkQrCodeEntityCustom createWorkQrCode(QrCodeBean qrCodeBean) throws Exception;
+
+    public WorkQrCodeEntityCustom createBizQrCode(Long ownerId) throws Exception;
 }

@@ -27,6 +27,7 @@ public class WorkUserInfoEntity implements Serializable {
     @JSONField(serialize = false)
     private Date auditorTime; // 审核时间
     private String openId;
+    private Long ownerId; // 所属业务ID
 
     public Long getId() {
         return id;
@@ -146,6 +147,14 @@ public class WorkUserInfoEntity implements Serializable {
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override

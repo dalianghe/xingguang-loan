@@ -18,6 +18,7 @@ public class InfoBean implements Serializable {
     private String cityName; // 所在市名称
     private Date createTime;
     private String openId;// 微信openid
+    private Long ownerId; // 所属业务ID
 
     public Long getId() {
         return id;
@@ -105,6 +106,14 @@ public class InfoBean implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override

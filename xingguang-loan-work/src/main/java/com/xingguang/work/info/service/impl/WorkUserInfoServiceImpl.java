@@ -28,6 +28,7 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
         entity.setPhone(infoBean.getPhone());
         entity.setOpenId(infoBean.getOpenId());
         entity.setCreateTime(new Date());
+        entity.setOwnerId(infoBean.getOwnerId());
         workUserInfoMapper.insertWorkUserInfo(entity);
         return entity;
     }

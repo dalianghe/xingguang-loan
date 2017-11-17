@@ -1,5 +1,6 @@
 package com.xingguang.work.qrcode.service.impl;
 
+import com.xingguang.exception.CustomException;
 import com.xingguang.utils.qrcode.MatrixToBgImageConfig;
 import com.xingguang.utils.qrcode.QrcodeUtils;
 import com.xingguang.work.qrcode.entity.WorkQrCodeEntity;
@@ -64,6 +65,23 @@ public class WorkQrCodeServiceImpl implements IWorkQrCodeService {
             }
         }
         entity.setQrCode(bytes);
+        return entity;
+    }
+
+    @Override
+    public WorkQrCodeEntityCustom createBizQrCode(Long ownerId) throws Exception {
+        WorkQrCodeEntityCustom entity = null ;
+        // 生成二维码
+        MatrixToBgImageConfig config = new MatrixToBgImageConfig();
+        config.setQrcode_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56e3a34a9f127f04&redirect_uri=http://www.xingguangqb.com/web/work/index.html%23/register/"+ownerId+"&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
+        byte[] bytes = QrcodeUtils.createQrcode(config);
+        if(bytes!=null) {
+            entity = this.findQrCodeByWorkUserId(ownerId);
+            if (entity == null) {
+                throw new CustomException("所属业务员为空！");
+            }
+            entity.setQrCode(bytes);
+        }
         return entity;
     }
 }

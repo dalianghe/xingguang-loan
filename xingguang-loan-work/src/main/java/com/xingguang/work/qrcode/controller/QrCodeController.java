@@ -31,4 +31,15 @@ public class QrCodeController {
 //        resultBean.setBizCode(ResultBean.SUCCESS);
         response.getOutputStream().write(entityCustom.getQrCode());
     }
+
+    @RequestMapping(value = "/qrcode/bizcode/{ownerId}")
+    public void bizCode(HttpServletResponse response, @PathVariable Long ownerId)throws Exception{
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setContentType("image/jpeg");
+        WorkQrCodeEntityCustom entityCustom = workQrCodeService.createBizQrCode(ownerId);
+        response.getOutputStream().write(entityCustom.getQrCode());
+    }
+
 }

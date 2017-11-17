@@ -9,6 +9,7 @@ public class AuthBean implements Serializable{
     private String phone;
     private String smsCode;
     private String openId;
+    private Long ownerId;
 
     public String getPhone() {
         return phone;
@@ -32,5 +33,13 @@ public class AuthBean implements Serializable{
 
     public void setOpenId(String openId) {
         this.openId = openId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }
