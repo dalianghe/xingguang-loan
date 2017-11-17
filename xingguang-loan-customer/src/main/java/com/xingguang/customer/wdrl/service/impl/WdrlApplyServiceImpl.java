@@ -29,7 +29,7 @@ public class WdrlApplyServiceImpl implements IWdrlApplyService {
     public int create(WdrlApply wdrlApply) {
         final CreditInfo creditInfo = this.creditInfoService.findByCusUserId(wdrlApply.getCusUserId());
         creditInfo.setUnusedAmount(creditInfo.getUnusedAmount().subtract(wdrlApply.getAmount()));
-        creditInfo.setUsedAmount(creditInfo.getUsedAmount().add(wdrlApply.getAmount()));
+        creditInfo.setUsedAmount(creditInfo.getUsedAmount() == null ? wdrlApply.getAmount() : creditInfo.getUsedAmount().add(wdrlApply.getAmount()));
         CreditInfo creditInfoNew = new CreditInfo();
         creditInfoNew.setId(creditInfo.getId());
         creditInfoNew.setUnusedAmount(creditInfo.getUnusedAmount().subtract(wdrlApply.getAmount()));
