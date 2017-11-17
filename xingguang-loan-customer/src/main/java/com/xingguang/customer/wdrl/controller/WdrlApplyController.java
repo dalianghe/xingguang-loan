@@ -61,9 +61,9 @@ public class WdrlApplyController {
         CusUserInfo cusUserInfo = this.userInfoService.findById(userId);
         wdrlApply.setCusUserId(userId);
         wdrlApply.setCusUserName(cusUserInfo.getName());
-        ProductInfo productInfo = this.productService.getProductById(creditInfo.getProductId());
-        wdrlApply.setServiceCharge(wdrlApply.getAmount().multiply(productInfo.getServiceRate()));
-        wdrlApply.setAccMgmtCharge(wdrlApply.getAmount().multiply(productInfo.getAccMgmtRate()));
+//        ProductInfo productInfo = this.productService.getProductById(creditInfo.getProductId());
+//        wdrlApply.setServiceCharge(wdrlApply.getAmount().multiply(productInfo.getServiceRate()));
+//        wdrlApply.setAccMgmtCharge(wdrlApply.getAmount().multiply(productInfo.getAccMgmtRate()));
         wdrlApply.setProductId(creditInfo.getProductId());
         wdrlApply.setTermId(creditInfo.getTermId());
         wdrlApply.setStatus(10);
