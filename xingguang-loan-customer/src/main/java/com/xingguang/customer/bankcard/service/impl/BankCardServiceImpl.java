@@ -39,11 +39,13 @@ public class BankCardServiceImpl implements IBankCardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CusBankCard> getBankCardList(CusBankCardExample example) {
         return this.cusBankCardMapper.selectByExample(example);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CusBankCard getBankCardById(Long id, Long userId) {
         CusBankCardExample example = new CusBankCardExample();
         example.createCriteria().andIdEqualTo(id).andCusUserIdEqualTo(userId);
@@ -55,7 +57,21 @@ public class BankCardServiceImpl implements IBankCardService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public long countByExample(CusBankCardExample example) {
         return this.cusBankCardMapper.countByExample(example);
+    }
+
+    @Override
+    public int updateDef(Long id, Long userId) {
+        CusBankCardExample example = new CusBankCardExample();
+        example.createCriteria().andCusUserIdEqualTo(userId);
+        CusBankCard unDefCusBankCard = new CusBankCard();
+        unDefCusBankCard.setIsDefault(2);
+        this.cusBankCardMapper.updateByExampleSelective(unDefCusBankCard, example);
+        CusBankCard defCusBankCard = new CusBankCard();
+        defCusBankCard.setId(id);
+        defCusBankCard.setIsDefault(1);
+        return this.cusBankCardMapper.updateByPrimaryKeySelective(defCusBankCard);
     }
 }

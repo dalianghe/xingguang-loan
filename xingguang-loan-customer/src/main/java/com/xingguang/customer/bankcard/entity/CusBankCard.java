@@ -19,6 +19,8 @@ public class CusBankCard {
 
     private Integer status;
 
+    private Integer isDefault;
+
     public Long getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class CusBankCard {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(Integer isDefault) {
+        this.isDefault = isDefault;
     }
 }

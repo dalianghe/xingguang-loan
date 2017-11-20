@@ -34,6 +34,10 @@ public class BankCardController {
         example.createCriteria().andCardNoEqualTo(cusBankCard.getCardNo());
         Long count = this.bankCardService.countByExample(example);
         if(count == 0){
+            CusBankCardExample example1 = new CusBankCardExample();
+            example1.createCriteria().andCusUserIdEqualTo(userId).andStatusEqualTo(1);
+            Long count1 = this.bankCardService.countByExample(example1);
+            cusBankCard.setIsDefault(count1 == 0 ? 1 : 2);
             cusBankCard.setCusUserId(userId);
             CusBank cusBank = this.cusBankService.findByKey(cusBankCard.getBankId());
             cusBankCard.setBankName(cusBank.getName());
@@ -50,6 +54,13 @@ public class BankCardController {
                                 @JWTParam(key = "userId", required = true) Long userId){
         ResultBean resultBean =  new ResultBean();
         this.bankCardService.update(id, userId, cusBankCard);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/bank/cards/{id}/def",method = RequestMethod.PATCH)
+    public ResultBean<?> updateByDef(@PathVariable Long id, @JWTParam(key = "userId", required = true) Long userId){
+        ResultBean resultBean =  new ResultBean();
+        this.bankCardService.updateDef(id, userId);
         return resultBean;
     }
 
@@ -76,7 +87,7 @@ public class BankCardController {
         CusBankCardExample.Criteria criteria = example.createCriteria();
         criteria.andStatusEqualTo(1);
         criteria.andCusUserIdEqualTo(userId);
-        example.setOrderByClause("create_time desc");
+        example.setOrderByClause("is_default, create_time desc");
         List<CusBankCard> cusBankCardList = this.bankCardService.getBankCardList(example);
         Map<Long, CusBank> cusBankMap = this.cusBankService.findAllToMap();
         List<CusBankCardForList> newList = new ArrayList<>();

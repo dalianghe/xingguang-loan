@@ -10,9 +10,13 @@
         </RollingFile>
     </appenders>
     <loggers>
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="RollingFile"/>
             <appender-ref ref="Console"/>
         </root>
+        <logger name="com.sf.dao">
+            <level value="DEBUG" />
+            <AppenderRef ref="STDOUT" />
+        </logger>
     </loggers>
 </configuration>
