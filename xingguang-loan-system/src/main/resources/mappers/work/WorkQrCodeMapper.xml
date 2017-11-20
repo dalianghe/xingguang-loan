@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.work.qrcode.mapper.WorkQrCodeMapper" >
+    <resultMap id="BaseResultMap" type="com.xingguang.work.qrcode.entity.WorkQrCodeEntity" >
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="work_user_id" jdbcType="BIGINT" property="workUserId" />
+        <result column="lng" jdbcType="VARCHAR" property="lng" />
+        <result column="lat" jdbcType="VARCHAR" property="lat" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, work_user_id, lng, lat, status, create_time, update_time
+    </sql>
+
+    <select id="findWorkQrCodeList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM work_qr_code
+        ORDER BY create_time desc
+    </select>
+
+</mapper>

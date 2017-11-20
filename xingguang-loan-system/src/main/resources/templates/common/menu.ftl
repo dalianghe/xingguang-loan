@@ -38,7 +38,7 @@
         <b class="arrow"></b>
         <ul class="submenu" v-if="menu.subMenus.length >= 1">
             <li class="" v-for="sub in menu.subMenus" v-on:self="router">
-                <a href="#" :id="sub.id" :title="sub.resUrl">
+                <a href="#" :id="sub.id" :title="sub.resUrl" :type="sub.openType">
                     <i class="menu-icon fa fa-caret-right"></i>
                     {{sub.resName}}
                 </a>
@@ -87,21 +87,30 @@
             router : function(event){
                 var id = event.target.id
                 var url = event.target.title;
+                var type = event.target.type;
                 $("#menuUl").find("li").removeClass("active");
                 $("#"+id).parent().parent().parent().addClass("open active");
                 $("#"+id).parent().addClass("active");
                 if(url != ""){
-                    $("#main").empty();
-                    $("#main").load(url+"?"+(new Date()).getTime(),function(response,status,xhr){
-                        if(response.match("^\{(.+:.+,*){1,}\}$")){
-                            var result = $.parseJSON(response);
-                            if(result.sysCode==0){
-                                if(result.bizCode==1){
-                                    $("#main").load("/error/500");
+                    if(type==0){
+                        $("#main").empty();
+                        $("#main").load(url+"?"+(new Date()).getTime(),function(response,status,xhr){
+                            if(response.match("^\{(.+:.+,*){1,}\}$")){
+                                var result = $.parseJSON(response);
+                                if(result.sysCode==0){
+                                    if(result.bizCode==1){
+                                        $("#main").load("/error/500");
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }else{
+                        var a = $("<a href='"+url+"' target='_blank'></a>").get(0);
+                        var e = document.createEvent('MouseEvents');
+                        e.initEvent( 'click', true, true );
+                        a.dispatchEvent(e);
+                    }
+
                 }
             }
         }

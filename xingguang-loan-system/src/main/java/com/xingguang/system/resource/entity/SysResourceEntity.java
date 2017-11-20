@@ -16,6 +16,8 @@ public class SysResourceEntity implements Serializable{
 
     private String resUrl;
 
+    private Integer openType;
+
     private String menuIcon;
 
     private Integer menuLevel;
@@ -138,6 +140,14 @@ public class SysResourceEntity implements Serializable{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getOpenType() {
+        return openType;
+    }
+
+    public void setOpenType(Integer openType) {
+        this.openType = openType;
     }
 
     @Override

@@ -6,6 +6,7 @@
     <result column="res_name" property="resName" jdbcType="VARCHAR" />
     <result column="res_type" property="resType" jdbcType="VARCHAR" />
     <result column="res_url" property="resUrl" jdbcType="VARCHAR" />
+      <result column="open_type" property="openType" jdbcType="INTEGER" />
     <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
     <result column="menu_level" property="menuLevel" jdbcType="INTEGER" />
     <result column="permis_code" property="permisCode" jdbcType="VARCHAR" />
@@ -22,7 +23,8 @@
       <id property="id" column="id2"/>
       <result property="resName" column="res_name2"/>
       <result property="resUrl" column="res_url2"/>
-        <result property="menuIcon" column="menu_icon2"/>
+      <result property="openType" column="open_type2"/>
+      <result property="menuIcon" column="menu_icon2"/>
       <result property="menuLevel" column="menu_level2"/>
     </collection>
   </resultMap>
@@ -32,12 +34,12 @@
     </resultMap>
 
   <sql id="Base_Column_List" >
-    c.id, res_name, res_type, res_url, permis_code, parent_id, sortstring, delete_flag,
+    c.id, res_name, res_type, res_url, open_type, permis_code, parent_id, sortstring, delete_flag,
     delete_time, create_time, update_time
   </sql>
 
   <select id="findMenusByUserId" parameterType="java.lang.Long" resultMap="BaseResultMapCustom" >
-      select t1.id,t1.res_name,t1.res_url,t1.menu_level,t1.menu_icon,t2.id id2,t2.res_name res_name2,t2.res_url res_url2,t2.menu_level menu_level2,t2.menu_icon menu_icon2
+      select t1.id,t1.res_name,t1.res_url,t1.open_type,t1.menu_level,t1.menu_icon,t2.id id2,t2.res_name res_name2,t2.res_url res_url2,t2.open_type open_type2,t2.menu_level menu_level2,t2.menu_icon menu_icon2
       from
       (select c.* from sys_user_role a,sys_role_resource b,sys_resource c
       where a.sys_role_id = b.sys_role_id
@@ -58,7 +60,7 @@
   </select>
 
     <select id="findResourceAll" parameterType="com.xingguang.system.resource.entity.SysResourceEntity" resultMap="BaseResultMapCustom2" >
-      SELECT id, res_name, res_type, res_url, menu_icon, menu_level, if(menu_level=1,'一级','二级') menu_level_name,
+      SELECT id, res_name, res_type, res_url, open_type, menu_icon, menu_level, if(menu_level=1,'一级','二级') menu_level_name,
                   permis_code, parent_id, sortstring, delete_flag, delete_time, create_time, update_time
       FROM sys_resource
       WHERE delete_flag = '0'
@@ -71,11 +73,11 @@
     <insert id="insertSysResource" parameterType="com.xingguang.system.resource.entity.SysResourceEntity" useGeneratedKeys="true" keyProperty="id">
       INSERT INTO sys_resource
       (
-      res_name, res_type, res_url, menu_icon, menu_level, permis_code, parent_id, sortstring, create_time, update_time
+      res_name, res_type, res_url, open_type, menu_icon, menu_level, permis_code, parent_id, sortstring, create_time, update_time
       )
       VALUES
       (
-      #{resName,jdbcType=VARCHAR}, #{resType,jdbcType=VARCHAR}, #{resUrl,jdbcType=VARCHAR},
+      #{resName,jdbcType=VARCHAR}, #{resType,jdbcType=VARCHAR}, #{resUrl,jdbcType=VARCHAR}, #{openType,jdbcType=INTEGER},
       #{menuIcon,jdbcType=VARCHAR}, #{menuLevel,jdbcType=INTEGER}, #{permisCode,jdbcType=VARCHAR},
       #{parentId,jdbcType=BIGINT}, #{sortstring,jdbcType=INTEGER},
       #{createTime,jdbcType=TIMESTAMP},  #{updateTime,jdbcType=TIMESTAMP}

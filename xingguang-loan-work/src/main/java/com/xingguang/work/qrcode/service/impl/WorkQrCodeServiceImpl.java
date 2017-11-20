@@ -75,13 +75,10 @@ public class WorkQrCodeServiceImpl implements IWorkQrCodeService {
         MatrixToBgImageConfig config = new MatrixToBgImageConfig();
         config.setQrcode_url("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56e3a34a9f127f04&redirect_uri=http://www.xingguangqb.com/web/work/index.html%23/register/"+ownerId+"&response_type=code&scope=snsapi_base&state=1#wechat_redirect");
         byte[] bytes = QrcodeUtils.createQrcode(config);
-        if(bytes!=null) {
-            entity = this.findQrCodeByWorkUserId(ownerId);
-            if (entity == null) {
-                throw new CustomException("所属业务员为空！");
-            }
-            entity.setQrCode(bytes);
+        if(bytes==null) {
+            throw new CustomException("生成二维码错误！");
         }
+        entity.setQrCode(bytes);
         return entity;
     }
 }
