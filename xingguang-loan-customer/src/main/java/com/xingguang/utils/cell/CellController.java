@@ -34,7 +34,8 @@ public class CellController {
     private ISysInterfaceLogService sysInterfaceLogService;
 
     @RequestMapping(value = "/cell/auth" , method = RequestMethod.POST)
-    public ResultBean<?> cellAuth(@RequestBody UserBasicInfoDomain domain) throws Exception{
+    public ResultBean<?> cellAuth(@RequestBody UserBasicInfoDomain domain,
+                                  @JWTParam(key = "userId", required = true) Long userId) throws Exception{
         ResultBean<?> resultBean = null;
         if(this.checkObjFieldIsNull(domain)){
             resultBean = new ResultBean<>();
@@ -58,6 +59,19 @@ public class CellController {
             resultBean.setBizCode(ResultBean.FALL);
             resultBean.setMsg("调用动态验证接口错误！");
             return resultBean;
+        }
+        if("10008".equals(collectResponse.getData().getProcess_code())){
+            SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
+            sysInterfaceLogWithBLOBs.setType(3);
+            sysInterfaceLogWithBLOBs.setStatus(1);
+            sysInterfaceLogWithBLOBs.setCreateTime(new Date());
+            sysInterfaceLogWithBLOBs.setRoleType(2);
+            sysInterfaceLogWithBLOBs.setIdNo(domain.getIdCardNum());
+            sysInterfaceLogWithBLOBs.setName(domain.getName());
+            sysInterfaceLogWithBLOBs.setPhone(domain.getCellPhoneNum());
+            sysInterfaceLogWithBLOBs.setUserId(userId);
+            this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
+            collectResponse.setAppId(sysInterfaceLogWithBLOBs.getId());
         }
         collectResponse.setToken(response.getData().getToken());
         collectResponse.setWebsite(response.getData().getDatasource().getWebsite());
@@ -93,7 +107,6 @@ public class CellController {
             this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
             response.setAppId(sysInterfaceLogWithBLOBs.getId());
         }
-
         resultBean = new ResultBean<>(response);
         resultBean.setSysCode(ResultBean.SUCCESS);
         return resultBean;
