@@ -75,7 +75,7 @@ public class CellController {
         }
         collectResponse.setToken(response.getData().getToken());
         collectResponse.setWebsite(response.getData().getDatasource().getWebsite());
-        collectResponse.setPassword(domain.getCellPhoneNum());
+        collectResponse.setPhone(domain.getCellPhoneNum());
         collectResponse.setPassword(domain.getPassword());
         resultBean = new ResultBean<>(collectResponse);
         resultBean.setBizCode(ResultBean.SUCCESS);
