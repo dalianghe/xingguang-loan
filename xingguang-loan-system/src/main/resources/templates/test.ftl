@@ -15,7 +15,7 @@
 <script>
     jQuery(function($) {
         var data={
-            location:"39.90403,116.407526",
+            location:"39.9588,116.3227",
            /*换成自己申请的key*/
             key:"KXUBZ-HANCF-H4EJY-J4KUH-GXT5Q-67FM5",
             get_poi:0

@@ -1,8 +1,6 @@
 package com.xingguang.cell.service;
 
-import com.xingguang.cell.entity.JxlCellBehaviorEntity;
-import com.xingguang.cell.entity.JxlContactListEntity;
-import com.xingguang.cell.entity.JxlContactRegionEntity;
+import com.xingguang.cell.entity.*;
 
 import java.util.List;
 
@@ -20,4 +18,9 @@ public interface ICellReportService {
 
     public List<JxlContactListEntity> getContactListByBizId(Long bizId) throws Exception;
 
+    public JxlApplicationCheckUsernameEntity getApplicationCheckUserNameByBizId(Long bizId) throws Exception;
+
+    public JxlApplicationCheckCellPhoneEntity getApplicationCheckCellPhoneByBizId(Long bizId) throws Exception;
+
+    public JxlApplicationCheckIdCardEntity getApplicationCheckIdCardByBizId(Long bizId) throws Exception;
 }

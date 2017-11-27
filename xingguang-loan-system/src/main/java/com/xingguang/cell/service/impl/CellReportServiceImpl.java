@@ -1,11 +1,7 @@
 package com.xingguang.cell.service.impl;
 
-import com.xingguang.cell.entity.JxlCellBehaviorEntity;
-import com.xingguang.cell.entity.JxlContactListEntity;
-import com.xingguang.cell.entity.JxlContactRegionEntity;
-import com.xingguang.cell.mapper.JxlCellBehaviorMapper;
-import com.xingguang.cell.mapper.JxlContactListMapper;
-import com.xingguang.cell.mapper.JxlContactRegionMapper;
+import com.xingguang.cell.entity.*;
+import com.xingguang.cell.mapper.*;
 import com.xingguang.cell.service.ICellReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +23,12 @@ public class CellReportServiceImpl implements ICellReportService {
     private JxlContactRegionMapper contactRegionMapper;
     @Autowired
     private JxlContactListMapper contactListMapper;
+    @Autowired
+    private JxlApplicationCheckUsernameMapper checkUsernameMapper;
+    @Autowired
+    private JxlApplicationCheckCellPhoneMapper checkCellPhoneMapper;
+    @Autowired
+    private JxlApplicationCheckIdCardMapper checkIdCardMapper;
 
     @Override
     public List<JxlCellBehaviorEntity> getCellBehaviorByBizId(Long bizId) throws Exception {
@@ -41,5 +43,20 @@ public class CellReportServiceImpl implements ICellReportService {
     @Override
     public List<JxlContactListEntity> getContactListByBizId(Long bizId) throws Exception {
         return contactListMapper.getContactListByBizId(bizId);
+    }
+
+    @Override
+    public JxlApplicationCheckUsernameEntity getApplicationCheckUserNameByBizId(Long bizId) throws Exception {
+        return checkUsernameMapper.findCheckUsernameByBizId(bizId);
+    }
+
+    @Override
+    public JxlApplicationCheckCellPhoneEntity getApplicationCheckCellPhoneByBizId(Long bizId) throws Exception {
+        return checkCellPhoneMapper.findCheckCellPhoneByBizId(bizId);
+    }
+
+    @Override
+    public JxlApplicationCheckIdCardEntity getApplicationCheckIdCardByBizId(Long bizId) throws Exception {
+        return checkIdCardMapper.findCheckIdCardByBizId(bizId);
     }
 }

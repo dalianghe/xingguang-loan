@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.cell.mapper.JxlApplicationCheckCellPhoneMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.cell.entity.JxlApplicationCheckCellPhoneEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="key_value" jdbcType="VARCHAR" property="keyValue" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="reliability" jdbcType="VARCHAR" property="reliability" />
+    <result column="reg_time" jdbcType="VARCHAR" property="regTime" />
+    <result column="check_name" jdbcType="VARCHAR" property="checkName" />
+    <result column="check_idcard" jdbcType="VARCHAR" property="checkIdcard" />
+    <result column="check_ebusiness" jdbcType="VARCHAR" property="checkEbusiness" />
+  </resultMap>
+
+  <select id="findCheckCellPhoneByBizId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT t1.* FROM
+    jxl_application_check_cellphone t1,jxl_report t2
+    WHERE t1.rpt_id = t2.id
+    AND t2.biz_id=#{bizId}
+  </select>
+
+</mapper>

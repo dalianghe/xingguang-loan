@@ -1,8 +1,6 @@
 package com.xingguang.cell.controller;
 
-import com.xingguang.cell.entity.JxlCellBehaviorEntity;
-import com.xingguang.cell.entity.JxlContactListEntity;
-import com.xingguang.cell.entity.JxlContactRegionEntity;
+import com.xingguang.cell.entity.*;
 import com.xingguang.cell.service.ICellReportService;
 import com.xingguang.common.beans.ResultBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,4 +49,32 @@ public class CellReportController {
         resultBean.setBizCode(ResultBean.SUCCESS);
         return resultBean;
     }
+
+    @RequestMapping(value = "/cell/check/username/{bizId}" , method = RequestMethod.GET)
+    public ResultBean<?> getApplicationCheckUserName(@PathVariable Long bizId)throws Exception{
+        ResultBean<?> resultBean = null;
+        JxlApplicationCheckUsernameEntity entity = cellReportService.getApplicationCheckUserNameByBizId(bizId);
+        resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/cell/check/cellphone/{bizId}" , method = RequestMethod.GET)
+    public ResultBean<?> getApplicationCheckCellPhone(@PathVariable Long bizId)throws Exception{
+        ResultBean<?> resultBean = null;
+        JxlApplicationCheckCellPhoneEntity entity = cellReportService.getApplicationCheckCellPhoneByBizId(bizId);
+        resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
+    @RequestMapping(value = "/cell/check/idcard/{bizId}" , method = RequestMethod.GET)
+    public ResultBean<?> getApplicationCheckIdCard(@PathVariable Long bizId)throws Exception{
+        ResultBean<?> resultBean = null;
+        JxlApplicationCheckIdCardEntity entity = cellReportService.getApplicationCheckIdCardByBizId(bizId);
+        resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
 }

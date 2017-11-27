@@ -206,21 +206,35 @@
                                 </div>
                             </div>
                             <div id="callrecord" class="tab-pane fade">
-                                <#--<div class="col-xs-12 col-sm-12" style="text-align: center;margin-top: -20px;">
-                                    <h4 class="header smaller lighter blue">报告概况</h4>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;margin-top: -20px;">
+                                    <h4 class="header smaller lighter blue">用户申请表检测</h4>
                                 </div>
-                                <div class="row">
+                                <div id="appCheck" class="row">
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="profile-user-info profile-user-info-striped">
                                             <div class="profile-info-row">
-                                                <div class="profile-info-name"> 编号 </div>
-                                                <div class="profile-info-value"></div>
-                                                <div class="profile-info-name"> 报告时间 </div>
-                                                <div class="profile-info-value"></div>
+                                                <div class="profile-info-name"> 姓名 </div>
+                                                <div class="profile-info-value">{{checkUserName.keyValue}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 身份证 </div>
+                                                <div class="profile-info-value">
+                                                    {{checkIdCard.keyValue}} | {{checkIdCard.gender}} | {{checkIdCard.age}} |
+                                                    {{checkIdCard.province}} | {{checkIdCard.city}} | {{checkIdCard.region}}
+                                                </div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 手机号 </div>
+                                                <div class="profile-info-value">
+                                                    {{checkCellPhone.website}} | {{checkCellPhone.reliability}} | {{checkCellPhone.regTime}} |
+                                                    {{checkCellPhone.checkName}} |
+                                                    {{checkCellPhone.checkIdcard}} |
+                                                    {{checkCellPhone.checkEbusiness}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
                                 <#--<h4 class="header smaller lighter blue">通话记录</h4>-->
                                 <div class="col-xs-12 col-sm-12" style="text-align: center;">
                                     <h4 class="header smaller lighter blue">运营商数据</h4>
@@ -229,24 +243,24 @@
                                     <div class="col-xs-12 col-sm-12">
                                         <div class="profile-user-info profile-user-info-striped">
                                             <table id="cell_behavior" class="table table-striped table-bordered table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>运营商</th>
-                                            <th>号码</th>
-                                            <th class="hidden-480">归属地</th>
-                                            <th>月份</th>
-                                            <th class="hidden-480">呼叫次数</th>
-                                            <th>主叫次数</th>
-                                            <th>主叫时长（分）</th>
-                                            <th>被叫次数</th>
-                                            <th>被叫时长（分）</th>
-                                            <th>短信数量</th>
-                                            <th>话费消费</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                                <thead>
+                                                <tr>
+                                                    <th>运营商</th>
+                                                    <th>号码</th>
+                                                    <th class="hidden-480">归属地</th>
+                                                    <th>月份</th>
+                                                    <th class="hidden-480">呼叫次数</th>
+                                                    <th>主叫次数</th>
+                                                    <th>主叫时长（分）</th>
+                                                    <th>被叫次数</th>
+                                                    <th>被叫时长（分）</th>
+                                                    <th>短信数量</th>
+                                                    <th>话费消费</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -426,6 +440,19 @@
         function getProductList() {
             return axios.get("/product/list");
         }
+
+        function getApplicationCheckUserName() {
+            return axios.get("/cell/check/username/${applyId}");
+        }
+
+        function getApplicationCheckCellPhone() {
+            return axios.get("/cell/check/cellphone/${applyId}");
+        }
+
+        function getApplicationCheckIdCard() {
+            return axios.get("/cell/check/idcard/${applyId}");
+        }
+
         var userApp = new Vue({
             el: '#userinfo',
             data:{
@@ -588,6 +615,42 @@
                 backward : function(){
                     $("#main").load("/router/credit/apply/applytodolist");
                 }
+            }
+        });
+
+        var appCheck = new Vue({
+            el: '#appCheck',
+            data:{
+                checkUserName : {},
+                checkCellPhone : {},
+                checkIdCard : {}
+            },
+            mounted : function(){
+                var that=this;
+                axios.all([getApplicationCheckUserName(), getApplicationCheckCellPhone(), getApplicationCheckIdCard()])
+                        .then(axios.spread(function (checkUserName, checkCellPhone, checkIdCard) {
+                                    var userName = checkUserName.data;
+                                    if(userName.sysCode==0){
+                                        if(userName.bizCode==0){
+                                            that.checkUserName = userName.data;
+                                        }
+                                    }
+
+                                    var cellPhone = checkCellPhone.data;
+                                    if(cellPhone.sysCode==0){
+                                        if(cellPhone.bizCode==0){
+                                            that.checkCellPhone = cellPhone.data;
+                                        }
+                                    }
+
+                                    var idCard = checkIdCard.data;
+                                    if(idCard.sysCode==0){
+                                        if(idCard.bizCode==0){
+                                            that.checkIdCard = idCard.data;
+                                        }
+                                    }
+                                }
+                        ));
             }
         });
 
