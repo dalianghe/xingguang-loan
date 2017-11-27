@@ -1,8 +1,19 @@
 package com.xingguang.job.cell;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.xingguang.job.cell.entity.SysInterfaceLog;
 import com.xingguang.job.cell.service.ICellService;
+import com.xingguang.utils.cell.entity.JxlApplicatinoCheckEntity;
+import com.xingguang.utils.cell.entity.JxlApplicationCheckCellPhoneEntity;
+import com.xingguang.utils.cell.entity.JxlApplicationCheckIdCardEntity;
+import com.xingguang.utils.cell.entity.JxlApplicationCheckUsernameEntity;
+import com.xingguang.utils.cell.mapper.JxlApplicationCheckCellPhoneMapper;
+import com.xingguang.utils.cell.mapper.JxlApplicationCheckIdCardMapper;
+import com.xingguang.utils.cell.mapper.JxlApplicationCheckUsernameMapper;
+import com.xingguang.utils.cell.service.IJxlApplicationCheckService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +26,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +45,16 @@ public class CellTest {
     private ICellService cellService;
     @Autowired
     RestTemplate restTemplate;
+    @Autowired
+    private IJxlApplicationCheckService checkService;
+    @Autowired
+    private JxlApplicationCheckUsernameMapper jxlApplicationCheckUsernameMapper;
+    @Autowired
+    private JxlApplicationCheckIdCardMapper jxlApplicationCheckIdCardMapper;
+    @Autowired
+    private JxlApplicationCheckCellPhoneMapper jxlApplicationCheckCellPhoneMapper;
+    @Autowired
+    private IJxlApplicationCheckService service;
 
     @Test
     public void testList() throws Exception{
@@ -56,6 +78,75 @@ public class CellTest {
             System.out.println("------------");
         }
         System.out.println(result);
+    }
+
+    @Test
+    public void testGetReportData() throws Exception{
+        String dataUrl = "https://www.juxinli.com/api/access_report_data?access_token={accessToken}&client_secret={clientSecret}&name={name}&phone={phone}&idcard={idCard}";
+        String result = null;
+        Map<String,Object> userMap = new HashMap<>();
+        userMap.put("clientSecret","1b9617b05de443749cd147a308d3c58b");
+        userMap.put("accessToken","c9782ea405d04d93b2e31fbd0ba3e0ad");
+        userMap.put("name","何大亮");
+        userMap.put("idCard","130130198206061255");
+        userMap.put("phone","13611201362");
+        String jsonStr = restTemplate.getForObject(dataUrl, String.class, userMap);
+        JSONObject object = JSON.parseObject(jsonStr);
+        checkService.deleteApplicationCheckByRptId(60L);
+        if(object.getString("success").equals("true")){
+            JSONObject jxlReport = JSON.parseObject(jsonStr);
+            JSONObject reportData = JSON.parseObject(jxlReport.getString("report_data"));
+            JSONArray array = reportData.getJSONArray("application_check");
+            service.addApplicationCheck(60L,61L,array);
+            List<JxlApplicatinoCheckEntity> list1 = new ArrayList<>();
+            for(int i=0;i<array.size();i++)/*{
+                JxlApplicatinoCheckEntity checkEntity = new JxlApplicatinoCheckEntity();
+                Object obj = array.get(i);
+                JSONObject aa = JSON.parseObject(obj.toString());
+                String appPoint = aa.getString("app_point");
+                checkEntity.setRptId(60L);
+                checkEntity.setAppPoint(appPoint);
+                if("user_name".equals(appPoint)){
+                    JxlApplicationCheckUsernameEntity usernameEntity = new JxlApplicationCheckUsernameEntity();
+                    usernameEntity.setRptId(60L);
+                    JSONObject ab = JSON.parseObject(aa.getString("check_points"));
+                    usernameEntity.setKeyValue(ab.getString("key_value"));
+                    jxlApplicationCheckUsernameMapper.deleteCheckUsernameByRptId(60L);
+                    jxlApplicationCheckUsernameMapper.insertCheckUsername(usernameEntity);
+                }else if("id_card".equals(appPoint)){
+                    JxlApplicationCheckIdCardEntity idCardEntity = new JxlApplicationCheckIdCardEntity();
+                    idCardEntity.setRptId(60L);
+                    JSONObject ab = JSON.parseObject(aa.getString("check_points"));
+                    idCardEntity.setKeyValue(ab.getString("key_value"));
+                    idCardEntity.setGender(ab.getString("gender"));
+                    idCardEntity.setAge(ab.getString("age"));
+                    idCardEntity.setProvince(ab.getString("province"));
+                    idCardEntity.setCity(ab.getString("city"));
+                    idCardEntity.setRegion(ab.getString("region"));
+                    jxlApplicationCheckIdCardMapper.deleteCheckIdCardByRptId(60L);
+                    jxlApplicationCheckIdCardMapper.insertCheckIdCard(idCardEntity);
+                }else if("cell_phone".equals(appPoint)){
+                    JxlApplicationCheckCellPhoneEntity checkCellPhoneEntity = new JxlApplicationCheckCellPhoneEntity();
+                    checkCellPhoneEntity.setRptId(60L);
+                    JSONObject ab = JSON.parseObject(aa.getString("check_points"));
+                    checkCellPhoneEntity.setKeyValue(ab.getString("key_value"));
+                    checkCellPhoneEntity.setWebsite(ab.getString("website"));
+                    checkCellPhoneEntity.setReliability(ab.getString("reliability"));
+                    checkCellPhoneEntity.setRegTime(ab.getString("reg_time"));
+                    checkCellPhoneEntity.setCheckName(ab.getString("check_name"));
+                    checkCellPhoneEntity.setCheckIdcard(ab.getString("check_idcard"));
+                    checkCellPhoneEntity.setCheckEbusiness(ab.getString("check_ebusiness"));
+                    jxlApplicationCheckCellPhoneMapper.deleteCheckCellPhoneByRptId(60L);
+                    jxlApplicationCheckCellPhoneMapper.insertCheckCellPhone(checkCellPhoneEntity);
+                }
+                list1.add(checkEntity);
+            }*/
+
+            if(list1!=null){
+                //checkService.insertApplicationCheck(list1);
+            }
+
+        }
     }
 
 }

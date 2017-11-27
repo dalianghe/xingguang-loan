@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.utils.cell.mapper.JxlApplicationCheckMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.utils.cell.entity.JxlApplicatinoCheckEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="app_point" jdbcType="VARCHAR" property="appPoint" />
+  </resultMap>
+
+  <delete id="deleteApplicationCheck" parameterType="java.lang.Long">
+    DELETE FROM jxl_application_check WHERE rpt_id=#{rptId}
+  </delete>
+
+  <insert id="insertApplicationCheck" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_application_check
+    (rpt_id, app_point)
+    VALUES
+    <foreach collection="list" index="index" item="app" separator=",">
+      ( #{app.rptId}, #{app.appPoint})
+    </foreach>
+  </insert>
+
+</mapper>

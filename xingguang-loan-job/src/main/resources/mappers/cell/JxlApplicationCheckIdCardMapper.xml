@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.utils.cell.mapper.JxlApplicationCheckIdCardMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.utils.cell.entity.JxlApplicationCheckIdCardEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="key_value" jdbcType="VARCHAR" property="keyValue" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+  </resultMap>
+
+  <delete id="deleteCheckIdCardByRptId" parameterType="java.lang.Long">
+    DELETE FROM jxl_application_check_idcard WHERE rpt_id=#{rptId}
+  </delete>
+
+  <insert id="insertCheckIdCard" parameterType="com.xingguang.utils.cell.entity.JxlApplicationCheckIdCardEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_application_check_idcard (rpt_id, key_value, gender, age, province, city, region)
+    VALUES ( #{rptId}, #{keyValue}, #{gender}, #{age}, #{province}, #{city}, #{region})
+  </insert>
+
+</mapper>

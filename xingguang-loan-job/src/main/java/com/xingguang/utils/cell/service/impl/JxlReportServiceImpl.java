@@ -1,4 +1,4 @@
-package com.xingguang.utils.cell.service.imple;
+package com.xingguang.utils.cell.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;

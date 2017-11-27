@@ -8,10 +8,7 @@ import com.xingguang.job.cell.mapper.SysInterfaceLogMapper;
 import com.xingguang.job.cell.service.ICellService;
 import com.xingguang.utils.cell.CellUtils;
 import com.xingguang.utils.cell.entity.JxlReportEntity;
-import com.xingguang.utils.cell.service.IJxlCellBehaviorService;
-import com.xingguang.utils.cell.service.IJxlContactListService;
-import com.xingguang.utils.cell.service.IJxlContactRegionService;
-import com.xingguang.utils.cell.service.IJxlReportService;
+import com.xingguang.utils.cell.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +38,8 @@ public class CellServiceImpl implements ICellService {
     private IJxlContactRegionService contactRegionService;
     @Autowired
     private IJxlContactListService contactListService;
+    @Autowired
+    private IJxlApplicationCheckService applicationCheckService;
 
     @Override
     public List<SysInterfaceLog> findTodoReportList() throws Exception {
@@ -72,6 +71,7 @@ public class CellServiceImpl implements ICellService {
             cellBehaviorService.addCellBehavior(oldId , reportEntity.getId() , reportData.getJSONArray("cell_behavior"));
             contactRegionService.addContactRegion(oldId , reportEntity.getId() , reportData.getString("contact_region"));
             contactListService.addContactList(oldId , reportEntity.getId() , reportData.getString("contact_list"));
+            applicationCheckService.addApplicationCheck(oldId , reportEntity.getId() , reportData.getJSONArray("application_check"));
             // 更新状态
             SysInterfaceLogWithBLOBs bean = new SysInterfaceLogWithBLOBs();
             bean.setId(log.getId());

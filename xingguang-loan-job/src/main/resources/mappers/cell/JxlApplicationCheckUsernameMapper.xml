@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.utils.cell.mapper.JxlApplicationCheckUsernameMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.utils.cell.entity.JxlApplicationCheckUsernameEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="rpt_id" jdbcType="BIGINT" property="rptId" />
+    <result column="key_value" jdbcType="VARCHAR" property="keyValue" />
+  </resultMap>
+
+  <delete id="deleteCheckUsernameByRptId" parameterType="java.lang.Long">
+    DELETE FROM jxl_application_check_username WHERE rpt_id=#{rptId}
+  </delete>
+
+  <insert id="insertCheckUsername" parameterType="com.xingguang.utils.cell.entity.JxlApplicationCheckUsernameEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_application_check_username (rpt_id, key_value)
+    VALUES ( #{rptId}, #{keyValue})
+  </insert>
+
+</mapper>
