@@ -77,4 +77,13 @@ public class CellReportController {
         return resultBean;
     }
 
+    @RequestMapping(value = "/cell/behavior/check/{bizId}" , method = RequestMethod.GET)
+    public ResultBean<?> getBehaviorCheck(@PathVariable Long bizId)throws Exception{
+        ResultBean<?> resultBean = null;
+        List<JxlBehaviorCheckEntity> entity = cellReportService.getBehaviorCheckByBizId(bizId);
+        resultBean = new ResultBean<>(entity);
+        resultBean.setBizCode(ResultBean.SUCCESS);
+        return resultBean;
+    }
+
 }

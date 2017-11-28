@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-    <title>MarkerCluster</title>
+    <title>星光钱包-业务员分布</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script charset="utf-8" src="http://map.qq.com/api/js?v=2.exp"></script>
     <style type="text/css">

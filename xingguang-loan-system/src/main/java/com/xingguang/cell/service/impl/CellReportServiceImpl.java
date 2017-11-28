@@ -29,6 +29,8 @@ public class CellReportServiceImpl implements ICellReportService {
     private JxlApplicationCheckCellPhoneMapper checkCellPhoneMapper;
     @Autowired
     private JxlApplicationCheckIdCardMapper checkIdCardMapper;
+    @Autowired
+    private JxlBehaviorCheckMapper behaviorCheckMapper;
 
     @Override
     public List<JxlCellBehaviorEntity> getCellBehaviorByBizId(Long bizId) throws Exception {
@@ -58,5 +60,10 @@ public class CellReportServiceImpl implements ICellReportService {
     @Override
     public JxlApplicationCheckIdCardEntity getApplicationCheckIdCardByBizId(Long bizId) throws Exception {
         return checkIdCardMapper.findCheckIdCardByBizId(bizId);
+    }
+
+    @Override
+    public List<JxlBehaviorCheckEntity> getBehaviorCheckByBizId(Long bizId) throws Exception {
+        return behaviorCheckMapper.getBehaviorCheckByBizId(bizId);
     }
 }

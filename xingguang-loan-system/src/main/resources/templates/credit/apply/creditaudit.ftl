@@ -235,7 +235,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <#--<h4 class="header smaller lighter blue">通话记录</h4>-->
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">用户行为检测</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <table id="behavior_check" class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>检查项</th>
+                                                    <th>结果</th>
+                                                    <th class="hidden-480">依据</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-xs-12 col-sm-12" style="text-align: center;">
                                     <h4 class="header smaller lighter blue">运营商数据</h4>
                                 </div>
@@ -686,6 +705,33 @@
             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange fa-spin'></i>");//let's add a custom loading icon
             $(document).one('ajaxloadstart.page', function(e) {
                 $('#colorbox, #cboxOverlay').remove();
+            });
+            var cellTable =$('#behavior_check').DataTable({
+                bAutoWidth: false,
+                "ordering": false,
+                "lengthChange": true,
+                "searching": false,
+                language: {
+                    "sLengthMenu":   "显示 _MENU_ 项结果",
+                    "sSearch" : "搜索:",
+                    "sZeroRecords":  "没有匹配结果",
+                    "sInfo" : "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "oPaginate" : {
+                        "sFirst":    "首页",
+                        "sPrevious": "上页",
+                        "sNext":     "下页",
+                        "sLast":     "末页"
+                    }
+                },
+                ajax:{
+                    url:"/cell/behavior/check/${applyId}",
+                    dataSrc:function(result){
+                        return result.data;
+                    }
+                },
+                aoColumns:[
+                    {data:'checkPointCn'},{data:'result'},{data:'evidence'}
+                ]
             });
             var cellTable =$('#cell_behavior').DataTable({
                 bAutoWidth: false,

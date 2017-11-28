@@ -23,4 +23,6 @@ public interface ICellReportService {
     public JxlApplicationCheckCellPhoneEntity getApplicationCheckCellPhoneByBizId(Long bizId) throws Exception;
 
     public JxlApplicationCheckIdCardEntity getApplicationCheckIdCardByBizId(Long bizId) throws Exception;
+
+    public List<JxlBehaviorCheckEntity> getBehaviorCheckByBizId(Long bizId) throws Exception;
 }
