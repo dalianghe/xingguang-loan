@@ -173,6 +173,7 @@ public class AuthController {
         cusUserInfoDB.setRealStatus(realFlag ? 1 : 2);
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
+        resultBean.setBizCode(1);
         return resultBean;
     }
 

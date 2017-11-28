@@ -87,6 +87,9 @@ public class InfoController {
             setCreateTime(cusUserInfo.getCreateTime());
             setWorkUserId(cusUserInfo.getWorkUserId());
             setWorkUserName(cusUserInfo.getWorkUserName());
+            setHomeAddr(cusUserInfo.getHomeAddr());
+            setCompanyName(cusUserInfo.getCompanyName());
+            setCompanyAddr(cusUserInfo.getCompanyAddr());
 
             setSexName(sexName);
             setIncomeName(incomeName);
