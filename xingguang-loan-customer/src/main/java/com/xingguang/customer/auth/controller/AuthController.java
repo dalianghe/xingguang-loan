@@ -16,16 +16,22 @@ import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import com.xingguang.utils.oss.OssUtils;
 import com.xingguang.utils.real.RealUtils;
 import com.xingguang.utils.sms.SmsController;
+import com.xingguang.utils.wx.WxUtils;
+import com.xingguang.utils.wx.entity.WxAccessToken;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,11 +60,19 @@ public class AuthController {
     private RealUtils realUtils;
 
     @Autowired
+    private WxUtils wxUtils;
+
+    @Autowired
+    RestTemplate restTemplate;
+
+    @Autowired
     private ISysInterfaceLogService sysInterfaceLogService;
 
     @Value("${OSS.CUS.REAL}")
     private String realImgPath;
 
+    static final String WX_IMG_URL = "https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
+    static final String WX_POSTFIX = ".jpg";
 
     @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
     public ResultBean<?> register(@RequestBody AuthBean authBean, HttpServletRequest request) throws Exception {
@@ -102,10 +116,11 @@ public class AuthController {
 
     @RequestMapping(value = "/auth/real", method = RequestMethod.POST)
     public ResultBean<?> real(CusUserInfo cusUserInfo,
-                              @JWTParam(key = "userId", required = true) Long userId,
-                              @RequestParam("img1") MultipartFile realImg1,
-                              @RequestParam("img2") MultipartFile realImg2,
-                              @RequestParam("img3") MultipartFile realImg3) throws Exception {
+                              @JWTParam(key = "userId", required = true) Long userId
+//                                ,@RequestParam("img1") MultipartFile realImg1,
+//                              @RequestParam("img2") MultipartFile realImg2,
+//                              @RequestParam("img3") MultipartFile realImg3
+                            ) throws Exception {
 
         String realStatus = this.realUtils.realByNameAndIdNo(cusUserInfo.getName(), cusUserInfo.getIdNo());
         boolean realFlag = false;
@@ -122,11 +137,31 @@ public class AuthController {
         sysInterfaceLogWithBLOBs.setUserId(userId);
         this.sysInterfaceLogService.create(sysInterfaceLogWithBLOBs);
 
-        List<MultipartFile> files = new ArrayList(3);
-        files.add(realImg1);
-        files.add(realImg2);
-        files.add(realImg3);
-        List<String> paths = this.putFiles(userId, files);
+//        List<MultipartFile> files = new ArrayList(3);
+//        files.add(realImg1);
+//        files.add(realImg2);
+//        files.add(realImg3);
+//        List<String> paths = this.putFiles(userId, files);
+
+        WxAccessToken wxAccessToken = this.wxUtils.getAccessToken();
+        String realImg1Url = MessageFormat.format(WX_IMG_URL, wxAccessToken.getAccess_token(), cusUserInfo.getRealImg1Url());
+        String realImg2Url = MessageFormat.format(WX_IMG_URL, wxAccessToken.getAccess_token(), cusUserInfo.getRealImg2Url());
+        String realImg3Url = MessageFormat.format(WX_IMG_URL, wxAccessToken.getAccess_token(), cusUserInfo.getRealImg3Url());
+        byte[] imgByte1 = this.restTemplate.getForObject(realImg1Url, byte[].class);
+        byte[] imgByte2 = this.restTemplate.getForObject(realImg2Url, byte[].class);
+        byte[] imgByte3 = this.restTemplate.getForObject(realImg3Url, byte[].class);
+        List<String> paths;
+        try(
+            InputStream inputStream1 = new ByteArrayInputStream(imgByte1);
+            InputStream inputStream2 = new ByteArrayInputStream(imgByte2);
+            InputStream inputStream3 = new ByteArrayInputStream(imgByte3);
+        ) {
+            List<InputStream> streams = new ArrayList(3);
+            streams.add(inputStream1);
+            streams.add(inputStream2);
+            streams.add(inputStream3);
+            paths = this.putStreams(userId, streams);
+        }
         CusUserInfo cusUserInfoDB = new CusUserInfo();
         cusUserInfoDB.setRealImg1Url(paths.get(0));
         cusUserInfoDB.setRealImg2Url(paths.get(1));
@@ -139,6 +174,15 @@ public class AuthController {
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
         return resultBean;
+    }
+
+    private List<String> putStreams(Long userId, List<InputStream> streams) throws IOException {
+        List<String> list = new ArrayList(streams.size());
+        for (InputStream inputStream : streams) {
+            String path = ossUtils.putFile(this.realImgPath + "/" + userId + "_" + UUID.randomUUID().toString() + WX_POSTFIX, inputStream);
+            list.add(path);
+        }
+        return list;
     }
 
     private List<String> putFiles(Long userId, List<MultipartFile> files) throws IOException {
