@@ -40,6 +40,8 @@ public class CellServiceImpl implements ICellService {
     private IJxlContactListService contactListService;
     @Autowired
     private IJxlApplicationCheckService applicationCheckService;
+    @Autowired
+    private IJxlBehaviorCheckService behaviorCheckService;
 
     @Override
     public List<SysInterfaceLog> findTodoReportList() throws Exception {
@@ -72,6 +74,7 @@ public class CellServiceImpl implements ICellService {
             contactRegionService.addContactRegion(oldId , reportEntity.getId() , reportData.getString("contact_region"));
             contactListService.addContactList(oldId , reportEntity.getId() , reportData.getString("contact_list"));
             applicationCheckService.addApplicationCheck(oldId , reportEntity.getId() , reportData.getJSONArray("application_check"));
+            behaviorCheckService.addBehaviorCheck(oldId , reportEntity.getId() , reportData.getString("behavior_check"));
             // 更新状态
             SysInterfaceLogWithBLOBs bean = new SysInterfaceLogWithBLOBs();
             bean.setId(log.getId());

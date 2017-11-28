@@ -14,6 +14,7 @@ import com.xingguang.utils.cell.mapper.JxlApplicationCheckCellPhoneMapper;
 import com.xingguang.utils.cell.mapper.JxlApplicationCheckIdCardMapper;
 import com.xingguang.utils.cell.mapper.JxlApplicationCheckUsernameMapper;
 import com.xingguang.utils.cell.service.IJxlApplicationCheckService;
+import com.xingguang.utils.cell.service.IJxlBehaviorCheckService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,8 @@ public class CellTest {
     private JxlApplicationCheckCellPhoneMapper jxlApplicationCheckCellPhoneMapper;
     @Autowired
     private IJxlApplicationCheckService service;
+    @Autowired
+    private IJxlBehaviorCheckService behaviorCheckService;
 
     @Test
     public void testList() throws Exception{
@@ -87,9 +90,9 @@ public class CellTest {
         Map<String,Object> userMap = new HashMap<>();
         userMap.put("clientSecret","1b9617b05de443749cd147a308d3c58b");
         userMap.put("accessToken","c9782ea405d04d93b2e31fbd0ba3e0ad");
-        userMap.put("name","何大亮");
-        userMap.put("idCard","130130198206061255");
-        userMap.put("phone","13611201362");
+        userMap.put("name","孙荐");
+        userMap.put("idCard","130821198704271513");
+        userMap.put("phone","18101096010");
         String jsonStr = restTemplate.getForObject(dataUrl, String.class, userMap);
         JSONObject object = JSON.parseObject(jsonStr);
         checkService.deleteApplicationCheckByRptId(60L);
@@ -97,7 +100,7 @@ public class CellTest {
             JSONObject jxlReport = JSON.parseObject(jsonStr);
             JSONObject reportData = JSON.parseObject(jxlReport.getString("report_data"));
             JSONArray array = reportData.getJSONArray("application_check");
-            service.addApplicationCheck(60L,61L,array);
+            service.addApplicationCheck(60L,47L,array);
             List<JxlApplicatinoCheckEntity> list1 = new ArrayList<>();
             for(int i=0;i<array.size();i++)/*{
                 JxlApplicatinoCheckEntity checkEntity = new JxlApplicatinoCheckEntity();
@@ -147,6 +150,25 @@ public class CellTest {
             }
 
         }
+    }
+
+    @Test
+    public void testBehaviorCheck() throws Exception {
+        String dataUrl = "https://www.juxinli.com/api/access_report_data?access_token={accessToken}&client_secret={clientSecret}&name={name}&phone={phone}&idcard={idCard}";
+        String result = null;
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("clientSecret", "1b9617b05de443749cd147a308d3c58b");
+        userMap.put("accessToken", "c9782ea405d04d93b2e31fbd0ba3e0ad");
+        userMap.put("name", "孙荐");
+        userMap.put("idCard", "130821198704271513");
+        userMap.put("phone", "18101096010");
+        String jsonStr = restTemplate.getForObject(dataUrl, String.class, userMap);
+        JSONObject object = JSON.parseObject(jsonStr);
+        JSONObject reportData = JSON.parseObject(object.getString("report_data"));
+        String behaviorCheck = reportData.getString("behavior_check");
+
+        behaviorCheckService.addBehaviorCheck(60L,47L,behaviorCheck);
+        System.out.println(behaviorCheck);
     }
 
 }
