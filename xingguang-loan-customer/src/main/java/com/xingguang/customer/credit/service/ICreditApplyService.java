@@ -1,6 +1,7 @@
 package com.xingguang.customer.credit.service;
 
 import com.xingguang.customer.credit.entity.CreditApply;
+import com.xingguang.customer.credit.params.CreditApplyParam;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public interface ICreditApplyService {
 
-    void create(CreditApply creditApply, Long appId);
+    void create(CreditApply creditApply, CreditApplyParam creditApplyParam);
 
     CreditApply getByUserId(Long userId);
 

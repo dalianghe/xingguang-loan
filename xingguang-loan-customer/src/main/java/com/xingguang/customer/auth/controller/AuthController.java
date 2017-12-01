@@ -9,6 +9,8 @@ import com.xingguang.customer.auth.params.AuthBean;
 import com.xingguang.customer.auth.service.ICusUserAuthService;
 import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
+import com.xingguang.customer.worker.entity.WorkUserInfo;
+import com.xingguang.customer.worker.service.IWorkUserInfoService;
 import com.xingguang.exception.CustomException;
 import com.xingguang.utils.JwtUtils;
 import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
@@ -52,6 +54,9 @@ public class AuthController {
 
     @Autowired
     private ICusUserInfoService cusUserInfoService;
+
+    @Autowired
+    private IWorkUserInfoService workUserInfoService;
 
     @Autowired
     private OssUtils ossUtils;
@@ -121,7 +126,13 @@ public class AuthController {
 //                              @RequestParam("img2") MultipartFile realImg2,
 //                              @RequestParam("img3") MultipartFile realImg3
                             ) throws Exception {
-
+        WorkUserInfo workUserInfo = null;
+        if (cusUserInfo.getWorkUserId() != null) {
+            workUserInfo = this.workUserInfoService.getWorkUserInfoById(cusUserInfo.getWorkUserId());
+            if (workUserInfo == null) {
+                throw new CustomException("业务员不存在");
+            }
+        }
         String realStatus = this.realUtils.realByNameAndIdNo(cusUserInfo.getName(), cusUserInfo.getIdNo());
         boolean realFlag = false;
         if (!StringUtils.isBlank(realStatus) && "3".equals(realStatus.trim())) {
@@ -171,6 +182,10 @@ public class AuthController {
         cusUserInfoDB.setIdNo(cusUserInfo.getIdNo());
         cusUserInfoDB.setSex(cusUserInfo.getSex());
         cusUserInfoDB.setRealStatus(realFlag ? 1 : 2);
+        if (workUserInfo != null){
+            cusUserInfoDB.setWorkUserId(cusUserInfo.getWorkUserId());
+            cusUserInfoDB.setWorkUserName(workUserInfo.getName());
+        }
         this.cusUserInfoService.update(cusUserInfoDB);
         ResultBean<?> resultBean = new ResultBean<>(cusUserInfoDB);
         if(!realFlag){

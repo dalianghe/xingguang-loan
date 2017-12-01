@@ -52,7 +52,7 @@ public class CreditController {
         creditApply.setWorkLng(workQrCode.getLng());
         Double distance = MapUtils.GetDistance(creditApplyParam.getCusLat(), creditApplyParam.getCusLng(), workQrCode.getLat(), workQrCode.getLng());
         creditApply.setCusWorkDistance(distance.toString());
-        this.creditApplyService.create(creditApply, creditApplyParam.getAppId());
+        this.creditApplyService.create(creditApply, creditApplyParam);
         return new ResultBean();
     }
 
