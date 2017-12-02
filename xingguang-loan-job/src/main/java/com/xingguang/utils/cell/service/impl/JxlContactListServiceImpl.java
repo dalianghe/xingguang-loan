@@ -37,11 +37,10 @@ public class JxlContactListServiceImpl implements IJxlContactListService{
     @Override
     @Transactional
     public List<JxlContactListEntity> addContactList(Long oldRptId, Long newRptId, String json) throws Exception {
-        // 删除
-        this.deleteContactListByRptId(oldRptId);
-        // 插入
+
         List<JxlContactListEntity> list = JSON.parseArray(json , JxlContactListEntity.class);
         if(list != null){
+            this.deleteContactListByRptId(oldRptId);
             for(JxlContactListEntity entity : list){
                 entity.setRptId(newRptId);
             }
