@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridRegisterOrgsStatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridRegisterOrgsStatisticsEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="orgs_id" jdbcType="BIGINT" property="orgsId" />
+    <result column="count" jdbcType="VARCHAR" property="count" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+  </resultMap>
+
+  <delete id="deleteRegisterOrgsStatisticsByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_register_orgs_statistics WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertRegisterOrgsStatistics" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_register_orgs_statistics (biz_id, orgs_id, count, label)
+    VALUES
+    <foreach collection="list" index="index" item="org" separator=",">
+    (#{org.bizId}, #{org.orgsId}, #{org.count}, #{org.label})
+    </foreach>
+  </insert>
+
+</mapper>

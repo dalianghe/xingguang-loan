@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridUserRegisterOrgsMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridUserRegisterOrgsEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="grid_id" jdbcType="BIGINT" property="gridId" />
+    <result column="register_cnt" jdbcType="VARCHAR" property="registerCnt" />
+    <result column="phone_num" jdbcType="VARCHAR" property="phoneNum" />
+  </resultMap>
+
+  <delete id="deleteGridUserRegisterOrgsByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_user_register_orgs WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertGridUserRegisterOrgs" parameterType="com.xingguang.grid.entity.JxlGridUserRegisterOrgsEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_user_register_orgs (biz_id, grid_id, register_cnt, phone_num)
+    VALUES (#{bizId}, #{gridId}, #{registerCnt}, #{phoneNum})
+  </insert>
+
+</mapper>

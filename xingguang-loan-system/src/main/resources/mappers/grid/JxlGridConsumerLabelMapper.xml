@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridConsumerLabelMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridConsumerLabelEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="grid_id" jdbcType="BIGINT" property="gridId" />
+    <result column="if_own_cc" jdbcType="VARCHAR" property="ifOwnCc" />
+    <result column="own_wg_cc" jdbcType="VARCHAR" property="ownWgCc" />
+    <result column="if_own_car" jdbcType="VARCHAR" property="ifOwnCar" />
+    <result column="if_pay_ins" jdbcType="VARCHAR" property="ifPayIns" />
+    <result column="if_fin_buy_pre6" jdbcType="VARCHAR" property="ifFinBuyPre6" />
+    <result column="cst_score_finally" jdbcType="VARCHAR" property="cstScoreFinally" />
+  </resultMap>
+
+  <delete id="deleteConsumerLabelBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_consumer_label WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertConsumerLabel" parameterType="com.xingguang.grid.entity.JxlGridConsumerLabelEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_consumer_label (biz_id, grid_id, if_own_cc, own_wg_cc, if_own_car, if_pay_ins, if_fin_buy_pre6,cst_score_finally)
+    VALUES (#{bizId}, #{gridId}, #{ifOwnCc}, #{ownWgCc}, #{ifOwnCar}, #{ifPayIns}, #{ifFinBuyPre6}, #{cstScoreFinally})
+  </insert>
+
+</mapper>

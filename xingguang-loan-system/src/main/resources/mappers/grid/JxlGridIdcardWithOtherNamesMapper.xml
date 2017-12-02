@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridIdcardWithOtherNamesMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridIdcardWithOtherNamesEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="grid_id" jdbcType="BIGINT" property="gridId" />
+    <result column="susp_name" jdbcType="VARCHAR" property="suspName" />
+    <result column="susp_updt" jdbcType="VARCHAR" property="suspUpdt" />
+  </resultMap>
+
+  <delete id="deleteIdcardWithOtherNamesByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_idcard_with_other_names WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertIdcardWithOtherNames" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_idcard_with_other_names (biz_id, grid_id, susp_name, susp_updt)
+    VALUES
+    <foreach collection="list" index="index" item="idcard" separator=",">
+    (#{idcard.bizId}, #{idcard.gridId}, #{idcard.suspName}, #{idcard.suspUpdt})
+    </foreach>
+  </insert>
+
+</mapper>

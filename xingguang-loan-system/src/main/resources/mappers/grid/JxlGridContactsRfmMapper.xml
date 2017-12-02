@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridContactsRfmMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridContactsRfmEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="gray_id" jdbcType="BIGINT" property="grayId" />
+    <result column="recent_time_to_all" jdbcType="VARCHAR" property="recentTimeToAll" />
+    <result column="recent_time_be_all" jdbcType="VARCHAR" property="recentTimeBeAll" />
+    <result column="recent_time_to_black" jdbcType="VARCHAR" property="recentTimeToBlack" />
+    <result column="recent_time_be_black" jdbcType="VARCHAR" property="recentTimeBeBlack" />
+    <result column="recent_time_to_applied" jdbcType="VARCHAR" property="recentTimeToApplied" />
+    <result column="recent_time_be_applied" jdbcType="VARCHAR" property="recentTimeBeApplied" />
+    <result column="call_cnt_to_all" jdbcType="VARCHAR" property="callCntToAll" />
+    <result column="call_cnt_be_all" jdbcType="VARCHAR" property="callCntBeAll" />
+    <result column="call_cnt_to_black" jdbcType="VARCHAR" property="callCntToBlack" />
+    <result column="call_cnt_be_black" jdbcType="VARCHAR" property="callCntBeBlack" />
+    <result column="call_cnt_to_applied" jdbcType="VARCHAR" property="callCntToApplied" />
+    <result column="call_cnt_be_applied" jdbcType="VARCHAR" property="callCntBeApplied" />
+    <result column="time_spent_to_all" jdbcType="VARCHAR" property="timeSpentToAll" />
+    <result column="time_spent_be_all" jdbcType="VARCHAR" property="timeSpentBeAll" />
+    <result column="time_spent_to_black" jdbcType="VARCHAR" property="timeSpentToBlack" />
+    <result column="time_spent_be_black" jdbcType="VARCHAR" property="timeSpentBeBlack" />
+    <result column="time_spent_to_applied" jdbcType="VARCHAR" property="timeSpentToApplied" />
+    <result column="time_spent_be_applied" jdbcType="VARCHAR" property="timeSpentBeApplied" />
+  </resultMap>
+
+  <delete id="deleteContactsRfmByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_contacts_rfm WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertContactsRfm" parameterType="com.xingguang.grid.entity.JxlGridContactsRfmEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_contacts_rfm (biz_id, gray_id, recent_time_to_all, recent_time_be_all, recent_time_to_black, recent_time_be_black, recent_time_to_applied,
+    recent_time_be_applied, call_cnt_to_all, call_cnt_be_all, call_cnt_to_black, call_cnt_be_black, call_cnt_to_applied, call_cnt_be_applied, time_spent_to_all,
+    time_spent_be_all, time_spent_to_black, time_spent_be_black, time_spent_to_applied, time_spent_be_applied)
+    VALUES (#{bizId}, #{grayId}, #{recentTimeToAll}, #{recentTimeBeAll}, #{recentTimeToBlack}, #{recentTimeBeBlack}, #{recentTimeToApplied},
+    #{recentTimeBeApplied}, #{callCntToAll}, #{callCntBeAll}, #{callCntToBlack}, #{callCntBeBlack}, #{callCntToApplied}, #{callCntBeApplied},
+    #{timeSpentToAll}, #{timeSpentBeAll} , #{timeSpentToBlack}, #{timeSpentBeBlack}, #{timeSpentToApplied}, #{timeSpentBeApplied})
+  </insert>
+
+</mapper>

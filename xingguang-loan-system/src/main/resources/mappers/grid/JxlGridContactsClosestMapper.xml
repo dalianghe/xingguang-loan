@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridContactsClosestMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridContactsClosestEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="gray_id" jdbcType="BIGINT" property="grayId" />
+    <result column="weight_to_all" jdbcType="VARCHAR" property="weightToAll" />
+    <result column="weight_be_all" jdbcType="VARCHAR" property="weightBeAll" />
+    <result column="weight_all" jdbcType="VARCHAR" property="weightAll" />
+    <result column="weight_to_black" jdbcType="VARCHAR" property="weightToBlack" />
+    <result column="weight_be_black" jdbcType="VARCHAR" property="weightBeBlack" />
+    <result column="weight_black" jdbcType="VARCHAR" property="weightBlack" />
+    <result column="weight_to_applied" jdbcType="VARCHAR" property="weightToApplied" />
+    <result column="weight_be_applied" jdbcType="VARCHAR" property="weightBeApplied" />
+    <result column="weight_applied" jdbcType="VARCHAR" property="weightApplied" />
+  </resultMap>
+
+  <delete id="deleteContactsClosestByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_contacts_closest WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertContactsClosest" parameterType="com.xingguang.grid.entity.JxlGridContactsClosestEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_contacts_closest (biz_id, gray_id, weight_to_all, weight_be_all, weight_all, weight_to_black, weight_be_black,
+    weight_black, weight_to_applied, weight_be_applied, weight_applied)
+    VALUES (#{bizId}, #{grayId}, #{weightToAll}, #{weightBeAll}, #{weightAll}, #{weightToBlack}, #{weightBeBlack},
+    #{weightBlack}, #{weightToApplied}, #{weightBeApplied}, #{weightApplied})
+  </insert>
+
+</mapper>

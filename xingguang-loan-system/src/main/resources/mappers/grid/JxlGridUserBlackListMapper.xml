@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridUserBlackListMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridUserBlackListEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="grid_id" jdbcType="VARCHAR" property="gridId" />
+    <result column="blacklist_name_with_phone" jdbcType="VARCHAR" property="blacklistNameWithPhone" />
+    <result column="blacklist_name_with_idcard" jdbcType="VARCHAR" property="blacklistNameWithIdcard" />
+    <result column="blacklist_update_time_name_phone" jdbcType="VARCHAR" property="blacklistUpdateTimeNamePhone" />
+    <result column="blacklist_update_time_name_idcard" jdbcType="VARCHAR" property="blacklistUpdateTimeNameIdcard" />
+  </resultMap>
+
+  <delete id="deleteUserBlackListByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_user_blacklist WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertUserBlackList" parameterType="com.xingguang.grid.entity.JxlGridReportEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_user_blacklist (biz_id, grid_id, blacklist_name_with_phone, blacklist_name_with_idcard, blacklist_update_time_name_phone, blacklist_update_time_name_idcard)
+    VALUES (#{bizId}, #{gridId}, #{blacklistNameWithPhone}, #{blacklistNameWithIdcard}, #{blacklistUpdateTimeNamePhone}, #{blacklistUpdateTimeNameIdcard})
+  </insert>
+
+</mapper>

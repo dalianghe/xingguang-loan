@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridUserBasicMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridUserBasicEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="grid_id" jdbcType="BIGINT" property="gridId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_gender" jdbcType="VARCHAR" property="userGender" />
+    <result column="user_age" jdbcType="VARCHAR" property="userAge" />
+    <result column="user_idcard" jdbcType="VARCHAR" property="userIdcard" />
+    <result column="user_idcard_valid" jdbcType="VARCHAR" property="userIdcardValid" />
+    <result column="user_province" jdbcType="VARCHAR" property="userProvince" />
+    <result column="user_city" jdbcType="VARCHAR" property="userCity" />
+    <result column="user_region" jdbcType="VARCHAR" property="userRegion" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_phone_operator" jdbcType="VARCHAR" property="userPhoneOperator" />
+    <result column="user_phone_province" jdbcType="VARCHAR" property="userPhoneProvince" />
+    <result column="user_phone_city" jdbcType="VARCHAR" property="userPhoneCity" />
+  </resultMap>
+
+  <delete id="deleteGridUserBasicByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_user_basic WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertUserBasic" parameterType="com.xingguang.grid.entity.JxlGridUserBasicEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_user_basic (biz_id, grid_id, user_name, user_gender, user_age, user_idcard, user_idcard_valid,
+    user_province, user_city, user_region, user_phone, user_phone_operator, user_phone_province, user_phone_city)
+    VALUES (#{bizId}, #{gridId}, #{userName}, #{userGender}, #{userAge}, #{userIdcard}, #{userIdcardValid},
+    #{userProvince}, #{userCity}, #{userRegion}, #{userPhone}, #{userPhoneOperator}, #{userPhoneProvince}, #{userPhoneCity})
+  </insert>
+
+</mapper>

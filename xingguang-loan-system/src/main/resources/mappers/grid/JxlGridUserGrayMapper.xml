@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridUserGrayMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridUserGrayEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="grid_id" jdbcType="BIGINT" property="gridId" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="phone_gray_score" jdbcType="VARCHAR" property="phoneGrayScore" />
+    <result column="has_report" jdbcType="VARCHAR" property="hasReport" />
+    <result column="recent_active_time" jdbcType="VARCHAR" property="recentActiveTime" />
+    <result column="social_liveness" jdbcType="VARCHAR" property="socialLiveness" />
+    <result column="social_influence" jdbcType="VARCHAR" property="socialInfluence" />
+  </resultMap>
+
+  <delete id="deleteGridUserGrayByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_user_gray WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertGridUserGray" parameterType="com.xingguang.grid.entity.JxlGridUserGrayEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_user_gray (biz_id, grid_id, user_phone, phone_gray_score, has_report, recent_active_time, social_liveness, social_influence)
+    VALUES (#{bizId}, #{gridId}, #{userPhone}, #{phoneGrayScore}, #{hasReport}, #{recentActiveTime}, #{socialLiveness}, #{socialInfluence})
+  </insert>
+
+</mapper>

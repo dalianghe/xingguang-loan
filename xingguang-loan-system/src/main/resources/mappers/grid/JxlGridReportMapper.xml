@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridReportMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridReportEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="user_grid_id" jdbcType="VARCHAR" property="userGridId" />
+    <result column="auth_org" jdbcType="VARCHAR" property="authOrg" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <delete id="deleteGridReportByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_report WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertGridReport" parameterType="com.xingguang.grid.entity.JxlGridReportEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_report (biz_id, user_grid_id, auth_org, update_time, create_time)
+    VALUES (#{bizId}, #{userGridId}, #{authOrg}, #{updateTime}, #{createTime})
+  </insert>
+
+  <select id="selectGridReportByBizId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT * FROM jxl_grid_report WHERE biz_id=#{bizId}
+  </select>
+
+</mapper>

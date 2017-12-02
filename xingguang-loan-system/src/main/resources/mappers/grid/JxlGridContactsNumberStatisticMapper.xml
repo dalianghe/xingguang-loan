@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingguang.grid.mapper.JxlGridContactsNumberStatisticMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.grid.entity.JxlGridContactsNumberStatisticEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="gray_id" jdbcType="BIGINT" property="grayId" />
+    <result column="cnt_to_all" jdbcType="VARCHAR" property="cntToAll" />
+    <result column="cnt_be_all" jdbcType="VARCHAR" property="cntBeAll" />
+    <result column="cnt_all" jdbcType="VARCHAR" property="cntAll" />
+    <result column="cnt_router" jdbcType="VARCHAR" property="cntRouter" />
+    <result column="router_ratio" jdbcType="VARCHAR" property="routerRatio" />
+    <result column="cnt_to_black" jdbcType="VARCHAR" property="cntToBlack" />
+    <result column="cnt_be_black" jdbcType="VARCHAR" property="cntBeBlack" />
+    <result column="cnt_black" jdbcType="VARCHAR" property="cntBlack" />
+    <result column="black_ratio" jdbcType="VARCHAR" property="blackRatio" />
+    <result column="cnt_black2" jdbcType="VARCHAR" property="cntBlack2" />
+    <result column="cnt_to_applied" jdbcType="VARCHAR" property="cntToApplied" />
+    <result column="cnt_applied" jdbcType="VARCHAR" property="cnt_applied" />
+    <result column="cnt_be_applied" jdbcType="VARCHAR" property="cntBeApplied" />
+    <result column="pct_cnt_to_all" jdbcType="VARCHAR" property="pctCntToAll" />
+    <result column="pct_cnt_be_all" jdbcType="VARCHAR" property="pctCntBeAll" />
+    <result column="pct_cnt_all" jdbcType="VARCHAR" property="pctCntAll" />
+    <result column="pct_cnt_router" jdbcType="VARCHAR" property="pctCntRouter" />
+    <result column="pct_router_ratio" jdbcType="VARCHAR" property="pctRouterRatio" />
+    <result column="pct_cnt_to_black" jdbcType="VARCHAR" property="pctCntToBlack" />
+    <result column="pct_cnt_be_black" jdbcType="VARCHAR" property="pctCntBeBlack" />
+    <result column="pct_cnt_black" jdbcType="VARCHAR" property="pctCntBlack" />
+    <result column="pct_black_ratio" jdbcType="VARCHAR" property="pctBlackRatio" />
+    <result column="pct_cnt_black2" jdbcType="VARCHAR" property="pctCntBlack2" />
+    <result column="pct_cnt_to_applied" jdbcType="VARCHAR" property="pctCntToApplied" />
+    <result column="pct_cnt_be_applied" jdbcType="VARCHAR" property="pctCntBeApplied" />
+    <result column="pct_cnt_applied" jdbcType="VARCHAR" property="pctCntApplied" />
+  </resultMap>
+
+  <delete id="deleteContactsNumberStatisticByBizId" parameterType="java.lang.Long">
+    DELETE FROM jxl_grid_contacts_number_statistic WHERE biz_id=#{bizId}
+  </delete>
+
+  <insert id="insertContactsNumberStatistic" parameterType="com.xingguang.grid.entity.JxlGridContactsNumberStatisticEntity" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO jxl_grid_contacts_number_statistic (biz_id, gray_id, cnt_to_all, cnt_be_all, cnt_all, cnt_router, router_ratio,
+    cnt_to_black, cnt_be_black, cnt_black, black_ratio, cnt_black2, cnt_to_applied, cnt_be_applied, cnt_applied,
+    pct_cnt_to_all, pct_cnt_be_all, pct_cnt_all, pct_cnt_router, pct_router_ratio, pct_cnt_to_black, pct_cnt_be_black,
+    pct_cnt_black, pct_black_ratio, pct_cnt_black2, pct_cnt_to_applied, pct_cnt_be_applied, pct_cnt_applied)
+    VALUES (#{bizId}, #{grayId}, #{cntToAll}, #{cntBeAll}, #{cntAll}, #{cntRouter}, #{routerRatio},
+    #{cntToBlack}, #{cntBeBlack}, #{cntBlack}, #{blackRatio}, #{cntBlack2}, #{cntToApplied}, #{cntBeApplied},
+    #{cntApplied}, #{pctCntToAll} , #{pctCntBeAll}, #{pctCntAll}, #{pctCntRouter}, #{pctRouterRatio},
+    #{pctCntToBlack}, #{pctCntBeBlack}, #{pctCntBlack}, #{pctBlackRatio}, #{pctCntBlack2}, #{pctCntToApplied},
+    #{pctCntBeApplied}, #{pctCntApplied})
+  </insert>
+
+</mapper>

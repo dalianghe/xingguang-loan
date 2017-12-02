@@ -15,4 +15,15 @@ public class DateUtils {
         return new SimpleDateFormat("yyyy-MM-dd").format(time);
     }
 
+    public static String convertTimeStr(String s){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        long lt = new Long(s);
+        Date date = new Date(lt);
+        return simpleDateFormat.format(date);
+    }
+
+    public static void main(String[] args){
+        System.out.println(convertTimeStr("1512183001666"));
+    }
+
 }
