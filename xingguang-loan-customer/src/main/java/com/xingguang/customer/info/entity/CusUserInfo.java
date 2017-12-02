@@ -39,6 +39,12 @@ public class CusUserInfo {
 
     private String openId;
 
+    private String homeAddr;
+
+    private String companyName;
+
+    private String companyAddr;
+
     public Long getId() {
         return id;
     }
@@ -181,5 +187,29 @@ public class CusUserInfo {
 
     public void setOpenId(String openId) {
         this.openId = openId == null ? null : openId.trim();
+    }
+
+    public String getHomeAddr() {
+        return homeAddr;
+    }
+
+    public void setHomeAddr(String homeAddr) {
+        this.homeAddr = homeAddr == null ? null : homeAddr.trim();
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName == null ? null : companyName.trim();
+    }
+
+    public String getCompanyAddr() {
+        return companyAddr;
+    }
+
+    public void setCompanyAddr(String companyAddr) {
+        this.companyAddr = companyAddr == null ? null : companyAddr.trim();
     }
 }

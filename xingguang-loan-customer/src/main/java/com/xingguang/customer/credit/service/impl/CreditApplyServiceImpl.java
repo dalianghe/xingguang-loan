@@ -3,12 +3,14 @@ package com.xingguang.customer.credit.service.impl;
 import com.xingguang.customer.credit.entity.CreditApply;
 import com.xingguang.customer.credit.entity.CreditApplyExample;
 import com.xingguang.customer.credit.mapper.CreditApplyMapper;
+import com.xingguang.customer.credit.params.CreditApplyParam;
 import com.xingguang.customer.credit.service.ICreditApplyService;
 import com.xingguang.customer.info.entity.CusUserInfo;
 import com.xingguang.customer.info.service.ICusUserInfoService;
 import com.xingguang.customer.link.service.ICusUserLinkService;
 import com.xingguang.customer.worker.entity.WorkUserInfo;
 import com.xingguang.customer.worker.service.IWorkUserInfoService;
+import com.xingguang.exception.CustomException;
 import com.xingguang.utils.interfacelog.entity.SysInterfaceLogWithBLOBs;
 import com.xingguang.utils.interfacelog.service.ISysInterfaceLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,7 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
 
     @Override
-    public void create(CreditApply creditApply, Long appId) {
+    public void create(CreditApply creditApply, CreditApplyParam creditApplyParam) {
         WorkUserInfo workUserInfo = this.workUserInfoService.getWorkUserByCusUserId(creditApply.getCusUserId());
         String nowDate = LocalDate.now().format(this.formatter);
         creditApply.setApplyNo(nowDate + workUserInfo.getCityId());
@@ -49,12 +51,20 @@ public class CreditApplyServiceImpl implements ICreditApplyService {
         creditApply.setWorkUserName(workUserInfo.getName());
         this.creditApplyMapper.insertSelectiveApplyNo(creditApply);
         SysInterfaceLogWithBLOBs sysInterfaceLogWithBLOBs = new SysInterfaceLogWithBLOBs();
-        sysInterfaceLogWithBLOBs.setId(appId);
+        sysInterfaceLogWithBLOBs.setId(creditApplyParam.getAppId());
         sysInterfaceLogWithBLOBs.setBizId(creditApply.getId());
         this.sysInterfaceLogService.update(sysInterfaceLogWithBLOBs);
         CusUserInfo cusUserInfo = new CusUserInfo();
         cusUserInfo.setId(creditApply.getCusUserId());
         cusUserInfo.setStatus(20);
+        if (creditApplyParam.getWorkUserId() != null) {
+            workUserInfo = this.workUserInfoService.getWorkUserInfoById(creditApplyParam.getWorkUserId());
+            if (workUserInfo == null) {
+                throw new CustomException("业务员不存在");
+            }
+            cusUserInfo.setWorkUserId(creditApplyParam.getWorkUserId());
+            cusUserInfo.setWorkUserName(workUserInfo.getName());
+        }
         cusUserInfoService.update(cusUserInfo);
     }
 

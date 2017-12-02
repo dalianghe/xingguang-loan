@@ -12,6 +12,8 @@ public class CreditApplyParam {
 
     String cusLat;
 
+    Long workUserId;
+
     public Long getAppId() {
         return appId;
     }
@@ -34,5 +36,13 @@ public class CreditApplyParam {
 
     public void setCusLat(String cusLat) {
         this.cusLat = cusLat;
+    }
+
+    public Long getWorkUserId() {
+        return workUserId;
+    }
+
+    public void setWorkUserId(Long workUserId) {
+        this.workUserId = workUserId;
     }
 }

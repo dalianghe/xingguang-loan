@@ -80,6 +80,7 @@ public class InfoController {
             setName(cusUserInfo.getName());
             setIdNo(cusUserInfo.getIdNo());
             setRealStatus(cusUserInfo.getRealStatus());
+            setStatus(cusUserInfo.getStatus());
             setSex(cusUserInfo.getSex());
             setIncome(cusUserInfo.getIncome());
             setEducation(cusUserInfo.getEducation());
@@ -87,6 +88,10 @@ public class InfoController {
             setCreateTime(cusUserInfo.getCreateTime());
             setWorkUserId(cusUserInfo.getWorkUserId());
             setWorkUserName(cusUserInfo.getWorkUserName());
+            setHomeAddr(cusUserInfo.getHomeAddr());
+            setCompanyName(cusUserInfo.getCompanyName());
+            setCompanyAddr(cusUserInfo.getCompanyAddr());
+
 
             setSexName(sexName);
             setIncomeName(incomeName);
