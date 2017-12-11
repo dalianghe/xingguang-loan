@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xingguang.log.mapper.SysInterfaceLogMapper">
+  <resultMap id="BaseResultMap" type="com.xingguang.log.entity.SysInterfaceLogEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="role_type" jdbcType="INTEGER" property="roleType" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="biz_id" jdbcType="BIGINT" property="bizId" />
+    <result column="send_data" jdbcType="LONGVARCHAR" property="sendData" />
+    <result column="receive_data" jdbcType="LONGVARCHAR" property="receiveData" />
+  </resultMap>
+
+
+  <select id="getLogByBiz" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from sys_interface_log
+    where type=5
+    and biz_id=#{bizId}
+  </select>
+
+  <insert id="insertLog" keyColumn="id" keyProperty="id" parameterType="com.xingguang.log.entity.SysInterfaceLogEntity" useGeneratedKeys="true">
+    insert into sys_interface_log (type, status, create_time, 
+      update_time, role_type, user_id,
+      name, id_no, phone,
+      biz_id, receive_data
+      )
+    values (#{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{roleType,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT},
+      #{name,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{bizId,jdbcType=BIGINT}, #{receiveData,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+
+</mapper>

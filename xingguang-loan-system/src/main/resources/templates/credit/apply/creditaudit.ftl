@@ -56,6 +56,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a data-toggle="tab" href="#gridinfo">
+                                    <i class="green ace-icon fa fa-umbrella bigger-120"></i>
+                                    欺诈信息
+                                </a>
+                            </li>
+                            <li>
                                 <a data-toggle="tab" href="#auditresult">
                                     <i class="green ace-icon fa fa-check bigger-120"></i>
                                     授信审核
@@ -336,6 +342,396 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="gridinfo" class="tab-pane fade">
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;margin-top: -20px;">
+                                    <h4 class="header smaller lighter blue">用户基本信息</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 姓名 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_name}}</div>
+                                                <div class="profile-info-name"> 性别 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_gender}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 年龄 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_age}}</div>
+                                                <div class="profile-info-name"> 身份证号码 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_idcard}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 身份证所在地 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_province}}{{grid.user_basic.user_city}}</div>
+                                                <div class="profile-info-name"> 身份证是否合规 </div>
+                                                <div class="profile-info-value" v-if="grid.user_basic.user_idcard_valid===true">是</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 手机号 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_phone}}</div>
+                                                <div class="profile-info-name"> 手机所属运营商 </div>
+                                                <div class="profile-info-value">{{grid.user_basic.user_phone_operator}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">注册信息</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 注册APP数量 </div>
+                                                <div class="profile-info-value">{{grid.user_register_orgs.register_cnt}}</div>
+                                            </div>
+                                            <div class="profile-info-row"  v-for="(register,index) in grid.user_register_orgs.register_orgs_statistics">
+                                                <div class="profile-info-name"> APP类型</div>
+                                                <div class="profile-info-value">{{register.label}}</div>
+                                                <div class="profile-info-name"> 注册数量</div>
+                                                <div class="profile-info-value">{{register.count}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">社交特征</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 灰度分 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.phone_gray_score}}</div>
+                                                <div class="profile-info-name"> 社交活跃度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.social_liveness}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 社交影响力 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.social_influence}}</div>
+                                                <div class="profile-info-name"> 是否种子号 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.has_report}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">黑名单信息</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width:20%"> 姓名和手机是否在黑名单 </div>
+                                                <div class="profile-info-value">{{grid.user_blacklist.blacklist_name_with_phone}}</div>
+                                                <div class="profile-info-name"> 更新时间 </div>
+                                                <div class="profile-info-value">{{grid.user_blacklist.blacklist_update_time_name_phone}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width:20%"> 身份证和姓名是否在黑名单 </div>
+                                                <div class="profile-info-value">{{grid.user_blacklist.blacklist_name_with_idcard}}</div>
+                                                <div class="profile-info-name"> 更新时间 </div>
+                                                <div class="profile-info-value">{{grid.user_blacklist.blacklist_update_time_name_idcard}}</div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(black,index) in grid.user_blacklist.blacklist_details">
+                                                <div class="profile-info-name"> 详情名称 </div>
+                                                <div class="profile-info-value">{{black.details_key}}</div>
+                                                <div class="profile-info-name"> 详情内容 </div>
+                                                <div class="profile-info-value">{{black.details_value}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">联系人相关字段</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width: 30%"> 主动联系人数 </div>
+                                                <div class="profile-info-value" style="width: 20%">{{grid.user_gray.contacts_number_statistic.cnt_to_all}}</div>
+                                                <div class="profile-info-name" style="width: 30%"> 主动联系人数在群体中的百分位 </div>
+                                                <div class="profile-info-value" style="width: 20%">{{grid.user_gray.contacts_number_statistic.pct_cnt_to_all}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 主动联系的黑号淑 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_to_black}}</div>
+                                                <div class="profile-info-name"> 主动联系的黑号数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_to_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 主动联系人中曾为申请人的人数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_to_applied}}</div>
+                                                <div class="profile-info-name"> 主动联系人曾为申请人的人数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_to_applied}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 被动联系人数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_be_black}}</div>
+                                                <div class="profile-info-name"> 被动联系的黑号数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_be_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 被动联系的黑号数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_be_black}}</div>
+                                                <div class="profile-info-name"> 被动联系的黑号数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_be_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 被动联系人中曾为申请人的人数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_be_applied}}</div>
+                                                <div class="profile-info-name"> 主动联系人曾为申请人的人数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_be_applied}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 一阶联系(间接联系)黑号总数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_black}}</div>
+                                                <div class="profile-info-name"> 一阶联系黑号数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_black_ratio}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 一阶联系人总数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_all}}</div>
+                                                <div class="profile-info-name"> 一阶联系人数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_all}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 二阶联系(间接联系)黑号总数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_black2}}</div>
+                                                <div class="profile-info-name"> 二阶联系黑号数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_black2}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 联系人曾为申请人的人数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_applied}}</div>
+                                                <div class="profile-info-name"> 联系人曾为申请人的人数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_applied}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 一阶联系人黑号数占比 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.black_ratio}}</div>
+                                                <div class="profile-info-name"> 一阶联系人黑号数占比在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_black_ratio}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 引起黑名单的一阶联系人数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.cnt_router}}</div>
+                                                <div class="profile-info-name"> 引起黑名单的一阶联系人数在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_cnt_router}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 引起黑名单的一阶联系人数占比 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.router_ratio}}</div>
+                                                <div class="profile-info-name"> 引起黑名单的一阶联系人数占比在群体中的百分位 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_number_statistic.pct_router_ratio}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">联系权重R、F、M相关字段</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width: 30%"> 与所有联系人的最近主动通话时间 </div>
+                                                <div class="profile-info-value" style="width: 20%">{{grid.user_gray.contacts_rfm.recent_time_to_all}}</div>
+                                                <div class="profile-info-name" style="width: 30%"> 与所有联系人的最近被动通话时间 </div>
+                                                <div class="profile-info-value" style="width: 20%">{{grid.user_gray.contacts_rfm.recent_time_be_all}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与黑号的最近主动通话时间 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.recent_time_to_black}}</div>
+                                                <div class="profile-info-name"> 与黑号的最近被动通话时间 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.recent_time_be_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与申请人的最近主动通话时间 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.recent_time_to_applicant}}</div>
+                                                <div class="profile-info-name"> 与申请人的最近被动通话时间 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.recent_time_be_applicant}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与所有联系人的主动总通话次数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.call_cnt_to_all}}</div>
+                                                <div class="profile-info-name"> 与所有联系人的被动总通话次数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.call_cnt_be_all}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与黑号的主动总通话次数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.call_cnt_to_black}}</div>
+                                                <div class="profile-info-name"> 与黑号的被动总通话次数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.call_cnt_be_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与申请人的主动通话次数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.call_cnt_to_applied}}</div>
+                                                <div class="profile-info-name"> 与申请人的被动通话次数 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.call_cnt_be_applied}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与所有联系人的主动总通话时长(s) </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.time_spent_to_all}}</div>
+                                                <div class="profile-info-name"> 与所有联系人的被动总通话时长(s) </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.time_spent_be_all}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与黑号的主动总通话时长(s) </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.time_spent_to_black}}</div>
+                                                <div class="profile-info-name"> 与黑号的被动总通话时长(s) </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.time_spent_be_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与申请人的主动通话时长(s) </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.time_spent_to_applied}}</div>
+                                                <div class="profile-info-name"> 与申请人的被动通话时长(s) </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_rfm.time_spent_be_applied}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">与联系人最大亲密度</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width: 30%"> 与所有联系人的最大主动联系亲密度 </div>
+                                                <div class="profile-info-value" style="width: 20%">{{grid.user_gray.contacts_closest.weight_to_all}}</div>
+                                                <div class="profile-info-name" style="width: 30%"> 与所有联系人的最大被动联系亲密度 </div>
+                                                <div class="profile-info-value" style="width: 20%">{{grid.user_gray.contacts_closest.weight_be_all}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与所有联系人的最大互动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_all}}</div>
+                                                <div class="profile-info-name"> 与黑号的最大主动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_to_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与黑号的最大被动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_be_black}}</div>
+                                                <div class="profile-info-name"> 与黑号的最大互动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_black}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与申请人的最大主动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_to_applied}}</div>
+                                                <div class="profile-info-name"> 与申请人的最大被动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_be_applied}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 与申请人的最大互动联系亲密度 </div>
+                                                <div class="profile-info-value">{{grid.user_gray.contacts_closest.weight_applied}}</div>
+                                                <div class="profile-info-value"></div>
+                                                <div class="profile-info-value"></div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">机构历史查询</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 查询次数统计 </div>
+                                                <div class="profile-info-value">{{grid.user_searched_statistic.searched_org_cnt}}</div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(history,index) in grid.user_searched_history_by_orgs">
+                                                <div class="profile-info-name"> 查询日期 </div>
+                                                <div class="profile-info-value">{{history.searched_date}}</div>
+                                                <div class="profile-info-name"> 机构类型 </div>
+                                                <div class="profile-info-value">{{history.searched_org}}</div>
+                                                <div class="profile-info-name"> 是否本机构查询 </div>
+                                                <div class="profile-info-value">{{history.org_self}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">手机存疑</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width: 20%"> 使用过此手机的其他姓名 </div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(item,index) in grid.user_phone_suspicion.phone_with_other_names">
+                                                <div class="profile-info-name" style="width: 20%"> 绑定姓名 </div>
+                                                <div class="profile-info-value" style="width: 30%">{{item.susp_name}}</div>
+                                                <div class="profile-info-name" style="width: 20%"> 绑定时间 </div>
+                                                <div class="profile-info-value" style="width: 30%">{{history.susp_updt}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 使用过此手机的其他身份证 </div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(item,index) in grid.user_phone_suspicion.phone_with_other_idcards">
+                                                <div class="profile-info-name"> 绑定身份证 </div>
+                                                <div class="profile-info-value">{{item.susp_idcard}}</div>
+                                                <div class="profile-info-name"> 绑定时间 </div>
+                                                <div class="profile-info-value">{{history.susp_updt}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 提供数据的机构 </div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(item,index) in grid.user_phone_suspicion.phone_applied_in_orgs">
+                                                <div class="profile-info-name"> 机构所属类型 </div>
+                                                <div class="profile-info-value">{{item.susp_org_type}}</div>
+                                                <div class="profile-info-name"> 绑定时间 </div>
+                                                <div class="profile-info-value">{{history.susp_updt}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12" style="text-align: center;">
+                                    <h4 class="header smaller lighter blue">身份证存疑</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name" style="width: 20%"> 使用过此身份证的其他姓名 </div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(item,index) in grid.user_idcard_suspicion.idcard_with_other_names">
+                                                <div class="profile-info-name"> 绑定姓名 </div>
+                                                <div class="profile-info-value">{{item.susp_name}}</div>
+                                                <div class="profile-info-name"> 绑定时间 </div>
+                                                <div class="profile-info-value">{{history.susp_updt}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 使用过此手机的其他身份证 </div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(item,index) in grid.user_idcard_suspicion.idcard_with_other_phones">
+                                                <div class="profile-info-name">该号码所属省份 </div>
+                                                <div class="profile-info-value">{{item.susp_phone_province}}</div>
+                                                <div class="profile-info-name"> 该号码所在地区 </div>
+                                                <div class="profile-info-value">{{history.susp_phone_city}}</div>
+                                                <div class="profile-info-name"> 该号码所属运营商 </div>
+                                                <div class="profile-info-value">{{history.susp_phone_operator}}</div>
+                                                <div class="profile-info-name"> 绑定时间 </div>
+                                                <div class="profile-info-value">{{history.susp_updt}}</div>
+                                                <div class="profile-info-name"> 存疑手机号码 </div>
+                                                <div class="profile-info-value">{{history.susp_phone}}</div>
+                                            </div>
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> 提供数据的机构 </div>
+                                            </div>
+                                            <div class="profile-info-row" v-for="(item,index) in grid.user_idcard_suspicion.idcard_applied_in_orgs">
+                                                <div class="profile-info-name"> 机构所属类型 </div>
+                                                <div class="profile-info-value">{{item.susp_org_type}}</div>
+                                                <div class="profile-info-name"> 绑定时间 </div>
+                                                <div class="profile-info-value">{{history.susp_updt}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="auditresult" class="tab-pane fade">
                                 <div class="col-xs-12 col-sm-2">
                                     <div class="text-left">
@@ -429,7 +825,6 @@
                                 </div>
                                 <div class="row"></div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -489,14 +884,9 @@
                                 if(user.bizCode==0){
                                     that.user = user.data;
                                     userfilmApp.user = user.data;
+                                    gridInfo.getGridInfo(that.user.id,that.user.name,that.user.idNo,that.user.phone);
                                 }
                             }
-                            /*var link = cusLink.data;
-                            if(link.sysCode==0){
-                                if(link.bizCode==0){
-                                    that.link = link.data;
-                                }
-                            }*/
                             var worker = worker.data;
                             if(worker.sysCode==0){
                                 if(worker.bizCode==0){
@@ -636,7 +1026,6 @@
                 }
             }
         });
-
         var appCheck = new Vue({
             el: '#appCheck',
             data:{
@@ -670,6 +1059,58 @@
                                     }
                                 }
                         ));
+            }
+        });
+        var gridInfo = new Vue({
+            "el" : "#gridinfo",
+            data:{
+                grid:{
+                    user_basic:{},
+                    user_register_orgs:{},
+                    user_gray:{
+                        contacts_number_statistic:{},
+                        contacts_rfm:{},
+                        contacts_closest:{}
+                    },
+                    user_blacklist:{},
+                    user_searched_statistic:{},
+                    user_searched_history_by_orgs:{},
+                    user_phone_suspicion:{
+                        phone_with_other_idcards:{},
+                        phone_with_other_names:{},
+                        phone_applied_in_orgs:{}
+                    },
+                    user_idcard_suspicion:{
+                        idcard_with_other_names:{},
+                        idcard_with_other_phones:{},
+                        idcard_applied_in_orgs:{}
+                    }
+                }
+            },
+            mounted : function(){
+
+            },
+            methods : {
+                getGridInfo : function(userId,userName,idCard,phone){
+                    var that=this;
+                    axios.get("/grid" , {
+                        params : {
+                            userId:userId,
+                            userName:userName,
+                            idCard:idCard,
+                            phone:phone,
+                            bizId:${applyId}
+                        }
+                    }).then(function(res){
+                        var grid = res.data;
+                        console.log(res.data);
+                        if(grid.sysCode==0){
+                            if(grid.bizCode==0){
+                                that.grid = grid.data;
+                            }
+                        }
+                    });
+                }
             }
         });
 
