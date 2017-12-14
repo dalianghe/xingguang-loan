@@ -56,4 +56,9 @@ public class WorkUserInfoServiceImpl implements IWorkUserInfoService {
     public List<WorkUserInfoEntity> selectWorkInfoByOwnerId(Long ownerId) throws Exception {
         return workUserInfoMapper.selectWorkInfoByOwnerId(ownerId);
     }
+
+    @Override
+    public WorkUserInfoEntity selectWorkInfoByPhone(String phone) throws Exception {
+        return workUserInfoMapper.selectWorkInfoByPhone(phone);
+    }
 }

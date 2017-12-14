@@ -20,4 +20,6 @@ public interface IWorkUserInfoService {
 
     public List<WorkUserInfoEntity> selectWorkInfoByOwnerId(Long ownerId) throws Exception;
 
+    public WorkUserInfoEntity selectWorkInfoByPhone(String phone) throws Exception;
+
 }
